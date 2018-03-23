@@ -1,0 +1,6 @@
+spring cloud配置集合
+
+dev:开发环境
+online:线上环境
+
+前面的为  application name

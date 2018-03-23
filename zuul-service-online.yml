@@ -1,0 +1,30 @@
+server:
+  port: 9100
+
+spring:
+  application:
+    name: zuul-service
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://58.206.97.102:9100/eureka/
+  instance:
+    prefer-ip-address: true
+    ip-address: 58.206.97.103
+
+zuul:
+  routes:
+    api-a:
+      path: /user/**
+      serviceId: userdata-service
+    api-b:
+      path: /address/**
+      serviceId: addressdata-service
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

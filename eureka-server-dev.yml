@@ -1,0 +1,29 @@
+server:
+  port: 9100
+
+spring:
+  application:
+    name: eureka-server
+#  security:
+#    user:
+#      name: admin
+#      password: 123
+
+eureka:
+  client:
+    fetch-registry: false
+    register-with-eureka: false
+    service-url:
+      defaultZone: http://127.0.0.1:9100/eureka/
+  instance:
+    hostname: 127.0.0.1
+#    status-page-url: http://${spring.cloud.client.ipAddress}:${server.port}/swagger-ui.html
+#    prefer-ip-address: true
+  server:
+    enable-self-preservation: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
