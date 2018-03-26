@@ -39,7 +39,7 @@ eureka:
       defaultZone: http://58.206.97.102:9100/eureka/
   instance:
     prefer-ip-address: true
-    ip-address: 58.206.97.104
+    ip-address: 58.206.97.105
 
 management:
   endpoints:
