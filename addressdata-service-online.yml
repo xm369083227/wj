@@ -8,7 +8,7 @@ spring:
     name: addressdata-service
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://58.206.97.102:3306/basedata?useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://58.206.97.106:3306/basedata?useUnicode=true&characterEncoding=utf-8
     username: root
     password: Xt2018
     platform: mysql
@@ -27,6 +27,22 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+  cloud:
+    stream:
+      default-binder: kafka
+      kafka:
+        binder:
+          brokers: 58.206.97.102:9092,58.206.97.103:9092,58.206.97.104:9092,58.206.97.105:9092
+          zk-nodes: 58.206.97.103:2181,58.206.97.104:2181,58.206.97.105:2181
+  redis:
+    sentinel:
+      master: mymaster
+      nodes: 58.206.97.107:26379,58.206.97.108:26379
+    lettuce:
+      pool:
+        max-active: 15
+        min-idle: 1
+        max-idle: 8
 
 #datasource
 #dataSource:
@@ -47,6 +63,8 @@ management:
     web:
       exposure:
         include: '*'
+
+
 
 
 
