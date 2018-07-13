@@ -1,0 +1,174 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+	<ui:include src="/common/templates/ui.xhtml"></ui:include>
+</h:head>
+<body>
+	<p:growl id="growlid" sticky="true" autoUpdate="true"></p:growl>
+	<h:form id="rolemgid" style="margin-bottom:10px;margin-top:10px">
+		<p:messages id="msgId" showDetail="true" autoUpdate="true" />
+		<h:panelGrid columns="1"
+			style="text-align: left;margin-left: -3px;margin-top: -6px;">
+			<p:panel header="查询条件" style="width:90%">
+				<h:panelGrid columns="5">
+					<p:outputLabel value="角色编码：" style="text-align: right"></p:outputLabel>
+					<p:inputText value="#{jcRoleMb.jsbm}"></p:inputText>
+					<p:outputLabel value="角色名称："></p:outputLabel>
+					<p:inputText value="#{jcRoleMb.jsmc}"></p:inputText>
+					<p:commandButton value="查询" action="#{jcRoleMb.doSearch}"
+						update=":rolemgid:data" />
+
+				</h:panelGrid>
+			</p:panel>
+			<h:inputHidden id="lovdiv" value="#{jcRoleMb.showLovDiv}"></h:inputHidden>
+			<p:dataTable id="data" style="width:90%" var="item"
+				value="#{jcRoleMb.lazyDataModel}" paginator="true"
+				rows="#{jcRoleMb.pageSize}" rowIndexVar="rowVar" filterDelay="300"
+				liveResize="true" paginatorPosition="bottom"
+				currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+				paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				lazy="true" rowsPerPageTemplate="5,10,15">
+
+				<p:column headerText="#{jc.jc_js_jsbm}" filterBy="#{item.jsbm}"
+					sortBy="#{item.jsbm}">
+					<h:outputText value="#{item.jsbm}" />
+				</p:column>
+
+				<p:column headerText="#{jc.jc_js_jsmc}" filterBy="#{item.jsmc}"
+					sortBy="#{item.jsmc}">
+					<h:outputText value="#{item.jsmc}" />
+				</p:column>
+				<p:column headerText="角色分类" filterBy="#{item.jsfl}"
+					sortBy="#{item.jsfl}">
+					<h:outputText value="#{item.jsfl}" />
+				</p:column>
+				<p:column headerText="操作">
+					<f:facet name="header">
+						<p:commandLink action="#{jcRoleMb.addnewRole}" value="新增角色"
+							oncomplete="PF('jstoupdate').show();" style="color: orange;"
+							update=":dialog:jsupd">
+							<f:setPropertyActionListener target="#{jcRoleMb.showLovDiv}"
+								value="#{true}"></f:setPropertyActionListener>
+						</p:commandLink>
+					</f:facet>
+					<p:commandLink value="该角色对应用户" action="#{jcRoleMb.selectRoleYh}"
+						oncomplete="PF('jstouser').show();" style="color: orange;"
+						update=":jstouserfromid">
+						<f:param name="jsbm" value="#{item.jsbm}"></f:param>
+					</p:commandLink>
+					<h:outputText value="  |  " />
+					<p:commandLink value="#{jc.edit}" action="#{jcRoleMb.initRole()}"
+						style="color: orange;" oncomplete="PF('jstoupdate').show();"
+						update=":dialog:jsupd">
+						<f:param name="jsbm" value="#{item.jsbm}"></f:param>
+						<f:setPropertyActionListener target="#{jcRoleMb.showLovDiv}"
+							value="#{true}"></f:setPropertyActionListener>
+					</p:commandLink>
+					<h:outputText value="  |  " />
+					<p:commandLink value="#{jc.delete }" disabled="#{item.xtjs}"
+						style="color: orange;"
+						onmousedown="if(confirm('确定要删除该用户吗?')) this.onclick();"
+						action="#{jcRoleMb.deleteRole}" update=":rolemgid:data">
+						<f:setPropertyActionListener target="#{jcRoleMb.targetRole}"
+							value="#{item}"></f:setPropertyActionListener>
+					</p:commandLink>
+
+				</p:column>
+			</p:dataTable>
+		</h:panelGrid>
+	</h:form>
+
+
+	<p:dialog id="jstouserdialogid" widgetVar="jstouser" modal="true"
+		header="角色对应用户" width="60%" maximizable="true">
+		<h:form id="jstouserfromid">
+			<h:panelGrid columns="3">
+				<p:outputLabel value="#{jcRoleMb.targetRole.jsmc}"
+					style="font-size: large; text-align: center;color:red;" />
+
+				<p:outputLabel value="对应用户如下："
+					style="font-size: large; text-align: center"></p:outputLabel>
+
+				<p:commandButton value="导出" icon="ui-icon-image" title="导出用户信息"
+					ajax="false">
+					<p:dataExporter type="xls" target="yhdata" fileName="users" />
+				</p:commandButton>
+			</h:panelGrid>
+
+			<p:dataTable id="yhdata" var="item" value="#{jcRoleMb.yhList}"
+				paginator="true" rows="15" rowIndexVar="rowVar" filterDelay="300"
+				paginatorPosition="bottom" liveResize="true"
+				currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+				paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				lazy="true" rowsPerPageTemplate="15,30,50">
+
+				<p:column sortBy="yhbm" filterBy="yhbm" headerText="用户编码">
+					<h:outputText value="#{item.yhbm}" />
+				</p:column>
+				<p:column sortBy="zsmc" filterBy="zsmc" headerText="姓名">
+					<h:outputText value="#{item.zsmc}" />
+				</p:column>
+				<p:column sortBy="ssbm.bmmc" filterBy="ssbm.bmmc" headerText="部门名称">
+					<h:outputText value="#{item.ssbm.bmmc}" />
+				</p:column>
+				<p:column sortBy="fsbm" filterBy="#{item.fsbm}" headerText="工作中心">
+					<h:outputText value="#{item.fsbm}" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</p:dialog>
+
+
+
+
+
+	<p:dialog widgetVar="jstoupdate" header="新增角色" modal="true"
+		maximizable="true" id="jstoupdatedialogid">
+		<h:form id="dialog">
+
+			<h:panelGrid id="jsupd">
+				<h:panelGrid columns="4">
+					<h:panelGroup>
+						<h:outputText value="#{jc.jc_js_jsbm }：" />
+						<h:outputText value="*" style="color: red"></h:outputText>
+					</h:panelGroup>
+					<p:inputText id="jsbm" value="#{jcRoleMb.targetRole.jsbm}"
+						required="true" requiredMessage="角色编码不能为空！"
+						disabled="#{jcRoleMb.targetRole.jsbm!=null}" />
+					<h:panelGroup style="margin-left: 20px;">
+						<h:outputText value="#{jc.jc_js_jsmc }：" />
+						<h:outputText value="*" style="color: red"></h:outputText>
+					</h:panelGroup>
+					<p:inputText id="jsmc" value="#{jcRoleMb.targetRole.jsmc}"
+						required="true" requiredMessage="角色名称不能为空！"
+						validatorMessage="角色名称不能超过25个字">
+						<f:validateLength maximum="25" minimum="1"></f:validateLength>
+					</p:inputText>
+				</h:panelGrid>
+
+				<p:pickList rendered="#{jcRoleMb.showLovDiv}"
+					value="#{jcRoleMb.gnsModel}" var="romb" itemLabel="#{romb}"
+					itemValue="#{romb}" showSourceFilter="true" showTargetFilter="true"
+					filterMatchMode="contains">
+				</p:pickList>
+
+				<h:panelGrid style="margin-top: 10px; text-align: center;  ">
+					<p:commandButton action="#{jcRoleMb.addOrEdit}" value="保存"
+						update=":rolemgid:data :rolemgid:lovdiv"
+						oncomplete="if('false'==$('#rolemgid\\:lovdiv').val()){PF('jstoupdate').hide()}"
+						icon="ui-icon-bookmark" style="margin-left: 160px;">
+					</p:commandButton>
+				</h:panelGrid>
+
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+</body>
+</html>

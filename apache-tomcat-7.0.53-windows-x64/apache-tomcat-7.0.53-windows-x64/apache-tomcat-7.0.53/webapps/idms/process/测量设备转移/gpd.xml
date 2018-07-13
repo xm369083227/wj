@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process-diagram name="测量设备转移" width="1094" height="573">
+  <node name="开始" x="228" y="12" width="194" height="40">
+    <transition name="提交">
+      <label x="5" y="-10"/>
+    </transition>
+  </node>
+  <node name="计量管理员（原部门）申请" x="228" y="96" width="193" height="40">
+    <transition name="提交">
+      <label x="5" y="-10"/>
+    </transition>
+    <transition name="取消">
+      <label x="5" y="-10"/>
+      <bendpoint w1="192" h1="4" w2="192" h2="-368"/>
+      <bendpoint w1="194" h1="367" w2="194" h2="-5"/>
+    </transition>
+  </node>
+  <node name="主管领导（原部门）审批" x="228" y="156" width="193" height="40">
+    <transition name="提交">
+      <label x="5" y="-10"/>
+    </transition>
+  </node>
+  <node name="计量管理员（接收部门）审批" x="228" y="216" width="193" height="40">
+    <transition name="提交">
+      <label x="5" y="-10"/>
+    </transition>
+  </node>
+  <node name="主管领导（接收部门）审批" x="228" y="276" width="193" height="40">
+    <transition name="提交">
+      <label x="5" y="-10"/>
+    </transition>
+  </node>
+  <node name="计量科长审批" x="228" y="336" width="193" height="40">
+    <transition name="提交">
+      <label x="5" y="-10"/>
+    </transition>
+  </node>
+  <node name="专业组确认" x="228" y="396" width="193" height="40">
+    <transition name="结束申请">
+      <label x="5" y="-10"/>
+    </transition>
+  </node>
+  <node name="结束" x="228" y="468" width="193" height="40"/>
+</process-diagram>

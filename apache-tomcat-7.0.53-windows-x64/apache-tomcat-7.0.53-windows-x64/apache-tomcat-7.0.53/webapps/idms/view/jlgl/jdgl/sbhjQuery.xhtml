@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+<f:view contentType="text/html">
+	<h:head>
+		<title>IDMS</title>
+		<ui:include src="/common/templates/ui.xhtml"></ui:include>
+	</h:head>
+	<h:body>
+		<p:growl id="growlid" showDetail="false" sticky="true"
+			autoUpdate="true" />
+		<h:form id="form">
+			<h:panelGrid width="99%">
+				<p:panel header="条件查询">
+					<h:panelGrid columns="6">
+						<h:outputText value="设备名称："></h:outputText>
+						<p:inputText value="#{sbhjJlQueryBean.sbmc}" size="25"></p:inputText>
+						<h:outputText value="计量编号："></h:outputText>
+						<p:inputText value="#{sbhjJlQueryBean.jlbh}" size="25"></p:inputText>
+
+						<h:outputText value="录入用户："></h:outputText>
+						<p:inputText value="#{sbhjJlQueryBean.queryObj.czr}" size="25"></p:inputText>
+						<h:outputText value="录入日期："></h:outputText>
+						<h:panelGroup>
+							<p:calendar label="录入日期" value="#{sbhjJlQueryBean.startTime}"
+								size="8" readonlyInput="false" pattern="yyyy-MM-dd" />
+						                                  至<p:calendar label="录入日期"
+								value="#{sbhjJlQueryBean.endTime}" size="8"
+								readonlyInput="false" pattern="yyyy-MM-dd" />
+						</h:panelGroup>
+
+						<h:outputText value="有效期："></h:outputText>
+						<h:panelGroup>
+							<p:calendar label="有效期" value="#{sbhjJlQueryBean.startYxq}"
+								size="8" readonlyInput="false" pattern="yyyy-MM-dd" />
+						                                  至<p:calendar label="有效期"
+								value="#{sbhjJlQueryBean.endYxq}" size="8" readonlyInput="false"
+								pattern="yyyy-MM-dd" />
+						</h:panelGroup>
+					</h:panelGrid>
+					<p:commandButton value="查询" ajax="false"
+						action="#{sbhjJlQueryBean.doSearch}"></p:commandButton>
+				</p:panel>
+
+				<p:dataTable id="table" paginator="true"
+					value="#{sbhjJlQueryBean.lazyDataModel}" style="width:100%;"
+					filterDelay="300"  var="item" rows="15"
+					rowIndexVar="rowVar" resizableColumns="true " liveResize="true"
+					paginatorPosition="bottom"
+					currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+					paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					lazy="true" rowsPerPageTemplate="20,30,50">
+					<p:column headerText="序号" sortBy="#{item.id}" style="width:50px;">
+						<h:outputText value="#{rowVar+1}" />
+					</p:column>
+					<p:column headerText="设备名称" sortBy="#{sb.sbmc}" style="width:150px">
+						<h:outputText value="#{item.sbxx.sbmc}"></h:outputText>
+					</p:column>
+					<p:column headerText="计量编号" sortBy="#{sb.jlbh}" style="width:150px">
+						<h:outputText value="#{item.sbxx.jlbh}"></h:outputText>
+					</p:column>
+					<p:column headerText="原有效期" sortBy="#{item.yyxrq}"
+						style="width:80px;">
+						<h:outputText value="#{item.yyxrq}">
+							<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+								timeZone="GMT+8" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="新有效期" sortBy="#{item.xyxrq}"
+						style="width:80px;">
+						<h:outputText value="#{item.xyxrq}">
+							<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+								timeZone="GMT+8" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="缓检原因" sortBy="#{item.hjyy}"
+						style="width:380px;">
+						<h:outputText value="#{item.hjyy}">
+							<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+								timeZone="GMT+8" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="录入人员" sortBy="#{item.czr}">
+						<p:outputLabel value="#{item.czr}"></p:outputLabel>
+					</p:column>
+					<p:column headerText="录入时间" sortBy="#{item.czrq}">
+						<h:outputText value="#{item.czrq}">
+							<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+								timeZone="GMT+8" />
+						</h:outputText>
+					</p:column>
+				</p:dataTable>
+
+			</h:panelGrid>
+
+		</h:form>
+
+	</h:body>
+</f:view>
+</html>

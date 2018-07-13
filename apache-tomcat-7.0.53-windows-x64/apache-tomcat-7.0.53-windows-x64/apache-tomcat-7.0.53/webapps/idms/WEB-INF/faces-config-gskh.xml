@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="2.2"
+              xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+		
+		
+    <managed-bean>
+		<managed-bean-name>gskhQb</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.sbgl.GskhQb</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	
+	
+	<managed-bean>
+		<managed-bean-name>gskhbzMb</managed-bean-name>
+		<managed-bean-class>
+			idms.webapp.jlsbgl.gskh.GskhbzMb
+		</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>grgsAllGsQb</managed-bean-name>
+		<managed-bean-class>
+			idms.webapp.jlsbgl.gskh.GrgsAllGsQb
+		</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>grgsAllDjMb</managed-bean-name>
+		<managed-bean-class>
+			idms.webapp.jlsbgl.gskh.GrgsAllDjMb
+		</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>grgsAllTjQb</managed-bean-name>
+		<managed-bean-class>
+			idms.webapp.jlsbgl.gskh.GrgsAllTjQb
+		</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>ryzzMb</managed-bean-name>
+		<managed-bean-class>
+			idms.webapp.jlsbgl.gskh.RyzzMb
+		</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>selectDebzlxBean</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.gskh.SelectDebzlxBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+</faces-config>

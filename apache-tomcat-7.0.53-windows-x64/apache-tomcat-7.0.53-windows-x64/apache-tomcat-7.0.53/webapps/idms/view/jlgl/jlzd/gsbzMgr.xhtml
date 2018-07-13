@@ -1,0 +1,250 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+<f:view contentType="text/html">
+	<h:head>
+		<title>IDMS</title>
+		<ui:include src="/common/templates/ui.xhtml"></ui:include>
+	</h:head>
+	<h:body>
+		<p:growl id="growlid" sticky="true" autoUpdate="true" />
+		<p:dialog id="dialogid1" header="增加" widgetVar="opendlg1"
+			maximizable="true" height="200px" width="700px" modal="true">
+			<h:form id="dialogform1" enctype="multipart/form-data">
+				<p:panelGrid columns="1">
+					<h:panelGrid columns="4">
+						<h:outputText value="类型"></h:outputText>
+						<p:selectOneMenu value="#{gskhbzMb.editObj.lx}">
+							<f:selectItem itemLabel="请选择类型" itemValue="" />
+							<f:selectItem itemLabel="产品配套工时定额标准" itemValue="产品配套工时定额标准" />
+							<f:selectItem itemLabel="仪表检修工时定额标准" itemValue="仪表检修工时定额标准" />
+							<f:selectItem itemLabel="长度计量专用量具周期检定工时定额标准"
+								itemValue="长度计量专用量具周期检定工时定额标准" />
+							<f:selectItem itemLabel="长度计量通用量具周期检定工时定额标准"
+								itemValue="长度计量通用量具周期检定工时定额标准" />
+							<f:selectItem itemLabel="设备保管工时定额标准" itemValue="设备保管工时定额标准" />
+						</p:selectOneMenu>
+						<h:outputText value="名称："></h:outputText>
+						<p:inputText value="#{gskhbzMb.editObj.mc}" size="25"
+							maxlength="100"></p:inputText>
+
+						<h:panelGroup>
+							<h:outputText value="规格等级：" size="10" maxlength="20" />
+							<h:outputText value="*" style="color: red" />
+						</h:panelGroup>
+						<p:inputText value="#{gskhbzMb.editObj.ggdj}" size="25"
+							maxlength="50" required="true" label="规格等级"></p:inputText>
+						<h:outputText value="单位："></h:outputText>
+						<p:inputText value="#{gskhbzMb.editObj.dw}" size="25"
+							maxlength="20"></p:inputText>
+						<h:outputText value="周期检定工时："></h:outputText>
+						<p:inputText value="#{gskhbzMb.editObj.zqjdgs}" size="25"
+							label="周期检定工时">
+							<f:validateDoubleRange></f:validateDoubleRange>
+						</p:inputText>
+						<h:outputText value="维修工时："></h:outputText>
+						<p:inputText value="#{gskhbzMb.editObj.wxgs}" size="25"
+							label="维修工时"></p:inputText>
+						<h:outputText value="一次检定工时："></h:outputText>
+						<p:inputText value="#{gskhbzMb.editObj.ycjdgs}" size="25"
+							label="一次检定工时"></p:inputText>
+						<h:outputText value="周期检定累加工时："></h:outputText>
+						<p:inputText value="#{gskhbzMb.editObj.zjljgs}" size="25"
+							label="周期检定累加工时"></p:inputText>
+						<h:outputText value="产品配套工时："></h:outputText>
+						<p:inputText value="#{gskhbzMb.editObj.cpptgs}" size="25"
+							label="产品配套工时"></p:inputText>
+					</h:panelGrid>
+				</p:panelGrid>
+				<p:commandButton value="保存" update=":form:data"
+					style="margin-left: 300px" ajax="true"
+					oncomplete="PF('opendlg1').hide()"
+					actionListener="#{gskhbzMb.addObj}"></p:commandButton>
+			</h:form>
+		</p:dialog>
+		<p:dialog id="dialogid" header="#{gskhbzMb.edit?'修改':'详情'}"
+			widgetVar="opendlg" maximizable="true" height="200px" width="700px"
+			modal="true">
+			<h:form id="dialogform" enctype="multipart/form-data">
+				<p:panelGrid columns="1">
+					<h:panelGrid columns="4">
+						<h:outputText value="类型：" style="color:"></h:outputText>
+						<p:selectOneMenu value="#{gskhbzMb.editObj.lx}">
+							<f:selectItem itemLabel="请选择类型" itemValue="" />
+							<f:selectItem itemLabel="产品配套工时定额标准" itemValue="产品配套工时定额标准" />
+							<f:selectItem itemLabel="仪表检修工时定额标准" itemValue="仪表检修工时定额标准" />
+							<f:selectItem itemLabel="长度计量专用量具周期检定工时定额标准"
+								itemValue="长度计量专用量具周期检定工时定额标准" />
+							<f:selectItem itemLabel="长度计量通用量具周期检定工时定额标准"
+								itemValue="长度计量通用量具周期检定工时定额标准" />
+							<f:selectItem itemLabel="设备保管工时定额标准" itemValue="设备保管工时定额标准" />
+						</p:selectOneMenu>
+						<h:outputText value="名称："></h:outputText>
+						<p:inputText value="#{gskhbzMb.editObj.mc}" size="25"
+							readonly="#{!gskhbzMb.edit}" maxlength="100"></p:inputText>
+						<h:panelGroup>
+							<h:outputText value="规格等级：" size="10" maxlength="20" />
+							<h:outputText value="*" style="color: red" />
+						</h:panelGroup>
+						<p:inputText value="#{gskhbzMb.editObj.ggdj}" size="25"
+							readonly="#{!gskhbzMb.edit}" maxlength="50" required="true"
+							label="规格等级"></p:inputText>
+						<h:outputText value="单位："></h:outputText>
+						<p:inputText value="#{gskhbzMb.editObj.dw}" size="25"
+							readonly="#{!gskhbzMb.edit}" maxlength="20"></p:inputText>
+						<h:outputText value="周期检定工时："></h:outputText>
+						<p:inputText value="#{gskhbzMb.editObj.zqjdgs}" size="25"
+							readonly="#{!gskhbzMb.edit}" maxlength="250" label="周期检定工时"></p:inputText>
+						<h:outputText value="维修工时："></h:outputText>
+						<p:inputText value="#{gskhbzMb.editObj.wxgs}" size="25"
+							readonly="#{!gskhbzMb.edit}" label="维修工时"></p:inputText>
+						<h:outputText value="一次检定工时："></h:outputText>
+						<p:inputText value="#{gskhbzMb.editObj.ycjdgs}" size="25"
+							readonly="#{!gskhbzMb.edit}" label="一次检定工时"></p:inputText>
+						<h:outputText value="周期检定累加工时："></h:outputText>
+						<p:inputText value="#{gskhbzMb.editObj.zjljgs}" size="25"
+							readonly="#{!gskhbzMb.edit}" label="周期检定累加工时"></p:inputText>
+						<h:outputText value="产品配套工时："></h:outputText>
+						<p:inputText value="#{gskhbzMb.editObj.cpptgs}" size="25"
+							readonly="#{!gskhbzMb.edit}" label="产品配套工时"></p:inputText>
+					</h:panelGrid>
+				</p:panelGrid>
+				<p:commandButton value="保存" update=":form:data"
+					rendered="#{gskhbzMb.edit}" style="margin-left: 300px" ajax="true"
+					oncomplete="PF('opendlg').hide()"
+					actionListener="#{gskhbzMb.addObj}"></p:commandButton>
+			</h:form>
+		</p:dialog>
+		<h:form id="form"
+			style="margin-bottom:10px;width:1250px;margin-top:10px">
+			<h:panelGrid>
+				<p:panel header="请填写相关数据">
+					<h:panelGrid columns="6" width="1200px" align="left">
+						<h:outputText value="类型：" style="color:"></h:outputText>
+						<p:selectOneMenu value="#{gskhbzMb.queryObj.lx}">
+							<f:selectItem itemLabel="请选择类型" itemValue="" />
+							<f:selectItem itemLabel="产品配套工时定额标准" itemValue="产品配套工时定额标准" />
+							<f:selectItem itemLabel="仪表检修工时定额标准" itemValue="仪表检修工时定额标准" />
+							<f:selectItem itemLabel="长度计量专用量具周期检定工时定额标准"
+								itemValue="长度计量专用量具周期检定工时定额标准" />
+							<f:selectItem itemLabel="长度计量通用量具周期检定工时定额标准"
+								itemValue="长度计量通用量具周期检定工时定额标准" />
+							<f:selectItem itemLabel="设备保管工时定额标准" itemValue="设备保管工时定额标准" />
+						</p:selectOneMenu>
+						<h:outputText value="名称："></h:outputText>
+						<p:inputText value="#{gskhbzMb.queryObj.mc}" size="25"
+							maxlength="100"></p:inputText>
+						<h:outputText value="规格等级：" size="10" style="width:317px"
+							maxlength="20" />
+						<p:inputText value="#{gskhbzMb.queryObj.ggdj}" size="25"
+							maxlength="50"></p:inputText>
+						<h:outputText value="单位："></h:outputText>
+						<p:inputText value="#{gskhbzMb.queryObj.dw}" size="25"
+							maxlength="20"></p:inputText>
+						<h:outputText value="周期检定工时："></h:outputText>
+						<p:inputText value="#{gskhbzMb.queryObj.zqjdgs}" size="25"
+							label="周期检定工时"></p:inputText>
+						<h:outputText value="维修工时："></h:outputText>
+						<p:inputText value="#{gskhbzMb.queryObj.wxgs}" size="25"
+							label="维修工时"></p:inputText>
+						<h:outputText value="一次检定工时："></h:outputText>
+						<p:inputText value="#{gskhbzMb.queryObj.ycjdgs}" size="25"
+							label="一次检定工时"></p:inputText>
+						<h:outputText value="周期检定累加工时："></h:outputText>
+						<p:inputText value="#{gskhbzMb.queryObj.zjljgs}" size="25"
+							label="周期检定累加工时"></p:inputText>
+						<h:outputText value="产品配套工时："></h:outputText>
+						<p:inputText value="#{gskhbzMb.queryObj.cpptgs}" size="25"
+							label="产品配套工时"></p:inputText>
+					</h:panelGrid>
+
+					<p:commandButton value="查询" ajax="true" update=":form:data"
+						action="#{gskhbzMb.doSearch}"></p:commandButton>
+					<font color="red">注意：类型为“设备保管工时”的标准只能有一个，如果重复将覆盖！</font>&nbsp;&nbsp; 
+				</p:panel>
+
+				<p:dataTable id="data" paginator="true"
+					value="#{gskhbzMb.lazyDataModel}" style="width:1250px" var="item"
+					rows="10" rowIndexVar="rowVar" filterDelay="300"
+					resizableColumns="true " liveResize="true"
+					paginatorPosition="bottom"
+					currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+					paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					lazy="true" rowsPerPageTemplate="10,30,50">
+					<f:facet name="header">
+						<h:outputText value="工时定额列表" style="font-size:15px"></h:outputText>
+					</f:facet>
+					<p:column filterBy="#{item.id}" sortBy="#{item.id}" headerText="序号"
+						style="width:50px;">
+						<h:outputText value="#{rowVar+1}"></h:outputText>
+					</p:column>
+					<p:column filterBy="#{item.lx}" sortBy="#{item.lx}" headerText="类型"
+						style="width:180px;">
+						<h:outputText value="#{item.lx}"></h:outputText>
+					</p:column>
+					<p:column filterBy="#{item.mc}" sortBy="#{item.mc}" headerText="名称"
+						style="width:120px;">
+						<h:outputText value="#{item.mc}"></h:outputText>
+					</p:column>
+					<p:column filterBy="#{item.ggdj}" sortBy="#{item.ggdj}"
+						headerText="规格等级" style="width:80px;">
+						<h:outputText value="#{item.ggdj}"></h:outputText>
+					</p:column>
+
+					<p:column filterBy="#{item.zqjdgs}" sortBy="#{item.zqjdgs}"
+						headerText="周期检定工时" style="width:80px;">
+						<h:outputText value="#{item.zqjdgs}"></h:outputText>
+					</p:column>
+					<p:column filterBy="#{item.ycjdgs}" sortBy="#{item.ycjdgs}"
+						headerText="一次检定工时" style="width:80px;">
+						<h:outputText value="#{item.ycjdgs}"></h:outputText>
+					</p:column>
+					<p:column filterBy="#{item.wxgs}" sortBy="#{item.wxgs}"
+						headerText="维修工时" style="width:80px;">
+						<h:outputText value="#{item.wxgs}"></h:outputText>
+					</p:column>
+					<p:column filterBy="#{item.cpptgs}" sortBy="#{item.cpptgs}"
+						headerText="产品配套工时" style="width:80px;">
+						<h:outputText value="#{item.cpptgs}"></h:outputText>
+					</p:column>
+
+					<p:column headerText="操作" style="width:100px">
+						<f:facet name="header">
+							<p:commandButton actionListener="#{gskhbzMb.openAddPanal}"
+								oncomplete="PF('opendlg1').show()" ajax="true"
+								update=":dialogid1" value="增加"></p:commandButton>
+
+						</f:facet>
+
+						<h:panelGroup>
+							<p:commandButton action="#{gskhbzMb.openPanal}"
+								oncomplete="PF('opendlg').show()" ajax="true" update=":dialogid"
+								title="详情" icon="ui-icon-search">
+								<f:param name="id" value="#{item.id}"></f:param>
+							</p:commandButton>
+							<p:commandButton actionListener="#{gskhbzMb.editPanal}"
+								oncomplete="PF('opendlg').show()" ajax="true" update=":dialogid"
+								title="修改" icon="ui-icon-gear" immediate="true">
+								<f:param name="id" value="#{item.id}"></f:param>
+							</p:commandButton>
+							<p:commandButton style="margin-left:10px;" title="删除"
+								action="#{gskhbzMb.delete}" icon="ui-icon-trash" ajax="true"
+								update=":form:data">
+								<f:param name="id" value="#{item.id}"></f:param>
+								<p:confirm icon="ui-icon-alert" message="确定删除吗?"></p:confirm>
+							</p:commandButton>
+						</h:panelGroup>
+					</p:column>
+
+				</p:dataTable>
+
+			</h:panelGrid>
+		</h:form>
+
+	</h:body>
+</f:view>
+</html>

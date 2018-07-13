@@ -1,0 +1,422 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+<f:view contentType="text/html">
+	<h:head>
+		<title>IDMS</title>
+		<ui:include src="/common/templates/ui.xhtml"></ui:include>
+	</h:head>
+	<h:body>
+		<p:growl id="growlid" sticky="true" autoUpdate="true" />
+		<p:dialog id="dialogid" header="标准物质" widgetVar="dialog"
+			maximizable="true" height="400px" width="700px" modal="true">
+			<h:form id="dialogform" enctype="multipart/form-data">
+				<p:tabView id="tabview">
+					<p:tab title="标准物质">
+						<p:panelGrid columns="1">
+							<h:panelGrid columns="4">
+								<h:panelGroup>
+									<h:outputText value="物质名称："></h:outputText>
+									<h:outputText value="*" style="color:red" />
+								</h:panelGroup>
+								<p:inputText label="物质名称" value="#{bzglBzwzMb.varchObj.wzmc}"
+									required="true" maxlength="200" size="20"></p:inputText>
+								<h:panelGroup>
+									<h:outputText value="物质编号："></h:outputText>
+									<h:outputText value="*" style="color:red" />
+								</h:panelGroup>
+								<p:inputText label="物质编号" value="#{bzglBzwzMb.varchObj.wzbh}"
+									required="true" maxlength="50" size="20"></p:inputText>
+								<h:outputText value="物质序号："></h:outputText>
+								<p:inputText value="#{bzglBzwzMb.varchObj.wzxh}" label="物质序号"
+									maxlength="200" size="20"></p:inputText>
+								<h:outputText value="准确度："></h:outputText>
+								<p:inputText value="#{bzglBzwzMb.varchObj.zqd}" label="准确度"
+									maxlength="200" size="20"></p:inputText>
+								<h:panelGroup>
+									<h:outputText value="生产厂家："></h:outputText>
+									<h:outputText value="*" style="color:red" />
+								</h:panelGroup>
+								<p:inputText label="生产厂家" value="#{bzglBzwzMb.varchObj.sccj}"
+									required="true" maxlength="50" size="20"></p:inputText>
+								<h:panelGroup>
+									<h:outputText value="管理类别："></h:outputText>
+									<h:outputText value="*" style="color:red" />
+								</h:panelGroup>
+								<p:selectOneMenu label="管理类别"
+									value="#{bzglBzwzMb.varchObj.gllb}" required="true">
+									<f:selectItems value="#{selectSbxxBean.bzwzGllbItems}"
+										var="obj" itemLabel="#{obj.key}" itemValue="#{obj.value}"></f:selectItems>
+								</p:selectOneMenu>
+								<h:outputText value="检定日期："></h:outputText>
+								<p:calendar label="检定日期" value="#{bzglBzwzMb.varchObj.jdrq}"
+									readonlyInput="false" navigator="true" pattern="yyyy-MM-dd" />
+								<h:panelGroup>
+									<h:outputText value="有效期："></h:outputText>
+									<h:outputText value="*" style="color:red" />
+								</h:panelGroup>
+								<p:calendar label="有效期" value="#{bzglBzwzMb.varchObj.yxrq}"
+									required="true" readonlyInput="false" navigator="true"
+									pattern="yyyy-MM-dd" />
+								<h:outputText value="证书编号："></h:outputText>
+								<p:inputText value="#{bzglBzwzMb.varchObj.zsbh}" label="证书编号"
+									maxlength="200" size="20"></p:inputText>
+								<h:outputText value="位号："></h:outputText>
+								<p:inputText value="#{bzglBzwzMb.varchObj.wh}" label="位号"
+									maxlength="200" size="20"></p:inputText>
+								<h:outputText value="领用人："></h:outputText>
+								<p:inputText value="#{bzglBzwzMb.varchObj.lyr}" label="领用人"
+									maxlength="20" size="20"></p:inputText>
+								<h:outputText value="领用日期："></h:outputText>
+								<p:calendar label="领用日期" value="#{bzglBzwzMb.varchObj.lyrq}"
+									readonlyInput="false" navigator="true" pattern="yyyy-MM-dd">
+								</p:calendar>
+							</h:panelGrid>
+
+							<h:panelGrid columns="2">
+								<h:outputText value="备注："></h:outputText>
+								<p:inputTextarea value="#{bzglBzwzMb.varchObj.bz}" rows="4"
+									cols="80" label="备注" maxlength="1000"></p:inputTextarea>
+
+							</h:panelGrid>
+						</p:panelGrid>
+					</p:tab>
+
+					<p:tab title="附件管理">
+						<h:panelGrid width="670px"
+							style="margin-top: -10px;margin-left:-17px;">
+							<h:panelGrid width="100%">
+								<p:fileUpload multiple="true"
+									update=":dialogform:tabview:filePaneId"
+									fileUploadListener="#{bzglBzwzMb.handleFileUpload}"
+									style="width:100%;" mode="advanced" label="浏览" cancelLabel="取消"
+									uploadLabel="上传" sizeLimit="10240000"
+									invalidSizeMessage="文件必须小于10M" invalidFileMessage="格式不支持"
+									dragDropSupport="false"
+									allowTypes="/(\.|\/)(gif|jpe?g|png|pdf|txt|rar|zip|doc|docx|xls|xlsx)$/">
+								</p:fileUpload>
+								<p:dataTable id="filePaneId" paginator="true" rows="10"
+									rowIndexVar="rowVar" paginatorPosition="bottom"
+									value="#{bzglBzwzMb.fileBean.files}" style="width:100%;"
+									filterDelay="300" lazy="false" var="file"
+									rowsPerPageTemplate="5,10,15"
+									currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+									paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+			                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+									<p:column headerText="序号" style="width:40px;">
+										<h:outputText value="#{rowVar+1}" />
+									</p:column>
+
+									<p:column headerText="附件名称" style="width:50%">
+										<h:outputText value="#{file.wjmc}" />
+									</p:column>
+
+									<p:column headerText="上传人员" style="width:70px">
+										<p:outputLabel value="#{file.scyhid}"></p:outputLabel>
+									</p:column>
+									<p:column headerText="上传时间" style="width:70px">
+										<h:outputText value="#{file.scrq}">
+											<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+												timeZone="GMT+8" />
+										</h:outputText>
+									</p:column>
+									<p:column headerText="操作" style="width:10%">
+										<h:panelGroup>
+											<p:commandButton id="downId" ajax="false"
+												action="#{bzglBzwzMb.fileBean.downFile}"
+												icon="ui-icon-arrowthick-1-s" immediate="true">
+												<f:setPropertyActionListener
+													target="#{bzglBzwzMb.fileBean.file}" value="#{file}"></f:setPropertyActionListener>
+											</p:commandButton>
+											<h:outputText value="  "></h:outputText>
+											<p:commandButton id="deleteId" ajax="true"
+												action="#{bzglBzwzMb.fileBean.deleteFile}"
+												icon="ui-icon-trash" oncomplete="PF('dialog').show()"
+												update=":dialogform:tabview:filePaneId">
+												<f:setPropertyActionListener
+													target="#{bzglBzwzMb.fileBean.file}" value="#{file}"></f:setPropertyActionListener>
+											</p:commandButton>
+										</h:panelGroup>
+									</p:column>
+								</p:dataTable>
+							</h:panelGrid>
+						</h:panelGrid>
+					</p:tab>
+
+
+				</p:tabView>
+				<h:inputHidden id="lovdiv" value="#{bzglBzwzMb.showLovDiv}" />
+				<p:commandButton value="保存" update=":form:table :dialogform:lovdiv"
+					ajax="true"
+					oncomplete="if ('false'==$('#dialogform\\:lovdiv').val()){PF('dialog').hide()}"
+					actionListener="#{bzglBzwzMb.addObj}"></p:commandButton>
+			</h:form>
+		</p:dialog>
+		<h:form id="form">
+			<h:panelGrid width="99%">
+				<p:panel header="条件查询">
+					<h:panelGrid columns="6">
+						<h:outputText value="物质名称："></h:outputText>
+						<p:inputText value="#{bzglBzwzMb.queryObj.wzmc}" size="20"></p:inputText>
+						<h:outputText value="物质编号："></h:outputText>
+						<p:inputText value="#{bzglBzwzMb.queryObj.wzbh}" size="20"></p:inputText>
+						<h:outputText value="物质序号："></h:outputText>
+						<p:inputText value="#{bzglBzwzMb.queryObj.wzxh}" size="20"></p:inputText>
+						<h:outputText value="准确度："></h:outputText>
+						<p:inputText value="#{bzglBzwzMb.queryObj.zqd}" size="20"></p:inputText>
+						<h:outputText value="生产厂家："></h:outputText>
+						<p:inputText value="#{bzglBzwzMb.queryObj.sccj}" size="20"></p:inputText>
+						<h:outputText value="管理类别："></h:outputText>
+						<p:selectOneMenu value="#{bzglBzwzMb.queryObj.gllb}">
+							<f:selectItems value="#{selectSbxxBean.bzwzGllbItems}" var="obj"
+								itemLabel="#{obj.key}" itemValue="#{obj.value}"></f:selectItems>
+						</p:selectOneMenu>
+						<h:outputText value="证书编号："></h:outputText>
+						<p:inputText value="#{bzglBzwzMb.queryObj.zsbh}" size="20"></p:inputText>
+						<h:outputText value="位号："></h:outputText>
+						<p:inputText value="#{bzglBzwzMb.queryObj.wh}" size="20"></p:inputText>
+						<h:outputText value="领用人："></h:outputText>
+						<p:inputText value="#{bzglBzwzMb.queryObj.lyr}" size="20"></p:inputText>
+
+						<h:outputText value="检定日期："></h:outputText>
+						<h:panelGroup>
+							<p:calendar label="检定日期" value="#{bzglBzwzMb.startJdrq}" size="8"
+								readonlyInput="false" navigator="true" pattern="yyyy-MM-dd" />
+							                                  至<p:calendar label="检定日期"
+								value="#{bzglBzwzMb.endJdrq}" size="8" readonlyInput="false"
+								navigator="true" pattern="yyyy-MM-dd" />
+						</h:panelGroup>
+
+						<h:outputText value="有效期："></h:outputText>
+						<h:panelGroup>
+							<p:calendar label="有效期" value="#{bzglBzwzMb.startYxq}" size="8"
+								readonlyInput="false" navigator="true" pattern="yyyy-MM-dd" />
+							                                  至<p:calendar label="有效期"
+								value="#{bzglBzwzMb.endYxq}" size="8" readonlyInput="false"
+								navigator="true" pattern="yyyy-MM-dd" />
+						</h:panelGroup>
+
+						<h:outputText value="录入用户："></h:outputText>
+						<p:inputText value="#{bzglBzwzMb.queryObj.lrry}" size="25"></p:inputText>
+						<h:outputText value="录入日期："></h:outputText>
+						<h:panelGroup>
+							<p:calendar label="录入日期" value="#{bzglBzwzMb.startTime}" size="8"
+								readonlyInput="false" navigator="true" pattern="yyyy-MM-dd" />
+							                                  至<p:calendar label="录入日期"
+								value="#{bzglBzwzMb.endTime}" size="8" readonlyInput="false"
+								navigator="true" pattern="yyyy-MM-dd" />
+						</h:panelGroup>
+
+
+					</h:panelGrid>
+					<p:commandButton value="查询" ajax="false"
+						action="#{bzglBzwzMb.doSearch}"></p:commandButton>
+				</p:panel>
+				<p:dataTable id="table" paginator="true"  editable="true"
+					value="#{bzglBzwzMb.lazyDataModel}" rows="15" rowIndexVar="rowVar"
+					filterDelay="300" resizableColumns="true " liveResize="true"
+					paginatorPosition="bottom"  var="item"
+					currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+					paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					lazy="true" rowsPerPageTemplate="15,30,50">
+					<p:ajax event="rowEdit" update=":form:table"
+						listener="#{bzglBzwzMb.onRowEdit}"></p:ajax>
+					<p:column style="width:40px">
+						<p:rowEditor></p:rowEditor>
+					</p:column>
+
+					<p:column headerText="操作" style="width:70px">
+						<f:facet name="header">
+							<p:commandButton actionListener="#{bzglBzwzMb.openAddPanal}"
+								oncomplete="PF('dialog').show()" ajax="true" update=":dialogid"
+								immediate="true" value="增加">
+							</p:commandButton>
+						</f:facet>
+						<h:panelGroup>
+							<p:commandButton actionListener="#{bzglBzwzMb.openEditPanal}"
+								oncomplete="PF('dialog').show()" ajax="true" update=":dialogid"
+								title="修改" icon="ui-icon-gear" immediate="true">
+								<f:param name="ID" value="#{item.id}"></f:param>
+							</p:commandButton>
+							<h:outputText value="  "></h:outputText>
+							<p:commandButton id="deleteId" ajax="true" update=":form:table"
+								action="#{bzglBzwzMb.delObj}" title="删除" icon="ui-icon-trash"
+								immediate="true">
+								<f:param name="ID" value="#{item.id}"></f:param>
+								<p:confirm icon="ui-icon-alert" message="确定删除吗?"></p:confirm>
+							</p:commandButton>
+						</h:panelGroup>
+					</p:column>
+
+
+					<p:column headerText="序号" sortBy="#{item.id}" style="width:50px;">
+						<h:outputText value="#{rowVar+1}" />
+					</p:column>
+					<p:column headerText="物质名称" sortBy="#{item.wzmc}"
+						style="width:120px">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{item.wzmc}"></h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{item.wzmc}" style="width:90%" label="物质名称"
+									required="true" maxlength="200"></p:inputText>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="物质编号" sortBy="#{item.wzbh}"
+						style="width:120px">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{item.wzbh}"></h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{item.wzbh}" style="width:90%" label="物质编号"
+									required="true" maxlength="50"></p:inputText>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="物质序号" sortBy="#{item.wzxh}"
+						style="width:80px;">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{item.wzxh}"></h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{item.wzxh}" style="width:90%" label="物质序号"
+									maxlength="200"></p:inputText>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="准确度" sortBy="#{item.zqd}" style="width:80px;">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{item.zqd}"></h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{item.zqd}" style="width:90%" label="准确度"
+									maxlength="200"></p:inputText>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="有效期" sortBy="#{item.yxrq}"
+						style="width:80px;">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{item.yxrq}">
+									<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+										timeZone="GMT+8" />
+								</h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:calendar label="有效期" value="#{item.yxrq}" style="width:90%"
+									required="true" size="8" readonlyInput="false" navigator="true"
+									pattern="yyyy-MM-dd" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="检定日期" sortBy="#{item.jdrq}"
+						style="width:80px;">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{item.jdrq}">
+									<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+										timeZone="GMT+8" />
+								</h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:calendar label="检定日期" value="#{item.jdrq}" style="width:99%"
+									size="8" readonlyInput="false" navigator="true"
+									pattern="yyyy-MM-dd" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="生产厂家" sortBy="#{item.sccj}"
+						style="width:120px;">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{item.sccj}"></h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{item.sccj}" style="width:94%" label="生产厂家"
+									maxlength="50"></p:inputText>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="管理类别" sortBy="#{item.gllb}"
+						style="width:106px;">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{item.gllb}"></h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:selectOneMenu value="#{item.gllb}" style="width:100%"
+									label="管理类别" required="true">
+									<f:selectItems value="#{selectSbxxBean.bzwzGllbItems}"
+										var="obj" itemLabel="#{obj.key}" itemValue="#{obj.value}"></f:selectItems>
+								</p:selectOneMenu>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="位号" sortBy="#{item.wh}" style="width:70px;">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{item.wh}"></h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{item.wh}" style="width:90%" label="位号"
+									maxlength="200"></p:inputText>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="证书编号" sortBy="#{item.zsbh}"
+						style="width:70px;">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{item.zsbh}"></h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{item.zsbh}" style="width:90%" label="证书编号"
+									maxlength="200"></p:inputText>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="领用人" sortBy="#{item.lyr}" style="width:70px;">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{item.lyr}"></h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{item.lyr}" style="width:90%" label="领用人"
+									maxlength="20"></p:inputText>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="录入人员" sortBy="#{item.lrry}"
+						style="width:70px">
+						<p:outputLabel value="#{item.lrry}"></p:outputLabel>
+					</p:column>
+					<p:column headerText="录入时间" sortBy="#{item.lrsj}"
+						style="width:70px">
+						<h:outputText value="#{item.lrsj}">
+							<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+								timeZone="GMT+8" />
+						</h:outputText>
+					</p:column>
+
+				</p:dataTable>
+
+			</h:panelGrid>
+
+		</h:form>
+
+	</h:body>
+</f:view>
+</html>

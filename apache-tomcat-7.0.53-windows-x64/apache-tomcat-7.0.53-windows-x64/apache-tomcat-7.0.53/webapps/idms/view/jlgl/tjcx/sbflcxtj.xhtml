@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <f:view contentType="text/html">
+        <h:head>
+            <title>IDMS</title>
+		    <ui:include src="/common/templates/ui.xhtml"></ui:include>
+        </h:head>
+    <h:body>
+        <h:form id="form">
+             <h:panelGrid width="99%" >
+                        <p:panel header="">
+                             <h:panelGrid columns="4">
+				                  <h:outputText value="选择纵向统计："></h:outputText>
+				                  <p:selectOneRadio value="#{sbxxFlTjQb.flkey}" layout="grid" columns="4" valueChangeListener="#{sbxxFlTjQb.doAction}">
+				                        <f:selectItem itemLabel="学科分类" itemValue="xkflp"></f:selectItem>
+				                        <f:selectItem itemLabel="使用部门" itemValue="sybmmc"></f:selectItem>
+				                        <f:selectItem itemLabel="鉴定部门" itemValue="jdbmn"></f:selectItem>
+				                        <f:selectItem itemLabel="设备种类" itemValue="sbfl"></f:selectItem>
+				                        <f:ajax event="change" render="form:data bar"></f:ajax>
+				                  </p:selectOneRadio>
+				                   <h:outputText value="选择横向统计："></h:outputText>
+				                  <p:selectOneRadio value="#{sbxxFlTjQb.columnKey}" layout="grid" columns="5" valueChangeListener="#{sbxxFlTjQb.doColumnAction}">
+				                        <f:selectItem itemLabel="All" itemValue="null"></f:selectItem>
+				                        <f:selectItem itemLabel="管理类别" itemValue="gllb"></f:selectItem>
+				                        <f:selectItem itemLabel="是否强检" itemValue="sfqj"></f:selectItem>
+				                        <f:selectItem itemLabel="是否标准器" itemValue="sfbzq"></f:selectItem>
+				                        <f:selectItem itemLabel="设备状态" itemValue="sbzt"></f:selectItem>
+				                        <f:ajax event="change" render="form:data bar"></f:ajax>
+				                  </p:selectOneRadio>
+                             </h:panelGrid>
+                        </p:panel>   
+                        
+					     <p:dataTable id="data" var="obj" selectionMode="single" rowIndexVar="index" selection="#{sbxxFlTjQb.selectCountForm}" 
+					            rowKey="#{obj.id}" value="#{sbxxFlTjQb.dataList}" widgetVar="carsTable">      
+					         <p:ajax event="rowSelect" listener="#{sbxxFlTjQb.onRowSelect}" update=":bar" />              
+					         <p:column headerText="序号" width="26">
+					             #{index+1}
+					         </p:column>
+					         <p:columns value="#{sbxxFlTjQb.columns}" var="column" 
+					             columnIndexVar="colIndex" sortBy="#{obj[column.property]}" >
+					            <f:facet name="header">
+					                <h:outputText value="#{column.header}" />
+					            </f:facet>
+					            <h:outputText value="#{obj[column.property]}" />
+					        </p:columns>
+					    </p:dataTable>
+
+			    	</h:panelGrid>
+        </h:form>
+                   <p:chart id="bar" type="bar"  model="#{sbxxFlTjQb.barModel}" 
+                       rendered="#{sbxxFlTjQb.barModel!=null}" style="height:300px"/>
+            
+     </h:body>
+    </f:view>
+</html>

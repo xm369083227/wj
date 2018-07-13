@@ -1,0 +1,383 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+	<title>设备检定周期调整</title>
+	<ui:include src="/common/templates/ui.xhtml"></ui:include>
+</h:head>
+<body style="border-bottom-width: 1px">
+	<h:form id="form" style="text-align: center;"
+		enctype="multipart/form-data">
+		<p:panel id="thyy" rendered="#{zttzClsbJdzqtzJBean.ztxg.thyy!=null}"
+			header="退回"
+			style="width:800px;text-align: left;margin-left: -10px;margin-top: -10px;">
+			<h:panelGroup>
+				<p:outputLabel value="退回原因：" style="color:red"></p:outputLabel>
+				<p:outputLabel value="#{zttzClsbJdzqtzJBean.ztxg.thyy}"
+					style="color: black;font-weight: bold;"></p:outputLabel>
+			</h:panelGroup>
+		</p:panel>
+
+		<p:tabView id="allform" style="text-align: left;">
+			<div style="left: -10px;azimuth: "></div>
+			<p:tab title="设备检定周期调整申请单">
+				<p:panelGrid columns="1" style="width:900px;align:left">
+					<f:facet name="header">
+						<h:outputText value="设备检定周期调整申请" style="font-size:25px;"></h:outputText>
+					</f:facet>
+					<h:panelGrid columns="2" style="margin-left: 700px">
+						<h:outputText value="填表日期："></h:outputText>
+						<h:outputText value="#{zttzClsbJdzqtzJBean.ztxg.kssj}">
+							<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" locale="zh_CN"
+								timeZone="GMT+8" />
+						</h:outputText>
+					</h:panelGrid>
+					<p:panel style="border:1px solid #ADADAD">
+						<h:panelGrid columns="4" width="900">
+							<h:outputText value="申&nbsp;&nbsp;请&nbsp;&nbsp;人："></h:outputText>
+							<p:inputText value="#{zttzClsbJdzqtzJBean.ztxg.sqr}" size="20"
+								readonly="true"></p:inputText>
+							<h:outputText value="申请日期："></h:outputText>
+							<p:inputText value="#{zttzClsbJdzqtzJBean.ztxg.kssj}"
+								readonly="true">
+								<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+									timeZone="GMT+8" />
+							</p:inputText>
+						</h:panelGrid>
+					</p:panel>
+					<p:panel style="border:1px solid #ADADAD">
+						<h:panelGrid columns="4" width="900">
+							<h:outputText value="计量编号："></h:outputText>
+							<p:inputText value="#{zttzClsbJdzqtzJBean.ztxg.sbglSbxx.jlbh}"
+								size="20" readonly="true"></p:inputText>
+							<h:outputText value="设备名称："></h:outputText>
+							<p:inputText value="#{zttzClsbJdzqtzJBean.ztxg.sbglSbxx.sbmc}"
+								size="20" readonly="true"></p:inputText>
+							<h:outputText value="规格型号："></h:outputText>
+							<p:inputText value="#{zttzClsbJdzqtzJBean.ztxg.sbglSbxx.ggxh}"
+								size="20" readonly="true"></p:inputText>
+							<h:outputText value="生产厂家："></h:outputText>
+							<p:inputText value="#{zttzClsbJdzqtzJBean.ztxg.sbglSbxx.sccj}"
+								size="20" readonly="true"></p:inputText>
+							<h:outputText value="出厂编号："></h:outputText>
+							<p:inputText value="#{zttzClsbJdzqtzJBean.ztxg.sbglSbxx.ccbh}"
+								size="20" readonly="true"></p:inputText>
+							<h:outputText value="使用部门："></h:outputText>
+							<p:inputText value="#{zttzClsbJdzqtzJBean.ztxg.sbglSbxx.sybmmc}"
+								size="20" readonly="true"></p:inputText>
+							<h:outputText value="设备状态："></h:outputText>
+							<p:inputText value="#{zttzClsbJdzqtzJBean.ztxg.ysbzt}" size="20"
+								readonly="true"></p:inputText>
+							<h:outputText value="原有效期："></h:outputText>
+							<p:inputText value="#{zttzClsbJdzqtzJBean.ztxg.yyxrq}"
+								readonly="true">
+								<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+									timeZone="GMT+8" />
+							</p:inputText>
+							<h:outputText value="原检定周期："></h:outputText>
+							<h:panelGrid columns="2">
+								<p:inputText value="#{zttzClsbJdzqtzJBean.ztxg.yjdzq}" size="10"
+									readonly="true"></p:inputText>
+								<h:outputText value="月" />
+							</h:panelGrid>
+							<h:outputText value="新检定周期："></h:outputText>
+							<h:panelGrid columns="2">
+								<p:inputText value="#{zttzClsbJdzqtzJBean.ztxg.xjdzq}" size="10"
+									readonly="#{!zttzClsbJdzqtzJBean.showA}"></p:inputText>
+								<h:outputText value="月"></h:outputText>
+							</h:panelGrid>
+						</h:panelGrid>
+					</p:panel>
+					<p:panel style="border:1px solid #ADADAD">
+						<h:panelGrid columns="2" width="900">
+							<h:panelGroup>
+								<h:outputText value="调整原因："></h:outputText>
+								<h:outputText value="*" style="color: red" />
+							</h:panelGroup>
+							<p:inputTextarea value="#{zttzClsbJdzqtzJBean.ztxg.xgyy}"
+								rows="3" cols="90" required="true" label="调整原因" maxlength="100"
+								readonly="#{!zttzClsbJdzqtzJBean.showA}"></p:inputTextarea>
+							<h:outputText value="备注："></h:outputText>
+							<p:inputTextarea value="#{zttzClsbJdzqtzJBean.ztxg.bz}" rows="3"
+								cols="90" label="备注" maxlength="250"
+								readonly="#{!zttzClsbJdzqtzJBean.showA}"></p:inputTextarea>
+						</h:panelGrid>
+					</p:panel>
+					<p:panel style="border:1px solid #ADADAD">
+						<h:panelGrid columns="4" width="900">
+							<h:outputText value="主管领导："></h:outputText>
+							<p:inputText
+								value="#{zttzClsbJdzqtzJBean.spjlZqtzBean.spjl_B.qzyhmc}"
+								size="20" readonly="true"></p:inputText>
+							<h:outputText value="审批日期："></h:outputText>
+							<p:inputText label="审批日期"
+								value="#{zttzClsbJdzqtzJBean.spjlZqtzBean.spjl_B.qzrq}"
+								readonly="true">
+								<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+									timeZone="GMT+8" />
+							</p:inputText>
+						</h:panelGrid>
+						<h:panelGrid columns="2" width="900">
+							<h:outputText value="审批意见："></h:outputText>
+							<p:inputTextarea rows="3"
+								readonly="#{!zttzClsbJdzqtzJBean.showB}"
+								value="#{zttzClsbJdzqtzJBean.spjlZqtzBean.spjl_B.qznr}"
+								cols="90" label="审批意见" maxlength="100"
+								style="border:#{zttzClsbJdzqtzJBean.showB ? '2px solid' : ''};border-color:#{zttzClsbJdzqtzJBean.showB ? '#46A3FF' : ''};"></p:inputTextarea>
+						</h:panelGrid>
+					</p:panel>
+					<p:panel style="border:1px solid #ADADAD">
+						<h:panelGrid columns="4" width="900">
+							<h:outputText value="责任工程师："></h:outputText>
+
+							<p:selectOneMenu value="#{zttzClsbJdzqtzJBean.selectedZrgcs}"
+								rendered="#{zttzClsbJdzqtzJBean.showB}">
+								<f:selectItems value="#{zttzClsbJdzqtzJBean.zrfw.zrgcs}"
+									var="obj" itemValue="#{obj.yhbm}" itemLabel="#{obj.zsmc}"></f:selectItems>
+							</p:selectOneMenu>
+							<p:inputText
+								value="#{zttzClsbJdzqtzJBean.spjlZqtzBean.spjl_C.qzyhmc}"
+								size="20" readonly="true"
+								rendered="#{!zttzClsbJdzqtzJBean.showB}"></p:inputText>
+							<h:outputText value="审批日期："></h:outputText>
+							<p:inputText label="审批日期" readonly="true"
+								value="#{zttzClsbJdzqtzJBean.spjlZqtzBean.spjl_C.qzrq}">
+								<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+									timeZone="GMT+8" />
+							</p:inputText>
+						</h:panelGrid>
+						<h:panelGrid columns="2" width="900">
+							<h:outputText value="审批意见："></h:outputText>
+							<p:inputTextarea rows="3"
+								readonly="#{!zttzClsbJdzqtzJBean.showC}"
+								value="#{zttzClsbJdzqtzJBean.spjlZqtzBean.spjl_C.qznr}"
+								cols="90" label="审批意见" maxlength="100"
+								style="border:#{zttzClsbJdzqtzJBean.showC ? '2px solid' : ''};border-color:#{zttzClsbJdzqtzJBean.showC ? '#46A3FF' : ''};"></p:inputTextarea>
+						</h:panelGrid>
+					</p:panel>
+					<p:panel style="border:1px solid #ADADAD">
+						<h:panelGrid columns="4" width="900">
+							<h:outputText value="计量科长："></h:outputText>
+							<p:inputText
+								value="#{zttzClsbJdzqtzJBean.spjlZqtzBean.spjl_D.qzyhmc}"
+								size="20" readonly="true"></p:inputText>
+							<h:outputText value="审批日期："></h:outputText>
+							<p:inputText label="审批日期" readonly="true"
+								value="#{zttzClsbJdzqtzJBean.spjlZqtzBean.spjl_D.qzrq}">
+								<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+									timeZone="GMT+8" />
+							</p:inputText>
+						</h:panelGrid>
+						<h:panelGrid columns="2" width="900">
+							<h:outputText value="审批意见："></h:outputText>
+							<p:inputTextarea rows="3"
+								readonly="#{!zttzClsbJdzqtzJBean.showD}"
+								value="#{zttzClsbJdzqtzJBean.spjlZqtzBean.spjl_D.qznr}"
+								cols="90" label="审批意见" maxlength="100"
+								style="border:#{zttzClsbJdzqtzJBean.showD ? '2px solid' : ''};border-color:#{zttzClsbJdzqtzJBean.showD ? '#46A3FF' : ''};"></p:inputTextarea>
+						</h:panelGrid>
+					</p:panel>
+					<p:panel style="border:1px solid #ADADAD">
+						<h:panelGrid columns="4" width="900">
+							<h:outputText value="检&nbsp;&nbsp;定&nbsp;&nbsp;员："></h:outputText>
+							<p:inputText
+								value="#{zttzClsbJdzqtzJBean.spjlZqtzBean.spjl_E.qzyhmc}"
+								size="20" readonly="true"></p:inputText>
+							<h:outputText value="审批日期："></h:outputText>
+							<p:inputText label="审批日期"
+								value="#{zttzClsbJdzqtzJBean.spjlZqtzBean.spjl_E.qzrq}">
+								<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+									timeZone="GMT+8" />
+							</p:inputText>
+								<h:outputText value="新有效期："></h:outputText>
+							<p:calendar value="#{zttzClsbJdzqtzJBean.ztxg.xyxrq}" size="20"
+								style="width:317px" pattern="yyyy-MM-dd">
+							</p:calendar>
+						</h:panelGrid>
+						<h:panelGrid columns="2" width="900">
+							<h:outputText value="审批意见："></h:outputText>
+							<p:inputTextarea rows="3"
+								readonly="#{!zttzClsbJdzqtzJBean.showE}"
+								value="#{zttzClsbJdzqtzJBean.spjlZqtzBean.spjl_E.qznr}"
+								cols="90" label="审批意见" maxlength="100"
+								style="border:#{zttzClsbJdzqtzJBean.showE ? '2px solid' : ''};border-color:#{zttzClsbJdzqtzJBean.showE ? '#46A3FF' : ''};"></p:inputTextarea>
+						</h:panelGrid>
+					</p:panel>
+				</p:panelGrid>
+			</p:tab>
+			<p:tab title="附件">
+				<h:panelGrid width="670"
+					style="margin-top: -10px;margin-left:-17px;">
+					<h:panelGrid width="100%">
+						<p:fileUpload multiple="true" update=":form:allform:filePaneId"
+							fileUploadListener="#{zttzClsbJdzqtzJBean.handleFileUpload}"
+							style="width:100%;" mode="advanced" label="浏览" cancelLabel="取消"
+							uploadLabel="上传" sizeLimit="10240000"
+							invalidSizeMessage="文件必须小于10M" invalidFileMessage="格式不支持"
+							dragDropSupport="false"
+							allowTypes="/(\.|\/)(gif|jpe?g|png|pdf|txt|rar|zip|doc|docx|xls|xlsx)$/">
+						</p:fileUpload>
+						<p:dataTable id="filePaneId" paginator="true" rows="10"
+							rowIndexVar="rowVar" paginatorPosition="bottom"
+							value="#{zttzClsbJdzqtzJBean.fileBean.files}" style="width:100%;"
+							filterDelay="300" lazy="false" var="file"
+							resizableColumns="true " liveResize="true"
+							currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+							paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="5,10,15">
+							<h:outputText value="#{rowVar+1}" />
+							<p:column headerText="序号" style="width:40px;">
+								<h:outputText value="#{rowVar+1}" />
+							</p:column>
+
+							<p:column headerText="附件名称" style="width:50%">
+								<h:outputText value="#{file.wjmc}" />
+							</p:column>
+
+							<p:column headerText="上传节点" style="width:70px">
+								<p:outputLabel value="#{file.taskNode}"></p:outputLabel>
+							</p:column>
+							<p:column headerText="上传人员" style="width:70px">
+								<p:outputLabel value="#{file.scyhid}"></p:outputLabel>
+							</p:column>
+							<p:column headerText="上传时间" style="width:70px">
+								<h:outputText value="#{file.scrq}">
+									<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+										timeZone="GMT+8" />
+								</h:outputText>
+							</p:column>
+							<p:column headerText="操作" style="width:10%">
+								<h:panelGroup>
+									<p:commandButton id="downId" ajax="false"
+										action="#{zttzClsbJdzqtzJBean.fileBean.downFile}"
+										icon="ui-icon-arrowthick-1-s" immediate="true">
+										<f:setPropertyActionListener
+											target="#{zttzClsbJdzqtzJBean.fileBean.file}" value="#{file}"></f:setPropertyActionListener>
+									</p:commandButton>
+									<h:outputText value="  "></h:outputText>
+									<p:commandButton id="deleteId" ajax="false"
+										disabled="#{file.scyhbm eq zttzClsbJdzqtzJBean.currentUser.yhbm and file.taskNode eq zttzClsbJdzqtzJBean.taskNode ? false : true}"
+										action="#{zttzClsbJdzqtzJBean.fileBean.deleteFile}"
+										icon="ui-icon-trash" oncomplete="PF('dialog').show()">
+										<p:confirm icon="ui-icon-alert" message="确定删除吗?"></p:confirm>
+										<f:setPropertyActionListener
+											target="#{zttzClsbJdzqtzJBean.fileBean.file}" value="#{file}"></f:setPropertyActionListener>
+									</p:commandButton>
+								</h:panelGroup>
+							</p:column>
+						</p:dataTable>
+					</h:panelGrid>
+				</h:panelGrid>
+			</p:tab>
+
+			<p:tab title="审批日志">
+				<h:panelGrid
+					style="text-align: left; width:90%;margin-top:-10px;margin-left:-17px;">
+					<h:panelGrid width="100%;">
+
+						<p:dataTable var="qzjl" value="#{zttzClsbJdzqtzJBean.wfLogList}"
+							rows="500" rowIndexVar="rowVar" style="width:100%" lazy="true">
+							<p:column headerText="序号" style="width:40px;">
+								<h:outputText value="#{rowVar+1}" />
+							</p:column>
+							<p:column headerText="签字用户">
+								<h:outputText value="#{qzjl.qzry.zsmc}" />
+							</p:column>
+							<p:column headerText="签字日期">
+								<h:outputText value="#{qzjl.qzsj}" />
+							</p:column>
+							<p:column headerText="签字内容">
+								<h:outputText value="#{qzjl.qznr}" />
+							</p:column>
+							<p:column headerText="审批结论">
+								<h:outputText value="#{qzjl.jlmc}" />
+							</p:column>
+							<p:column headerText="当前节点">
+								<h:outputText value="#{qzjl.nodeName}" />
+							</p:column>
+							<p:column headerText="操作指令">
+								<h:outputText value="#{qzjl.transitionName}" />
+							</p:column>
+
+						</p:dataTable>
+					</h:panelGrid>
+				</h:panelGrid>
+			</p:tab>
+		</p:tabView>
+
+
+
+		<h:panelGrid columns="4" style="margin-left: 200px;">
+			<p:dialog id="prodialogPub" height="30" style="position: absolute;"
+				closable="false" widgetVar="proDiaWidPub" resizable="false">
+				<p:progressBar id="progressBarClientPub" labelTemplate="流程处理中..."
+					widgetVar="pbClient" style="width:300px;" />
+			</p:dialog>
+
+			<h:panelGroup>
+				<c:forEach var="availableTransition"
+					items="#{wftaskBean.availableTransitions}">
+					<c:set var="availableTransition" value="#{availableTransition}" />
+					<p:commandButton ajax="false"
+						rendered="#{(availableTransition.name=='退回修改' )?false:true}"
+						id="#{availableTransition.name}" action="#{wftaskBean.outcome}"
+						value="#{availableTransition.name}"
+						actionListener="#{wftaskBean.processAction}" immediate="false"
+						onclick="PF('proDiaWidPub').show();start();">
+					</p:commandButton>
+					<f:verbatim>&nbsp;&nbsp;&nbsp;&nbsp;</f:verbatim>
+				</c:forEach>
+				<p:commandButton value="退回修改"
+					rendered="#{!(wftaskBean.availableTransitions==null) and !zttzClsbJdzqtzJBean.showA}"
+					ajax="false" immediate="true"
+					onclick="PF('dlg1').show(); return false ; ">
+				</p:commandButton>
+
+
+				<p:commandButton value="任务召回" ajax="false"
+					rendered="#{wftaskBean.zhrw and wftaskBean.hasFunction}"
+					action="#{wftaskBean.outcome}"
+					actionListener="#{wftaskBean.processBackAction}" immediate="true">
+				</p:commandButton>
+
+			</h:panelGroup>
+
+		</h:panelGrid>
+	</h:form>
+
+
+	<p:dialog id="basicDialog" header="退回修改" widgetVar="dlg1"
+		maximizable="true" height="200px" width="400px" modal="true"
+		closable="false">
+		<h:form id="gzzx" enctype="multipart/form-data">
+			<h:panelGrid id="hq">
+				<p:inputTextarea value="#{zttzClsbJdzqtzJBean.ztxg.thyy}" rows="5"
+					cols="45"></p:inputTextarea>
+				<h:panelGrid columns="2">
+					<p:outputLabel value="退回目标节点："></p:outputLabel>
+
+					<h:selectOneMenu value="#{wftaskBean.targetNode}">
+						<f:selectItems value="#{wftaskBean.targetNodes}"></f:selectItems>
+					</h:selectOneMenu>
+					<p:commandButton id="退回" ajax="false"
+						action="#{wftaskBean.outcome}" value="确认"
+						actionListener="#{wftaskBean.processAction}" immediate="false">
+					</p:commandButton>
+
+					<p:commandButton id="取消" ajax="true" update=":basicDialog"
+						oncomplete="PF('dlg1').hide()" value="取消"
+						actionListener="#{wftaskBean.cancelProcessAction}"
+						immediate="false">
+					</p:commandButton>
+				</h:panelGrid>
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+</body>
+
+</html>

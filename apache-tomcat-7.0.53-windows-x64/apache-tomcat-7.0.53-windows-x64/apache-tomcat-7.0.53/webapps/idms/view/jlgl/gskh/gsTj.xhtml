@@ -1,0 +1,197 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+<f:view contentType="text/html">
+	<h:head>
+		<title>IDMS</title>
+		<ui:include src="/common/templates/ui.xhtml"></ui:include>
+	</h:head>
+	<h:body>
+		<p:growl id="growlid" sticky="true" autoUpdate="true" />
+		<p:dialog id="dlg1" header="工时详情（#{grgsAllTjQb.selectGzry}）"
+			widgetVar="opendlg" height="400px" modal="true">
+			<h:form id="grgs"
+				style="margin-bottom:10px;width:900px;margin-top:10px">
+				<h:panelGrid columns="1">
+					<p:outputLabel value="标准工时：" style="font-weight:bold;color:red;"></p:outputLabel>
+					<p:dataTable id="bzgs" paginator="true" var="item"
+						value="#{grgsAllTjQb.grgsBztjQb.lazyDataModel}" rows="15"
+						rowIndexVar="rowVar" filterDelay="300" resizableColumns="true "
+						liveResize="true" paginatorPosition="bottom" style="width:900px"
+						currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+						paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						lazy="true" rowsPerPageTemplate="15,30,50">
+						<p:column style="width:10px;">
+							<h:outputText value="#{rowVar+1}"></h:outputText>
+						</p:column>						
+						<p:column headerText="测量编码" style="width:60px;">
+							<h:outputText value="#{item.sbxx.jlbh}"></h:outputText>
+						</p:column>
+						<p:column headerText="设备名称" style="width:40px;">
+							<h:outputText value="#{item.sbxx.sbmc}"></h:outputText>
+						</p:column>
+						<p:column headerText="工作人员" style="width:20px;">
+							<h:outputText value="#{item.gzry.zsmc}"></h:outputText>
+						</p:column>
+						<p:column headerText="工作时间" style="width:50px;">
+							<h:outputText value="#{item.gzsj}">
+								<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+									timeZone="GMT+8"></f:convertDateTime>
+							</h:outputText>
+						</p:column>						
+						<p:column headerText="工时类型" style="width:150px;">
+							<h:outputText value="#{item.gslx}"></h:outputText>
+						</p:column>
+						<p:column headerText="名称" style="width:50px;">
+							<h:outputText value="#{item.debz.mc}"></h:outputText>
+						</p:column>
+						<p:column headerText="规格等级" style="width:50px;">
+							<h:outputText value="#{item.debz.ggdj}"></h:outputText>
+						</p:column>
+						<p:column headerText="单件工时" style="width:20px;">
+							<h:outputText value="#{item.djgs}"></h:outputText>
+						</p:column>
+						<p:column headerText="工作量（件）" style="width:20px;">
+							<h:outputText value="#{item.gzl}"></h:outputText>
+						</p:column>
+						<p:column headerText="总工时" style="width:20px;">
+							<h:outputText value="#{item.zgs}"></h:outputText>
+						</p:column>
+						<p:column headerText="检定计划" style="width:50px;">
+							<h:outputText value="#{item.jdjh.jhbm}"></h:outputText>
+						</p:column>
+						<p:column headerText="备注" style="width:20px;">
+							<h:outputText value="#{item.bz}"></h:outputText>
+						</p:column>
+					</p:dataTable>
+					<p:outputLabel value="其他工时：" style="font-weight:bold;color:red;" />
+					<p:dataTable id="tsgs" paginator="true"
+						value="#{grgsAllTjQb.grgsTstjQb.lazyDataModel}"
+						style="width:900px" rows="15" rowIndexVar="rowVar"
+						filterDelay="300" resizableColumns="true " liveResize="true"
+						paginatorPosition="bottom" var="item"
+						currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+						paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						lazy="true" rowsPerPageTemplate="15,30,50">
+						<p:column style="width:10px;">
+							<h:outputText value="#{rowVar+1}"></h:outputText>
+						</p:column>
+						<p:column headerText="工作类型" style="width:100px;">
+							<h:outputText value="#{item.gzlx}"></h:outputText>
+						</p:column>
+						<p:column headerText="任务描述" style="width:100px;">
+							<h:outputText value="#{item.rwms}"></h:outputText>
+						</p:column>
+						<p:column headerText="工作人员" style="width:100px;">
+							<h:outputText value="#{item.gzry.zsmc}"></h:outputText>
+						</p:column>
+						<p:column headerText="工作时间" style="width:100px;">
+							<h:outputText value="#{item.gzsj}">
+								<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+									timeZone="GMT+8"></f:convertDateTime>
+							</h:outputText>
+						</p:column>
+						<p:column headerText="工作量" style="width:100px;">
+							<h:outputText value="#{item.gzl}"></h:outputText>
+						</p:column>
+						<p:column headerText="总工时" style="width:100px;">
+							<h:outputText value="#{item.zgs}"></h:outputText>
+						</p:column>
+					</p:dataTable>
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<h:form id="form"
+			style="margin-bottom:10px;width:1000px;margin-top:10px">
+			<h:panelGrid>
+				<p:panel header="工时查询统计">
+					<h:panelGrid columns="8" width="1000px" align="left">
+						<h:outputText value="所属部门："></h:outputText>
+						<p:inputText value="#{grgsAllTjQb.bmmcs}"></p:inputText>
+						<h:outputText value="工作人员："></h:outputText>
+						<p:inputText value="#{grgsAllTjQb.gzrymc}"></p:inputText>
+						<p:outputLabel value="工时时间：" />
+						<h:panelGroup>
+							<p:calendar label="工时时间" value="#{grgsAllTjQb.startTime}"
+								size="8" readonlyInput="false" navigator="true"
+								pattern="yyyy-MM-dd" />
+						                                  至<p:calendar
+								value="#{grgsAllTjQb.endTime}" size="8" readonlyInput="false"
+								navigator="true" pattern="yyyy-MM-dd" />
+						</h:panelGroup>
+						<p:commandButton value="查询" ajax="true" update=":form"
+							action="#{grgsAllTjQb.doSearch}"></p:commandButton>
+					</h:panelGrid>
+				</p:panel>
+				<p:toolbar>
+					<f:facet name="left">
+						<p:commandButton type="button" value="打印" icon="ui-icon-print">
+							<p:printer target="data" />
+						</p:commandButton>
+						<p:commandButton value="导出为PDF" ajax="false">
+							<p:dataExporter type="pdf" target="data" fileName="gsxx" />
+						</p:commandButton>
+						<p:commandButton value="导出为Excel" ajax="false">
+							<p:dataExporter type="xls" target="data" fileName="gsxx" />
+						</p:commandButton>
+					</f:facet>
+				</p:toolbar>
+				<h:panelGrid columns="2">
+					<p:outputLabel value="本月总工时 ：#{grgsAllTjQb.sumGs}"
+						style="font-size:15px">&nbsp;&nbsp;&nbsp;&nbsp;    
+                                  </p:outputLabel>
+					<p:outputLabel value="平均工时：#{grgsAllTjQb.avgGs}"
+						style="font-size:15px"></p:outputLabel>
+				</h:panelGrid>
+
+				<p:dataTable id="data" paginator="true" rows="5"
+					value="#{grgsAllTjQb.gstjList}" style="width:1100px" var="item"
+					filterDelay="300" resizableColumns="true " liveResize="true"
+					paginatorPosition="bottom" rowIndexVar="rowVar"
+					currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+					paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					lazy="true" rowsPerPageTemplate="20,30,50">
+
+					<p:column style="width:50px;">
+						<h:outputText value="#{rowVar+1}"></h:outputText>
+					</p:column>
+					<p:column headerText="职工编号" style="width:180px;">
+						<h:outputText value="#{item.gzrybm}"></h:outputText>
+					</p:column>
+					<p:column headerText="工作人员" style="width:100px;">
+						<h:outputText value="#{item.gzrymc}"></h:outputText>
+					</p:column>
+					<p:column headerText="标准总工时" style="width:180px;">
+						<h:outputText value="#{item.bzzgs}"></h:outputText>
+					</p:column>
+					<p:column headerText="其他总工时" style="width:180px;">
+						<h:outputText value="#{item.qtzgs}"></h:outputText>
+					</p:column>
+					<p:column headerText="累计总工时" style="width:180px;">
+						<h:outputText value="#{item.grZgs}" ></h:outputText>
+					</p:column>
+					<p:column headerText="操作">
+					      &nbsp;&nbsp;&nbsp;
+							<p:commandButton 
+								action="#{grgsAllTjQb.openPanal(item.gzrybm,item.gzrymc)}"
+								oncomplete="PF('opendlg').show()" ajax="true" update=":dlg1"
+								title="详情" icon="ui-icon-search" immediate="true">
+							</p:commandButton>
+						
+					</p:column>
+
+				</p:dataTable>
+
+			</h:panelGrid>
+		</h:form>
+
+	</h:body>
+</f:view>
+</html>

@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+<class 
+    name="idms.model.msa.Fxsj" table="MSA_FXSJ">
+    <id name="fxsjid"  type="java.lang.Long" column="FXSJID" length="10">
+        <generator class="sequence">
+            <param name="sequence">S_FXSJ</param>
+        </generator>
+    </id>
+    <property name="g1" type="java.lang.Double">
+        <column name="G1" length="20" />
+    </property>
+    <property name="g2" type="java.lang.Double">
+        <column name="G2" length="20" />
+    </property>
+    <property name="g3" type="java.lang.Double">
+        <column name="G3" length="20" />
+    </property>
+    <property name="g4" type="java.lang.Double">
+        <column name="G4" length="20" />
+    </property>
+    <property name="g5" type="java.lang.Double">
+        <column name="G5" length="20" />
+    </property>
+    <property name="g6" type="java.lang.Double">
+        <column name="G6" length="20" />
+    </property>
+    <property name="g7" type="java.lang.Double">
+        <column name="G7" length="20" />
+    </property>
+    <property name="g8" type="java.lang.Double">
+        <column name="G8" length="20" />
+    </property>
+    <property name="g9" type="java.lang.Double">
+        <column name="G9" length="20" />
+    </property>
+    <property name="g10" type="java.lang.Double">
+        <column name="G10" length="20" />
+    </property>
+    <property name="g11" type="java.lang.Double">
+        <column name="G11" length="20" />
+    </property>
+    <property name="g12" type="java.lang.Double">
+        <column name="G12" length="20" />
+    </property>
+    <property name="g13" type="java.lang.Double">
+        <column name="G13" length="20" />
+    </property>
+    <property name="g14" type="java.lang.Double">
+        <column name="G14" length="20" />
+    </property>
+    <property name="g15" type="java.lang.Double">
+        <column name="G15" length="20" />
+    </property>
+    <property name="g16" type="java.lang.Double">
+        <column name="G16" length="20" />
+    </property>
+    <property name="g17" type="java.lang.Double">
+        <column name="G17" length="20" />
+    </property>
+    <property name="g18" type="java.lang.Double">
+        <column name="G18" length="20" />
+    </property>
+    <property name="g19" type="java.lang.Double">
+        <column name="G19" length="20" />
+    </property>
+    <property name="g20" type="java.lang.Double">
+        <column name="G20" length="20" />
+    </property>
+    <property name="clcs" type="java.lang.Integer">
+        <column name="CLCS" length="20" />
+    </property>
+    <property name="ljsm" type="java.lang.Integer">
+        <column name="LJSM" length="20" />
+    </property>
+    <property name="jzz" type="java.lang.Double">
+        <column name="JZZ" length="20" />
+    </property>
+    <property name="rybh" type="java.lang.String">
+        <column name="RYBH" length="40" />
+    </property>
+    <property name="cjsj" type="java.util.Date">
+        <column name="CJSJ" length="40" />
+    </property>
+    <property name="cjbh" type="java.lang.String">
+        <column name="CJBH" length="40" />
+    </property>
+      <property name="czry" type="java.lang.String">
+        <column name="CZRY" length="100" />
+    </property>
+    
+      <property name="ljbh" type="java.lang.String">
+        <column name="LJBH" length="100" />
+    </property>
+    
+    
+    
+    <!-- bi-directional many-to-one association to Fxsj -->
+    
+    <many-to-one name="jbxx" class="idms.model.msa.Jbxx" lazy="false"
+                  cascade="save-update" not-null="true">
+            <column name="FXID" />
+            
+    </many-to-one>
+
+</class>
+</hibernate-mapping>

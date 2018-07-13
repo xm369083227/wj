@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="idms.model.mail.MailInfo" table="MAIL_INFO" >
+          <cache usage="nonstrict-read-write"/>
+        <id name="mailId" type="java.lang.Long" column="MAILID">
+			<generator class="sequence">
+				<param name="sequence">S_MAIL_INFO</param>
+			</generator>
+		</id>
+		<many-to-one name="sender" class="idms.model.base.User" lazy="proxy" >
+			<column name="SENDER"/>
+		</many-to-one>
+		<property name="toAddress" type="java.lang.String">
+			<column name="TOADDRESS" length="1000" />
+		</property>
+		<property name="ccAddress" type="java.lang.String">
+			<column name="CCADDRESS" length="1000" />
+		</property>
+		<property name="subject" type="java.lang.String">
+			<column name="SUBJECT" length="200" />
+		</property>
+		<property name="content" type="java.lang.String">
+			<column name="CONTENT" length="1000" />
+		</property>
+		<property name="attName" type="java.lang.String">
+			<column name="ATTNAME" length="50" />
+		</property>
+		<property name="sendTime" type="java.util.Date">
+			<column name="SENDTIME"/>
+		</property>
+		<property name="state" type="java.lang.Integer">
+			<column name="STATE" length="2" />
+		</property>
+		<property name="importantFlag" type="java.lang.Integer">
+			<column name="IMPORTANTFLAG" length="2" />
+		</property>
+		<property name="emailType" type="java.lang.String">
+			<column name="EMAILTYPE" length="20" />
+		</property>
+		
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,440 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+	<ui:include src="/common/templates/ui.xhtml"></ui:include>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+</h:head>
+<h:body>
+	<p:dialog id="editsbxxDialogId" header="计量设备"
+		widgetVar="editsbxxDialog" maximizable="true" height="500px"
+		width="1200px" modal="true">
+		<ui:include src="/view/jlgl/sbgl/editSbxx.xhtml"></ui:include>
+	</p:dialog>
+	<p:dialog id="batchDialogId" header="批量修改" widgetVar="batchDialog"
+		maximizable="true" height="300px" width="520px">
+		<h:form id="batch">
+			<h:panelGrid columns="4">
+				<h:outputLabel value="批量处理范围："></h:outputLabel>
+				<p:selectOneRadio value="#{sbglSbxxMb.batchDateClfw}">
+					<f:selectItem itemLabel="所有设备" itemValue="ALL"></f:selectItem>
+					<f:selectItem itemLabel="当前查询结果" itemValue="ONLYSELECT"></f:selectItem>
+				</p:selectOneRadio>
+			</h:panelGrid>
+			<p:panelGrid columns="3">
+				<h:outputLabel value="选择项："></h:outputLabel>
+				<p:selectOneMenu immediate="true"
+					valueChangeListener="#{selectColumns.changeInputValues}"
+					value="#{sbglSbxxMb.batchSelectClumnKey}">
+					<f:selectItems value="#{selectColumns.batchSelectColumns()}"
+						var="ccol" itemLabel="#{ccol.zdms}" itemValue="#{ccol.zdmc}"></f:selectItems>
+					<f:ajax event="change" render="batch:valueSelect"></f:ajax>
+				</p:selectOneMenu>
+				<p:selectOneMenu immediate="true" id="valueSelect" label="选择项"
+					value="#{sbglSbxxMb.batchSelectClumnValue}">
+					<f:selectItems value="#{selectColumns.valueItems()}" var="obj"
+						itemLabel="#{obj.key}" itemValue="#{obj.key}"></f:selectItems>
+				</p:selectOneMenu>
+
+				<h:outputLabel value="文本项Boolean："></h:outputLabel>
+				<p:selectOneMenu value="#{sbglSbxxMb.batchBoolClumnKey}">
+					<f:selectItems value="#{selectColumns.batchBooleanColumns()}"
+						var="ccol" itemLabel="#{ccol.zdms}" itemValue="#{ccol.zdmc}"></f:selectItems>
+				</p:selectOneMenu>
+				<p:selectOneRadio immediate="true"
+					value="#{sbglSbxxMb.batchBoolClumnValue}">
+					<f:selectItem itemLabel="是" itemValue="true"></f:selectItem>
+					<f:selectItem itemLabel="否" itemValue="false"></f:selectItem>
+				</p:selectOneRadio>
+
+
+				<h:outputLabel value="文本输入项："></h:outputLabel>
+				<p:selectOneMenu value="#{sbglSbxxMb.batchTextClumnKey}">
+					<f:selectItems value="#{selectColumns.batchTextColumns()}"
+						var="ccol" itemLabel="#{ccol.zdms}" itemValue="#{ccol.zdmc}"></f:selectItems>
+				</p:selectOneMenu>
+				<p:inputText label="文本输入项"
+					value="#{sbglSbxxMb.batchTextClumnValule}"></p:inputText>
+
+
+				<h:outputLabel value="日期输入项："></h:outputLabel>
+				<p:selectOneMenu value="#{sbglSbxxMb.batchCalendClumnKey}">
+					<f:selectItems value="#{selectColumns.batchCalendColumns()}"
+						var="ccol" itemLabel="#{ccol.zdms}" itemValue="#{ccol.zdmc}"></f:selectItems>
+				</p:selectOneMenu>
+				<p:calendar label="日期输入项" pattern="yyyy-MM-dd"
+					value="#{sbglSbxxMb.batchCalendClumnValue}"></p:calendar>
+
+
+			</p:panelGrid>
+			<p:commandButton value="批量更新" update=":form:data"
+				actionListener="#{sbglSbxxMb.batchUpdateDataSbxx()}" ajax="true"></p:commandButton>
+		</h:form>
+
+	</p:dialog>
+
+	<p:growl id="growlid" showDetail="false" sticky="true" autoUpdate="true"></p:growl>
+	<h:form id="form">
+		<h:inputHidden id="lovdiv" value="#{jcUserMb.showLovDiv}"></h:inputHidden>
+		<h:panelGrid columns="1" width="110%"
+			style="text-align: left;margin-left: -3px;margin-top: -1px;">
+			<p:toolbar>
+				<f:facet name="left">
+					<p:commandButton value="高级查询" ajax="false"
+						onclick="PF('gjcx').show();return false;">
+					</p:commandButton>
+
+					<p:commandButton value="批量修改" ajax="false"
+						onclick="PF('batchDialog').show();return false;">
+					</p:commandButton>
+
+
+				</f:facet>
+			</p:toolbar>
+		</h:panelGrid>
+		<p:contextMenu for="data" widgetVar="cMenu">
+			<p:menuitem value="详情" icon="ui-icon-search"></p:menuitem>
+		</p:contextMenu>
+
+
+
+
+
+		<p:dataTable id="data" var="sb" editable="true"
+			binding="#{sbglSbxxMb.dataTable}" value="#{sbglSbxxMb.lazyDataModel}"
+			paginator="true" rows="15" widgetVar="cellSbxx" rowIndexVar="rowVar"
+			filterDelay="300" resizableColumns="true " liveResize="true"
+			paginatorPosition="bottom"  style="width:110%"
+			currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+			paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			lazy="true" rowsPerPageTemplate="15,30,50">
+			<p:ajax event="rowEdit" listener="#{sbglSbxxMb.onRowEdit}"
+				update=":growlid"></p:ajax>
+			<p:column headerText="编辑" exportable="false" style="width:40px">
+				<p:rowEditor></p:rowEditor>
+			</p:column>
+			<p:column exportable="false" style="width:60px" headerText="操作">
+				<h:panelGroup>
+					<p:commandLink value="修改"
+						actionListener="#{sbglSbxxMb.openSbxxDetails(sb)}" ajax="true"
+						style="color: orange;" oncomplete="PF('editsbxxDialog').show();"
+						update=":editsbxxDialogId">
+					</p:commandLink>
+					<h:outputText value=" | "></h:outputText>
+					<p:commandLink value="删除" style="color: orange;" ajax="true"
+						action="#{sbglSbxxMb.deleteSbxx}" update=":form:data">
+						<f:param name="JLBH" value="#{sb.jlbh}"></f:param>
+						<p:confirm icon="ui-icon-alert" message="确定删除吗?"></p:confirm>
+					</p:commandLink>
+
+				</h:panelGroup>
+			</p:column>
+
+
+
+			<p:column sortBy="#{sb.jlbh}" filterBy="#{sb.jlbh}"
+				style="width:#{sys.sbxx.jlbh.xskd}px"
+				rendered="#{sys.sbxx.jlbh.sfsx}" headerText="#{sys.sbxx.jlbh.zdms}">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{sb.jlbh}"></h:outputText>
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText value="#{sb.jlbh}" style="width:90%"
+							label="#{sys.sbxx.jlbh.zdms}" required="true"
+							maxlength="#{sys.sbxx.jlbh.zdcd}"></p:inputText>
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			<p:column sortBy="#{sb.sbmc}" filterBy="#{sb.sbmc}"
+				style="width:#{sys.sbxx.sbmc.xskd}px"
+				rendered="#{sys.sbxx.sbmc.sfsx}" headerText="#{sys.sbxx.sbmc.zdms}">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{sb.sbmc}"></h:outputText>
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText value="#{sb.sbmc}" style="width:90%"
+							label="#{sys.sbxx.sbmc.zdms}" required="true"
+							maxlength="#{sys.sbxx.sbmc.zdcd}"></p:inputText>
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			<p:column sortBy="#{sb.zdyzd1}" filterBy="#{sb.zdyzd1}"
+				style="width:#{sys.sbxx.zdyzd1.xskd}px"
+				rendered="#{sys.sbxx.zdyzd1.sfsx}" headerText="#{sys.sbxx.zdyzd1.zdms}">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{sb.zdyzd1}"></h:outputText>
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText value="#{sb.zdyzd1}" style="width:90%"
+							label="#{sys.sbxx.zdyzd1.zdms}" required="true"
+							maxlength="#{sys.sbxx.zdyzd1.zdcd}"></p:inputText>
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			<p:column sortBy="#{sb.zdyzd2}" filterBy="#{sb.zdyzd2}"
+				style="width:#{sys.sbxx.zdyzd2.xskd}px"
+				rendered="#{sys.sbxx.zdyzd2.sfsx}" headerText="#{sys.sbxx.zdyzd2.zdms}">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{sb.zdyzd2}"></h:outputText>
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText value="#{sb.zdyzd2}" style="width:90%"
+							label="#{sys.sbxx.zdyzd2.zdms}" required="true"
+							maxlength="#{sys.sbxx.zdyzd2.zdcd}"></p:inputText>
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			<p:column sortBy="#{sb.fjdfy}" filterBy="#{sb.fjdfy}"
+				style="width:#{sys.sbxx.fjdfy.xskd}px"
+				rendered="#{sys.sbxx.fjdfy.sfsx}" headerText="#{sys.sbxx.fjdfy.zdms}（元）">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{sb.fjdfy}"></h:outputText>
+					</f:facet>
+					<f:facet name="input">
+						<p:inputText value="#{sb.fjdfy}" style="width:90%"
+							label="#{sys.sbxx.fjdfy.zdms}" required="true"
+							maxlength="#{sys.sbxx.fjdfy.zdcd}"></p:inputText>
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			
+
+			<p:column sortBy="#{sb.gllb}" filterBy="#{sb.gllb}"
+				rendered="#{sys.sbxx.gllb.sfsx}" headerText="#{sys.sbxx.gllb.zdms}"
+				style="width:#{80}px">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{sb.gllb}"></h:outputText>
+					</f:facet>
+					<f:facet name="input">
+						<p:selectOneMenu value="#{sb.gllb}" style="width:100%"
+							label="#{sys.sbxx.gllb.zdms}" required="true">
+							<f:selectItem itemLabel="A" itemValue="A"></f:selectItem>
+							<f:selectItem itemLabel="B" itemValue="B"></f:selectItem>
+							<f:selectItem itemLabel="C" itemValue="C"></f:selectItem>
+						</p:selectOneMenu>
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			
+			<p:column sortBy="#{sb.cysj}" filterBy="#{sb.cysj}"
+						style="width:100px"  filterMatchMode="exact"
+						headerText="参与事件">
+						<f:facet name="filter">
+			                <p:selectOneMenu  onchange="PF('cellSbxx').filter()">
+			                    <f:selectItem itemLabel="" itemValue="#{null}" noSelectionOption="true" />
+			                    <f:selectItems value="#{selectSbxxBean.cysjItems}" var="obj" 
+			                       itemLabel="#{obj.key}" itemValue="#{obj.value}"
+			                      ></f:selectItems>
+			                </p:selectOneMenu>
+			            </f:facet>
+						
+						<h:outputText value="#{sb.cysjMc}"></h:outputText>
+					</p:column>
+			
+			<p:column sortBy="#{sb.sbzt}" filterBy="#{sb.sbzt}"
+				rendered="#{sys.sbxx.sbzt.sfsx}" headerText="#{sys.sbxx.sbzt.zdms}"
+				style="width:#{80}px">
+				<h:outputText value="#{sb.sbzt}"
+				style="color:#{((sb.sbzt eq '报废')  or (sb.sbzt eq '封存'))?'red':''}">
+				</h:outputText>
+			</p:column>
+			<p:column sortBy="#{sb.fjdrq}" 
+				rendered="#{sys.sbxx.fjdrq.sfsx}"
+				headerText="#{sys.sbxx.fjdrq.zdms}"
+				style="width:#{sys.sbxx.fjdrq.xskd}px">
+				<h:outputText value="#{sb.fjdrq}">
+					<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+						timeZone="GMT+8" />
+				</h:outputText>
+			</p:column>
+
+			<p:column sortBy="#{sb.qrjg}" filterBy="#{sb.qrjg}"
+				rendered="#{sys.sbxx.qrjg.sfsx}" headerText="#{sys.sbxx.qrjg.zdms}"
+				style="width:#{sys.sbxx.qrjg.xskd}px">
+				<h:outputText value="#{sb.qrjg}"></h:outputText>
+			</p:column>
+
+			<p:column sortBy="#{sb.jdfs}" filterBy="#{sb.jdfs}"
+				rendered="#{sys.sbxx.jdfs.sfsx}" headerText="#{sys.sbxx.jdfs.zdms}"
+				style="width:#{sys.sbxx.jdfs.xskd}px">
+				<h:outputText value="#{sb.jdfs}"></h:outputText>
+			</p:column>
+			<p:column sortBy="#{sb.fyxrq}" 
+				rendered="#{sys.sbxx.fyxrq.sfsx}"
+				headerText="#{sys.sbxx.fyxrq.zdms}"
+				style="width:#{sys.sbxx.fyxrq.xskd}px">
+				<h:outputText value="#{sb.fyxrq}">
+					<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+						timeZone="GMT+8" />
+				</h:outputText>
+				
+			</p:column>
+			
+			
+			<p:column sortBy="#{sb.ggxh}" filterBy="#{sb.ggxh}"
+				rendered="#{sys.sbxx.ggxh.sfsx}" headerText="#{sys.sbxx.ggxh.zdms}"
+				style="width:#{sys.sbxx.ggxh.xskd}px">
+				<h:outputText value="#{sb.ggxh}"></h:outputText>
+			</p:column>
+			
+			<p:column sortBy="#{sb.sccj}" filterBy="#{sb.sccj}"
+				rendered="#{sys.sbxx.sccj.sfsx}" headerText="#{sys.sbxx.sccj.zdms}"
+				style="width:#{sys.sbxx.sccj.xskd}px">
+				<h:outputText value="#{sb.sccj}"></h:outputText>
+			</p:column>
+			
+			<p:column sortBy="#{sb.ccbh}" filterBy="#{sb.ccbh}"
+				rendered="#{sys.sbxx.ccbh.sfsx}" headerText="#{sys.sbxx.ccbh.zdms}"
+				style="width:#{sys.sbxx.ccbh.xskd}px">
+				<h:outputText value="#{sb.ccbh}"></h:outputText>
+			</p:column>
+			<p:column sortBy="#{sb.sbfl}" filterBy="#{sb.sbfl}"
+				rendered="#{sys.sbxx.sbfl.sfsx}" headerText="#{sys.sbxx.sbfl.zdms}"
+				style="width:#{80}px">
+				<h:outputText value="#{sb.sbfl}"></h:outputText>
+			</p:column>
+			
+		</p:dataTable>
+
+
+	</h:form>
+	<p:dialog id="gjcx" header="高级查询" widgetVar="gjcx" maximizable="true"
+		height="300px" width="720px">
+		<h:form id="form1">
+			<h:panelGrid columns="1">
+				<p:panelGrid columns="6" style="width:680px">
+					<h:outputText value="文本字段"></h:outputText>
+					<p:selectOneMenu value="#{sbglSbxxMb.textCondition.fieldName}">
+						<f:selectItems value="#{selectColumns.varchar2Columns()}"
+							var="ccol" itemLabel="#{ccol.zdms}" itemValue="#{ccol.zdms}"></f:selectItems>
+					</p:selectOneMenu>
+					<p:selectOneMenu value="#{sbglSbxxMb.textCondition.operator}">
+						<f:selectItems value="#{selectColumns.varchar2Options()}"
+							var="opt" itemLabel="#{opt.selname}" itemValue="#{opt.selval}"></f:selectItems>
+					</p:selectOneMenu>
+					<p:inputText value="#{sbglSbxxMb.textCondition.value}"></p:inputText>
+					<p:selectOneMenu value="#{sbglSbxxMb.textCondition.logic}">
+						<f:selectItem itemLabel="并且" itemValue="并且"></f:selectItem>
+						<f:selectItem itemLabel="或者" itemValue="或者"></f:selectItem>
+					</p:selectOneMenu>
+					<p:commandButton style="width:80px" value="添加"
+						actionListener="#{sbglSbxxMb.addTextCondition()}"
+						update=":form1:condition"></p:commandButton>
+					<h:outputText value="数值字段"></h:outputText>
+					<p:selectOneMenu
+						valueChangeListener="#{sbglSbxxMb.changeSelectNumConditon}"
+						value="#{sbglSbxxMb.numbCondition.fieldName}">
+						<f:selectItems value="#{selectColumns.numberColumns()}" var="ccol"
+							itemLabel="#{ccol.zdms}" itemValue="#{ccol.zdms}"></f:selectItems>
+						<f:ajax event="change"
+							render="form1:numberValue form1:numberOperator"></f:ajax>
+					</p:selectOneMenu>
+					<p:selectOneMenu id="numberOperator"
+						value="#{sbglSbxxMb.numbCondition.operator}">
+						<f:selectItems value="#{selectColumns.commonOptions()}" var="opt"
+							itemLabel="#{opt.selname}" itemValue="#{opt.selval}"></f:selectItems>
+					</p:selectOneMenu>
+
+					<h:panelGroup id="numberValue">
+						<p:inputText
+							rendered="#{!(sbglSbxxMb.selectNumKey eq '参与事件' || sbglSbxxMb.selectNumKey eq '使用年限' || 
+						                       sbglSbxxMb.selectNumKey eq '强检' || sbglSbxxMb.selectNumKey eq '标准器' || sbglSbxxMb.selectNumKey eq '' || sbglSbxxMb.selectNumKey ==null) }"
+							value="#{sbglSbxxMb.numbCondition.value}"></p:inputText>
+						<p:selectOneMenu
+							rendered="#{ (sbglSbxxMb.selectNumKey eq '参与事件')}"
+							value="#{sbglSbxxMb.numbCondition.value}">
+							<f:selectItems value="#{selectSbxxBean.cysjItems}" var="obj"
+								itemLabel="#{obj.key}" itemValue="#{obj.value}"></f:selectItems>
+						</p:selectOneMenu>
+						<p:selectOneMenu value="#{sbglSbxxMb.numbCondition.value}"
+							style="width:100px"
+							rendered="#{sys.sbxx.synx.sfsx and (sbglSbxxMb.selectNumKey eq '使用年限')}">
+							<f:selectItems value="#{selectSbxxBean.yearItems}" var="obj"
+								itemLabel="#{obj.key}" itemValue="#{obj.value}"></f:selectItems>
+						</p:selectOneMenu>
+						<p:selectBooleanCheckbox
+							rendered="#{(sbglSbxxMb.selectNumKey eq '强检') 
+					                          or (sbglSbxxMb.selectNumKey eq '标准器') or (sbglSbxxMb.selectNumKey ==null) || 
+						                      (sbglSbxxMb.selectNumKey =='') }"
+							value="#{sbglSbxxMb.numbCondition.value}" style="width:100px" />
+					</h:panelGroup>
+
+
+					<p:selectOneMenu value="#{sbglSbxxMb.numbCondition.logic}">
+						<f:selectItem itemLabel="并且" itemValue="并且"></f:selectItem>
+						<f:selectItem itemLabel="或者" itemValue="或者"></f:selectItem>
+					</p:selectOneMenu>
+					<p:commandButton style="width:80px" value="添加"
+						actionListener="#{sbglSbxxMb.addNumbCondition()}"
+						update=":form1:condition"></p:commandButton>
+					<h:outputText value="日期字段"></h:outputText>
+					<p:selectOneMenu value="#{sbglSbxxMb.dateCondition.fieldName}">
+						<f:selectItems value="#{selectColumns.dateColumns()}" var="ccol"
+							itemLabel="#{ccol.zdms}" itemValue="#{ccol.zdms}"></f:selectItems>
+					</p:selectOneMenu>
+					<p:selectOneMenu value="#{sbglSbxxMb.dateCondition.operator}">
+						<f:selectItems value="#{selectColumns.commonOptions()}" var="opt"
+							itemLabel="#{opt.selname}" itemValue="#{opt.selval}"></f:selectItems>
+					</p:selectOneMenu>
+					<p:calendar value="#{sbglSbxxMb.dateCondition.dateValue}"
+						readonlyInput="true" navigator="true" pattern="yyyy-MM-dd"></p:calendar>
+					<p:selectOneMenu value="#{sbglSbxxMb.dateCondition.logic}">
+						<f:selectItem itemLabel="并且" itemValue="并且"></f:selectItem>
+						<f:selectItem itemLabel="或者" itemValue="或者"></f:selectItem>
+					</p:selectOneMenu>
+					<p:commandButton style="width:80px" value="添加"
+						actionListener="#{sbglSbxxMb.addDateCondition()}"
+						update=":form1:condition"></p:commandButton>
+				</p:panelGrid>
+				<div style="margin-left: -10px;margin-right: -10px;float: right;"></div>
+				<p:panelGrid columns="2" style="width:680px">
+					<p:dataTable id="condition" var="cond"
+						style="height:100%;
+						            widht:620px;margin-left: -10px;margin-right: -10px"
+						value="#{sbglSbxxMb.pageConditions}" rows="200"
+						rowIndexVar="rowVar">
+						<p:column width="80" headerText="查询字段">#{cond.fieldName}</p:column>
+						<p:column width="80" headerText="查询方法">#{cond.operator}</p:column>
+						<p:column headerText="查询内容">
+							<h:outputText value="#{cond.dateValue}"
+								rendered="#{cond.zdlx eq 'date'}">
+								<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+									timeZone="GMT+8"></f:convertDateTime>
+							</h:outputText>
+							<h:outputText value="#{cond.value}"
+								rendered="#{cond.zdlx != 'date'}"></h:outputText>
+						</p:column>
+						<p:column width="80" headerText="关联条件">#{cond.logic}</p:column>
+						<p:column width="80" headerText="操作">
+							<p:commandButton value="删除" update=":form1:condition"
+								actionListener="#{sbglSbxxMb.deletePageConditions}"
+								style="width:80px">
+								<f:attribute name="pageCondtion" value="#{cond}"></f:attribute>
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+					<p:panelGrid style="width:83px;float:right;">
+						<p:commandButton value="删除全部" update=":form1:condition"
+							actionListener="#{sbglSbxxMb.clearPageConditions()}"
+							style="margin-top: 30px;width:80px"></p:commandButton>
+					</p:panelGrid>
+				</p:panelGrid>
+
+				<p:commandButton value="查询" ajax="true"
+					action="#{sbglSbxxMb.doSearch}" update=":form:data"></p:commandButton>
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+</h:body>
+</html>

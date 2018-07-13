@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="idms.model.jlgl.sbgl.SbglBhgxxFkd" table="SBGL_BHGXX_FKD">
+		<id name="id" type="java.lang.Long" column="ID" length="22">
+			<generator class="sequence">
+				<param name="sequence">S_SBGL_BHGXX_FKD</param>
+			</generator>
+		</id>		
+		<many-to-one name="sbxx" class="idms.model.jlgl.sbgl.SbglSbxx">
+			<column name="SBXX" />
+		</many-to-one>
+		
+        <many-to-one name="ztxg" class="idms.model.jlgl.sbrz.SbrzZtxg">
+			<column name="ZTXG" />
+		</many-to-one>
+		
+		<many-to-one name="fxr" class="idms.model.base.User">
+			<column name="FXR" />
+		</many-to-one>	
+					
+		<property name="fkdh" type="string" length="250" column="FKDH" />
+		<property name="bhgms" type="string" length="250" column="BHGMS" />
+		<property name="bhgsbpj" type="string" length="250" column="BHGSBPJ" />
+		
+		<property name="fxclr" type="string" length="250" column="FXCLR" />
+		<property name="clsj" type="java.util.Date" column="CLSJ"
+			length="7" />
+		<property name="cljg" type="string" length="250" column="CLJG" />
+		
+		<property name="fxsj" type="java.util.Date" column="FXSJ"
+			length="7" />
+		<property name="fxpj" type="string" length="250" column="FXPJ" />
+		<property name="pjr" type="string" length="250" column="PJR" />
+		<property name="pjsj" type="java.util.Date" column="PJSJ"
+			length="7" />	
+			
+		<property name="sbczfx" type="boolean" length="20" column="SBCZFX" />
+		<property name="cljgczfx" type="boolean" length="20" column="CLJGCZFX" />
+		<property name="sfzz" type="java.lang.String" length="20" column="SFZZ" />
+		<property name="zzchr" type="string" length="250" column="ZZCHR" />
+		<property name="zzqk" type="string" length="250" column="ZZQK" />
+		<property name="zzsj" type="java.util.Date" column="ZZSJ"
+			length="7" />			
+		<property name="jdrwId" type="java.lang.Long" column="JDRWID" />	
+	</class>
+</hibernate-mapping>

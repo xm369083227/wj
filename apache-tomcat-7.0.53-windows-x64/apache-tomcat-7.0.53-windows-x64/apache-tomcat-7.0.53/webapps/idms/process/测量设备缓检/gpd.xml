@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process-diagram name="测量设备缓检" width="799" height="585">
+  <node name="开始" x="216" y="36" width="193" height="40">
+    <transition name="提交">
+      <label x="5" y="-10"/>
+    </transition>
+  </node>
+  <node name="计量管理员申请" x="216" y="108" width="193" height="40">
+    <transition name="提交">
+      <label x="5" y="-10"/>
+    </transition>
+    <transition name="取消">
+      <label x="5" y="-10"/>
+      <bendpoint w1="268" h1="3" w2="268" h2="-213"/>
+      <bendpoint w1="268" h1="219" w2="268" h2="3"/>
+    </transition>
+  </node>
+  <node name="主管领导审批" x="216" y="181" width="193" height="40">
+    <transition name="提交">
+      <label x="5" y="-10"/>
+    </transition>
+  </node>
+  <node name="计量科长审批" x="214" y="250" width="193" height="40">
+    <transition name="结束申请">
+      <label x="5" y="-10"/>
+    </transition>
+  </node>
+  <node name="结束" x="216" y="324" width="193" height="40"/>
+</process-diagram>

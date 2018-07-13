@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="idms.model.jlgl.gcgl.GcglGccs" table="GCGL_GCCS"
+		lazy="false">
+		<id name="id" type="long" column="ID" length="22">
+			<generator class="sequence">
+				<param name="sequence">S_GCGL_GCCS</param>
+			</generator>
+		</id>
+		<many-to-one name="clgc" class="idms.model.jlgl.gcgl.GcglClgc" column="CLGC" />
+		<property name="gccs" type="string" column="GCCS" length="100" />
+		<property name="clfw" type="string" column="CLFW" length="100" />
+		<property name="yxwc" type="string" column="YXWC" length="100" />
+		<property name="fbl" type="string" column="FBL" length="100" />
+		<property name="hjtj" type="string" column="HJTJ" length="100" />
+		<property name="clmc" type="string" column="CLMC" length="20" />
+		<property name="sbmc" type="string" column="SBMC" length="50" />
+		<property name="xhgg" type="string" column="XHGG" length="50" />
+		<property name="zqd" type="string" column="ZQD" length="200" />
+		<!-- Associations -->
+
+	</class>
+</hibernate-mapping>
+ 

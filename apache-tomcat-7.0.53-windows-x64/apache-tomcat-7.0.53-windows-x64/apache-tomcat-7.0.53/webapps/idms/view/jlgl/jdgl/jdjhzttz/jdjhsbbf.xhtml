@@ -1,0 +1,300 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+	<title>设备报废单</title>
+	<ui:include src="/common/templates/ui.xhtml"></ui:include>
+</h:head>
+<body style="border-bottom-width: 1px">
+<p:growl id="growlid" showDetail="false" sticky="true" autoUpdate="true"></p:growl>
+	<h:form id="form" style="text-align: center;"
+		enctype="multipart/form-data">
+		<p:tabView id="allform" style="text-align: left;">
+			<p:tab title="设备报废申请单">
+				<p:panel header="" style="width:90%;text-align: left;">
+					<p:panelGrid columns="1" width="900px" align="left">
+						<f:facet name="header">
+							<h:outputText value="设备报废申请"
+								style="text-align: center;font-size:25px;"></h:outputText>
+						</f:facet>
+						<p:panel style="border:1px solid #ADADAD">
+							<h:panelGrid columns="4" width="900px" align="left">
+								<h:outputText value="申&nbsp;&nbsp;请&nbsp;&nbsp;人："></h:outputText>
+								<p:inputText value="#{SbbfBean.ztxg.sqr}" size="20"
+									readonly="true"></p:inputText>
+								<h:outputText value="申请日期："></h:outputText>
+								<p:inputText value="#{SbbfBean.ztxg.kssj}" readonly="true">
+									<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+										timeZone="GMT+8" />
+								</p:inputText>
+							</h:panelGrid>
+						</p:panel>
+						<p:panel style="border:1px solid #ADADAD">
+							<h:panelGrid columns="4" width="900px" align="left">
+								<h:outputText value="计量编号："></h:outputText>
+								<p:inputText value="#{SbbfBean.ztxg.sbglSbxx.jlbh}" size="20"
+									readonly="true"></p:inputText>
+								<h:outputText value="设备名称："></h:outputText>
+								<p:inputText value="#{SbbfBean.ztxg.sbglSbxx.sbmc}" size="20"
+									readonly="true"></p:inputText>
+								<h:outputText value="规格型号："></h:outputText>
+								<p:inputText value="#{SbbfBean.ztxg.sbglSbxx.ggxh}" size="20"
+									readonly="true"></p:inputText>
+								<h:outputText value="生产厂家："></h:outputText>
+								<p:inputText value="#{SbbfBean.ztxg.sbglSbxx.sccj}" size="20"
+									readonly="true"></p:inputText>
+								<h:outputText value="出厂编号："></h:outputText>
+								<p:inputText value="#{SbbfBean.ztxg.sbglSbxx.ccbh}" size="20"
+									readonly="true"></p:inputText>
+								<h:outputText value="使用部门："></h:outputText>
+								<p:inputText value="#{SbbfBean.ztxg.sbglSbxx.sybmmc}" size="20"
+									readonly="true"></p:inputText>
+								<h:outputText value="检定方式："></h:outputText>
+								<p:inputText value="#{SbbfBean.ztxg.sbglSbxx.jdfs}" size="20"
+									readonly="true"></p:inputText>
+								<h:outputText value="设备状态："></h:outputText>
+								<p:inputText value="#{SbbfBean.ztxg.sbglSbxx.sbzt}" size="20"
+									readonly="true"></p:inputText>
+							</h:panelGrid>
+						</p:panel>
+						<p:panel style="border:1px solid #ADADAD">
+							<h:panelGrid columns="2" width="900px" align="left">
+								<h:panelGroup>
+									<h:outputText value="报废原因："></h:outputText>
+									<h:outputText value="*" style="color: red" />
+								</h:panelGroup>
+								<p:inputTextarea value="#{SbbfBean.ztxg.xgyy}" rows="3"
+									readonly="true" cols="90" required="true" label="报废原因"
+									maxlength="100"></p:inputTextarea>
+								<h:outputText value="备注："></h:outputText>
+								<p:inputTextarea value="#{SbbfBean.ztxg.bz}" rows="3"
+									readonly="false" cols="90" label="备注" maxlength="100"></p:inputTextarea>
+							</h:panelGrid>
+						</p:panel>
+						<p:panel style="border:1px solid #ADADAD" rendered="false">
+
+							<h:panelGrid columns="4" width="900px" align="left">
+								<h:outputText value="主管领导："></h:outputText>
+								<p:inputText value="#{SbbfBean.spjlSbbfBean.spjl_A.qzyhmc}" size="20"
+									readonly="true"></p:inputText>
+								<h:outputText value="审批日期："></h:outputText>
+								<p:inputText value="#{SbbfBean.spjlSbbfBean.spjl_A.qzrq}" readonly="true">
+									<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+										timeZone="GMT+8" />
+								</p:inputText>
+							</h:panelGrid>
+							<h:panelGrid columns="2" width="900px" align="left">
+							<h:panelGroup>
+								<h:outputText value="审批意见："></h:outputText>
+								<h:outputText value="*" style="color: red" />
+								</h:panelGroup>
+								<p:inputTextarea rows="3" readonly="#{!SbbfBean.showA}"
+									value="#{SbbfBean.spjlSbbfBean.spjl_A.qznr}" cols="90"
+									style="border:#{SbbfBean.taskNode=='主管领导审批' ? '2px solid' : ''};border-color:#{SbbfBean.taskNode=='主管领导审批' ? '#46A3FF' : ''};"
+									label="审批意见" maxlength="100" required="true" requiredMessage="审批意见：不能为空！"></p:inputTextarea>
+							</h:panelGrid>
+						</p:panel>
+						<p:panel style="border:1px solid #ADADAD" rendered="false">
+
+							<h:panelGrid columns="4" width="900px" align="left" rendered="false">
+							
+								<h:outputText value="计量科长："></h:outputText>
+								
+								
+								<p:inputText value="#{SbbfBean.spjlSbbfBean.spjl_B.qzyhmc}" size="20"
+									readonly="true"></p:inputText>
+								<h:outputText value="审批日期："></h:outputText>
+								<p:inputText value="#{SbbfBean.spjlSbbfBean.spjl_B.qzrq}" readonly="true">
+									<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+										timeZone="GMT+8" />
+								</p:inputText>
+
+							</h:panelGrid>
+							<h:panelGrid columns="2" width="900px" align="left" rendered="false">
+							<h:panelGroup>
+								<h:outputText value="审批意见："></h:outputText>
+								<h:outputText value="*" style="color: red" />
+								</h:panelGroup>
+								<p:inputTextarea rows="3" readonly="#{!SbbfBean.showB}"
+									style="border:#{SbbfBean.taskNode=='计量科长审批' ? '2px solid' : ''};border-color:#{SbbfBean.taskNode=='计量科长审批' ? '#46A3FF' : ''};"
+									value="#{SbbfBean.spjlSbbfBean.spjl_B.qznr}" cols="90" label="审批意见"
+									maxlength="100" required="true" requiredMessage="审批意见：不能为空！"></p:inputTextarea>
+							</h:panelGrid>
+						</p:panel>
+						<p:panel style="border:1px solid #ADADAD">
+
+							<h:panelGrid columns="4" width="900px" align="left">
+								<h:outputText value="责任工程师："></h:outputText>
+								<p:inputText value="#{SbbfBean.spjlSbbfBean.spjl_C.qzyhmc}" size="20"
+									readonly="true"></p:inputText>
+								<h:outputText value="审批日期："></h:outputText>
+								<p:inputText value="#{SbbfBean.spjlSbbfBean.spjl_C.qzrq}" readonly="true">
+									<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+										timeZone="GMT+8" />
+								</p:inputText>
+
+							</h:panelGrid>
+							<h:panelGrid columns="2" width="900px" align="left">
+							<h:panelGroup>
+								<h:outputText value="审批意见："></h:outputText>
+								<h:outputText value="*" style="color: red" />
+								</h:panelGroup>
+								<p:inputTextarea rows="3" readonly="#{!SbbfBean.showC}"
+									style="border:#{SbbfBean.taskNode=='责任工程师确认' ? '2px solid' : ''};border-color:#{SbbfBean.taskNode=='责任工程师确认' ? '#46A3FF' : ''};"
+									value="#{SbbfBean.spjlSbbfBean.spjl_C.qznr}" cols="90" label="审批意见"
+									maxlength="100" required="true" requiredMessage="审批意见：不能为空！"></p:inputTextarea>
+							</h:panelGrid>
+						</p:panel>
+					</p:panelGrid>
+				</p:panel>
+			</p:tab>
+			
+		</p:tabView>
+		<h:panelGrid columns="4" style="margin-left: 200px;">
+			<h:panelGroup>
+				<p:commandButton value="同意" 
+				action="#{SbbfBean.submit()}"
+					 oncomplete="PF('bhgxxDialog').show()" >
+				</p:commandButton>
+				&nbps;
+				&nbps;&nbsp;
+				<p:commandButton value="取消" ajax="false" rendered="#{SbbfBean.currentTask.zt==1}"
+				 action="#{SbbfBean.cancel}"  >
+				</p:commandButton>
+			</h:panelGroup>
+
+		</h:panelGrid>
+	</h:form>
+	
+	<p:dialog id="bhgxxDialog" header="不合格信息反馈单" widgetVar="bhgxxDialog"
+			maximizable="true" height="550px" width="900px">
+			<h:form id="bhgxxform" enctype="multipart/form-data">			
+			<p:panelGrid columns="1">
+		<f:facet name="header">
+			<h:outputText value="测量设备不合格信息反馈单"
+				style="text-align: center;font-size:25px;"></h:outputText>
+		</f:facet>
+		<h:panelGrid columns="4">
+			<h:outputText value="使用单位（User the unit）："></h:outputText>
+			<p:inputText value="#{SbbfBean.ztxg.sbglSbxx.sybmmc}" size="20"
+				readonly="true"></p:inputText>
+			<h:outputText value="反馈单号（Feedback No.）："></h:outputText>
+			<p:inputText value="#{SbbfBean.bhgxxFkd.fkdh}" size="20"
+				readonly="true"></p:inputText>
+		</h:panelGrid>
+		<h:outputText value="测量设备基本信息：" style="width:100%;" />
+		<h:panelGrid columns="6" align="left" width="800px">
+			<h:outputText value="测量设备编码：" />
+			<p:inputText value="#{SbbfBean.ztxg.sbglSbxx.jlbh}" maxlength="22"  />
+			<h:outputText value="测量设备名称：" />
+			<p:inputText value="#{SbbfBean.ztxg.sbglSbxx.sbmc}" />
+			<h:outputText value="型号规格：" />
+			<p:inputText value="#{SbbfBean.ztxg.sbglSbxx.ggxh}" maxlength="22" />
+			<h:outputText value="精度等级：" />
+			<p:inputText value="#{SbbfBean.ztxg.sbglSbxx.zqd}" />
+			<h:outputText value="出厂编号：" />
+			<p:inputText value="#{SbbfBean.ztxg.sbglSbxx.ccbh}" maxlength="22"  />
+			<h:outputText value="生产厂家：" />
+			<p:inputText value="#{SbbfBean.ztxg.sbglSbxx.sccj}" />
+		</h:panelGrid>
+		<h:panelGrid columns="1" width="700px" align="left">
+			<h:outputText
+				value="测量设备不合格情况描述（Reason of the measuring equipment to the unqualified）："
+				style="width:100%;" />
+			<p:inputTextarea style="width:700px;" readonly="true"
+				value="#{SbbfBean.ztxg.xgyy}" required="true"
+				label="测量设备不合格情况描述" maxlength="500"/>
+		</h:panelGrid>
+		<h:panelGrid columns="4" width="900px" align="left">
+			<h:outputText value="发现人（Finding people）："></h:outputText>
+			<p:inputText size="20" value="#{SbbfBean.ztxg.sqr}" readonly="true"></p:inputText>
+			<h:outputText value="发现时间（Finding time）："></h:outputText>
+			<p:inputText value="#{SbbfBean.ztxg.kssj}" readonly="true">
+				<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+					timeZone="GMT+8" />
+			</p:inputText>
+		</h:panelGrid>
+		<h:panelGrid columns="1" width="700px" align="left">
+		<h:panelGroup>
+			<h:outputText
+				value="不合格测量设备评价（Unqualified measurement equipment appraisal）："
+				style="width:100%;" />
+				<h:outputText value="*" style="color:red"/>
+				</h:panelGroup>
+			<p:inputTextarea style="width:700px;"
+				value="#{SbbfBean.bhgxxFkd.bhgsbpj}" required="true"
+				label="不合格产生的可能原因" maxlength="500" />
+				<h:panelGrid columns="2">
+				<h:panelGroup>
+				<h:outputText value="是否追踪："></h:outputText>
+				<h:outputText value="*" style="color:red" />
+				</h:panelGroup>
+				<h:selectOneRadio value="#{SbbfBean.bhgxxFkd.sfzz}">
+				  <f:selectItem itemValue="否" itemLabel="否"/>
+				  <f:selectItem itemValue="是" itemLabel="是"/>
+				</h:selectOneRadio>
+				</h:panelGrid>
+		</h:panelGrid>
+		
+		<h:panelGrid columns="4" width="900px" align="left">
+			<h:outputText value="计量责任工程师（Measuring responsibility engineer）："></h:outputText>
+			<p:inputText size="20" readonly="true" value="#{SbbfBean.spjlSbbfBean.spjl_C.qzyhmc}"></p:inputText>
+			<h:outputText value="时间（time）："></h:outputText>
+			<p:inputText readonly="true" value="#{SbbfBean.spjlSbbfBean.spjl_C.qzrq}">
+				<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+					timeZone="GMT+8" />
+			</p:inputText>
+		</h:panelGrid>
+		<h:panelGrid columns="1" width="700px" align="left">
+			<h:outputText
+				value="产品（或检测、实验数据）追踪情况（Tracing of Products or Measuring/Experimentation Data）："
+				style="width:100%;" />
+			<p:inputTextarea style="width:700px;"
+				value="#{SbbfBean.bhgxxFkd.zzqk}" maxlength="500" />
+		</h:panelGrid>
+		<h:panelGrid columns="4" width="900px" align="left">
+			<h:outputText value="追踪核查人（Inspector people）："></h:outputText>
+			<p:inputText size="20" readonly="true"></p:inputText>
+			<h:outputText value="时间（time）："></h:outputText>
+			<p:inputText readonly="true">
+				<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+					timeZone="GMT+8" />
+			</p:inputText>
+		</h:panelGrid>
+		<h:panelGrid columns="1" width="700px" align="left">
+			<h:outputText value="对是否产生风险的评价（Valuation to producing risk or not）："
+				style="width:1000px;" />
+			<p:inputTextarea style="width:700px;"
+				value="#{SbbfBean.bhgxxFkd.sbczfx}" 
+				label="对是否产生风险的评价" maxlength="500" />
+		</h:panelGrid>
+		<h:panelGrid columns="1" width="700px" align="left">
+			<h:outputText value="处理结果（Disposal result）：" style="width:100%;" />
+			<p:inputTextarea value="#{SbbfBean.bhgxxFkd.cljg}"
+				style="width:700px;" maxlength="500" />
+		</h:panelGrid>
+		<h:panelGrid columns="4" width="900px" align="left">
+			<h:outputText value="分析处理人（Approver people）："></h:outputText>
+			<p:inputText value="#{SbbfBean.bhgxxFkd.fxclr}" size="20"
+				readonly="true"></p:inputText>
+			<h:outputText value="时间（time）："></h:outputText>
+			<p:inputText readonly="true">
+				<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+					timeZone="GMT+8" />
+			</p:inputText>
+		</h:panelGrid>
+		<p:commandButton value="保存" ajax="false" rendered="#{SbbfBean.currentTask.zt==1}"
+					oncomplete="PF('bhgxxDialog').hide()"
+					action="#{SbbfBean.saveBhgxx}" style="margin-left: 320px"></p:commandButton>
+	</p:panelGrid>
+			
+			</h:form>
+			</p:dialog>
+
+</body>
+
+</html>

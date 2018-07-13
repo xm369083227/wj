@@ -1,0 +1,171 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <f:view contentType="text/html">
+    
+        <h:head>
+            <title>IDMS</title>
+            <link id="themes" rel="stylesheet" type="text/css" href="#{request.contextPath}/common/jQuery/themes/cupertino/easyui.css"/>
+			<link rel="stylesheet" type="text/css" href="#{request.contextPath}/common/jQuery/themes/icon.css"/>
+			<link rel="stylesheet" type="text/css" href="#{request.contextPath}/common/images/top/top.css"></link>
+			<script type="text/javascript" charset="utf-8" src="#{request.contextPath}/common/jQuery/jquery.easyui.min.js"></script>
+			<script type="text/javascript" charset="utf-8" src="#{request.contextPath}/common/jQuery/locale/easyui-lang-zh_CN.js"></script>
+			<script type="text/javascript" charset="utf-8" src="#{request.contextPath}/common/scripts/system/main.js"></script>
+			<script type="text/javascript">
+			   $(document).ready(function(){ 
+				   $('#frameHomeId').attr('src','home.xhtml');
+				    	var tabsId = 'tab_menu';//tabs页签Id
+						var tab_rightmenuId = 'tab_rightmenu';//tabs右键菜单Id
+						//绑定tabs的右键菜单
+						$("#"+tabsId).tabs({
+							onContextMenu:function(e,title,index){//这时去掉 tabsId所在的div的这个属性：class="easyui-tabs"，否则会加载2次
+								e.preventDefault();
+								alert(title);
+							$('#tab_rightmenu').menu('show', { 
+								left: 200, 
+								top: 100 
+								}); 
+								$('#tab_rightmenu').show();
+							}
+						});
+			   });
+			    $(function (){
+                    $("#menuPanel").delegate("a.menuItem", "click", function(){
+                    $(this).siblings().removeClass("menuItem_hover").end().addClass("menuItem_hover");
+                   });
+                });
+                
+               function changeMenu(a){
+	                    loadTree();
+               }
+			</script>
+			<style>
+			  A {text-decoration: NONE} <!--去掉下划线--> 
+			</style>
+        </h:head>
+    <h:body class="easyui-layout" >
+
+
+	<h:inputHidden id="jv" value="#{funcTreeBean.menu}"/>  
+	<h:outputText id="curus" style="display: none;" value="#{funcTreeBean.userName }" />
+
+    	<div id="cc" class="easyui-layout" style="width:100%;height:100%;">
+         <div data-options="region:'north'" style="height:65px;width: 1440px;min-width: 1440px;overflow:auto; " >
+          <!-- div 横排 -display:inline-->
+			<style>
+			.moreinfo{ display:inline}
+			.msg_div{ display:inline}
+			</style>
+            <div class="index_top" style="overflow: auto;">
+				<div class="left_logo">
+					<img id="logoImg" src="#{request.contextPath}/common/images/top/bpmlogo_login.gif"/>
+				</div>
+				<div class="search_welcome">
+					<div class="welcome_panel">
+									<div style="padding: 5px;">
+											欢迎您，
+											#{funcTreeBean.userName}
+											<span class="moreinfo">
+											<span style="cursor: pointer;font-size: 13px;text-decoration: underline;" title="更多操作">
+											<span id="loginButton"></span></span>
+											    <div style="position:absolute;top:50px;left:1029.3333740234375px;" class="itemDiv"><ul>
+												    <li><a class="more detail2" resid="-002" href="/bpm3/platform/system/sysUser/get.ht?userId=1&amp;canReturn=1" target="_blank">个人资料</a></li>
+												    </ul>
+												 </div>
+											</span>
+											<span class="moreinfo">
+												<div style="position:absolute;top:50px;left:1029.3333740234375px;" class="itemDiv">
+												<ul>
+												</ul></div>
+											</span>
+									<div class="msg_div" alt="站内消息">
+											<img id="inMsg" title="站内消息" src="#{request.contextPath}/common/images/top/msg_none.png"/>
+										    <a href="javascript:showReadMsgDlg()" id="labMsgSize"></a>
+									</div>
+								    <a class="more exit2" href="#{request.contextPath}/login.xhtml">退出系统</a>
+						       </div>
+								<div colspan="8" style="text-align:right;padding-top:1px;padding-right: 100px">
+									<span style="padding-right: 5px;"> &nbsp;联系我们：618258</span>
+									<a href="http://www.xaxt.cn/" style="padding-right: 5px;" target="_blank">访问官网：http://www.xaxt.cn/</a>
+								</div>
+					</div>
+				</div>
+			    <h:form id="userform">
+					<div class="index_menu">
+						<div style="width: 730px;" class="menuParent">
+							<div style="left: 0px;" id="menuPanel" class="menuPanel">
+							<p:commandLink  ajax="true" action="#{funcTreeBean.action}" oncomplete="changeMenu(this)" update=":jv" styleClass="menuItem">
+							   <img src="#{request.contextPath}/common/images/top/destop.gif"/>
+							   <span>个人办公</span>
+							   <f:param name="param_name" value="1"></f:param>
+							</p:commandLink>
+							
+							  <p:commandLink  ajax="true" action="#{funcTreeBean.action}" oncomplete="changeMenu(this)" update=":jv" styleClass="menuItem">
+							   <img src="#{request.contextPath}/common/images/top/p_5.png"/>
+							   <span>计量管理</span>
+							   <f:param name="param_name" value="3"></f:param>
+							</p:commandLink>
+							
+							
+							 <p:commandLink rendered="#{funcTreeBean.userName =='系统管理员'}" ajax="true" action="#{funcTreeBean.action}" oncomplete="changeMenu(this)" update=":jv" styleClass="menuItem">
+							   <img src="#{request.contextPath}/common/images/top/setting.png"/>
+							   <span>系统管理</span>
+							   <f:param name="param_name" value="4"></f:param>
+							</p:commandLink>
+							
+						  
+							</div>
+						</div>
+					
+					</div>
+		          </h:form>	
+	          <div class="head_bg"></div>
+             </div>
+           
+        </div>
+
+
+
+
+        <div data-options="region:'south',split:false" style="height:20px;">
+             <div class="bg" id="bg" align="center" style="left: 40%; bottom: 3px; color: rgb(81, 81, 81); margin-left: -160px; position: absolute;">
+                         Copyright ℗  2015-2016, 西安交通大学 CIM 所, All Rights Reserved 
+             </div>
+        </div>
+        <div data-options="region:'west',split:false" title="系统菜单" style="width:200px;">
+           <div><ul id="tt"></ul> </div>
+        </div>
+        <div data-options="region:'center',split:false" style="overflow: hidden;">
+           <div id="tab_menu" class="easyui-tabs" fit="true"  style="margin-left: 2px;border:0px solid #000000;" >
+               <div id="sysmsg" title="首页" style="margin-top: 0px">
+                   <iframe id="frameHomeId" frameborder="0" scrolling="yes" src="" style="width: 100%;height: 100%"></iframe>
+               </div>
+           </div>
+          
+        </div>
+    </div>
+
+    
+     <p:idleMonitor timeout="1800000" onidle="PF('idleDialog').show();" />  
+     <p:dialog header="您已经很长时间没有操作，请重新登录！" closable="false" resizable="false"  
+               widgetVar="idleDialog" modal="true"  width="400">
+         <table align="center">
+             <tr>
+                 <td><a href="#{request.contextPath}/index.html" >重新登录</a></td>
+             </tr>
+         </table>
+     </p:dialog>
+            
+			      <div id="tab_rightmenu" class="easyui-menu" style="width:120px;">  
+				    <div name="close" class="menu-item" style="color:red">关闭</div>  
+				    <div name="Other" class="menu-item">关闭其他</div>  
+				    <div name="All" class="menu-item">关闭所有</div>
+			     </div>  
+     </h:body>
+    </f:view>
+ 
+</html>

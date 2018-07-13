@@ -1,0 +1,195 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	<h:head>
+	        <title>IDMS</title>
+            <link id="themes" rel="stylesheet" type="text/css" href="#{request.contextPath}/common/jQuery/themes/cupertino/easyui.css"/> 
+	        <script type="text/javascript" charset="utf-8" src="#{request.contextPath}/common/jQuery/jquery.easyui.min.js"></script>
+			<script type="text/javascript" charset="utf-8" src="#{request.contextPath}/common/jQuery/locale/easyui-lang-zh_CN.js"></script>
+	        <ui:include src="/common/templates/ui.xhtml"></ui:include>
+	</h:head>
+   <h:body class="easyui-layout">
+       <p:growl id="growlid" showDetail="false" sticky="true" autoUpdate="true"></p:growl>
+    	<div id="cc" class="easyui-layout" style="width:100%;height:100%;min-width: 1200px">
+	        <div data-options="region:'center',split:false"  style="overflow: hidden;">
+                   <h:form id="plan">
+	                         <p:tabView id="queryform">
+	                               <p:tab title="抽检计划">
+	                                   <h:panelGrid columns="2">
+		                                  <h:outputText value="参与抽检分类："></h:outputText>
+		                                  <p:selectManyCheckbox value="#{randomCheckPlan.xkfls}"  >
+		                                      <f:selectItems  value="#{selectXkflBean.parentsNoSelect}" itemLabelEscaped="#{obj.value!=力学F}"
+											     var="obj" itemLabel="#{obj.key}" itemValue="#{obj.value}" 
+											  ></f:selectItems>	
+		                                  </p:selectManyCheckbox>
+	                                 </h:panelGrid>
+	                                  <h:panelGrid columns="12">
+		                                           <h:outputText value="有效期："></h:outputText>
+				                                  <h:panelGroup>
+								                          <p:calendar label="有效期" value="#{randomCheckPlan.startDate}" size="8" readonlyInput="false" navigator="true" pattern="yyyy-MM-dd" />
+										                                                       至<p:calendar label="有效期" value="#{randomCheckPlan.endDate}"  size="8"  readonlyInput="false" navigator="true"  pattern="yyyy-MM-dd" />
+								                  </h:panelGroup>
+							                    <h:outputText value="管理类型："></h:outputText>
+			                                     <p:selectOneRadio  value="#{randomCheckPlan.gllb}"   style="width:130px" >
+							                         <f:selectItem  itemLabel="A" itemValue="A"/>
+							                         <f:selectItem  itemLabel="B" itemValue="B"/>
+							                     </p:selectOneRadio>
+							                     <h:outputText value="检定方式：" rendered="false"></h:outputText>
+			                                     <p:selectOneRadio value="#{randomCheckPlan.jdfs}" rendered="false"  style="width:130px" >
+							                         <f:selectItem  itemLabel="自检" itemValue="自检"/>
+							                         <f:selectItem  itemLabel="外送" itemValue="外送"/>
+							                     </p:selectOneRadio>
+							                     
+							                      <h:panelGrid columns="4">
+							                         <h:outputText value="#{sys.sbxx.sfqj.zdms}：" rendered="#{sys.sbxx.sfqj.sfsx}"/>
+							                          <p:selectBooleanCheckbox value="#{randomCheckPlan.sfqj}" style="width:50px" rendered="#{sys.sbxx.sfqj.sfsx}"/>
+							                          <h:outputText value="#{sys.sbxx.sfbzq.zdms}：" rendered="#{sys.sbxx.sfbzq.sfsx}"/>
+							                          <p:selectBooleanCheckbox value="#{randomCheckPlan.sfbzq}" style="width:50px" rendered="#{sys.sbxx.sfbzq.sfsx}"/>
+							                      </h:panelGrid>
+							                              <h:outputText value="抽检比例"></h:outputText>
+					                              <h:panelGroup>
+							                        <p:inputText size="2" value="#{randomCheckPlan.cjbl}"></p:inputText>
+							                        <p:outputLabel value="%"></p:outputLabel>
+							                      </h:panelGroup>
+							                        <h:outputText value="提前送检天数："></h:outputText>
+							                        <p:inputText  size="2"  value="#{randomCheckPlan.tqsjts}" label="提前送检天数">
+							                        	<f:validateLongRange minimum="3" maximum="30"/>
+							                        </p:inputText>
+	                                  </h:panelGrid>
+                                     <p:commandButton value="查询" ajax="false" action="#{randomCheckPlan.doSearch}"></p:commandButton>
+	                              </p:tab>
+	                        </p:tabView>
+                         
+		                  <p:toolbar id="toolbarid">
+			                      <f:facet name="left">
+			                              <p:commandButton value="保存计划" disabled="#{randomCheckPlan.jdjh!=null}" ajax="false" actionListener="#{randomCheckPlan.makePlan}"></p:commandButton>
+			                              <h:panelGroup id="curentJdjh" >
+			                                   <h:outputLabel value="当前计划：" rendered="#{randomCheckPlan.jdjh!=null}"></h:outputLabel>
+			                                   <h:outputText value="#{randomCheckPlan.jdjh.jhbm}" style="color:green"></h:outputText>
+			                                   &nbsp;&nbsp;<h:outputText value="应检设备总数：" rendered="#{randomCheckPlan.jdjh!=null}"></h:outputText>
+			                                   <h:outputText value="#{randomCheckPlan.sbxxList.size()}件" rendered="#{randomCheckPlan.jdjh!=null}" style="color:red"></h:outputText>
+			                              </h:panelGroup>
+			                       </f:facet>
+					       </p:toolbar>
+					 <p:tabView id="cjsb">
+					    <p:tab title="抽检设备信息">
+					         <p:dataTable  id="data" var="sb" scrollable="true" 
+					          scrollWidth="935" style="width:1200px;margin-left: -15px;margin-top: -10px" 
+					          scrollHeight="340"      value="#{randomCheckPlan.sbxxList}"  
+				              rows="#{randomCheckPlan.sbxxList.size()}"   
+				              widgetVar="cellSbxx" selection="#{randomCheckPlan.selectSbxxs}"  rowKey="#{sb.id}" 
+		                      rowIndexVar="rowVar"    >
+						  <p:column id="#{sb.id}ID" rendered="#{false}" width="15" selectionMode="multiple" >
+						  </p:column>
+						  <p:column headerText="序号" width="20" >
+						             <h:outputText value="#{rowVar+1}"></h:outputText>
+						  </p:column>
+						  <p:column  sortBy="#{sb.jlbh}"  width="80"
+						       rendered="#{sys.sbxx.jlbh.sfsx}"  headerText="#{sys.sbxx.jlbh.zdms}"  >
+								      <h:outputText value="#{sb.jlbh}" ></h:outputText>
+						  </p:column>
+						  <p:column sortBy="#{sb.sbmc}" width="80" 
+						       rendered="#{sys.sbxx.sbmc.sfsx}"  headerText="#{sys.sbxx.sbmc.zdms}"  >
+								       <h:outputText  value="#{sb.sbmc}" ></h:outputText>
+						  </p:column>
+						    <p:column sortBy="#{sb.sybm}" width="80" 
+						       rendered="#{sys.sbxx.sybmmc.sfsx}"  headerText="#{sys.sbxx.sybmmc.zdms}"  >
+								       <h:outputText  value="#{sb.sybmmc}" ></h:outputText>
+						  </p:column>
+						    <p:column sortBy="#{sb.xkflp}" width="100" rendered="#{sys.sbxx.xkfl.sfsx}" 
+						             headerText="#{sys.sbxx.xkfl.zdms}"    >
+								<h:outputText value="#{sb.xkflmcs}"></h:outputText>
+						    </p:column>
+						    
+						    <p:column sortBy="#{sb.gllb}" width="50" rendered="#{sys.sbxx.gllb.sfsx}" 
+						             headerText="#{sys.sbxx.gllb.zdms}"    >
+								      <h:outputText value="#{sb.gllb}" ></h:outputText>
+						   </p:column>
+						    <p:column sortBy="#{sb.sbzt}" width="50"  rendered="#{sys.sbxx.sbzt.sfsx}" 
+						             headerText="#{sys.sbxx.sbzt.zdms}"    >
+								<h:outputText value="#{sb.sbzt}"></h:outputText>
+						    </p:column>
+						      <p:column sortBy="#{sb.sfqj}" width="50"  rendered="#{sys.sbxx.sfqj.sfsx}" 
+						             headerText="#{sys.sbxx.sfqj.zdms}"    >
+								<h:outputText value="#{sb.sfqj?'是':'否'}" style="color:#{sb.sfqj?'red':'green'}"></h:outputText>
+						    </p:column>
+						      <p:column sortBy="#{sb.sfbzq}" width="50"  rendered="#{sys.sbxx.sfbzq.sfsx}" 
+						             headerText="#{sys.sbxx.sfbzq.zdms}"    >
+								<h:outputText value="#{sb.sfbzq?'是':'否'}" style="color:#{sb.sfbzq?'red':'green'}"></h:outputText>
+						    </p:column>
+						    
+						      <p:column sortBy="#{sb.fyxrq}" width="55"   rendered="#{sys.sbxx.fyxrq.sfsx}" 
+						             headerText="#{sys.sbxx.fyxrq.zdms}"    >
+								<h:outputText value="#{sb.fyxrq}">
+									<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN" timeZone="GMT+8"/>
+								</h:outputText>
+						    </p:column>
+						    
+						    <p:column sortBy="#{sb.jdfs}" width="50"   rendered="#{sys.sbxx.jdfs.sfsx}" 
+						             headerText="#{sys.sbxx.jdfs.zdms}"    >
+								<h:outputText value="#{sb.jdfs}" ></h:outputText>
+						    </p:column>
+						  
+						      <p:column sortBy="#{sb.qrjg}" width="50"   rendered="#{sys.sbxx.qrjg.sfsx}" 
+						             headerText="#{sys.sbxx.qrjg.zdms}"    >
+								<h:outputText value="#{sb.qrjg}" ></h:outputText>
+						    </p:column>
+						
+					</p:dataTable>  
+					    </p:tab>
+					     <p:tab title="抽检设备汇总">
+					         <p:dataTable  id="cjhz" var="cjtj" style="width:100%;margin-left: -15px;margin-top: -10px"
+					              value="#{randomCheckPlan.cjtjList}" rows="#{randomCheckPlan.cjtjList.size()}"   rowIndexVar="rowVar"    >
+	
+							  <p:column headerText="序号" width="20" >
+							             <h:outputText value="#{rowVar+1}"></h:outputText>
+							  </p:column>
+							   <p:column   headerText="分类代码"  >
+									      <h:outputText value="#{cjtj.xkfl}" ></h:outputText>
+							  </p:column>
+							   <p:column   headerText="在用总数"  >
+									      <h:outputText value="#{cjtj.zyzs}" ></h:outputText>
+							  </p:column>
+							   <p:column   headerText="抽检比例"  >
+									      <h:outputText value="#{cjtj.cjbl}%" ></h:outputText>
+							  </p:column>
+							  <p:column   headerText="抽检数目"  >
+									      <h:outputText value="#{cjtj.cjsm}" ></h:outputText>
+							  </p:column>
+						  </p:dataTable>
+					    </p:tab>
+					 </p:tabView>                       
+		             
+					
+                   </h:form>
+	        </div>
+	        <div data-options="region:'east',split:false"  title="已制定计划列表" style="height:100%;width: 300px">
+	         <h:form id="planlist">
+	       	  <p:dataList value="#{randomCheckPlan.jdjhList}"  var="plan" type="unordered" itemType="none"
+	       	            rows="500" styleClass="paginated">
+	       	            <h:outputText value="&nbsp;&nbsp;&nbsp;"></h:outputText>
+	       	            <p:commandLink  actionListener="#{randomCheckPlan.publishPlan(plan)}" 
+	       	               update=":planlist" disabled="#{plan.jhzt==1?false:true}" value="#{plan.jhzt==1?'发&nbsp;&nbsp;&nbsp;&nbsp;布':'已发布'}" style="color:#{plan.jhzt==1?'red':'green'}">
+	       	            </p:commandLink>
+	       	            <h:outputText value="&nbsp;&nbsp;&nbsp;"></h:outputText>
+	       	            <p:outputLabel value="#{plan.jhzt==2?jc.selected_flag:jc.list_flag}"  />
+	       	            <h:outputText value="&nbsp;&nbsp;&nbsp;"></h:outputText>
+	       	            <p:commandLink value="#{plan.jhbm}" actionListener="#{randomCheckPlan.viewPlanSbxxes(plan)}"
+	       	               update=":plan:cjsb :plan:toolbarid">
+	       	              </p:commandLink>
+	       	             <p:commandLink value="&nbsp;&nbsp;删除" disabled="#{plan.jhzt !=1}" 
+	       	                 style="color:red" actionListener="#{randomCheckPlan.deletePlan(plan.jhbm,plan.id)}"
+	       	               update=":planlist">
+	       	            </p:commandLink>
+		        </p:dataList>
+		       </h:form>
+	        </div>
+       
+           </div>
+	 </h:body>
+	 
+	</html>

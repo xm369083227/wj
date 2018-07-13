@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="idms.model.base.Menu" table="BASE_MENU">
+		<id name="id" type="long" column="ID" length="22">
+		</id>
+		<property name="gnbm" type="string" column="GNBM" length="20" />
+		<property name="jdfl" type="integer" column="JDFL" length="22" />
+		<property name="jdmc" type="string" column="JDMC" length="50" />
+		<property name="url" type="string" column="URL" length="100" />
+		<property name="lcmc" type="string" column="LCMC" length="100" />
+		<property name="cs" type="integer" column="CS" />
+		<many-to-one name="sjmu" class="idms.model.base.Menu" lazy="false">
+			<column name="SJID" length="22" />
+		</many-to-one>
+	
+	</class>
+</hibernate-mapping>

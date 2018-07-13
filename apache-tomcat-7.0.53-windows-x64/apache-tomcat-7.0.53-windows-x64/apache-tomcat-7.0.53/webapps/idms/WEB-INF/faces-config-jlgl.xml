@@ -1,0 +1,429 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>view_checktasks</from-outcome>
+			<to-view-id>/view/jlgl/jdgl/viewCheckTask.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>sbxxCheckAction</from-outcome>
+			<to-view-id>/view/jlgl/jdgl/sbxxCheckAction.xhtml</to-view-id>
+		</navigation-case>
+			<navigation-case>
+			<from-outcome>sbxxWsCheckAction</from-outcome>
+			<to-view-id>/view/jlgl/jdgl/sbxxWsCheckAction.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>goback_sbxxCheckMgr</from-outcome>
+			<to-view-id>/view/jlgl/jdgl/sbxxCheckMgr.xhtml</to-view-id>
+		</navigation-case>
+        <navigation-case>
+			<from-outcome>goback_sbxxWsQrMgr</from-outcome>
+			<to-view-id>/view/jlgl/jdgl/sbxxWsQrMgr.xhtml</to-view-id>
+		</navigation-case>
+         <navigation-case>
+			<from-outcome>bhgxxFkd</from-outcome>
+			<to-view-id>/view/jlgl/sbgl/bhgxxFkd.xhtml</to-view-id>
+		</navigation-case>
+		
+        <navigation-case>
+			<from-outcome>bzqMgr</from-outcome>
+			<to-view-id>/view/jlgl/bzgl/bzqMgr.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<managed-bean>
+		<managed-bean-name>viewJdrwsQb</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.jdgl.ViewJdrwsQb</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>zrfwMissSbxxMb</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.zrfw.ZrfwMissSbxxMb</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+    <managed-bean>
+		<managed-bean-name>checkSbxxAction</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.jdgl.CheckSbxxAction</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>checkSbxxWsAction</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.jdgl.CheckSbxxWsAction</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>sbglSbxxAddBean</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.sbgl.SbglSbxxAddBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>sbglBhgxxFkdQb</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.sbgl.SbglBhgxxFkdQb</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>zttzClsbFcJBean</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.sbgl.zttz.ClsbFcJBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>zttzClsbBfJBean</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.sbgl.zttz.ClsbBfJBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>zttzClsbGllbtzJBean</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.sbgl.zttz.ClsbGllbtzJBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>zttzClsbHjJBean</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.sbgl.zttz.ClsbHjJBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>zttzClsbJdzqtzJBean</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.sbgl.zttz.ClsbJdzqtzJBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>zttzClsbQyJBean</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.sbgl.zttz.ClsbQyJBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>zttzClsbSsbmZyJBean</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.sbgl.zttz.ClsbSsbmZyJBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>zttzClsbYqjdJBean</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.sbgl.zttz.ClsbYqjdJBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+
+
+
+	<managed-bean>
+		<managed-bean-name>cfgJhZxpzBean</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.acom.CfgJhZxpzBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+
+	<managed-bean>
+		<managed-bean-name>sbrzSbdsQb</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.sbrz.SbrzSbdsQb</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+
+	<managed-bean>
+		<managed-bean-name>sbhjJlQueryBean</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.jdgl.SbhjJlQueryBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>sbJdDwTjQb</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.sbgl.SbJdDwTjQb</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>sbxxFlTjQb</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.sbgl.SbxxFlTjQb</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+
+	<managed-bean>
+		<managed-bean-name>checkPlanMonitor</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.jdgl.CheckPlanMonitor</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>checkConfirmMb</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.jdgl.CheckConfirmMb</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+     <managed-bean>
+		<managed-bean-name>checkConfirmWsMb</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.jdgl.CheckConfirmWsMb</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>sendsCheckMb</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.jdgl.SendsCheckMb</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>randomCheckPlan</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.jdgl.RandomCheckPlan</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>verificationPlan</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.jdgl.VerificationPlan</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>sbxxDdsqMb</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.zrfw.SbxxDdsqMb</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>sbrzJysbMb</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.sbrz.SbrzJysbMb</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>sbrzZtxgMb</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.sbrz.SbrzZtxgMb</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>sbrzZqxgMb</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.sbrz.SbrzZqxgMb</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+
+	<managed-bean>
+		<managed-bean-name>sbrzWxjlMb</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.sbrz.SbrzWxjlMb</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>sbrzFcsbMb</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.sbrz.SbrzFcsbMb</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>sbrzQysbMb</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.sbrz.SbrzQysbMb</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+
+	<managed-bean>
+		<managed-bean-name>sbrzBfsbMb</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.sbrz.SbrzBfsbMb</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>sbrzSblbMb</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.sbrz.SbrzSblbMb</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>sbrzZysbMb</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.sbrz.SbrzZysbMb</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>sbrzYqjdMb</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.sbrz.SbrzYqjdMb</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>sbrzHjsbMb</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.sbrz.SbrzHjsbMb</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>sbglSbxxQb</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.acom.SbglSbxxQb</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+     <managed-bean>
+		<managed-bean-name>zrfwQryMb</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.zrfw.ZrfwQryMb</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>zrfwJdyMb</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.zrfw.ZrfwJdyMb</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>zrfwJlyMb</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.zrfw.ZrfwJlyMb</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>zrfwMb</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.zrfw.ZrfwMb</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>zrfwJdsqQb</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.zrfw.ZrfwJdsqQb</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>jdglJdjlMb</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.jdgl.JdglJdjlMb</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+
+	<managed-bean>
+		<managed-bean-name>bzglBzqMb</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.bzgl.BzglBzqMb</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>bzqSbxxQb</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.bzgl.BzqSbxxQb</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>bzglBzwzMb</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.bzgl.BzglBzwzMb</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>jlzdJdgfMb</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.jlzd.JlzdJdgfMb</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>jlzdWjxxMb</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.jlzd.JlzdWjxxMb</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>jlzdJxdwMb</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.jlzd.JlzdJxdwMb</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>jlzdFlxkMb</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.jlzd.JlzdFlxkMb</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>sbglSbxxMb</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.sbgl.SbglSbxxMb</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>selectXkflBean</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.acom.SelectXkflBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>selectSbxxBean</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.acom.SelectSbxxBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+
+	<managed-bean>
+		<managed-bean-name>dataTransBean</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.dataPort.XkflTransBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>gdzcMb</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.gdzcgl.gdzcMb</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>sbllMb</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.sbgl.SbllMb</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>SbfcBean</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.jdgl.jdjhzttz.SbfcBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>SbhjBean</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.jdgl.jdjhzttz.SbhjBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>SbbfBean</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.jdgl.jdjhzttz.SbbfBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>SbdsBean</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.jdgl.jdjhzttz.SbdsBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>SbwxBean</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.jdgl.jdjhzttz.SbwxBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>jdrwQb</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.jdgl.JdrwQueryBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>parseExcelToSbxxBak</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.dataPort.ParseExcelToSbxxBak</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>sbkhtjBean</managed-bean-name>
+		<managed-bean-class>idms.webapp.jlsbgl.jdgl.ZysbKhtjBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+
+
+</faces-config>

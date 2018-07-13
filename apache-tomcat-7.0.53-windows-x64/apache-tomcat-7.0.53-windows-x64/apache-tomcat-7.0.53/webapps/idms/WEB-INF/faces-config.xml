@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="2.2"
+              xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+   	<application>
+		<variable-resolver>org.springframework.web.jsf.DelegatingVariableResolver</variable-resolver>
+		<resource-bundle>
+			<base-name>messages</base-name>
+			<var>messages</var>
+		</resource-bundle>
+		<locale-config>
+			<default-locale>zh</default-locale>
+			<supported-locale>en</supported-locale>
+		</locale-config>
+	</application>
+	
+
+
+	<managed-bean>
+		<managed-bean-name>funcTreeBean</managed-bean-name>
+		<managed-bean-class>idms.webapp.system.FuncTreeBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>loginBean</managed-bean-name>
+		<managed-bean-class>idms.webapp.system.LoginBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>go_main</from-outcome>
+			<to-view-id>/view/sys/main.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>go_home</from-outcome>
+			<to-view-id>/view/sys/home.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	 <managed-bean>
+		<managed-bean-name>wfProsInedCtlBean</managed-bean-name>
+		<managed-bean-class>idms.webapp.system.wfcter.ProsInedCtlBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	 <managed-bean>
+		<managed-bean-name>wfprosInstBean</managed-bean-name>
+		<managed-bean-class>idms.webapp.system.wfcter.ProsInstMBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	
+	
+    <managed-bean>
+		<managed-bean-name>wftaskInstQBean</managed-bean-name>
+		<managed-bean-class>idms.webapp.system.wfcter.TaskInstQBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	
+    <managed-bean>
+		<managed-bean-name>wftaskInstMbean</managed-bean-name>
+		<managed-bean-class>idms.webapp.system.wfcter.TaskInstMBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>wfhomeBean</managed-bean-name>
+		<managed-bean-class>idms.webapp.system.wfcter.HomeBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+    
+     <managed-bean>
+		<managed-bean-name>wftaskInedCtlBean</managed-bean-name>
+		<managed-bean-class>idms.webapp.system.wfcter.TaskInedCtlBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	
+    <managed-bean>
+		<managed-bean-name>wftaskInedQBean</managed-bean-name>
+		<managed-bean-class>idms.webapp.system.wfcter.TaskInedQBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>wfworkItemQBean</managed-bean-name>
+		<managed-bean-class>idms.webapp.system.wfcter.WorkItemQbean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>wftaskBean</managed-bean-name>
+		<managed-bean-class>idms.webapp.system.wfcter.TaskJbpmBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+		<managed-property>
+			<property-name>jbpmBean</property-name>
+			<value>#{wfjbpmBean}</value>
+		</managed-property>
+	</managed-bean>
+
+	
+	
+	<managed-bean>
+		<managed-bean-name>wfjbpmBean</managed-bean-name>
+		<managed-bean-class>
+			idms.webapp.common.util.JbpmBean
+		</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>selectJbpmBean</managed-bean-name>
+		<managed-bean-class>idms.webapp.common.web.SelectJbpmBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+     <managed-bean>
+		<managed-bean-name>doneWorkBean</managed-bean-name>
+		<managed-bean-class>idms.webapp.system.wfcter.DoneWorkBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>packWorkB</managed-bean-name>
+		<managed-bean-class>idms.webapp.system.wfcter.PackWorkBean</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+	
+</faces-config>

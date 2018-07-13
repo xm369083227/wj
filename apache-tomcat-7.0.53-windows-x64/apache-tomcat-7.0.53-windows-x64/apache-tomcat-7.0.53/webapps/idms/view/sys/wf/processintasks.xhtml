@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+	<ui:include src="/common/templates/ui.xhtml"></ui:include>
+</h:head>
+<body>
+	<h:form id="processinstance" styleClass="dqiqsPanelGrid">
+		<b><h:messages style="color: red" /></b>
+
+
+		<p:dataTable id="datasj" var="processInstance"
+			value="#{wf_MonitorTaskBean.lazyDataModel}" paginator="false" rows="15"
+			rowIndexVar="rowVar" filterDelay="300" paginatorPosition="bottom"
+			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			lazy="true" rowsPerPageTemplate="5,10,15,">
+			<p:column headerText="序号" width="40px;">
+				<h:outputText value="#{rowVar+1}" />
+			</p:column>
+			<p:column headerText="表单编号" sortBy="ywno" filterBy="ywno">
+				<h:outputText value="#{processInstance.ywno}" />
+			</p:column>
+
+			<p:column headerText="申请人" sortBy="sqrmc" filterBy="sqrmc">
+				<h:outputText value="#{processInstance.sqrmc}" />
+			</p:column>
+
+			<p:column headerText="申请单位" sortBy="sqdw" filterBy="sqdw">
+				<h:outputText value="#{processInstance.sqdw}" />
+			</p:column>
+
+			<p:column headerText="开始时间" sortBy="start" filterBy="start">
+				<h:outputText value="#{processInstance.start}" />
+			</p:column>
+
+			<p:column headerText="结束时间" sortBy="end" filterBy="end">
+				<h:outputText value="#{processInstance.end}" />
+			</p:column>
+
+			<p:column headerText="当前位置" sortBy="currentPosition"
+				filterBy="currentPosition">
+				<h:outputText value="#{processInstance.currentPosition}" />
+			</p:column>
+
+			<p:column headerText="当前执行人" sortBy="currentActor"
+				filterBy="currentActor">
+				<h:outputText value="#{processInstance.currentActor}" />
+			</p:column>
+
+			<p:column headerText="流程名称" sortBy="name" filterBy="name">
+				<h:outputText value="#{processInstance.name}" />
+			</p:column>
+
+			<p:column headerText="表单状态" sortBy="lczt" filterBy="lczt">
+				<h:outputText value="#{processInstance.lczt}" />
+			</p:column>
+		</p:dataTable>
+	</h:form>
+
+</body>
+</html>
+

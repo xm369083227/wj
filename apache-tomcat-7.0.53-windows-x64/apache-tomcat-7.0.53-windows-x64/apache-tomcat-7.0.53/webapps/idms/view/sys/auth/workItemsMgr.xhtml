@@ -1,0 +1,168 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+	<ui:include src="/common/templates/ui.xhtml"></ui:include>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	
+</h:head>
+<h:body>
+
+	<p:growl id="growlid" sticky="true" autoUpdate="true"></p:growl>
+	
+	<h:form id="user">
+		<h:panelGrid columns="1"
+			style="text-align: left;margin-left: -3px;margin-top: -6px;">
+		
+				
+				<p:panel header="工作项管理" style="width:90%">		
+						
+	      
+			<p:dataTable  id="data" var="user" style="width:90%"
+				value="#{workItems.lazyDataModel}" paginator="true"
+				rows="#{workItems.pageSize}" rowIndexVar="rowVar" filterDelay="300"
+				resizableColumns="true" liveResize="true" paginatorPosition="bottom"
+				currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+				paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				lazy="true" rowsPerPageTemplate="5,10,20">
+
+				<p:column headerText="序号" width="1" >
+					<h:outputText value="#{rowVar+1}" />
+				</p:column>
+                <p:column 	headerText="用户编码" width="5" 
+                sortBy="#{user.yhbm}"  filterBy="#{user.yhbm}">
+					<h:outputText value="#{user.yhbm}" />
+				</p:column>
+				<p:column 	headerText="真实名称" width="5"
+				sortBy="#{user.zsmc}"  filterBy="#{user.zsmc}">
+					<h:outputText value="#{user.zsmc}" />
+				</p:column>
+
+				<p:column headerText="用户名称" width="5"
+				sortBy="#{user.yhmc}"  filterBy="#{user.yhmc}">
+					<h:outputText value="#{user.yhmc}" />
+				</p:column>
+				<p:column headerText="所属部门" width="10"
+				sortBy="#{user.ssbm.bmmc}"  filterBy="#{user.ssbm.bmmc}">
+					<h:outputText value="#{user.ssbm.bmmc}" />
+				</p:column>
+				<p:column headerText="性别" width="5">
+					<h:outputText value="#{user.xb}" />
+				</p:column>
+				<p:column headerText="邮件地址"  width="20">
+					<h:outputText value="#{user.yjdz}" />
+				</p:column>
+				<p:column headerText="操作"  width="20">
+					<p:commandButton value="待办项" immediate="true" update=":work:wf" actionListener="#{workItems.next(user)}"/>
+				</p:column>
+			</p:dataTable>
+			</p:panel>								
+		</h:panelGrid>
+	</h:form>
+	<h:form id="work">
+		<h:panelGrid columns="1"
+			style="text-align: left;margin-left: -3px;margin-top: -6px;">
+		
+				
+				<p:panel header="待办工作项" style="width:90%">	
+								
+				
+		
+	      
+			<p:dataTable id="wf" rows="15" emptyMessage="数据为空！"
+				resizableColumns="false" rowStyleClass="ctl"
+				style="width:99%;text-align: left;margin-left: 3px;margin-top: -3px;"
+				var="workItemuf" value="#{workItems.items.lazyDataModel}"
+				paginator="true" rowIndexVar="rowVar" filterDelay="300"	 liveResize="true"
+				paginatorPosition="bottom"
+				currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+				paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				lazy="true" rowsPerPageTemplate="10,15,30">
+				              
+				<p:column headerText="序号" width="2%">
+					<h:outputText value="#{rowVar+1}" />
+				</p:column>
+
+				<p:column 
+					 headerText="主题名" resizable="true"
+					width="8%" filterBy="#{workItemuf.gzx.ztm}">
+				<h:outputLabel value="#{workItemuf.gzx.ztm}"/>
+				</p:column>
+
+				<p:column style="width:10%" 
+					headerText="审批单编号" filterBy="#{workItemuf.gzx.ywno}">
+					<h:outputLabel value="#{workItemuf.gzx.ywno}">
+					</h:outputLabel>
+				</p:column>
+				<p:column sortBy="fqsj" filterBy="fqsj" headerText="发起时间"
+					width="13%">
+					<h:panelGroup>
+						<h:outputText value="#{workItemuf.gzx.fqsj}">
+							<f:convertDateTime pattern="MM-dd HH" locale="zh_CN"
+								timeZone="GMT+8"></f:convertDateTime>
+						</h:outputText>
+						<h:outputText value="#{workItemuf.sjc}" style="color: blue" />
+					</h:panelGroup>
+				</p:column>
+				<p:column filterBy="fqr" headerText="发起人" width="5%">
+					<h:outputText value="#{workItemuf.gzx.fqrmc}" id="bb" />
+				</p:column>	
+				<p:column  headerText="操作" width="5%">
+					<p:commandLink value="选择转发人"  style="color:orange"
+					oncomplete="PF('displaydlg').show();return false;"  immediate="true"
+					actionListener="#{workItems.selectedGzx(workItemuf)}" update=":dlg"/>
+				</p:column>				
+			</p:dataTable>
+			</p:panel>
+			</h:panelGrid>
+			</h:form>
+			
+	
+	<p:dialog id="dlg" header="用户列表" widgetVar="displaydlg" modal="true">
+			<h:form id="user1">
+			<h:panelGrid columns="1" >
+				
+						<p:commandButton value="转发"  action="#{workItems.send}"
+                 oncomplete="PF('displaydlg').hide()" ajax="true" update=":work:wf ">
+               
+                 </p:commandButton>
+				</h:panelGrid>	
+				
+				
+				
+				
+				<p:dataTable  id="data1" var="user1" style="width:800px"
+				value="#{workItems.userQb.lazyDataModel}" selection="#{workItems.selectUsers}" 
+				paginator="true" widgetVar="users" rowKey="#{user1.yhbm}"
+				rows="#{workItems.userQb.pageSize}" rowIndexVar="rowVar" filterDelay="300"
+				resizableColumns="true" liveResize="true" paginatorPosition="bottom"
+				currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+				paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				lazy="true" rowsPerPageTemplate="10,30,50">
+				
+					  <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+			
+					 <p:column 	headerText="用户编码" filterBy="#{user1.yhbm}">
+					<h:outputText value="#{user1.yhbm}" />
+				</p:column>
+				<p:column 	headerText="真实名称" filterBy="#{user1.zsmc}">
+					<h:outputText value="#{user1.zsmc}" />
+				</p:column>
+				<p:column headerText="所属部门" >
+					<h:outputText value="#{user1.ssbm.bmmc}" />
+				</p:column>
+					
+				</p:dataTable>
+			</h:form>
+		</p:dialog>
+
+	
+</h:body>
+</html>

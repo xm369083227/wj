@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="idms.model.jlgl.jlzd.JlzdXkfl" table="JLZD_XKFL" >
+        <id name="flbm" type="java.lang.String" column="FLBM" length="200">
+        </id>
+        <many-to-one name="sjfl" class="idms.model.jlgl.jlzd.JlzdXkfl" fetch="select">
+            <column name="SJFL" length="200"  />
+        </many-to-one>
+        <property name="jdmc" type="java.lang.String">
+            <column name="JDMC" length="200" />
+        </property>
+        <property name="tcpx" type="java.lang.Integer">
+            <column name="TCPX" precision="6" scale="0" />
+        </property>
+        <property name="jdlx" type="java.lang.Integer">
+            <column name="JDLX" precision="6" scale="0" />
+        </property>
+        <property name="sfsx" type="java.lang.Boolean">
+            <column name="SFSX" precision="1" scale="0" />
+        </property>
+        <property name="jdms" type="java.lang.String">
+            <column name="JDMS" length="500" />
+        </property>
+         <property name="bak" type="java.lang.String">
+            <column name="BAK" length="400" />
+        </property>
+        <property name="del" type="java.lang.Boolean">
+            <column name="DEL" length="1" />
+        </property>
+        <property name="sjly" type="java.lang.Integer">
+            <column name="SJLY" precision="6" scale="0" />
+        </property>
+           <property name="cs" type="java.lang.Integer">
+            <column name="CS" precision="6" scale="0" />
+        </property>
+    </class>
+</hibernate-mapping>

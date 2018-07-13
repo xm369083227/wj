@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="idms.model.mail.MailConfigInfo" table="MAIL_CONFIG_INFO" >
+          <cache usage="nonstrict-read-write"/>
+        <id name="id" type="java.lang.Long" column="ID">
+			<generator class="sequence">
+				<param name="sequence">S_MAIL_CONFIG_INFO</param>
+			</generator> 
+		</id>
+		
+		<many-to-one name="userInfo"  class="idms.model.base.User" column="USERINFO" unique="true">
+		</many-to-one>
+		<property name="userName" type="java.lang.String">
+			<column name="USERNAME" length="128" />
+		</property>
+		<property name="mailAddress" type="java.lang.String">
+			<column name="MAILADDRESS" length="128" />
+		</property>
+		<property name="mailPassword" type="java.lang.String">
+			<column name="MAILPASSWORD" length="128" />
+		</property>
+		<property name="mailType" type="java.lang.String">
+			<column name="MAILTYPE" length="20" />
+		</property>
+		<property name="smtpHost" type="java.lang.String">
+			<column name="SMTPHOST" length="128" />
+		</property>
+		<property name="smtpPort" type="java.lang.Integer">
+			<column name="SMTPPORT"/>
+		</property>
+		<property name="mailHost" type="java.lang.String">
+			<column name="MAILHOST" length="128" />
+		</property>
+		<property name="mailPort" type="java.lang.Integer">
+			<column name="MAILPORT"/>
+		</property>
+		
+	</class>
+</hibernate-mapping>

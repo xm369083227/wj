@@ -1,0 +1,26 @@
+<%@ include file="/common/include/taglibs.jsp"%>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="GB2312"%>
+<f:view>
+	<html>
+	<%@include file="/common/include/head.inc"%>
+	<body style="text-align: center">
+
+	<h:messages />
+	<h:form id="noticeform">
+		<br />
+		<br />
+
+		<h:outputText value="该表单数据已被删除！"
+			style="color: chocolate; font-size: large; font-style: normal; font-weight: bold; text-align: center" />
+		<br />
+		<br />
+		<hr style="color: blue; font-weight: bolder" />
+		<br />
+		<br />
+		<a name="hh" href="javascript:history.go(-1);" style="font-size: 12px; color: white;"> <img
+			src="/common/images/jl/return.gif"> </a>
+
+	</h:form>
+	</BODY>
+	</html>
+</f:view>

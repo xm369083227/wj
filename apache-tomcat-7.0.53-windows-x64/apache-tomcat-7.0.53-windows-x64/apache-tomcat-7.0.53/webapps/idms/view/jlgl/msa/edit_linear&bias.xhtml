@@ -1,0 +1,288 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+	<ui:include src="/common/templates/ui.xhtml"></ui:include>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+</h:head>
+<h:body>
+	<h2>
+		<h:outputText value="线性偏倚" />
+	</h2>
+	<p:growl id="growlid" showDetail="false" sticky="true"
+		autoUpdate="true"></p:growl>
+	<h:form id="form1" enctype="multipart/form-data">
+		<h:panelGrid columns="1">
+			<p:tabView id="jbxx" scrollable="true" style="width:1000px"
+				activeIndex="#{biasMB.activeIndex}">
+				<p:tab title="基本信息" titleStyle="width:200px">
+					<p:panelGrid columns="1" style="width:900px">
+						<p:panelGrid style="text-align:center">
+							<h:outputText value="线性偏倚基本数据(带"
+								style=" font-size:15px; font-weight border;color:gray;" />
+							<h:outputText value="*"
+								style="font-size:15px; font-weight border;color:red;" />
+							<h:outputText value="为必填)"
+								style="font-size:15px; font-weight border;color:gray;" />
+						</p:panelGrid>
+						<p:row>
+							<h:panelGrid id="glsb" columns="4" style="width:900px">
+								<h:panelGroup>
+									<h:outputText value="设备编码:" />
+									<h:outputText value="*" style="color:red" />
+								</h:panelGroup>
+								<p:inputText value="#{biasMB.jbxx.sbbm}" size="35"
+									readonly="true" />
+								<h:panelGroup>
+									<h:outputText value="设备名称:" />
+									<h:outputText value="*" style="color:red" />
+								</h:panelGroup>
+								<h:panelGroup>
+									<p:inputText value="#{biasMB.jbxx.sbmc}" size="35"
+										readonly="true" />
+									<p:commandButton
+										onclick="PF('displaydlg').show();return false;" title="查询"
+										icon="ui-icon-search" />
+								</h:panelGroup>
+								<h:panelGroup>
+									<h:outputText value="设备类型:" />
+									<h:outputText value="*" style="color:red" />
+								</h:panelGroup>
+								<p:inputText value="#{biasMB.jbxx.sblx}" size="35" />
+							</h:panelGrid>
+							<h:panelGrid columns="4" style="width:800px">
+								<h:outputText value="特性名称:" />
+								<p:inputText value="#{biasMB.jbxx.txmc}" size="35" />
+								<h:outputText value="分析日期:" />
+								<p:calendar value="#{biasMB.jbxx.fxrq}" size="35"
+									navigator="true" pattern="yyyy-MM-dd">
+								</p:calendar>
+								<h:outputText value="零件编号:" />
+								<p:inputText value="#{biasMB.jbxx.ljbh}" size="35"
+									readonly="true" />
+								<h:outputText value="零件名称:" />
+								<p:inputText value="#{biasMB.jbxx.ljmc}" size="35" />
+								<h:outputText value="零件变差:" />
+								<p:inputText value="#{biasMB.jbxx.ljbc}" size="35" />
+								<h:outputText value="操作人员:" />
+								<p:inputText value="#{biasMB.jbxx.czry}" size="35" />
+								<h:panelGroup>
+									<h:outputText value="零件数目:" />
+									<h:outputText value="*" style="color:red" />
+								</h:panelGroup>
+								<p:inputText value="#{biasMB.jbxx.ljsm}" size="35" />
+								<h:panelGroup>
+									<h:outputText value="测量次数:" />
+									<h:outputText value="*" style="color:red" />
+								</h:panelGroup>
+								<p:inputText value="#{biasMB.jbxx.clcs}" size="35" />
+							</h:panelGrid>
+							<h:panelGroup>
+								<h:outputText value="注：初始化时,为了覆盖测量器具的量程,设置零件数目为5,测量次数为10"
+									style="font-size:12px;color:red;" />
+							</h:panelGroup>
+							<h:panelGrid>
+								<p:commandButton value="下一步-->" ajax="false"
+									action="#{biasMB.nextOption}"
+									style="font-size:14px;font-weight: bolder;" />
+							</h:panelGrid>
+						</p:row>
+					</p:panelGrid>
+				</p:tab>
+				<p:tab title="分析数据" titleStyle="width:200px">
+					<p:panelGrid columns="1" style="width:900px">
+						<p:row>
+							<h:panelGroup>
+								<h:commandButton value="输入数据" action="#{biasMB.editValues}"
+									rendered="#{!biasMB.mEditValues}" immediate="true"
+									style="font-weight:bolder;" styleClass="standard" />
+								<f:verbatim>&nbsp;&nbsp;&nbsp;</f:verbatim>
+								<h:commandButton value="编辑数据" action="#{biasMB.editValues}"
+									rendered="#{biasMB.mEditValues}" style="font-weight:bolder;"
+									styleClass="standard" />
+								<f:verbatim>&nbsp;&nbsp;&nbsp;</f:verbatim>
+								<h:commandButton value="保存数据" action="#{biasMB.saveDate}"
+									style="font-weight:bolder;" styleClass="standard" />
+								<f:verbatim>&nbsp;&nbsp;&nbsp;</f:verbatim>
+								<h:commandButton value="分析数据" action="#{biasMB.analysisData}"
+									style="font-weight:bolder;" styleClass="standard" />
+								<f:verbatim>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</f:verbatim>
+							</h:panelGroup>
+						</p:row>
+					</p:panelGrid>
+					<p:panelGrid columns="4">
+						<p:row>
+							<h:panelGroup>
+								<f:verbatim>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</f:verbatim>
+								<h:outputText value="从Excel文件导入数据" style="font-weight:bold" />
+								<p:fileUpload value="#{biasMB.uploadedFile}" mode="simple"
+									skinSimple="true" />
+
+								<h:commandButton value="导入..."
+									actionListener="#{biasMB.importExcel}"
+									style="font-weight:bolder;color:gray;" />
+
+								<h:commandButton value="不显示Excel"
+									rendered="#{not biasMB.showExcelFile }"
+									actionListener="#{biasMB.getExcelExample}"
+									style="font-weight:bolder;color:gray;" />
+								<h:commandButton value="显示Excel帮助"
+									rendered="#{biasMB.showExcelFile }"
+									actionListener="#{biasMB.getExcelExample}"
+									style="font-weight:bolder;color:gray;" />
+							</h:panelGroup>
+
+
+						</p:row>
+
+					</p:panelGrid>
+					<p:panel>
+
+						<h:outputText value="分析数据列表："
+							style="font-size:14px; font-weight: bolder; color:  gray" />
+					</p:panel>
+
+					<p:dataTable id="datas" var="data" value="#{biasMB.dataList}"
+						widgetVar="carsTable" rowIndexVar="index"
+						style="text-align:center;">
+						<p:columns value="#{biasMB.columns}" var="column"
+							columnIndexVar="colIndex">
+							<f:facet name="header">
+								<h:outputText value="#{column.header}" />
+							</f:facet>
+							<p:inputText value="#{data[column.property]}"
+								rendered="#{!biasMB.mEditValues}"
+								style="width:100px;color:#{index==0?'red':''}"
+								disabled="#{index==0 and colIndex==0}"></p:inputText>
+							<h:outputText value="#{data[column.property]}"
+								style="width:100px;" rendered="#{biasMB.mEditValues}">
+							</h:outputText>
+						</p:columns>
+					</p:dataTable>
+
+
+
+					<p:panelGrid columns="1" rendered="#{not biasMB.showExcelFile }">
+						<h:panelGroup>
+							<h:outputText value="Excel文件格式如下图所示："
+								style="font-size:14px;font-weight:bold;color:#ff0000" />
+						</h:panelGroup>
+						<h:graphicImage url="/common/images/msa/importBias.jpg" />
+					</p:panelGrid>
+
+
+				</p:tab>
+
+				<p:tab title="线性结论" titleStyle="width:200px">
+					<p:panelGrid columns="1" style="width:900px">
+						<p:tabView id="jbxx" scrollable="true" style="width:900px">
+							<p:tab title="数值分析" titleStyle="width:100px">
+								<h:panelGroup>
+									<h:outputText value="线性偏倚结论:" />
+								</h:panelGroup>
+								<p:panelGrid columns="4" style="width:900px">
+									<h:outputText value="g(零件数目)" />
+									<p:inputText value="#{biasMB.lbiasBean.g}" size="10"
+										readonly="true"></p:inputText>
+									<h:outputText value="m(测量次数)" />
+									<p:inputText value="#{biasMB.lbiasBean.m}" size="10"
+										readonly="true"></p:inputText>
+									<h:outputText value="a(斜率)" />
+									<p:inputText value="#{biasMB.lbiasBean.a}" size="10"
+										readonly="true"></p:inputText>
+									<h:outputText value="b(截距/偏倚)" />
+									<p:inputText value="#{biasMB.lbiasBean.b}" size="10"
+										readonly="true"></p:inputText>
+									<h:outputText value="S(标准差)" />
+									<p:inputText value="#{biasMB.lbiasBean.s}" size="10"
+										readonly="true"></p:inputText>
+									<h:outputText value="&alpha;(置信水平)" />
+									<p:inputText value="#{biasMB.lbiasBean.conLevel}" size="10"
+										readonly="true"></p:inputText>
+									<h:outputText value="线性回归方程(Y=aX+b)" />
+									<p:inputText value="#{biasMB.lbiasBean.conLevel}" size="10"
+										readonly="true"></p:inputText>
+									<h:outputText value="t" />
+									<p:inputText value="#{biasMB.lbiasBean.t}" size="10"
+										readonly="true"></p:inputText>
+									<h:outputText value="|ta|" />
+									<p:inputText value="#{biasMB.lbiasBean.ta}" size="10"
+										readonly="true"></p:inputText>
+									<h:outputText value="|tb|" />
+									<p:inputText value="#{biasMB.lbiasBean.tb}" size="10"
+										readonly="true"></p:inputText>
+								</p:panelGrid>
+								<p:panelGrid columns="2" style="width:900px">
+									<h:outputText value="判断结果的标准：" />
+									<f:verbatim>1.回归线落入置信区间内。<br />2.|ta|&lt;=t,则线性可接受。<br />3.|tb|&lt;=t,则偏倚可接受。</f:verbatim>
+									<h:outputText value="得出结论：" />
+									<p:inputTextarea value=" " style="width:600px"></p:inputTextarea>
+								</p:panelGrid>
+							</p:tab>
+							<p:tab title="线性图" titleStyle="width:100px">
+								<p:panelGrid columns="1" style="width:900px">
+									<p:chart type="line" model="#{biasMB.lbiasBean.lineModel}"
+										rendered="#{biasMB.lbiasBean.lineModel!=null}"
+										style="height:450px;" />
+								</p:panelGrid>
+							</p:tab>
+						</p:tabView>
+
+					</p:panelGrid>
+				</p:tab>
+
+			</p:tabView>
+		</h:panelGrid>
+	</h:form>
+
+	<p:dialog id="dlg1" header="显示设备" widgetVar="displaydlg" modal="true">
+		<h:form>
+			<p:dataTable id="data" var="sb" style="width:600px"
+				value="#{sbglSbxxQb.lazyDataModel}" paginator="true" rows="10"
+				widgetVar="cellSbxx" selectionMode="single" rowKey="#{sb.id}"
+				rowIndexVar="rowVar" filterDelay="300" resizableColumns="true"
+				liveResize="true" paginatorPosition="bottom"
+				currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+				paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				lazy="true" >
+				<p:ajax event="rowSelect" listener="#{biasMB.onRowSelect}"
+					update=":form1:jbxx:glsb" oncomplete="PF('displaydlg').hide()"
+					immediate="true" />
+				<p:column headerText="序号" style="width:20px">
+					<h:outputText value="#{rowVar+1}"></h:outputText>
+				</p:column>
+				<p:column sortBy="#{sb.jlbh}" filterBy="#{sb.jlbh}"
+					style="width:#{sys.sbxx.jlbh.xskd}px"
+					rendered="#{sys.sbxx.jlbh.sfsx}" headerText="#{sys.sbxx.jlbh.zdms}">
+					<h:outputText value="#{sb.jlbh}"></h:outputText>
+				</p:column>
+				<p:column sortBy="#{sb.sbmc}" filterBy="#{sb.sbmc}"
+					style="width:100px" rendered="#{sys.sbxx.sbmc.sfsx}"
+					headerText="#{sys.sbxx.sbmc.zdms}">
+					<h:outputText value="#{sb.sbmc}"></h:outputText>
+				</p:column>
+
+				<p:column sortBy="#{sb.sbzt}" filterBy="#{sb.sbzt}"
+					rendered="#{sys.sbxx.sbzt.sfsx}" headerText="#{sys.sbxx.sbzt.zdms}"
+					style="width:#{sys.sbxx.sbzt.xskd}px">
+					<h:outputText value="#{sb.sbzt}"></h:outputText>
+				</p:column>
+				<p:column sortBy="#{sb.sbfl}" filterBy="#{sb.sbfl}"
+					rendered="#{sys.sbxx.sbfl.sfsx}" headerText="#{sys.sbxx.sbfl.zdms}"
+					style="width:#{sys.sbxx.sbfl.xskd}px">
+					<h:outputText value="#{sb.sbfl}"></h:outputText>
+				</p:column>
+
+
+			</p:dataTable>
+		</h:form>
+	</p:dialog>
+
+
+</h:body>
+</html>

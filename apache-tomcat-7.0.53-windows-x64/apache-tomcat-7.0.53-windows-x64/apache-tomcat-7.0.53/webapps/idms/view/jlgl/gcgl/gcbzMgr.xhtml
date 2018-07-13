@@ -1,0 +1,214 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	
+	>
+<f:view contentType="text/html">
+
+<style>
+		.tab{
+			
+			
+			
+			border: hidden;
+			
+		}
+		
+</style>
+	<h:head>
+		<title>IDMS</title>
+		<ui:include src="/common/templates/ui.xhtml"></ui:include>
+	</h:head>
+	<h:body>
+		<p:growl id="growlid" sticky="true" autoUpdate="true" />
+		<p:dialog id="dlg1" header="#{gcglClgcMb.edit?'修改':'详情'}"
+			widgetVar="opendlg" height="550px" width="1000px" modal="true">
+			<ui:include src="/view/jlgl/gcgl/gcbzEdit.xhtml"></ui:include>
+		</p:dialog>
+		<h:form id="gcmgr"
+			style="margin-bottom:10px;width:1200px;margin-top:10px">
+			<h:panelGrid>
+				<p:panel header="测量过程相关信息查询">
+					<h:panelGrid columns="6" width="1200px" align="left">
+						<h:outputText value="测&nbsp;量&nbsp;过&nbsp;&nbsp;程&nbsp;&nbsp;编&nbsp;&nbsp;号："></h:outputText>
+						<p:inputText value="#{gcglClgcMb.clgcQueryobj.bh}" size="25"></p:inputText>
+						<h:outputText value="测量过程名称："></h:outputText>
+						<p:inputText value="#{gcglClgcMb.clgcQueryobj.mc}" size="25"></p:inputText>
+						<h:outputText value="测量过程地点："></h:outputText>
+						<p:inputText value="#{gcglClgcMb.clgcQueryobj.cldd}" size="25"></p:inputText>
+						<h:outputText value="测量过程实施部门："></h:outputText>
+						<p:inputText value="#{gcglClgcMb.clgcQueryobj.ssbm}" size="25"></p:inputText>
+						<h:outputText value="单&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位："></h:outputText>
+						<p:inputText value="#{gcglClgcMb.clgcQueryobj.dw}" size="25"></p:inputText>
+						<h:outputText value="重&nbsp;要&nbsp;度&nbsp;类&nbsp;别："></h:outputText>
+						<p:selectOneRadio value="#{gcglClgcMb.clgcQueryobj.zydlb}">
+							<f:selectItem itemLabel="A" itemValue="A"></f:selectItem>
+							<f:selectItem itemLabel="B" itemValue="B"></f:selectItem>
+						</p:selectOneRadio>
+					</h:panelGrid>
+					<p:commandButton value="查询" ajax="true" update=":gcmgr"
+						action="#{gcglClgcMb.doSearch}"></p:commandButton>
+				</p:panel>
+
+				<p:toolbar>
+					<f:facet name="left">
+						<p:commandButton type="button" value="打印" icon="ui-icon-print">
+							<p:printer target="data" />
+						</p:commandButton>
+						<p:commandButton value="导出为PDF" ajax="false">
+							<p:dataExporter type="pdf" target="data" fileName="clgc" />
+						</p:commandButton>
+						<p:commandButton value="导出为Excel" ajax="false">
+							<p:dataExporter type="xls" target="data" fileName="clgc" />
+						</p:commandButton>
+						<p:commandButton value="导出单页Excel" ajax="false">
+							<p:dataExporter type="xls" target="data" fileName="clgc"
+								pageOnly="true" />
+						</p:commandButton>
+					</f:facet>
+				</p:toolbar>
+				
+				<h:commandButton id="kz221" value="停用/启用测量过程" onclick="if(!confirm('您确认修改状态吗？'))return false;else true"
+					styleClass="btn" action="#{gcglClgcMb.editClgczt}" />
+				
+				
+				
+				<p:dataTable id="data" paginator="true"  var="item"	
+					value="#{gcglClgcMb.lazyDataModel}" style="width:1230px;" rows="15"
+					rowIndexVar="rowVar" filterDelay="300" resizableColumns="true "
+					liveResize="true" paginatorPosition="bottom"
+					currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+					paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					lazy="true" rowsPerPageTemplate="15,30,50"
+						
+					>
+
+					
+					<p:column filterBy="#{item.id}" sortBy="#{item.id}" headerText="序号"
+						style="width:50px;">
+						<h:outputText value="#{rowVar+1}"></h:outputText>
+						
+					</p:column>
+					<p:column style="width:25px;">
+						<p:selectBooleanCheckbox value="#{item.markedForDeletion}" />
+					</p:column>
+					<p:column filterBy="#{item.bh}" sortBy="#{item.bh}"
+						headerText="测量过程编号" style="width:90px;">
+						<h:outputText value="#{item.bh}"></h:outputText>
+						
+					</p:column>
+				
+					<p:column filterBy="#{item.mc}" sortBy="#{item.mc}"
+						headerText="测量过程名称" style="width:180px;">
+						<h:outputText value="#{item.mc}"></h:outputText>
+					</p:column>
+					<p:column filterBy="#{item.cldd}" sortBy="#{item.clgcyj}"
+						headerText="测量地址" style="width:80px;">
+						<h:outputText value="#{item.cldd}"></h:outputText>
+					</p:column>
+					
+					<p:column style="width:220px">
+							<f:facet name="header" >
+								
+									<h:outputText value="测量名称"
+										style="text-align: center; width: 100%" />
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									<h:outputText value="测量范围"
+										style="text-align: center; width: 100%" />
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									<h:outputText value="允许误差"
+										style="text-align: center; width: 100%" />
+								
+							</f:facet>
+							<p:dataTable  id="data1" 
+								 value="#{item.gccs}" var="gccs">
+								<p:column style="width: 33%;">
+									<h:outputText value="#{gccs.clmc }"
+										style="text-align: center; width: 100%" />
+								</p:column>
+								<p:column style="width: 33%">
+									<h:outputText value="#{gccs.clfw }"
+										style="text-align: center; width: 100%" />
+								</p:column>
+								<p:column>
+									<h:outputText value="#{gccs.yxwc }"
+										style="text-align: center; width: 100%" />
+								</p:column>
+							</p:dataTable>
+					</p:column>
+					<p:column style="width:210px">
+						<f:facet name="header">
+		
+							
+								<h:outputText value="设备名称"
+									style="text-align: center; width: 100%" />
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<h:outputText value="型号规格"
+									style="text-align: center; width: 100%" />
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<h:outputText value="准确度"
+									style="text-align: center; width: 100%" />
+							
+						</f:facet>
+						<p:dataTable
+							
+							value="#{item.gccs}" var="gccs2"  >
+							<p:column style="width: 33%" >
+								<h:outputText value="#{gccs2.sbmc }"
+									style="text-align: center; width: 100%" />
+							</p:column>
+							<p:column style="width: 33%" >
+								<h:outputText value="#{gccs2.xhgg }"
+									style="text-align: center; width: 100%" />
+							</p:column>
+							<p:column>
+								<h:outputText value="#{gccs2.zqd }"
+									style="text-align: center; width: 100%" />
+							</p:column>
+						</p:dataTable>
+					</p:column>
+
+					<p:column filterBy="#{item.ssbm}" sortBy="#{item.jsjl}"
+						headerText="实施部门" style="width:100px;">
+						<h:outputText value="#{item.ssbm}"></h:outputText>
+					</p:column>
+					<p:column filterBy="#{item.djrq}" sortBy="#{item.djrq}"
+						headerText="状态" style="width:80px;">
+						<h:outputText value="#{item.zt}">
+							<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+								timeZone="GMT+8"></f:convertDateTime>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="操作">
+						<h:panelGroup>
+							<p:commandButton action="#{gcglClgcMb.openPanal}"
+								oncomplete="PF('opendlg').show()" ajax="true" update=":dlg1"
+								title="详情" icon="ui-icon-search">
+								<f:param name="id" value="#{item.id}"></f:param>
+							</p:commandButton>
+							<p:commandButton actionListener="#{gcglClgcMb.editPanal}"
+								oncomplete="PF('opendlg').show()" ajax="true" update=":dlg1"
+								title="修改" icon="ui-icon-gear" immediate="true" >
+								<f:param name="id" value="#{item.id}"></f:param>
+							</p:commandButton>
+							<p:commandButton style="margin-left:10px;" title="删除"
+								action="#{gcglClgcMb.delete}" icon="ui-icon-trash" ajax="true"
+								update=":gcmgr" >
+								<f:param name="id" value="#{item.id}"></f:param>
+								<p:confirm icon="ui-icon-alert" message="确定删除吗?"></p:confirm>
+							</p:commandButton>
+						</h:panelGroup>
+					</p:column>
+
+				</p:dataTable>
+
+			</h:panelGrid>
+		</h:form>
+
+	</h:body>
+</f:view>
+</html>

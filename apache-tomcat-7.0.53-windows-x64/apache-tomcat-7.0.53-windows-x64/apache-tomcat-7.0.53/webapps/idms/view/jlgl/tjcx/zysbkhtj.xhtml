@@ -1,0 +1,165 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+	<ui:include src="/common/templates/ui.xhtml"></ui:include>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+</h:head>
+<h:body>
+		<p:growl id="growlid" showDetail="false" sticky="true"
+			autoUpdate="true"></p:growl>
+		<h:form id="form">
+			<h:panelGrid width="99%">
+			<p:tabView>
+				<p:tab title="统计查询">
+					<h:panelGrid columns="4">
+					
+						<h:outputText value="计划类型；"></h:outputText>
+							<p:selectOneMenu value="#{sbkhtjBean.jhlxmc}">
+								 <f:selectItem itemValue="*" itemLabel="所有类型"/>
+								 <f:selectItem itemValue="周检" itemLabel="周检计划"/>
+								 <f:selectItem itemValue="外送" itemLabel="外送计划"/>
+					             <f:selectItem itemValue="抽检" itemLabel="抽检计划"/>
+					           
+							</p:selectOneMenu>
+							<h:outputText value="计划编码："></h:outputText>
+							<p:inputText value="#{sbkhtjBean.jhbm}"/>
+							<h:outputText value="使用部门"></h:outputText>
+							<p:selectOneMenu value="#{sbkhtjBean.sybm}">
+								<f:selectItem itemLabel="所有" itemValue="*"></f:selectItem>
+								<f:selectItems value="#{selectDeptBean.ssbmByCs}" var="obj"
+									itemLabel="#{obj.bmmc}" itemValue="#{obj.bmbm}"></f:selectItems>
+							</p:selectOneMenu>
+							<h:outputText value="计划时间 ："></h:outputText>
+							<h:panelGroup>
+								从<p:calendar label="有效期" value="#{sbkhtjBean.startDate}"
+									size="8" readonlyInput="false" navigator="true"
+									pattern="yyyy-MM-dd" />
+									                                  至<p:calendar label="有效期"
+									value="#{sbkhtjBean.endDate}" size="8"
+									readonlyInput="false" navigator="true" pattern="yyyy-MM-dd" />
+							</h:panelGroup>
+							
+
+					</h:panelGrid>
+					<p:commandButton value="统计" ajax="false" 
+						action="#{sbkhtjBean.search}"></p:commandButton>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<p:commandButton value="导出为Excel" ajax="false">
+					<p:dataExporter type="xls" target="data" fileName="zysbkhtj" />
+					<p:commandButton value="导出为PDf" ajax="false" rendered="false">
+					<p:dataExporter type="pdf" target="data" fileName="zysbkhtj" encoding="utf-8" />
+				</p:commandButton>
+				</p:commandButton>
+				
+				
+				<p:dataTable id="data" var="obj"
+					value="#{sbkhtjBean.formTjList}" scrollable="true"
+					style="width:100%;" scrollWidth="100%"			
+					widgetVar="khtj" rowKey="#{obj.id}"
+					rowIndexVar="rowVar">
+					<p:column headerText="序号" width="10">
+						<h:outputText value="#{rowVar+1}"></h:outputText>
+					</p:column>
+					<p:column headerText="使用部门" width="40">
+					   <h:outputText value="#{obj.sybmmc}"></h:outputText>
+					</p:column>
+					<p:column headerText="应检数目" width="30">
+					   <h:outputText value="#{obj.yjsm}"></h:outputText>
+					   </p:column>
+					<p:column headerText="送检数目" width="30">
+					   <h:outputText value="#{obj.sjsm}"></h:outputText>
+					</p:column>
+					<p:column headerText="未送检数目" width="30">
+					   <p:commandLink value="#{obj.wsjsm}" style="color:orange"
+					   update=":wsjSb"  immediate="true"
+					    oncomplete="PF('dialog').show(); return false ;" 
+					    ajax="true" action="#{sbkhtjBean.openEditPanal(obj.sybmmc)}">
+					   <!--  <p:ajax async="true" update=":wsjForm:sb"
+										immediate="true" /> -->
+					    </p:commandLink>
+					</p:column>
+					<p:column headerText="首次合格数" width="30">
+					   <h:outputText value="#{obj.schgs}"></h:outputText>
+					</p:column>
+					<p:column headerText="二次合格数" width="30">
+					   <h:outputText value="#{obj.echgs}"></h:outputText>
+					</p:column>
+					<p:column headerText="正常报废数" width="30">
+					   <h:outputText value="#{obj.bfsm}"></h:outputText>
+					</p:column>
+					<p:column headerText="送检率" width="30">
+					   <h:outputText value="#{obj.sjv}%"></h:outputText>
+					</p:column>
+					<p:column headerText="首次合格率" width="30">
+					   <h:outputText value="#{obj.schgv}%"></h:outputText>
+					</p:column>
+					<p:column headerText="二次合格率" width="30">
+					   <h:outputText value="#{obj.echgv}%"></h:outputText>
+					</p:column>
+					<p:column headerText="检定未完成数" width="30">
+					   <h:outputText value="#{obj.unfinished}"></h:outputText>
+					</p:column>
+					   
+					</p:dataTable>
+					</p:tab>
+					</p:tabView>
+					
+					</h:panelGrid>
+					</h:form>
+					
+    <p:dialog id="wsjSb" header="#{sbkhtjBean.sybmmc}  未送检设备详情"  widgetVar="dialog"
+		maximizable="true" height="500px" width="1024px" modal="true">
+		<h:form id="wsjForm" enctype="multipart/form-data">
+		<!-- <h:panelGrid style="margin:auto">
+			<h:panelGroup id="sb">
+				<h:outputText style="font-size:large;" value="#{sbkhtjBean.sybmmc}" />
+			</h:panelGroup>		
+		</h:panelGrid> -->
+		<p:dataTable id="data" var="item" 
+					value="#{sbkhtjBean.jdrwList}" scrollable="true"
+					style="width:100%;text-align:center;"  scrollHeight="450"	 	
+					widgetVar="wsjrw" rowKey="#{item.id}"
+					rowIndexVar="rowVar">
+					<p:column headerText="序号" width="30">
+						<h:outputText value="#{rowVar+1}" ></h:outputText>
+					</p:column>
+					<p:column headerText="计量编号" width="80">
+					   <h:outputText value="#{item.jlbh}"></h:outputText>
+					</p:column>
+					<p:column headerText="设备名称" >
+					   <h:outputText value="#{item.sbmc}"></h:outputText>
+					</p:column>
+					
+					<p:column headerText="计划编码">
+					   <h:outputText value="#{item.jhbm}"></h:outputText>
+					</p:column>
+					<p:column headerText="任务状态">
+					   <h:outputText value="#{item.rwztmc}" style="color:red"></h:outputText>
+					</p:column>
+					<p:column headerText="检定周期" width="40">
+					   <h:outputText value="#{item.sbxx.jdzq}月"></h:outputText>
+					</p:column>
+					<p:column headerText="规格型号">
+					   <h:outputText value="#{item.ggxh}"></h:outputText>
+					</p:column>
+					<p:column headerText="设备状态" width="40">
+					   <h:outputText value="#{item.sbxx.sbzt}"></h:outputText>
+					</p:column>
+					<p:column headerText="有效日期" width="80">
+					   <h:outputText value="#{item.sbxx.fyxrq}">
+					   <f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+						timeZone="GMT+8" />
+					   </h:outputText>
+					</p:column>
+				
+					</p:dataTable>
+		</h:form>
+	</p:dialog>
+
+</h:body>
+</html>

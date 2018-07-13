@@ -1,0 +1,180 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+<f:view contentType="text/html">
+	<h:head>
+		<title>IDMS</title>
+		<ui:include src="/common/templates/ui.xhtml"></ui:include>
+	</h:head>
+	<h:body>
+		<p:growl id="growlid" sticky="true" autoUpdate="true" />
+		<h:form id="form"
+			style="margin-bottom:10px;width:100%;margin-top:10px">
+			<h2 style="margin-left: 28%">设备检定、送检、确认授权补录</h2>
+			<p:fieldset legend="1.管理员授权补录"
+				style="margin-bottom:20px;width:70%;margin-top:10px">
+				<p:dataTable editable="true" id="subjlgly" var="obj"
+					value="#{zrfwMissSbxxMb.missGlys}" paginator="true" rows="5"
+					style="with:600px" rowIndexVar="rowVar" paginatorPosition="bottom"
+					liveResize="true"
+					currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+					paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="5,10,15">
+					<p:ajax event="rowEdit" update=":form:subjlgly"
+						listener="#{zrfwMissSbxxMb.onRowJlGlyEdit}"></p:ajax>
+					<p:column style="width:40px">
+						<p:rowEditor></p:rowEditor>
+					</p:column>
+					<p:column headerText="序号" width="5%">
+						<h:outputText value="#{rowVar+1}" />
+					</p:column>
+					<p:column headerText="部门" width="45%">
+						<h:outputText value="#{obj.bmmc}"
+							style="text-align: center; vertical-align: middle;" />
+					</p:column>
+					<p:column headerText="计量管理员" width="45%">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{obj.yhbm}"></h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:selectOneMenu value="#{obj.yhbm}">
+									<f:selectItems value="#{zrfwMissSbxxMb.glyUsers}" var="obj"
+										itemLabel="#{obj.key}" itemValue="#{obj.value}"></f:selectItems>
+								</p:selectOneMenu>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+				</p:dataTable>
+			</p:fieldset>
+
+			<p:fieldset legend="2、检定授权补录入"
+				style="margin-bottom:20px;width:70%;margin-top:10px">
+				<p:panelGrid columns="5">
+				   
+				    <h:outputText value="部门编码："></h:outputText>
+				    <p:inputText  value="#{zrfwMissSbxxMb.bmbmjdy}"></p:inputText>
+				     <h:outputText value="学科分类：" ></h:outputText>
+				    <p:inputText value="#{zrfwMissSbxxMb.xkflbmjdy}"></p:inputText>
+				    <p:commandButton actionListener="#{zrfwMissSbxxMb.seachJlJdy}"
+				      value="查询" update=":form:subjljdy">
+				   
+				      
+				    </p:commandButton>
+				</p:panelGrid>
+				<p:dataTable id="subjljdy" var="obj"
+					value="#{zrfwMissSbxxMb.missJdys}" paginator="true" rows="5"
+					style="with:800px" rowIndexVar="rowVar" editable="true"
+					liveResize="true" paginatorPosition="bottom"
+					currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+					paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					lazy="true" rowsPerPageTemplate="15,30,50">
+					<p:ajax event="rowEdit" update=":form:subjljdy"
+						listener="#{zrfwMissSbxxMb.onRowJlJdyEdit}"></p:ajax>
+					<p:column style="width:40px">
+						<p:rowEditor></p:rowEditor>
+					</p:column>
+					<p:column headerText="序号" width="5%">
+						<h:outputText value="#{rowVar+1}" />
+					</p:column>
+					<p:column headerText="部门名称" width="45%">
+						<h:outputText value="#{obj.bmmc}"
+							style="text-align: center; vertical-align: middle;" />
+					</p:column>
+					<p:column headerText="部门编码" width="45%">
+						<h:outputText value="#{obj.bmbm}"
+							style="text-align: center; vertical-align: middle;" />
+					</p:column>
+					<p:column headerText="学科分类编码" width="45%">
+						<h:outputText value="#{obj.xkflbm}"
+							style="text-align: center; vertical-align: middle;" />
+					</p:column>
+					<p:column headerText="学科分类名称" width="45%">
+						<h:outputText value="#{obj.xkflmc}"
+							style="text-align: center; vertical-align: middle;" />
+					</p:column>
+					<p:column headerText="检定员" width="45%">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{obj.yhbm}"></h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:selectOneMenu value="#{obj.yhbm}">
+									<f:selectItems value="#{zrfwMissSbxxMb.jdyUsers}" var="obj"
+										itemLabel="#{obj.key}" itemValue="#{obj.value}"></f:selectItems>
+								</p:selectOneMenu>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+				</p:dataTable>
+			</p:fieldset>
+			
+			
+			<p:fieldset legend="3、分厂确认授权补录入"
+				style="margin-bottom:20px;width:70%;margin-top:10px">
+				<p:panelGrid columns="5">
+				    <h:outputText value="部门编码："></h:outputText>
+				    <p:inputText  value="#{zrfwMissSbxxMb.bmbmqry}"></p:inputText>
+				    <h:outputText value="学科分类：" ></h:outputText>
+				    <p:inputText value="#{zrfwMissSbxxMb.xkflbmqry}"></p:inputText>
+				    <p:commandButton actionListener="#{zrfwMissSbxxMb.seachJlQry}"
+				      value="查询" update=":form:subjlQry">
+				    </p:commandButton>
+				</p:panelGrid>
+				<p:dataTable id="subjlQry" var="obj"
+					value="#{zrfwMissSbxxMb.missQry}" paginator="true" rows="5"
+					style="with:800px" rowIndexVar="rowVar" editable="true"
+					liveResize="true" paginatorPosition="bottom"
+					currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+					paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					lazy="true" rowsPerPageTemplate="15,30,50">
+					<p:ajax event="rowEdit" update=":form:subjlQry"
+						listener="#{zrfwMissSbxxMb.onRowJlQryEdit}"></p:ajax>
+					<p:column style="width:40px">
+						<p:rowEditor></p:rowEditor>
+					</p:column>
+					<p:column headerText="序号" width="5%">
+						<h:outputText value="#{rowVar+1}" />
+					</p:column>
+					<p:column headerText="部门名称" width="45%">
+						<h:outputText value="#{obj.bmmc}"
+							style="text-align: center; vertical-align: middle;" />
+					</p:column>
+					<p:column headerText="部门编码" width="45%">
+						<h:outputText value="#{obj.bmbm}"
+							style="text-align: center; vertical-align: middle;" />
+					</p:column>
+					<p:column headerText="学科分类编码" width="45%">
+						<h:outputText value="#{obj.xkflbm}"
+							style="text-align: center; vertical-align: middle;" />
+					</p:column>
+					<p:column headerText="学科分类名称" width="45%">
+						<h:outputText value="#{obj.xkflmc}"
+							style="text-align: center; vertical-align: middle;" />
+					</p:column>
+					<p:column headerText="分厂确认员" width="45%">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{obj.yhbm}"></h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:selectOneMenu value="#{obj.yhbm}">
+									<f:selectItems value="#{zrfwMissSbxxMb.qryUsers}" var="obj"
+										itemLabel="#{obj.key}" itemValue="#{obj.value}"></f:selectItems>
+								</p:selectOneMenu>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+				</p:dataTable>
+			</p:fieldset>
+		</h:form>
+
+	</h:body>
+</f:view>
+</html>

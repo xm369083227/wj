@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean id="jcglFlsqDao" class="idms.dao.hibernate.jlgl.jcgl.JcglFlsqDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+
+	
+	<bean id="jcglJyjlDao" class="idms.dao.hibernate.jlgl.jcgl.JcglJyjlImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="jcglJysbDao" class="idms.dao.hibernate.jlgl.jcgl.JcglJysbImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="jcglSbsqDao" class="idms.dao.hibernate.jlgl.jcgl.JcglSbsqDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<bean id="jdglJdjhDao" class="idms.dao.hibernate.jlgl.jdgl.JdglJdjhDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="jdglJdjlDao" class="idms.dao.hibernate.jlgl.jdgl.JdglJdjlDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="jdglJdrwDao" class="idms.dao.hibernate.jlgl.jdgl.JdglJdrwDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="jdglSbhjDao" class="idms.dao.hibernate.jlgl.jdgl.JdglSbhjDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<bean id="jdglCjtjDao" class="idms.dao.hibernate.jlgl.jdgl.JdglCjtjDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<bean id="jlbzBzqDao" class="idms.dao.hibernate.jlgl.jlbz.JlbzBzqDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="jlbzBzwzDao" class="idms.dao.hibernate.jlgl.jlbz.JlbzBzwzDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<bean id="jlzdJlgfDao" class="idms.dao.hibernate.jlgl.jlzd.JlzdJlgfDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="jlzdJxdwDao" class="idms.dao.hibernate.jlgl.jlzd.JlzdJxdwDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="jlzdWjsyfwDao" class="idms.dao.hibernate.jlgl.jlzd.JlzdWjsyfwDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="jlzdXkflDao" class="idms.dao.hibernate.jlgl.jlzd.JlzdXkflDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	
+	<bean id="sbglSbxxDao" class="idms.dao.hibernate.jlgl.sbgl.SbglSbxxDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="sbglSbxxBakDao" class="idms.dao.hibernate.jlgl.sbgl.SbglSbxxBakDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="sbglBhgxxFkdDao" class="idms.dao.hibernate.jlgl.sbgl.SbglBhgxxFkdDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="sbrzZqxgDao" class="idms.dao.hibernate.jlgl.sbrz.SbrzZqxgDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="sbrzWxjlDao" class="idms.dao.hibernate.jlgl.sbrz.SbrzWxjlDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="sbrzZtxgDao" class="idms.dao.hibernate.jlgl.sbrz.SbrzZtxgDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="sbrzSbdsDao" class="idms.dao.hibernate.jlgl.sbrz.SbrzSbdsDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<bean id="zrfwBmsqDao" class="idms.dao.hibernate.jlgl.zrfw.ZrfwBmsqDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="zrfwFlsqDao" class="idms.dao.hibernate.jlgl.zrfw.ZrfwFlsqDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="zrfwSbsqDao" class="idms.dao.hibernate.jlgl.zrfw.ZrfwSbsqDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<bean id="zrfwGxfwDao" class="idms.dao.hibernate.jlgl.zrfw.ZrfwGxfwDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<bean id="zrfwJlyDao" class="idms.dao.hibernate.jlgl.zrfw.ZrfwJlyDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+     <bean id="cfgJhZxpzDao" class="idms.dao.hibernate.jlgl.acom.CfgJhZxpzDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="sbxxSjlbDao" class="idms.dao.hibernate.jlgl.sbrz.SbxxSjlbDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+
+</beans>

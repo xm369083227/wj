@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <f:view contentType="text/html">
+        <h:head>
+            <title>IDMS</title>
+		    <ui:include src="/common/templates/ui.xhtml"></ui:include>
+        </h:head>
+    <h:body>
+    	<p:growl id="growlid" sticky="true" autoUpdate="true"/>
+        <h:form id="form" style="margin-bottom:10px;width:100%;margin-top:10px">
+                   <h2 style="margin-left: 28%">检定计划执行配置</h2>
+                   <p:fieldset  legend="1.管理员执行方案"  style="margin-bottom:20px;width:70%;margin-top:10px">
+                   <p:selectOneRadio value="#{cfgJhZxpzBean.obj.sysqgl}" layout="grid" columns="2">
+	                     <f:selectItem itemLabel="1.1单点授权-设备所属管理员" itemValue="2"></f:selectItem>
+	                     <f:selectItem itemLabel="1.2单点授权-设备所属使用部门" itemValue="3"></f:selectItem>
+	                     <f:selectItem itemLabel="1.3管辖范围-使用部门管辖范围" itemValue="5"></f:selectItem>
+	                     <f:selectItem itemLabel="1.4管辖范围-设备分类管辖范围" itemValue="7"></f:selectItem>
+                    </p:selectOneRadio>
+                    <h:panelGrid columns="2" style="margin-top:15px">
+                         <h:outputText value="注1.1：" style="color:red"></h:outputText>
+                         <h:outputText value="送检通知下发至：设备所属的计量管理员的工作中心"></h:outputText>
+                         <h:outputText value="注1.2：" style="color:red"></h:outputText>
+                         <h:outputText value="送检通知下发至：设备所属的使用部门所在的计量管理员的工作中心"></h:outputText>
+                         <h:outputText value="注1.3：" style="color:red"></h:outputText>
+                         <h:outputText value="送检通知下发至：设备所属的使用部门所在管辖的计量管理员的工作中心"></h:outputText>
+                         <h:outputText value="注1.4：" style="color:red"></h:outputText>
+                         <h:outputText value="送检通知下发至：设备所属的计量学科分类所属的计量管理员的工作中心"></h:outputText>
+                         
+                    </h:panelGrid>
+                  </p:fieldset>
+                
+                 <p:fieldset  legend="2.检定员执行方案"  style="margin-bottom:20px;width:70%;margin-top:10px">
+                 <p:selectOneRadio value="#{cfgJhZxpzBean.obj.jdsqgl}" layout="grid" columns="2">
+                         <f:selectItem itemLabel="2.1单点授权-设备所属检定员" itemValue="2"></f:selectItem>
+	                     <f:selectItem itemLabel="2.2单点授权-设备所属检定部门" itemValue="3"></f:selectItem>
+	                     <f:selectItem itemLabel="2.3管辖范围-使用部门管辖范围" itemValue="5"></f:selectItem>
+	                     <f:selectItem itemLabel="2.4管辖范围-设备分类管辖范围" itemValue="5"></f:selectItem>
+                 </p:selectOneRadio>
+                    <h:panelGrid columns="2" style="margin-top:15px">
+                         <h:outputText value="注1.1：" style="color:red"></h:outputText>
+                         <h:outputText value="送检通知下发至：设备所属的计量检定员的工作中心"></h:outputText>
+                         <h:outputText value="注1.2：" style="color:red"></h:outputText>
+                         <h:outputText value="送检通知下发至：设备所属的检定部门所在的计量检定员的工作中心"></h:outputText>
+                         <h:outputText value="注1.3：" style="color:red"></h:outputText>
+                         <h:outputText value="送检通知下发至：设备所属的检定部门所在管辖的计量检定员的工作中心"></h:outputText>
+                         <h:outputText value="注1.4：" style="color:red"></h:outputText>
+                         <h:outputText value="送检通知下发至：设备所属的计量学科分类所属的计量检定员的工作中心"></h:outputText>
+                    </h:panelGrid>
+                  </p:fieldset> 
+                  <p:commandButton value="保存配置" actionListener="#{cfgJhZxpzBean.saveJhZxpz}" style="margin-left: 32%"></p:commandButton>
+        </h:form>
+            
+     </h:body>
+    </f:view>
+</html>

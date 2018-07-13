@@ -1,0 +1,542 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+	<ui:include src="/common/templates/ui.xhtml"></ui:include>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+</h:head>
+<h:body>
+	<h2>
+		<h:outputText value="重复性&amp;再现性" />
+	</h2>
+	<p:growl id="growlid" showDetail="false" sticky="true"
+		autoUpdate="true" />
+
+	<h:form id="form" enctype="multipart/form-data">
+		<h:panelGrid columns="1">
+			<p:tabView id="jbxx" scrollable="true"
+				activeIndex="#{msaRarMb.activeIndex}" style="width:1000px">
+				<p:tab title="基本信息" titleStyle="width:200px">
+					<p:panelGrid columns="1" style="width:900px">
+						<p:panelGrid style="text-align:center">
+							<h:outputText value="重复性再现性基本数据(带"
+								style=" font-size:15px; font-weight border;color:gray;" />
+							<h:outputText value="*"
+								style="font-size:15px; font-weight border;color:red;" />
+							<h:outputText value="为必填)"
+								style="font-size:15px; font-weight border;color:gray;" />
+						</p:panelGrid>
+						<p:row>
+							<h:panelGrid id="glsb" columns="4" style="width:900px">
+								<h:panelGroup>
+									<h:outputText value="设备编码:" />
+									<h:outputText value="*" style="color:red" />
+								</h:panelGroup>
+								<p:inputText id="jlbh" value="#{msaRarMb.jbxx.sbbm}" size="35"
+									required="true" requiredMessage="请选择设备编码！！" maxlength="100"
+									readonly="true" />
+								<h:panelGroup>
+									<h:outputText value="设备名称:" />
+									<h:outputText value="*" style="color:red" />
+								</h:panelGroup>
+								<h:panelGroup>
+									<p:inputText id="sbmc" value="#{msaRarMb.jbxx.sbmc}" size="35"
+										required="true" requiredMessage="请选择设备名称！" maxlength="100"
+										readonly="true" />
+									<p:commandButton
+										onclick="PF('displaydlg').show();return false;" title="查询"
+										icon="ui-icon-search" />
+								</h:panelGroup>
+								<h:panelGroup>
+									<h:outputText value="设备类型:" />
+									<h:outputText value="*" style="color:red" />
+								</h:panelGroup>
+								<p:inputText id="sblx" value="#{msaRarMb.jbxx.sblx}"
+									required="true" requiredMessage="请选择设备类型！" maxlength="100"
+									size="35"></p:inputText>
+
+							</h:panelGrid>
+							<h:panelGrid columns="4" style="width:900px">
+
+								<h:outputText value="特性名称:" />
+								<p:inputText value="#{msaRarMb.jbxx.txmc}" size="35"
+									readonly="true"></p:inputText>
+								<h:panelGroup>
+									<h:outputText value="零件名称:" />
+									<h:outputText value="*" style="color:red" />
+								</h:panelGroup>
+								<p:inputText value="#{msaRarMb.jbxx.ljmc}" required="true"
+									requiredMessage="零件名称：不能为空！" maxlength="40" size="35"></p:inputText>
+								<h:outputText value="零件变差:" />
+								<p:inputText value="#{msaRarMb.jbxx.ljbc}" size="35"></p:inputText>
+								<h:panelGroup>
+									<h:outputText value="零件编号:" />
+									<h:outputText value="*" style="color:red" />
+								</h:panelGroup>
+
+								<p:inputText value="#{msaRarMb.jbxx.ljbh}" required="true"
+									requiredMessage="零件编号：不能为空！" maxlength="40" size="35"></p:inputText>
+								<h:panelGroup>
+									<h:outputText value="操作人员:" />
+									<h:outputText value="*" style="color:red" />
+								</h:panelGroup>
+								<p:inputText value="#{msaRarMb.jbxx.czry}" required="true"
+									requiredMessage="操作人员：不能为空！" maxlength="100" size="35"></p:inputText>
+
+								<h:outputText value="操作人数:" />
+
+								<p:inputText value="#{msaRarMb.jbxx.czrs}" size="35"
+									readonly="true"></p:inputText>
+
+								<h:outputText value="零件数目:" />
+
+								<p:inputText value="#{msaRarMb.jbxx.ljsm}" size="35"
+									readonly="true"></p:inputText>
+								<h:panelGroup>
+									<h:outputText value="测量次数:" />
+									<h:outputText value="*" style="color:red" />
+								</h:panelGroup>
+								<p:inputText value="#{msaRarMb.jbxx.clcs}" required="true"
+									requiredMessage="测量次数：不能为空！" maxlength="20" size="35"></p:inputText>
+								<h:outputText value="分析日期:" />
+								<p:calendar value="#{msaRarMb.jbxx.fxrq}" size="35"
+									navigator="true" pattern="yyyy-MM-dd"></p:calendar>
+							</h:panelGrid>
+							<h:panelGrid columns="4" style="width:900px">
+								<h:outputText value="零件上偏差:" />
+								<p:inputText value="#{msaRarMb.jbxx.ggsx}" size="35"></p:inputText>
+								<h:outputText value="零件下偏差:" />
+								<p:inputText value="#{msaRarMb.jbxx.ggxx}" size="35"></p:inputText>
+							</h:panelGrid>
+							<p:commandButton value="下一步-->" ajax="false"
+								action="#{msaRarMb.nextOption}"
+								style="font-size:14px;font-weight: bolder;" />
+						</p:row>
+					</p:panelGrid>
+				</p:tab>
+
+				<p:tab title="分析数据" titleStyle="width:200px">
+					<p:panelGrid columns="1" style="width:900px">
+						<p:row>
+							<h:panelGroup>
+								<p:commandButton value="输入数据" action="#{msaRarMb.editValues}"
+									rendered="#{!msaRarMb.mEditValues}" immediate="true"
+									style="font-weight:bolder;" styleClass="standard" />
+								<f:verbatim>&nbsp;&nbsp;&nbsp;</f:verbatim>
+								<p:commandButton value="编辑数据" ajax="false"
+									action="#{msaRarMb.editValues}"
+									rendered="#{msaRarMb.mEditValues}" style="font-weight:bolder;"
+									styleClass="standard" />
+								<f:verbatim>&nbsp;&nbsp;&nbsp;</f:verbatim>
+								<p:commandButton value="保存数据" ajax="false"
+									action="#{msaRarMb.saveDate}" style="font-weight:bolder;"
+									styleClass="standard" />
+								<f:verbatim>&nbsp;&nbsp;&nbsp;</f:verbatim>
+
+								<p:commandButton value="分析数据" disabled="#{!msaRarMb.bool}"
+									actionListener="#{msaRarMb.analysisData}" ajax="false"
+									style="font-weight:bolder;" styleClass="standard" />
+								<f:verbatim>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</f:verbatim>
+							</h:panelGroup>
+						</p:row>
+					</p:panelGrid>
+					<p:panelGrid columns="4">
+						<p:row>
+							<h:panelGroup>
+								<f:verbatim>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</f:verbatim>
+								<h:outputText value="从Excel文件导入数据" style="font-weight:bold" />
+								<p:fileUpload value="#{msaRarMb.uploadedFile}" mode="simple"
+									skinSimple="true" />
+
+								<h:commandButton value="导入..."
+									actionListener="#{msaRarMb.importExcel}"
+									style="font-weight:bolder;color:blue;" />
+
+								<p:commandButton value="不显示Excel"
+									rendered="#{not msaRarMb.showExcelFile }"
+									actionListener="#{msaRarMb.getExcelExample}"
+									style="font-weight:bolder;color:gray;" />
+								<p:commandButton value="显示Excel帮助"
+									rendered="#{msaRarMb.showExcelFile }"
+									actionListener="#{msaRarMb.getExcelExample}"
+									style="font-weight:bolder;color:gray;" />
+							</h:panelGroup>
+
+						</p:row>
+
+					</p:panelGrid>
+					<p:panel>
+
+						<h:outputText value="分析数据列表："
+							style="font-size:14px; font-weight: bolder; color:  gray" />
+					</p:panel>
+
+					<p:dataTable id="datas" var="data" value="#{msaRarMb.dataList}"
+						widgetVar="carsTable" rowIndexVar="index"
+						style="text-align:center;">
+						<p:column headerText="序号" resizable="false" width="30px;">
+							<h:outputText value="#{index+1}"></h:outputText>
+						</p:column>
+						<p:columns value="#{msaRarMb.columns}" var="column"
+							columnIndexVar="colIndex">
+							<f:facet name="header">
+								<h:outputText value="#{column.header}" />
+							</f:facet>
+
+							<p:outputLabel value="#{data[column.property]}"
+								rendered="#{msaRarMb.mEditValues}" style="width:100px" />
+							<p:inputText value="#{data[column.property]}"
+								rendered="#{!msaRarMb.mEditValues}" style="width:100px"></p:inputText>
+						</p:columns>
+					</p:dataTable>
+
+
+
+					<p:panelGrid columns="1" rendered="#{not msaRarMb.showExcelFile }">
+						<h:panelGroup>
+							<h:outputText value="Excel文件格式如下图所示："
+								style="font-size:14px;font-weight:bold;color:#ff0000" />
+						</h:panelGroup>
+						<h:graphicImage url="/common/images/msa/importRR.jpg" />
+					</p:panelGrid>
+
+				</p:tab>
+
+
+				<p:tab title="结论" titleStyle="width:200px">
+					<p:panelGrid columns="1" style="width:900px">
+						<p:tabView id="jbxx" scrollable="true" style="width:900px">
+							<p:tab title="非交互性结论" titleStyle="width:100px">
+
+
+								<h:panelGroup>
+									<h:outputText value="重复性&amp;再现性结论:" />
+								</h:panelGroup>
+								<p:panelGrid columns="2" style="width:900px">
+									<h:outputText value="x_bar(均值)" />
+									<p:inputText value="#{msaRarMb.grrBean.x_bar}" size="10"
+										readonly="true"></p:inputText>
+
+									<h:outputText value="r_bar(极差均值)" />
+									<p:inputText value="#{msaRarMb.grrBean.xR}" size="10"
+										readonly="true"></p:inputText>
+
+									<h:outputText value="Rp(所有零件平均值的极差)" />
+									<p:inputText value="#{msaRarMb.grrBean.rp}" size="10"
+										readonly="true"></p:inputText>
+
+									<h:outputText value="Xdiff(测量人员平均值的极差 )" />
+									<p:inputText value="#{msaRarMb.grrBean.xdiff}" size="10"
+										readonly="true"></p:inputText>
+
+									<h:outputText value="x_lcl(均值图下控线)" />
+									<p:inputText value="#{msaRarMb.grrBean.x_lcl}" size="10"
+										readonly="true"></p:inputText>
+
+									<h:outputText value="x_ucl(均值图上控线)" />
+									<p:inputText value="#{msaRarMb.grrBean.x_ucl}" size="10"
+										readonly="true"></p:inputText>
+
+									<h:outputText value="r_lcl(极差图下控线)" />
+									<p:inputText value=" #{msaRarMb.grrBean.r_lcl}" size="10"
+										readonly="true"></p:inputText>
+
+
+									<h:outputText value="r_ucl(极差图上控线)" />
+									<p:inputText value="#{msaRarMb.grrBean.r_ucl}" size="10"
+										readonly="true"></p:inputText>
+								</p:panelGrid>
+								<p:panelGrid columns="4" style="width:900px">
+									<h:outputText value="EV(重复性——设备变差)" />
+									<p:inputText value="#{msaRarMb.grrBean.ev}" size="10"
+										readonly="true"></p:inputText>
+									<h:outputText value="%EV=[EV/TV]" />
+									<p:inputText value="#{msaRarMb.grrBean.perEv}" size="10"
+										readonly="true"></p:inputText>
+
+									<h:outputText value="AV(再现性——人员变差)" />
+									<p:inputText value="#{msaRarMb.grrBean.av}" size="10"
+										readonly="true"></p:inputText>
+									<h:outputText value="%AV=[AV/TV]" />
+									<p:inputText value="#{msaRarMb.grrBean.perAv}" size="10"
+										readonly="true"></p:inputText>
+
+
+									<h:outputText value="R&amp;R(重复性和再现性)" />
+									<p:inputText value="#{msaRarMb.grrBean.grr}" size="10"
+										readonly="true"></p:inputText>
+									<h:outputText value="%R&amp;R=[R&amp;R/TV]" />
+									<p:inputText value="#{msaRarMb.grrBean.perGrr}" size="10"
+										readonly="true"></p:inputText>
+
+
+									<h:outputText value="PV(零件内变差)" />
+									<p:inputText value="#{msaRarMb.grrBean.pv}" size="10"
+										readonly="true"></p:inputText>
+									<h:outputText value="%PV=[PV/TV]" />
+									<p:inputText value="#{msaRarMb.grrBean.perPv}" size="10"
+										readonly="true"></p:inputText>
+
+								</p:panelGrid>
+								<p:panelGrid columns="2" style="width:900px">
+									<h:outputText value="TV(总变差)" />
+									<p:inputText value="#{msaRarMb.grrBean.tv}" size="10"
+										readonly="true"></p:inputText>
+
+									<h:outputText value="ndc( 数据分级数)" />
+									<p:inputText value="#{msaRarMb.grrBean.ndc}" size="10"
+										readonly="true"></p:inputText>
+
+									<h:outputText value="基于R&amp;R的结论" />
+									<p:inputTextarea value=" " style="width:600px"></p:inputTextarea>
+
+									<h:outputText value="基于ndc的结论" />
+									<p:inputTextarea value=" " style="width:600px"></p:inputTextarea>
+
+								</p:panelGrid>
+							</p:tab>
+							<p:tab title="均值极差控制图" titleStyle="width:100px">
+								<p:chart type="line" model="#{msaRarMb.grrBean.lineModel}"
+									rendered="#{msaRarMb.grrBean.lineModel!=null}"
+									style="height:450px;" />
+								<p:chart type="line" model="#{msaRarMb.grrBean.lineModel1}"
+									rendered="#{msaRarMb.grrBean.lineModel1!=null}"
+									style="height:450px;" />
+							</p:tab>
+							<p:tab title="交互性结论" titleStyle="width:100px">
+								<p:panelGrid columns="5" style="width:900px">
+									<h:outputText value="变差源" />
+									<h:outputText value="自由度(DF)" />
+									<h:outputText value="离差平方和(SS)" />
+									<h:outputText value="均差(MS)" />
+									<h:outputText value="F-value" />
+
+									<h:outputText value="零件" />
+									<h:panelGroup>
+										<h:outputText value="g-1" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<p:inputText value="#{msaRarMb.grrBean.anovaBean.dfB}"
+											readonly="true" size="10" />
+									</h:panelGroup>
+									<h:panelGroup>
+										<h:outputText value="SSb=" />&nbsp;&nbsp;
+								<p:inputText value="#{msaRarMb.grrBean.anovaBean.ssB}"
+											readonly="true" size="10" />
+									</h:panelGroup>
+									<h:panelGroup>
+										<h:outputText value="MSb=" />&nbsp;&nbsp;
+								<p:inputText value="#{msaRarMb.grrBean.anovaBean.msB}"
+											readonly="true" size="10" />
+									</h:panelGroup>
+									<p:inputText value="#{msaRarMb.grrBean.anovaBean.f_B}"
+										readonly="true" size="10" />
+
+
+									<h:outputText value="评价人" />
+									<h:panelGroup>
+										<h:outputText value="n-1" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<p:inputText value="#{msaRarMb.grrBean.anovaBean.dfA}"
+											readonly="true" size="10" />
+									</h:panelGroup>
+									<h:panelGroup>
+										<h:outputText value="SSa=" />&nbsp;&nbsp;
+								<p:inputText value="#{msaRarMb.grrBean.anovaBean.ssA}"
+											readonly="true" size="10" />
+									</h:panelGroup>
+									<h:panelGroup>
+										<h:outputText value="MSa=" />&nbsp;&nbsp;
+								<p:inputText value="#{msaRarMb.grrBean.anovaBean.msA}"
+											readonly="true" size="10" />
+									</h:panelGroup>
+									<p:inputText value="#{msaRarMb.grrBean.anovaBean.f_A}"
+										readonly="true" size="10" />
+
+
+									<h:outputText value="零件和评价人交互作用" />
+									<h:panelGroup>
+										<h:outputText value="(g-1)(n-1)" />
+										<p:inputText value="#{msaRarMb.grrBean.anovaBean.dfAB}"
+											readonly="true" size="10" />
+									</h:panelGroup>
+									<h:panelGroup>
+										<h:outputText value="SSab=" />
+										<p:inputText value="#{msaRarMb.grrBean.anovaBean.ssAB}"
+											readonly="true" size="10" />
+									</h:panelGroup>
+									<h:panelGroup>
+										<h:outputText value="MSab=" />
+										<p:inputText value="#{msaRarMb.grrBean.anovaBean.msAB}"
+											readonly="true" size="10" />
+									</h:panelGroup>
+									<p:inputText value="#{msaRarMb.grrBean.anovaBean.f_AB}"
+										readonly="true" size="10" />
+
+									<h:outputText value="量具误差" />
+									<h:panelGroup>
+										<h:outputText value="ng(r-1)" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<p:inputText value="#{msaRarMb.grrBean.anovaBean.dfE}"
+											readonly="true" size="10" />
+									</h:panelGroup>
+									<h:panelGroup>
+										<h:outputText value="SSe=" />&nbsp;&nbsp;
+								<p:inputText value="#{msaRarMb.grrBean.anovaBean.ssE}"
+											readonly="true" size="10" />
+									</h:panelGroup>
+									<h:panelGroup>
+										<h:outputText value="MSe=" />&nbsp;&nbsp;
+								<p:inputText value="#{msaRarMb.grrBean.anovaBean.msE}"
+											readonly="true" size="10" />
+									</h:panelGroup>
+									<h:outputText />
+									<h:outputText value="总变差" />
+									<h:panelGroup>
+										<h:outputText value="ngr-1" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<p:inputText value="#{msaRarMb.grrBean.anovaBean.dfT}"
+											readonly="true" size="10" />
+									</h:panelGroup>
+									<h:panelGroup>
+										<h:outputText value="SSt=" />&nbsp;&nbsp;
+								<p:inputText value="#{msaRarMb.grrBean.anovaBean.ssT}"
+											readonly="true" size="10" />
+									</h:panelGroup>
+
+									<h:outputText />
+									<h:outputText />
+
+								</p:panelGrid>
+								<p:panelGrid columns="4" style="width:900px">
+									<h:outputText value="参数" />
+									<h:outputText value="参数值(6*SD)" />
+									<h:outputText value="%总变差" />
+									<h:outputText value="%贡献" />
+									<h:outputText value="重复性(EV)" />
+									<p:inputText value="#{msaRarMb.grrBean.anovaBean.ev}"
+										readonly="true" />
+									<p:inputText value="#{msaRarMb.grrBean.anovaBean.perEv}%"
+										readonly="true" />
+									<p:inputText value="#{msaRarMb.grrBean.anovaBean.rateEv}%"
+										readonly="true" />
+									<h:outputText value="再现性(AV)" />
+									<p:inputText value="#{msaRarMb.grrBean.anovaBean.av}"
+										readonly="true" />
+									<p:inputText value="#{msaRarMb.grrBean.anovaBean.perAv}%"
+										readonly="true" />
+									<p:inputText value="#{msaRarMb.grrBean.anovaBean.rateAv}%"
+										readonly="true" />
+									<h:outputText value="R&amp;R" />
+									<p:inputText value="#{msaRarMb.grrBean.anovaBean.grr}"
+										readonly="true" />
+									<p:inputText value="#{msaRarMb.grrBean.anovaBean.perGrr}%"
+										readonly="true" />
+									<p:inputText value="#{msaRarMb.grrBean.anovaBean.rateGrr}%"
+										readonly="true" />
+									<h:outputText value="交互作用(I)" />
+									<p:inputText value="#{msaRarMb.grrBean.anovaBean.jh}"
+										readonly="true" />
+									<p:inputText value="#{msaRarMb.grrBean.anovaBean.perInt}%"
+										readonly="true" />
+									<p:inputText value="#{msaRarMb.grrBean.anovaBean.rateInt}%"
+										readonly="true" />
+									<h:outputText value="零件变差(PV)" />
+									<p:inputText value="#{msaRarMb.grrBean.anovaBean.pv}"
+										readonly="true" />
+									<p:inputText value="#{msaRarMb.grrBean.anovaBean.perPv}%"
+										readonly="true" />
+									<p:inputText value="#{msaRarMb.grrBean.anovaBean.ratePv}%"
+										readonly="true" />
+									<h:outputText value="总变差(TV)" />
+									<p:inputText value="#{msaRarMb.grrBean.anovaBean.tv}"
+										readonly="true" />
+									<p:inputText value="100%" readonly="true" />
+									<p:inputText value="100%" readonly="true" />
+								</p:panelGrid>
+								<p:panelGrid columns="2" style="width:900px">
+									<h:outputText value="判断结果的标准：" />
+									<f:verbatim>根据给定的显著性水平α在F分布表中查找相应的临界值Fα，将统计量F与Fα进行比较，做出决策。<span
+											style="color:red;">（默认α=0.05）</span>
+										<br />
+								 1.若Fa>=Fα(g-1,(g-1)(n-1)),则表明因素A对观察值有显著影响，否则，没有显著影响。<br />
+								 2.若Fb>=Fα(n-1,(g-1)(n-1)),则表明因素B对观察值有显著影响，否则，没有显著影响。<br />
+								 3.若Fab>=Fα(g-1,gn(r-1)),则表明因素A、B的交互作用对观察值有显著影响，否则，没有显著影响。</f:verbatim>
+									<h:outputText value="得出结论：" />
+									<p:inputTextarea value=" " style="width:600px"></p:inputTextarea>
+								</p:panelGrid>
+								<f:verbatim>
+									<a href="统计学附录_F分布临界值表_全.doc" style="color:red;">查看F分布临界值表</a>
+								</f:verbatim>
+							</p:tab>
+
+							<p:tab title="方差分析图" titleStyle="width:100px">
+								<p:chart type="bar"
+									model="#{msaRarMb.grrBean.anovaBean.barModel}"
+									rendered="#{msaRarMb.grrBean.anovaBean.barModel!=null}"
+									style="height:300px" />
+								<p:panelGrid columns="2" style="width:900px">
+									<p:chart type="line"
+										model="#{msaRarMb.grrBean.anovaBean.animatedModel}"
+										rendered="#{msaRarMb.grrBean.anovaBean.animatedModel!=null}"
+										style="height:300px" />
+									<p:chart type="line"
+										model="#{msaRarMb.grrBean.anovaBean.animatedModel1}"
+										rendered="#{msaRarMb.grrBean.anovaBean.animatedModel1!=null}"
+										style="height:300px" />
+								</p:panelGrid>
+							</p:tab>
+						</p:tabView>
+					</p:panelGrid>
+				</p:tab>
+			</p:tabView>
+		</h:panelGrid>
+	</h:form>
+
+
+
+	<p:dialog id="dlg1" header="显示设备" widgetVar="displaydlg" modal="true">
+		<h:form>
+			<p:dataTable id="data" var="sb" style="width:600px"
+				value="#{sbglSbxxQb.lazyDataModel}" paginator="true" rows="10"
+				widgetVar="cellSbxx" selectionMode="single" rowKey="#{sb.id}"
+				rowIndexVar="rowVar" filterDelay="300" resizableColumns="true"
+				liveResize="true" paginatorPosition="bottom"
+				currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+				paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				lazy="true" >
+				<p:ajax event="rowSelect" listener="#{msaRarMb.onRowSelect}"
+					update=":form:jbxx:glsb" oncomplete="PF('displaydlg').hide()"
+					immediate="true" />
+				<p:column headerText="序号" style="width:20px">
+					<h:outputText value="#{rowVar+1}"></h:outputText>
+				</p:column>
+				<p:column sortBy="#{sb.jlbh}" filterBy="#{sb.jlbh}"
+					style="width:#{sys.sbxx.jlbh.xskd}px"
+					rendered="#{sys.sbxx.jlbh.sfsx}" headerText="#{sys.sbxx.jlbh.zdms}">
+					<h:outputText value="#{sb.jlbh}"></h:outputText>
+				</p:column>
+				<p:column sortBy="#{sb.sbmc}" filterBy="#{sb.sbmc}"
+					style="width:100px" rendered="#{sys.sbxx.sbmc.sfsx}"
+					headerText="#{sys.sbxx.sbmc.zdms}">
+					<h:outputText value="#{sb.sbmc}"></h:outputText>
+				</p:column>
+
+				<p:column sortBy="#{sb.sbzt}" filterBy="#{sb.sbzt}"
+					rendered="#{sys.sbxx.sbzt.sfsx}" headerText="#{sys.sbxx.sbzt.zdms}"
+					style="width:#{sys.sbxx.sbzt.xskd}px">
+					<h:outputText value="#{sb.sbzt}"></h:outputText>
+				</p:column>
+				<p:column sortBy="#{sb.sbfl}" filterBy="#{sb.sbfl}"
+					rendered="#{sys.sbxx.sbfl.sfsx}" headerText="#{sys.sbxx.sbfl.zdms}"
+					style="width:#{sys.sbxx.sbfl.xskd}px">
+					<h:outputText value="#{sb.sbfl}"></h:outputText>
+				</p:column>
+
+
+			</p:dataTable>
+		</h:form>
+	</p:dialog>
+
+</h:body>
+</html>

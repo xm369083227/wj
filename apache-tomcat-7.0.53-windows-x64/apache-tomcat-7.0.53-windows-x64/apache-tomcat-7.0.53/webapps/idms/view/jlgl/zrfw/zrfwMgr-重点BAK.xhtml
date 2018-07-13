@@ -1,0 +1,176 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+     <ui:include src="/common/templates/ui.xhtml"></ui:include>
+     <meta name="viewport" content="width=device-width, initial-scale=1"/>
+</h:head>
+<h:body>
+	<p:growl id="growlFlsq" showDetail="true" sticky="true" autoUpdate="true"></p:growl>
+	         <p:dialog id="dialogFlsq"  header="计量管理员（#{zrfwJlyMb.varUser.zsmc}）分类授权" widgetVar="dlgflsq"  maximizable="true"
+		        height="450px" width="600" modal="true">  
+			           <h:form id="flsq">
+					    <p:tree id="treeid" style="width:100%" value="#{zrfwJlyMb.root}" var="tree"
+					                selectionMode="checkbox" 
+					                selection="#{zrfwJlyMb.selectedNodes}">
+                                <p:ajax event="unselect" update=":growlFlsq" listener="#{zrfwJlyMb.onNodeUnselect}" />
+					            <p:ajax event="select"  update=":growlFlsq" listener="#{zrfwJlyMb.onNodeSelect}" />
+						        <p:treeNode >
+						            <h:outputText value="#{tree.jdmc}"/>
+						            <span  style="color: blue;">&nbsp;&nbsp;&nbsp;&nbsp;#{tree.jdms}</span>
+						        </p:treeNode>
+					    </p:tree>
+		             </h:form>
+	        </p:dialog>
+	        
+	          
+	          
+	          <p:dialog id="dialogBmsq"  header="计量管理员（#{zrfwJlyMb.varUser.zsmc}）部门授权" widgetVar="dlgBmsq"  maximizable="true"
+		        height="450px" width="600" modal="true">  
+			           <h:form id="bmsq">
+					    <p:tree id="treeBid" style="width:100%" value="#{zrfwJlyMb.rootDept}" var="tree"
+					                selectionMode="checkbox" 
+					                selection="#{zrfwJlyMb.selectedNodesDept}">
+					            <p:ajax event="select"   listener="#{zrfwJlyMb.onNodeSelectDept}" />
+                                <p:ajax event="unselect"  listener="#{zrfwJlyMb.onNodeUnselectDept}" />
+						        <p:treeNode >
+						             <h:outputText value="#{tree.bmmc}"/>
+						             <h:outputText style="color:blue" value="&nbsp;&nbsp;已授权其他人(#{tree.bmmcms})" rendered="#{tree.bmmcms!=''}"></h:outputText>
+						        </p:treeNode>
+					    </p:tree>
+		             </h:form>
+	        </p:dialog>
+	        
+	         <p:dialog id="dialogSbsq"  header="计量管理员（#{zrfwJlyMb.varUser.zsmc}）设备授权" widgetVar="dlgSbsq"  maximizable="true"
+		        height="450px" width="100%" modal="true" position="top" >  
+			           <h:form id="Sbsq">
+			              	<p:dataTable  id="allSbxx" var="sb"  binding="#{zrfwJlyMb.dataTable}"     value="#{zrfwJlyMb.zrfwSbxxQb.lazyDataModel}"  
+					           paginator="true" rows="5"  widgetVar="cellSbxx"   rowKey="#{sb.id}" selectionMode="multiple" selection="#{zrfwJlyMb.selectedSbxxs}"
+			                   rowIndexVar="rowVar"  filterDelay="300"  resizableColumns="true" liveResize="true" 
+			                    paginatorPosition="top"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+			                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" lazy="true" >
+								  <p:column headerText="序号" style="width:20px">
+								             <h:outputText value="#{rowVar+1}"></h:outputText>
+								  </p:column>
+								   <p:column selectionMode="multiple" style="width:16px;text-align:center"/>	 
+								  <p:column  sortBy="#{sb.jlbh}" filterBy="#{sb.jlbh}" style="width:#{sys.sbxx.jlbh.xskd}px" 
+								       rendered="#{sys.sbxx.jlbh.sfsx}"  headerText="#{sys.sbxx.jlbh.zdms}"  >
+										      <h:outputText value="#{sb.jlbh}" ></h:outputText>
+								  </p:column>
+								  <p:column sortBy="#{sb.sbmc}" filterBy="#{sb.sbmc}" style="width:#{sys.sbxx.sbmc.xskd}px" 
+								       rendered="#{sys.sbxx.sbmc.sfsx}"  headerText="#{sys.sbxx.sbmc.zdms}"  >
+										       <h:outputText  value="#{sb.sbmc}" ></h:outputText>
+								  </p:column>
+								  
+								    <p:column sortBy="#{sb.gllb}" filterBy="#{sb.gllb}" rendered="#{sys.sbxx.gllb.sfsx}" 
+								             headerText="#{sys.sbxx.gllb.zdms}"  style="width:#{sys.sbxx.gllb.xskd}px"  >
+										      <h:outputText value="#{sb.gllb}" ></h:outputText>
+								   </p:column>
+								    <p:column sortBy="#{sb.sbzt}" filterBy="#{sb.sbzt}" rendered="#{sys.sbxx.sbzt.sfsx}" 
+								             headerText="#{sys.sbxx.sbzt.zdms}"  style="width:#{sys.sbxx.sbzt.xskd}px"  >
+										<h:outputText value="#{sb.sbzt}"></h:outputText>
+								    </p:column>
+								     <p:column sortBy="#{sb.sbfl}" filterBy="#{sb.sbfl}" rendered="#{sys.sbxx.sbfl.sfsx}" 
+								             headerText="#{sys.sbxx.sbfl.zdms}"  style="width:#{sys.sbxx.sbfl.xskd}px"  >
+										<h:outputText value="#{sb.sbfl}"></h:outputText>
+								    </p:column>
+								     <p:column sortBy="#{sb.sccj}" filterBy="#{sb.sccj}" rendered="#{sys.sbxx.sccj.sfsx}" 
+								             headerText="#{sys.sbxx.sccj.zdms}"  style="width:#{sys.sbxx.sccj.xskd}px"  >
+											<h:outputText value="#{sb.sccj}"></h:outputText>
+								    </p:column>
+								       <p:column sortBy="#{sb.ccbh}" filterBy="#{sb.ccbh}" rendered="#{sys.sbxx.ccbh.sfsx}" 
+								             headerText="#{sys.sbxx.ccbh.zdms}"  style="width:#{sys.sbxx.ccbh.xskd}px"  >
+										<h:outputText value="#{sb.ccbh}"></h:outputText>
+								    </p:column>
+					      </p:dataTable>
+				 <p:toolbar >
+								<f:facet name="left">
+								            <p:outputLabel value="已管辖设备"></p:outputLabel>
+								</f:facet>
+			    </p:toolbar>
+			
+			 
+			   <p:dataTable  id="table" var="obj"     value="#{zrfwJlyMb.zrfwSbsqQb.lazyDataModel}"  
+		           paginator="true" rows="8"  widgetVar="cellObj"  
+                   rowIndexVar="rowVar"  filterDelay="300"  resizableColumns="true" liveResize="true" 
+                    paginatorPosition="bottom"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" lazy="true" >
+					  <p:column headerText="序号" style="width:20px">
+					             <h:outputText value="#{rowVar+1}"></h:outputText>
+					  </p:column>
+					   <p:column headerText="设备名称" >
+					         <h:outputText value="#{obj.sbglSbxx.sbmc}"></h:outputText>
+					  </p:column>
+					   <p:column headerText="计量编号" >
+					         <h:outputText value="#{obj.sbglSbxx.jlbh}"></h:outputText>
+					  </p:column>
+				  </p:dataTable>
+		         </h:form>
+	        </p:dialog>
+	        
+	   <h:form id="user1">
+	      <h:panelGrid columns="1" style="width:100%;text-align: left;margin-left: -3px;margin-top: -6px;" >
+          <h:inputHidden id="lovdiv" value="#{zrfwJlyMb.showLovDiv}"></h:inputHidden>
+		  <p:dataTable   id="data" var="obj" value="#{zrfwJlyMb.lazyDataModel}"  
+		           paginator="true" rows="#{zrfwJlyMb.pageSize}"  
+                   rowIndexVar="rowVar"  filterDelay="300"  resizableColumns="true" liveResize="true"  rowKey="#{obj.id}"
+                    paginatorPosition="bottom"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" lazy="true" rowsPerPageTemplate="5,10,15">
+			 
+      
+        
+			  <p:column headerText="#{megs.xuhao}" width="3%"  >
+				 <h:outputText value="#{rowVar+1}" />
+			  </p:column>
+			
+			  
+			  <p:column sortBy="#{obj.jly.zsmc}" filterBy="#{obj.jly.zsmc}"  headerText="计量管理员"
+			            style="width:6%" filterStyle="width:80%" >
+					<h:outputText value="#{obj.jly.zsmc}" style="text-align: center; vertical-align: middle;"/>
+			  </p:column>
+		      
+		      <p:column headerText="#{jc.jc_yh_ssbm}"  style="width:6%" sortBy="#{obj.jly.ssbm.bmmc}"   
+			    filterBy="#{obj.jly.ssbm.bmmc}" filterStyle="width:80%">
+				<h:outputText value="#{obj.jly.ssbm.bmmc}" />
+			  </p:column>
+		      <p:column  headerText="责任范围（学科分类）"  filterStyle="width:80%" >
+					<h:outputText value="" style="text-align: center; vertical-align: middle;"/>
+			  </p:column>
+              <p:column  headerText="责任范围（使用部门）"  filterStyle="width:80%" >
+					<h:outputText value="" style="text-align: center; vertical-align: middle;"/>
+			  </p:column>
+			  
+			
+             
+               <p:column headerText="角色" width="10%">
+				<h:outputText value="#{obj.js}" />
+			  </p:column>
+			  
+			  
+			   <p:column width="18%" headerText="操作"  exportable="false">
+				<h:panelGroup>
+			         <p:commandLink  value="分类授权" actionListener="#{zrfwJlyMb.openFlsqPanal}" update=":dialogFlsq :flsq:treeid" oncomplete="PF('dlgflsq').show();"  style="color: orange;" >
+					    <f:param name="YHBM" value="#{obj.jly.yhbm}"></f:param>
+					 </p:commandLink>
+					<h:outputText value="  |  " />
+					<p:commandLink  value="设备授权" actionListener="#{zrfwJlyMb.openSbsqPanal}" update=":dialogSbsq"
+					     style="color: orange;"  oncomplete="PF('dlgSbsq').show();">
+					     <f:param name="YHBM" value="#{obj.jly.yhbm}"></f:param>
+					 </p:commandLink>
+					<h:outputText value="  |  " />
+					<p:commandLink  value="部门授权" actionListener="#{zrfwJlyMb.openBmsqPanal}" oncomplete="PF('dlgBmsq').show();" update=":dialogBmsq" style="color: orange;" >
+					        <f:param name="YHBM" value="#{obj.jly.yhbm}"></f:param>
+					 </p:commandLink>
+				</h:panelGroup>
+			</p:column> 
+
+			
+			</p:dataTable>
+			</h:panelGrid>
+</h:form>
+		</h:body>
+</html>

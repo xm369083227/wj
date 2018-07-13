@@ -1,0 +1,294 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<ui:include src="/common/templates/ui.xhtml"></ui:include>
+</h:head>
+<body>
+	<p:growl id="growlid" showDetail="true" sticky="true" autoUpdate="true"></p:growl>
+	<p:dialog maximizable="true" style="margin-left:20px;top:20px"
+		showEffect="true" hideEffect="true" id="basicdig"
+		visible="#{wfProsInedCtlBean.showLovDiv}" width="80%"
+		header="流程名称：#{wfProsInedCtlBean.processName}" widgetVar="dlgProdef"
+		height="400px" position="left">
+		<p:graphicImage
+			url="/jbpm/jbpmImageServlet?tokenId=#{wfProsInedCtlBean.tokenId}&amp;definitionId=#{wfProsInedCtlBean.processDefId}"></p:graphicImage>
+	</p:dialog>
+
+	<p:dialog id="basicDialog1" visible="#{wfProsInedCtlBean.msgs!=null}"
+		header="任务下发通知" widgetVar="dlg2" height="60px" width="300px"
+		modal="true">
+		<h:outputText value="#{wfProsInedCtlBean.msgs}"></h:outputText>
+		<h:form>
+			<div style="margin-top: 25px;text-align: center;"></div>
+			<p:commandButton value="确定" style="left: 50%;bottom: 5px"
+				onclick="PF('dlg2').hide()" type="button" immediate="true"
+				styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+		</h:form>
+	</p:dialog>
+
+
+
+	<h:form id="processform" style="min-width: 1024px">
+		<p:panel header="查询条件" style="min-width:800px">
+			<h:panelGrid columns="1">
+
+				<h:panelGrid columns="6">
+					<p:outputLabel value="审批单号：" style="text-align: right;width:50px"></p:outputLabel>
+					<h:panelGroup>
+						<p:inputText value="#{wfProsInedCtlBean.ywno}"
+							style=" margin-right:30px;"></p:inputText>
+					</h:panelGroup>
+					<p:outputLabel value="开 单  人：" style="text-align: right"></p:outputLabel>
+					<p:inputText value="#{wfProsInedCtlBean.sqr}"
+						style=" margin-right:30px;"></p:inputText>
+					<p:outputLabel value="开单部门："></p:outputLabel>
+					<p:inputText value="#{wfProsInedCtlBean.sqbm}"></p:inputText>
+
+
+
+					<p:outputLabel value="流程名称："></p:outputLabel>
+					<p:selectOneMenu value="#{wfProsInedCtlBean.bdlx}" style="width:168px">
+						<f:selectItem itemLabel="" itemValue="0"></f:selectItem>
+						<f:selectItems value="#{selectJbpmBean.lcms}"></f:selectItems>
+					</p:selectOneMenu>
+					<p:outputLabel value="当前位置 ："></p:outputLabel>
+					<p:inputText value="#{wfProsInedCtlBean.curNode}"/>
+
+					<p:outputLabel value="待办人 ："></p:outputLabel>
+					<p:inputText value="#{wfProsInedCtlBean.curacts}" />
+					<p:outputLabel value="审批状态："></p:outputLabel>
+					<p:selectOneMenu value="#{wfProsInedCtlBean.spzt}" style="width:168px">
+						<f:selectItem itemLabel="--请选择状态--" itemValue=""></f:selectItem>
+						<f:selectItem itemLabel="审批中" itemValue="审批中"></f:selectItem>
+						<f:selectItem itemLabel="已完成" itemValue="已完成"></f:selectItem>
+					</p:selectOneMenu>
+					
+					<p:outputLabel value="计量编号："></p:outputLabel>
+					<p:inputText value="#{wfProsInedCtlBean.ywnr}" />
+					<p:outputLabel value="发起时间："></p:outputLabel>
+					<h:panelGroup>
+						<p:calendar value="#{wfProsInedCtlBean.start}" locale="de"
+							navigator="true" pattern="yyyy-MM-dd" />
+								至<p:calendar value="#{wfProsInedCtlBean.end}" locale="de"
+							navigator="true" pattern="yyyy-MM-dd" />
+
+					</h:panelGroup>
+
+				</h:panelGrid>
+
+				<h:panelGroup>
+					<p:commandButton value="查询" update=":processform:data"
+						action="#{wfProsInedCtlBean.doSearch}" style=" margin-left:320px;" />
+					<p:commandButton value="重置" style="margin-left:5%;" type="reset"></p:commandButton>
+				</h:panelGroup>
+			</h:panelGrid>
+		</p:panel>
+
+
+		<p:dataTable id="data" style="min-width:800px"
+			value="#{wfProsInedCtlBean.lazyDataModel}" var="obj" paginator="true"
+			rows="#{wfProsInedCtlBean.pageSize}" rowIndexVar="rowIndex"
+			liveResize="true" paginatorPosition="bottom"
+			currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+			paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			lazy="true" rowsPerPageTemplate="15,30,50">
+			<p:column headerText="序号" width="3%">
+				<h:outputText value="#{rowIndex+1}" />
+			</p:column>
+			<p:column headerText="审批单号" width="8%">
+				<h:outputText value="#{obj.ywno}" />
+			</p:column>
+			<p:column headerText="开单人" width="5%">
+				<h:outputText value="#{obj.sqrmc}" />
+			</p:column>
+
+			<p:column headerText="开单部门" width="8%">
+				<h:outputText value="#{obj.sqdw}" />
+			</p:column>
+
+
+			<p:column headerText="发起时间" width="6%">
+				<h:outputText value="#{obj.start}" converter="javax.faces.DateTime" />
+			</p:column>
+
+			<p:column headerText="结束时间" width="6%">
+				<h:outputText value="#{obj.end}" converter="javax.faces.DateTime" />
+			</p:column>
+
+			<p:column headerText="当前位置" width="12%">
+				<h:outputText value="#{obj.currentPosition}"></h:outputText>
+			</p:column>
+
+			<p:column headerText="待办人">
+				 <h:outputText value="#{obj.currentActor}" style="color: orange;" ></h:outputText>
+			</p:column>
+
+
+
+
+
+			<p:column headerText="流程名称" width="9%">
+				<h:outputText value="#{obj.name}" />
+			</p:column>
+
+			<p:column headerText="审批状态" width="6%">
+				<h:outputText value="#{obj.currentPosition=='审批结束'?'已完成':'审批中'}"
+					style="color:#{obj.currentPosition=='审批结束'?'green':'red'}" />
+			</p:column>
+
+
+
+			<p:column headerText="操作" width="10%">
+				<p:commandLink id="buttJkID" value="监控"
+					action="#{wfProsInedCtlBean.openJbpmImgage}" update=":basicdig"
+					ajax="true" style="color: orange;">
+					<f:param name="taskInstanceId" value="#{obj.ywid}"></f:param>
+					<f:param name="processDefName" value="#{obj.name}"></f:param>
+					<f:setPropertyActionListener
+						target="#{wfProsInedCtlBean.processName}" value="#{obj.name}"></f:setPropertyActionListener>
+				</p:commandLink>
+				
+				<h:outputText value=" | "></h:outputText>
+				<p:commandLink value="审批历史" update=":dlgspls"
+					oncomplete="PF('dlgspls').show()" ajax="true"
+					action="#{wfProsInedCtlBean.viewSplogs}" style="color: orange;">
+					<f:param name="taskInstanceId" value="#{obj.ywid}"></f:param>
+					<f:setPropertyActionListener
+						target="#{wfProsInedCtlBean.processInstance}" value="#{obj}"></f:setPropertyActionListener>
+				</p:commandLink>
+			</p:column>
+
+		</p:dataTable>
+	</h:form>
+
+
+<p:dialog maximizable="true" style="margin-left:20px;top:20px;"
+		showEffect="true" hideEffect="true" id="dlgspls"
+		header="流程名称：#{wfProsInedCtlBean.processName}" widgetVar="dlgspls"
+		height="300px" >
+		<h:form id="form" enctype="multipart/form-data">
+		<p:tabView id="tabview">
+				<p:tab title="基础表单" >
+					<p:panelGrid columns="1" style="width:800px;">
+						<h:panelGrid columns="4">
+							<h:outputText value="申请人："></h:outputText>
+							<p:inputText value="#{wfProsInedCtlBean.ztxg.sqr}" size="20"
+								readonly="true"></p:inputText>
+							<h:outputText value="申请时间："></h:outputText>
+							<p:inputText value="#{wfProsInedCtlBean.ztxg.kssj}" size="20"
+								readonly="true">
+								<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+									timeZone="GMT+8"></f:convertDateTime>
+							</p:inputText>
+							</h:panelGrid>
+						
+							<p:dataTable id="data" var="obj"  
+							value="#{wfProsInedCtlBean.ztList}" scrollable="true"
+							style="width:700px; text-align:center;" 			
+							widgetVar="sbxx" 
+							rowIndexVar="rowVar">
+							<p:column headerText="计量编号" >
+								<h:outputText value="#{obj.sbglSbxx.jlbh}"> </h:outputText>
+							</p:column>
+							<p:column headerText="设备名称" >
+								<h:outputText value="#{obj.sbglSbxx.sbmc}"> </h:outputText>
+							</p:column>
+							<p:column headerText="规格型号" >
+								<h:outputText value="#{obj.sbglSbxx.ggxh}"> </h:outputText>
+							</p:column>
+							<p:column headerText="生成厂家" >
+								<h:outputText value="#{obj.sbglSbxx.sccj}"> </h:outputText>
+							</p:column>
+							<p:column headerText="设备状态" >
+								<h:outputText value="#{obj.sbglSbxx.sbzt}"> </h:outputText>
+							</p:column>
+							<p:column headerText="原有效期" 
+							rendered="#{wfProsInedCtlBean.processName eq '检定周期调整' || wfProsInedCtlBean.processName eq '管理类别调整'}">
+								<h:outputText value="#{obj.yyxrq}"> 
+								<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+										timeZone="GMT+8"/>
+								</h:outputText>
+							</p:column>
+							<p:column headerText="原检定周期" 
+							rendered="#{wfProsInedCtlBean.processName eq '检定周期调整' || wfProsInedCtlBean.processName eq '管理类别调整'}">
+								<h:outputText value="#{obj.yjdzq}月"> </h:outputText>
+							</p:column>
+							<p:column headerText="调整前类别" 
+							rendered="#{wfProsInedCtlBean.processName eq '管理类别调整'}">
+								<h:outputText value="#{obj.ygllb}"> </h:outputText>
+							</p:column>
+							<p:column headerText="原单位" 
+							rendered="#{wfProsInedCtlBean.processName eq '测量设备转移'}">
+								<h:outputText value="#{obj.yssbmmc}"> </h:outputText>
+							</p:column>
+							</p:dataTable>
+							<h:panelGrid columns="2" rendered="#{wfProsInedCtlBean.processName eq '检定周期调整'}">
+								<h:outputText value="新检定周期："></h:outputText>
+							<p:inputText value="#{wfProsInedCtlBean.ztxg.xjdzq}月"></p:inputText>
+						</h:panelGrid>
+						<h:panelGrid columns="2" rendered="#{wfProsInedCtlBean.processName eq '管理类别调整'}">
+								<h:outputText value="调整后类别："></h:outputText>
+							<p:inputText value="#{wfProsInedCtlBean.ztxg.xgllb}"></p:inputText>
+						</h:panelGrid>
+						<h:panelGrid columns="2" rendered="#{wfProsInedCtlBean.processName eq '测量设备转移'}">
+								<h:outputText value="接收单位："></h:outputText>
+							<p:inputText value="#{wfProsInedCtlBean.ztxg.xssbmmc}"></p:inputText>
+						</h:panelGrid>
+						
+						<h:panelGrid columns="2">
+							<h:panelGroup>
+								<h:outputText value="申请原因："></h:outputText>
+								<h:outputText value="*" style="color: red" />
+							</h:panelGroup>
+							<p:inputTextarea value="#{wfProsInedCtlBean.ztxg.xgyy}" rows="4"
+								cols="70" readonly="true"></p:inputTextarea>
+						</h:panelGrid>
+					</p:panelGrid>
+				</p:tab>
+				<p:tab title="签字记录">
+				<h:panelGrid
+			style="text-align: left;margin-left: -17px;margin-top: -10px;">
+			<h:panelGrid style="width:752px;">
+				<p:dataTable var="qzjl" value="#{wfProsInedCtlBean.jcqzList}" rows="50"
+					rowIndexVar="rowVar" style="width:752px;" lazy="true">
+					<p:column headerText="序号" style="width:40px;">
+						<h:outputText value="#{rowVar+1}" />
+					</p:column>
+					<p:column headerText="签字用户">
+						<h:outputText value="#{qzjl.qzry.zsmc}" />
+					</p:column>
+					<p:column headerText="签字日期">
+						<h:outputText value="#{qzjl.qzsj}"
+							converter="javax.faces.DateTime" />
+					</p:column>
+					<p:column headerText="签字内容">
+						<h:outputText value="#{qzjl.qznr}" />
+					</p:column>
+					<p:column headerText="审批结论">
+						<h:outputText value="#{qzjl.jlmc}" />
+					</p:column>
+					<p:column headerText="当前节点">
+						<h:outputText value="#{qzjl.nodeName}" />
+					</p:column>
+					<p:column headerText="操作指令">
+						<h:outputText value="#{qzjl.transitionName}" />
+					</p:column>
+
+				</p:dataTable>
+			</h:panelGrid>
+		</h:panelGrid>
+		
+				</p:tab>
+			</p:tabView>
+		</h:form>
+	</p:dialog>
+</body>
+</html>
+

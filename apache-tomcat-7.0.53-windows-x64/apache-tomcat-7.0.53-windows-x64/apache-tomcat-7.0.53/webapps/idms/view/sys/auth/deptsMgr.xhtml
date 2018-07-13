@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:head>
+	  <ui:include src="/common/templates/ui.xhtml"></ui:include>
+	</h:head>
+<h:body >
+    <p:growl id="growlid"  sticky="true" autoUpdate="true"></p:growl>
+	<h:form id="form"> 
+	     <h:inputHidden id="lovdiv" value="#{jcdeptMb.showLovDiv}"></h:inputHidden>
+		  <p:treeTable  caseSensitiveSort="true" id="docs" selectionMode="single"  
+		           selection="#{jcdeptMb.selectedNode}" value="#{jcdeptMb.root}" style="width:90%" var="dept"     >
+			<f:facet name="header">  
+              <h:outputText value="部门列表" />
+            </f:facet>
+ 
+            <p:column  width="60%"   filterBy="bmmc" sortBy="bmmc" headerText="部门名称">				
+				<h:outputText value="#{dept.bmmc}" />                    
+			</p:column>
+
+			<p:column  filterBy="bmbm" sortBy="bmbm" headerText="部门编码">	 			
+				<h:outputText value="#{dept.bmbm}" />
+			</p:column>
+			<p:column  headerText="部门类型">           
+            <h:outputText value="#{dept.lxmc}" />
+        </p:column>
+         <p:column filterBy="dmzg" sortBy="bmzg" headerText="部门主管" >           
+            <h:outputText value="#{dept.bmzg}" />
+        </p:column>		
+        
+          <p:column style="text-align: center;width:15%"  headerText="操作">
+                       
+                         
+                         <p:commandButton disabled="false" update=":updateform2 :form:docs" action="#{jcdeptMb.addDept}" icon="ui-icon-plusthick"  style="margin-right: 20px;margin-left: 5px; width: 18px;height: 18px" title="添加" 
+                         oncomplete="PF('updatedeptDialog2').show();" >                         
+                            <f:setPropertyActionListener target="#{jcdeptMb.sjbmbm}" value="#{dept.bmbm}"></f:setPropertyActionListener>
+                            <f:setPropertyActionListener target="#{jcdeptMb.showLovDiv}" value="#{true}"></f:setPropertyActionListener>
+                        </p:commandButton>                  
+                        <p:commandButton disabled="false"  update=":updateform" icon="ui-icon-wrench"   style="margin-right: 5px;margin-left: 5px;width: 18px;height: 18px" title="修改"  oncomplete="PF('updatedeptDialog').show();"   >
+                           <f:setPropertyActionListener value="#{dept}" target="#{jcdeptMb.selectedDept}" />     
+                            <f:setPropertyActionListener target="#{jcdeptMb.showLovDiv}" value="#{true}"></f:setPropertyActionListener>                      
+                        </p:commandButton>   
+                        <p:commandButton disabled="false"  action="#{jcdeptMb.deleteDept}"
+                         update=":form:docs" icon="ui-icon-trash"  style="margin-right: 5px;margin-left: 20px;width: 18px;height: 18px" title="删除"   >
+                           <f:setPropertyActionListener value="#{dept}" target="#{jcdeptMb.selectedDept}" /> 
+                           <p:confirm icon="ui-icon-alert" message="确定删除吗?"></p:confirm>                          
+                        </p:commandButton>                     
+                </p:column>
+			
+		</p:treeTable>
+</h:form>
+		
+		<p:dialog header="修改部门" widgetVar="updatedeptDialog" modal="true">
+			<h:form id="updateform">			
+             <h:panelGrid columns="2" >
+					<p:outputLabel  value="部门名称: " />					
+						<p:inputText id="upbmmc"  value="#{jcdeptMb.selectedDept.bmmc}" required="true" requiredMessage="部门名称不能为空" validatorMessage="部门名称不能大于20">
+						  <f:validateLength maximum="20" ></f:validateLength>						 
+						</p:inputText>
+						
+                  
+					<p:outputLabel  value="部门编码: " />					
+						<p:inputText id="upbmbm"  value="#{jcdeptMb.selectedDept.bmbm}" 
+						     required="true" requiredMessage="部门编码不能为空" disabled="#{jcdeptMb.selectedDept.bmbm!=null}">
+						 		 <f:validateLength maximum="20"></f:validateLength>				  
+						</p:inputText>
+						 					
+
+					<p:outputLabel value="部门主管:"></p:outputLabel>
+					<p:inputText value="#{jcdeptMb.selectedDept.bmzg}" validatorMessage="部门主管不能大于10">
+					<f:validateLength maximum="10"></f:validateLength>
+					</p:inputText>
+					<p:outputLabel value="上级部门编码:"></p:outputLabel>
+					<p:inputText value="#{jcdeptMb.selectedDept.sjbm.bmbm}" disabled="#{jcdeptMb.selectedDept.sjbm!=null}"></p:inputText>
+					<p:outputLabel value="部门类型:"></p:outputLabel>
+					 <h:selectManyCheckbox  value="#{jcdeptMb.selectedDept.lxlb}" layout="grid" columns="3">
+           				 <f:selectItems value="#{selectBaseBean.bmlxs}" />           				
+      			     </h:selectManyCheckbox>
+					
+				</h:panelGrid>
+				<h:panelGrid style="margin-top: 10px; text-align: center;">				
+      			<p:commandButton  value="保存" ajax="true" update=":form:lovdiv :form:docs" action="#{jcdeptMb.saveDept}" 
+      			      oncomplete="if('false'==$('#form\\:lovdiv').val()){PF('updatedeptDialog').hide();}"   icon="ui-icon-bookmark"  style="margin-left: 50px;">      									
+					</p:commandButton>
+                </h:panelGrid>
+				
+			</h:form>
+		</p:dialog>
+		
+				<p:dialog header="新增部门" widgetVar="updatedeptDialog2" modal="true">
+			<h:form id="updateform2">			
+             <h:panelGrid columns="2" >
+					<p:outputLabel  value="部门名称: " />					
+						<p:inputText id="upbmmc"  value="#{jcdeptMb.selectedDept.bmmc}" required="true" requiredMessage="部门名称不能为空" validatorMessage="部门名称不能大于20">
+						  <f:validateLength maximum="20" ></f:validateLength>						 
+						</p:inputText>
+						
+
+					<p:outputLabel  value="部门编码: " />					
+						<p:inputText id="upbmbm"  value="#{jcdeptMb.selectedDept.bmbm}" 
+						     required="true" requiredMessage="部门编码不能为空" disabled="#{jcdeptMb.selectedDept.bmbm!=null}">
+						 		 <f:validateLength maximum="20"></f:validateLength>				  
+						</p:inputText>
+						 					
+
+					<p:outputLabel value="部门主管:"></p:outputLabel>
+					<p:inputText value="#{jcdeptMb.selectedDept.bmzg}" validatorMessage="部门主管不能大于10">
+					<f:validateLength maximum="10"></f:validateLength>
+					</p:inputText>
+					<p:outputLabel value="上级部门编码:"></p:outputLabel>
+					<p:inputText value="#{jcdeptMb.selectedDept.sjbm.bmbm}" disabled="#{jcdeptMb.selectedDept.sjbm!=null}"></p:inputText>
+					<p:outputLabel value="部门类型:"></p:outputLabel>
+					 <h:selectManyCheckbox  value="#{jcdeptMb.selectedDept.lxlb}" layout="grid" columns="3">
+           				 <f:selectItems value="#{selectBaseBean.bmlxs}" />           				
+      			     </h:selectManyCheckbox>
+					
+				</h:panelGrid>
+				<h:panelGrid style="margin-top: 10px; text-align: center;">				
+      			<p:commandButton  value="保存" ajax="true" update=":form:lovdiv :form:docs" action="#{jcdeptMb.saveDept}" 
+      			      oncomplete="if('false'==$('#form\\:lovdiv').val()){PF('updatedeptDialog2').hide();}"   icon="ui-icon-bookmark"  style="margin-left: 50px;">      									
+					</p:commandButton>
+                </h:panelGrid>
+				
+			</h:form>
+		</p:dialog>
+		</h:body>
+		</html>

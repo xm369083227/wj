@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="idms.model.jlgl.gcgl.GcglBhggc" table="GCGL_BHGGC" lazy="false">
+    <id name="pddid" type="java.lang.Long" column="PDDID"  length="22">
+        <generator class="sequence">
+            <param name="sequence">S_GCGL_BHGGC</param>
+        </generator>
+    </id>
+    <property name="pddxh" type="java.lang.String" column="PDDXH" length="22"/>
+    
+    <property name="pdsj" type="java.util.Date" column="PDSJ" length="7"/>
+     
+    <property name="bhgxxms" type="java.lang.String" column="BHGXXMS" length="500"/>
+    
+    <property name="bhgyy" type="java.lang.String" column="BHGYY" length="500"/>
+    
+    <many-to-one name="clgc" class="idms.model.jlgl.gcgl.GcglClgc" not-null="true"  column="CLGC"/>
+    
+    <property name="fxpg" type="java.lang.String" column="FXPG" length="500" />
+    
+    <property name="jzyfcs" type="java.lang.String" column="JZYFCS" length="500"/>
+ 
+	</class>
+</hibernate-mapping>

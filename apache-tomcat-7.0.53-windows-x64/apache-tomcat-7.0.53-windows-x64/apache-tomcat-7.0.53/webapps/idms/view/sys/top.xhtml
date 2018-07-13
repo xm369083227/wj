@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	<h:head>
+	         <title>IDMS</title>
+            <link id="themes" rel="stylesheet" type="text/css" href="#{request.contextPath}/common/jQuery/themes/cupertino/easyui.css"/> 
+	        <script type="text/javascript" charset="utf-8" src="#{request.contextPath}/common/jQuery/jquery.easyui.min.js"></script>
+			<script type="text/javascript" charset="utf-8" src="#{request.contextPath}/common/jQuery/locale/easyui-lang-zh_CN.js"></script>
+	</h:head>
+   <h:body>
+  <div class="index_top">
+				<div class="left_logo">
+					<img id="logoImg" src="#{request.contextPath}/common/images/top/bpmx3_logo.jpg">
+				</div>
+	
+				<div class="search_welcome">
+					<div class="welcome_panel">
+									<div style="padding: 5px;">
+											欢迎您，
+											超级管理员
+											<span class="moreinfo">
+											<span style="cursor: pointer;font-size: 13px;text-decoration: underline;" title="更多操作"><span id="loginButton"></span>设置</span>
+												
+											<div style="position:absolute;top:50px;left:1029.3333740234375px;" class="itemDiv"><ul>
+												   <li><a class="more detail2" resid="-002" href="/bpm3/platform/system/sysUser/get.ht?userId=1&amp;canReturn=1" target="_blank">个人资料</a></li>
+												</ul></div></span>
+									<span class="moreinfo">
+									<a class="more switch2" resid="-003" href="javascript:;">切换岗位</a>
+									<div style="position:absolute;top:50px;left:1029.3333740234375px;" class="itemDiv"><ul>
+									<li><a class="curOrg" posid="10000000010268">宏天集团_总理</a></li>
+									</ul></div></span>
+									<div class="msg_div" alt="站内消息">
+											<img id="inMsg" title="站内消息" src="#{request.contextPath}/common/images/top/msg_none.png">
+										 (<a href="javascript:showReadMsgDlg()" id="labMsgSize">0</a>)
+									</div>
+								    <a class="more exit2" href="/bpm3/logout">退出系统</a>
+						       </div>
+								<div colspan="8" style="text-align:right;padding-top:1px;padding-right: 100px">
+									<span style="padding-right: 5px;">联系我们：400-0668-262</span>
+									<a href="http://www.jee-soft.cn" style="padding-right: 5px;" target="_blank">访问官网：www.jee-soft.cn</a>
+								</div>
+					</div>
+				</div>
+				<div class="index_menu">
+					<div style="width: 730px;" class="menuParent">
+						<div style="left: 0px;" id="menuPanel" class="menuPanel">
+						<a class="menuItem menuItem_hover" id="1">
+						<img src="#{request.contextPath}/common/images/top/destop.gif">
+						<span>个人办公</span></a><a class="menuItem" id="45">
+						<img src="#{request.contextPath}/common/images/top/user.gif">
+						<span>组织管理</span></a><a class="menuItem" id="80">
+						<img src="#{request.contextPath}/common/images/top/p_5.png">
+						<span>流程管理</span></a><a class="menuItem" id="122">
+						<img src="#{request.contextPath}/common/images/top/setting.png">
+						<span>系统管理</span></a></div>
+					</div>
+					<div class="nav_button">
+						<a style="display: none;" class="nav_left" href="javascript:;" onclick="rollRight()" onmousedown="startRoll(1)" onmouseup="breakRoll()" title="向左移动"></a>
+						<a style="display: none;" class="nav_right" href="javascript:;" onclick="rollLeft()" onmousedown="startRoll(0)" onmouseup="breakRoll()" title="向右移动"></a>
+					</div>
+				</div>
+				<div class="changge_skin"> 
+					<a href="javascript:void(0)" onclick="changeSkin('default')">	<img src="#{request.contextPath}/common/images/top/icons_38.png"> </a>
+					<a href="javascript:void(0)" onclick="changeSkin('green')"><img src="#{request.contextPath}/common/images/top/icons_40-69.png"> </a>
+				<!-- 	
+						<img src="/bpm3/styles/default/images/icons/icons_44-73.png" onclick="changeSkin('other')"/>
+					
+						<img src="/bpm3/styles/default/images/icons/icons_41-71.png" />
+						-->
+				</div>
+	          <div class="head_bg"></div>
+             </div>
+             
+	 </h:body>
+</html>

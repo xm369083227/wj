@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	
+	<bean id="grgsBztjService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.jlgl.gskh.GrgsBztjServiceImpl">
+				<property name="dao"  ref="grgsBztjDao" /><!-- ref后的值应与dao文件中的id值大小写格式完全一致 -->
+			</bean>
+		</property>
+	</bean>
+	<bean id="grgsTstjService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.jlgl.gskh.GrgsTstjServiceImpl">
+				<property name="dao"  ref="grgsTstjDao" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="gskhbzService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.jlgl.gskh.GskhbzServiceImpl">
+				<property name="dao"  ref="gskhbzDao" />
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="ryzzService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.jlgl.gskh.RyzzServiceImpl">
+				<property name="dao"  ref="ryzzDao" />
+			</bean>
+		</property>
+	</bean>
+	
+</beans>

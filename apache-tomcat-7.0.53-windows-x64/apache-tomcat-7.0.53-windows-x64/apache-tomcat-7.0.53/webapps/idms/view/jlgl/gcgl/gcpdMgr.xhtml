@@ -1,0 +1,211 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+<f:view contentType="text/html">
+	<h:head>
+		<title>IDMS</title>
+		<ui:include src="/common/templates/ui.xhtml"></ui:include>
+	</h:head>
+	<h:body>
+		<p:growl id="growlid" sticky="true" autoUpdate="true" />
+		<p:dialog id="dlg" header="已存在的测量过程" widgetVar="displaydlg"
+			maximizable="true" height="400px" width="700px" modal="true">
+			<h:form>
+				<p:dataTable id="data" var="item" style="width:600px"
+					value="#{gcglClgcMb.lazyDataModel}" paginator="true" widgetVar=""
+					selectionMode="single" rowKey="#{item.id}" rows="15"
+					rowIndexVar="rowVar" filterDelay="300" resizableColumns="true "
+					liveResize="true" paginatorPosition="bottom"
+					currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+					paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					lazy="true" rowsPerPageTemplate="20,30,50">
+					<p:ajax event="rowSelect" listener="#{gcglBhggcMb.onRowSelect}"
+						update=":pdd" oncomplete="PF('displaydlg').hide()"
+						immediate="true" />
+					<p:column filterBy="#{item.id}" sortBy="#{item.id}" headerText="序号">
+						<h:outputText value="#{rowVar+1}"></h:outputText>
+					</p:column>
+					<p:column filterBy="#{item.bh}" sortBy="#{item.bh}"
+						headerText="测量过程编号">
+						<h:outputText value="#{item.bh}"></h:outputText>
+					</p:column>
+					<p:column filterBy="#{item.mc}" sortBy="#{item.mc}"
+						headerText="测量过程名称">
+						<h:outputText value="#{item.mc}"></h:outputText>
+					</p:column>
+					<p:column filterBy="#{item.clgcyj}" sortBy="#{item.clgcyj}"
+						headerText="测量过程依据">
+						<h:outputText value="#{item.clgcyj}"></h:outputText>
+					</p:column>
+
+					<p:column filterBy="#{item.jsjl}" sortBy="#{item.jsjl}"
+						headerText="监视结论">
+						<h:outputText value="#{item.jsjl}"></h:outputText>
+					</p:column>
+					<p:column filterBy="#{item.djrq}" sortBy="#{item.djrq}"
+						headerText="登记时间">
+						<h:outputText value="#{item.djrq}">
+							<f:convertDateTime pattern="yyyy-MM-dd" timeZone="GMT+8"></f:convertDateTime>
+						</h:outputText>
+					</p:column>
+				</p:dataTable>
+				<p:commandButton value="返回" oncomplete="{PF('displaydlg').hide()}"
+					style="margin-left: 300px"></p:commandButton>
+			</h:form>
+		</p:dialog>
+		<h:form id="pdd">
+			<h:panelGrid columns="1">
+				<p:tabView id="pdd" scrollable="true" style="width:1230px">
+					<p:tab title="测量过程不合格评定单">
+						<p:panelGrid columns="1">
+							<h:panelGrid columns="2" width="800px" align="left">
+								<p:commandButton action="#{gcglBhggcMb.doSearch}"
+									onclick="PF('displaydlg').show();return false;" title="检索"
+									icon="ui-icon-search" />
+                &nbsp;&nbsp; <font color="red">注：
+									测量过程编号与名称、实施部门由检索后导入；带*的为必填内容。</font>&nbsp;&nbsp; 
+            </h:panelGrid>
+							<h:panelGrid columns="4" align="left" width="950px">
+								<h:outputText value="评定单序号：" />
+								<p:inputText value="#{gcglBhggcMb.editObj.pddxh}" maxlength="22" />
+								<h:outputText value="实施部门：" />
+								<p:inputText value="#{gcglBhggcMb.editObj.clgc.ssbm}"
+									readonly="true" />
+								<h:panelGroup>
+									<h:outputText value="测量过程编号：" />
+									<h:outputText value="*" style="color: red" />
+								</h:panelGroup>
+								<p:inputText value="#{gcglBhggcMb.editObj.clgc.bh}"
+									readonly="true" />
+								<h:panelGroup>
+									<h:outputText value="测量过程名称：" />
+									<h:outputText value="*" style="color: red" />
+								</h:panelGroup>
+								<p:inputText value="#{gcglBhggcMb.editObj.clgc.mc}"
+									readonly="true" />
+								<h:outputText value="评定时间：" />
+								<p:calendar value="#{gcglBhggcMb.editObj.pdsj}" navigator="true"
+									pattern="yyyy-MM-dd" locale="zh_CN" timeZone="GMT+8"></p:calendar>
+
+							</h:panelGrid>
+
+							<h:panelGrid columns="1" width="900px" align="left">
+								<h:panelGroup>
+									<h:outputText value="不合格现象描述：" style="width:100%;" />
+									<h:outputText value="*" style="color: red" />
+								</h:panelGroup>
+								<p:inputTextarea style="width:900px;"
+									value="#{gcglBhggcMb.editObj.bhgxxms}" required="true"
+									label="不合格现象描述" maxlength="500" />
+							</h:panelGrid>
+
+							<h:panelGrid columns="1" width="900px" align="left">
+								<h:panelGroup>
+									<h:outputText value="不合格产生的可能原因：" style="width:100%;" />
+									<h:outputText value="*" style="color: red" />
+								</h:panelGroup>
+								<p:inputTextarea style="width:900px;"
+									value="#{gcglBhggcMb.editObj.bhgyy}" required="true"
+									label="不合格产生的可能原因" maxlength="500" />
+							</h:panelGrid>
+							<h:panelGrid columns="1" width="900px" align="left">
+								<h:panelGroup>
+									<h:outputText value="风险评估：" style="width:100%;" />
+								</h:panelGroup>
+								<p:inputTextarea style="width:900px;"
+									value="#{gcglBhggcMb.editObj.fxpg}" maxlength="500" />
+							</h:panelGrid>
+							<h:panelGrid columns="1" width="900px" align="left">
+								<h:panelGroup>
+									<h:outputText value="纠正及预防措施：" style="width:100%;" />
+									<h:outputText value="*" style="color: red" />
+								</h:panelGroup>
+								<p:inputTextarea style="width:900px;"
+									value="#{gcglBhggcMb.editObj.jzyfcs}" required="true"
+									label="纠正及预防措施" maxlength="500" />
+							</h:panelGrid>
+							<h:panelGroup>
+								<p:commandButton styleClass="btn" value="保存"
+									actionListener="#{gcglBhggcMb.saveObjs}" ajax="true"
+									update=":growlid" style="margin-left: 450px" />
+							</h:panelGroup>
+						</p:panelGrid>
+					</p:tab>
+					<p:tab title="上传附件">
+						<h:panelGrid width="900px"
+							style="margin-top: -10px;margin-left:-17px;">
+							<h:panelGrid width="100%">
+								<p:fileUpload multiple="true" update=":pdd:pdd:filePaneId"
+									fileUploadListener="#{gcglBhggcMb.handleFileUpload}"
+									style="width:100%;" mode="advanced" label="浏览" cancelLabel="取消"
+									uploadLabel="上传" sizeLimit="10240000"
+									invalidSizeMessage="文件必须小于10M" invalidFileMessage="格式不支持"
+									dragDropSupport="false"
+									allowTypes="/(\.|\/)(gif|jpe?g|png|pdf|txt|rar|zip|doc|docx|xls|xlsx)$/">
+								</p:fileUpload>
+								<p:dataTable id="filePaneId" paginator="true"
+									value="#{gcglBhggcMb.fileBean.files}" style="width:100%;"
+									rows="15" rowIndexVar="rowVar" filterDelay="300"
+									resizableColumns="true " liveResize="true"
+									paginatorPosition="bottom"  var="file"	
+									currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+									paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+									lazy="true" rowsPerPageTemplate="15,30,50">
+
+									<p:column headerText="序号" style="width:40px;">
+										<h:outputText value="#{rowVar+1}" />
+									</p:column>
+									<p:column headerText="附件名称" style="width:50%">
+										<h:outputText value="#{file.wjmc}" />
+									</p:column>
+
+									<p:column headerText="上传人员">
+										<p:outputLabel value="#{file.scyhid}"></p:outputLabel>
+									</p:column>
+									<p:column headerText="上传时间">
+										<h:outputText value="#{file.scrq}">
+											<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+												timeZone="GMT+8" />
+										</h:outputText>
+									</p:column>
+									<p:column headerText="操作" style="width:8%">
+										<h:panelGroup>
+											<p:commandButton id="downId" ajax="false"
+												action="#{gcglBhggcMb.fileBean.downFile}"
+												icon="ui-icon-arrowthick-1-s" immediate="true">
+												<f:setPropertyActionListener
+													target="#{gcglBhggcMb.fileBean.file}" value="#{file}"></f:setPropertyActionListener>
+
+											</p:commandButton>
+											<h:outputText value="  "></h:outputText>
+											<p:commandButton id="deleteId" ajax="false"
+												action="#{gcglBhggcMb.fileBean.deleteFile}"
+												icon="ui-icon-trash" immediate="true">
+												<p:confirm icon="ui-icon-alert" message="确定删除吗?"></p:confirm>
+												<f:setPropertyActionListener
+													target="#{gcglBhggcMb.fileBean.file}" value="#{file}"></f:setPropertyActionListener>
+											</p:commandButton>
+										</h:panelGroup>
+									</p:column>
+								</p:dataTable>
+								<h:panelGroup>
+									<p:commandButton styleClass="btn" value="保存"
+										actionListener="#{gcglBhggcMb.saveObjs}" ajax="true"
+										update=":growlid" style="margin-left: 450px" />
+								</h:panelGroup>
+							</h:panelGrid>
+						</h:panelGrid>
+					</p:tab>
+				</p:tabView>
+			</h:panelGrid>
+		</h:form>
+
+	</h:body>
+</f:view>
+</html>

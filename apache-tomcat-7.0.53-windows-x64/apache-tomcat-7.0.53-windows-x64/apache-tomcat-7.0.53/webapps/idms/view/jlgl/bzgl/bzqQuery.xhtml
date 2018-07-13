@@ -1,0 +1,441 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+<f:view contentType="text/html">
+	<h:head>
+		<title>IDMS</title>
+		<ui:include src="/common/templates/ui.xhtml"></ui:include>
+	</h:head>
+	<h:body>
+		<p:growl id="growlid" sticky="true" autoUpdate="true" />
+
+		<h:form id="form">
+			<h:panelGrid width="99%">
+				<p:panel header="条件查询">
+					<h:panelGrid columns="6">
+						<h:outputText value="计量标准名称："></h:outputText>
+						<p:inputText value="#{bzglBzqMb.queryObj.jlbzmc}" size="20"></p:inputText>
+						<h:outputText value="计量标准编号："></h:outputText>
+						<p:inputText value="#{bzglBzqMb.queryObj.jlbzbh}" size="20"></p:inputText>
+						<h:outputText value="测量范围："></h:outputText>
+						<p:inputText value="#{bzglBzqMb.queryObj.clfw}" size="20"></p:inputText>
+						<h:outputText value="不确定度："></h:outputText>
+						<p:inputText value="#{bzglBzqMb.queryObj.bqdd}" size="20"></p:inputText>
+						<h:outputText value="计量标准证书号："></h:outputText>
+						<p:inputText value="#{bzglBzqMb.queryObj.jlbzzsh}" size="20"></p:inputText>
+						<h:outputText value="计量标准单位："></h:outputText>
+						<p:inputText value="#{bzglBzqMb.queryObj.jlbzdw}" size="20"></p:inputText>
+						<h:outputText value="发证机关："></h:outputText>
+						<p:inputText value="#{bzglBzqMb.queryObj.fzjg}" size="20"></p:inputText>
+						<h:outputText value="负责人："></h:outputText>
+						<p:inputText value="#{bzglBzqMb.queryObj.fzr}" size="20"></p:inputText>
+						<h:outputText value="使用人员："></h:outputText>
+						<p:inputText value="#{bzglBzqMb.queryObj.syry}" size="20"></p:inputText>
+						<h:outputText value="文字说明："></h:outputText>
+						<p:inputText value="#{bzglBzqMb.queryObj.wzsm}" size="20"></p:inputText>
+						<h:outputText value="录入用户："></h:outputText>
+						<p:inputText value="#{bzglBzqMb.queryObj.lrry}" size="25"></p:inputText>
+						<h:outputText value="录入日期："></h:outputText>
+						<h:panelGroup>
+							<p:calendar label="录入日期" value="#{bzglBzqMb.startTime}" size="8"
+								readonlyInput="false" navigator="true" pattern="yyyy-MM-dd" />
+						                                  至<p:calendar label="录入日期"
+								value="#{bzglBzqMb.endTime}" size="8" readonlyInput="false"
+								navigator="true" pattern="yyyy-MM-dd" />
+						</h:panelGroup>
+						<h:outputText value="有效期："></h:outputText>
+						<h:panelGroup>
+							<p:calendar label="有效期" value="#{bzglBzqMb.startYxq}" size="8"
+								readonlyInput="false" navigator="true" pattern="yyyy-MM-dd" />
+						                                  至<p:calendar label="有效期"
+								value="#{bzglBzqMb.endYxq}" size="8" readonlyInput="false"
+								navigator="true" pattern="yyyy-MM-dd" />
+						</h:panelGroup>
+					</h:panelGrid>
+					<p:commandButton value="查询" ajax="false"
+						action="#{bzglBzqMb.doSearch}"></p:commandButton>
+				</p:panel>
+				<p:dataTable id="table" paginator="true"
+					value="#{bzglBzqMb.lazyDataModel}" rows="15" rowIndexVar="rowVar"
+					filterDelay="300" resizableColumns="true " liveResize="true"
+					paginatorPosition="bottom" var="item"
+					currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+					paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					lazy="true" rowsPerPageTemplate="15,30,50">
+					
+					<p:column  style="width:30px">												
+							<p:commandButton
+								actionListener="#{bzglBzqMb.showBzqDetail(item.id)}"
+								oncomplete="PF('dialog').show()" ajax="true" update=":dialogid"
+								title="详情" icon="ui-icon-search">
+							</p:commandButton>							
+					</p:column>
+
+					<p:column headerText="序号" sortBy="#{item.id}" style="width:35px;">
+						<h:outputText value="#{rowVar+1}" />
+					</p:column>
+					<p:column headerText="计量标准编号" sortBy="#{item.jlbzbh}"
+						style="width:110px">
+						<h:outputText value="#{item.jlbzbh}"></h:outputText>
+					</p:column>
+					<p:column headerText="计量标准名称" sortBy="#{item.jlbzmc}"
+						style="width:110px">
+						<h:outputText value="#{item.jlbzmc}"></h:outputText>
+					</p:column>
+					<p:column headerText="测量范围" sortBy="#{item.clfw}"
+						style="width:80px;">
+						<h:outputText value="#{item.clfw}"></h:outputText>
+					</p:column>
+					<p:column headerText="不确定度" sortBy="#{item.bqdd}"
+						style="width:80px;">
+						<h:outputText value="#{item.bqdd}"></h:outputText>
+					</p:column>
+					<p:column headerText="有效期" sortBy="#{item.yxq}" style="width:76px;">
+						<h:outputText value="#{item.yxq}">
+							<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+								timeZone="GMT+8" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="计量标准证书号" sortBy="#{item.jlbzsh}"
+						style="width:105px;">
+						<h:outputText value="#{item.jlbzzsh}"></h:outputText>
+					</p:column>
+					<p:column headerText="计量标准单位" sortBy="#{item.jlbzdw}"
+						style="width:100px;">
+						<h:outputText value="#{item.jlbzdw}"></h:outputText>
+					</p:column>
+					<p:column headerText="发证机关" sortBy="#{item.fzjg}"
+						style="width:80px;">
+						<h:outputText value="#{item.fzjg}"></h:outputText>
+					</p:column>
+					<p:column headerText="负责人" sortBy="#{item.fzr}" style="width:70px;">
+						<h:outputText value="#{item.fzr}"></h:outputText>
+					</p:column>
+					<p:column headerText="使用人员" sortBy="#{item.syry}"
+						style="width:70px;">
+						<h:outputText value="#{item.syry}"></h:outputText>
+					</p:column>
+					<p:column headerText="录入人员" sortBy="#{item.lrry}"
+						style="width:70px">
+						<p:outputLabel value="#{item.lrry}"></p:outputLabel>
+					</p:column>
+					<p:column headerText="录入时间" sortBy="#{item.lrsj}"
+						style="width:70px">
+						<h:outputText value="#{item.lrsj}">
+							<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+								timeZone="GMT+8" />
+						</h:outputText>
+					</p:column>
+				</p:dataTable>
+			</h:panelGrid>
+		</h:form>
+		
+		<p:dialog id="dialogid" header="#{bzglBzqMb.detailShow?'修改':'详情'}"
+			widgetVar="dialog" height="500px" width="95%">
+			<h:form id="tabform" enctype="multipart/form-data">
+				<p:tabView id="tabview">
+					<p:tab title="标准器">
+						<p:panelGrid columns="1">
+							<p:panel>
+								<h:panelGrid columns="1" width="50%">
+									<font color="red">常用特殊字符: </font>&nbsp;&nbsp;
+							 &nbsp;&nbsp;<a href="javascript:insert('∠')">∠</a>
+							 &nbsp;&nbsp;<a href="javascript:insert('Φ')">Φ</a>
+							 &nbsp;&nbsp;<a href="javascript:insert('%')">%</a>
+			      			 &nbsp;&nbsp;<a href="javascript:insert('‰')">‰</a>
+			      			 &nbsp;&nbsp;<a href="javascript:insert('±')">±</a>
+			      			 &nbsp;&nbsp;<a href="javascript:insert('°')">°</a>
+			      			 &nbsp;&nbsp;<a href="javascript:insert('℃')">℃</a>      											   
+      						 &nbsp;&nbsp;<a href="javascript:insert('≤')">≤</a>
+							 &nbsp;&nbsp;<a href="javascript:insert('≥')">≥</a>
+							 &nbsp;&nbsp;<a href="javascript:insert('σ')">σ</a>	
+							 &nbsp;&nbsp;<a href="javascript:insert('&#8486;')">&#8486;</a>
+							 &nbsp;&nbsp;<a href="javascript:insert('√')">√</a>
+									<script>
+										var id;
+										function insert(v) {
+											try {
+												document.getElementById(id).value += v;
+												document.getElementById(id)
+														.focus();
+
+											} catch (e) {
+												;
+											}
+										}
+										function GetId(obj) {
+											id = obj.id;
+
+										}
+									</script>
+								</h:panelGrid>
+							</p:panel>
+							<h:panelGrid columns="4" style="align:right">
+								<h:panelGroup>
+									<h:outputText value="计量标准名称："></h:outputText>
+									<h:outputText value="*" style="color:red" />
+								</h:panelGroup>
+								<p:inputText value="#{bzglBzqMb.varchObj.jlbzmc}"
+									required="true" readonly="#{!bzglBzqMb.detailShow}"
+									requiredMessage="计量标准名称：不能为空！" maxlength="200" size="20"></p:inputText>
+								<h:panelGroup>
+									<h:outputText value="计量标准编号："></h:outputText>
+									<h:outputText value="*" style="color:red" />
+								</h:panelGroup>
+								<p:inputText value="#{bzglBzqMb.varchObj.jlbzbh}"
+									required="true" readonly="#{!bzglBzqMb.detailShow}"
+									requiredMessage="计量标准编号：不能为空！" maxlength="50" size="20"></p:inputText>
+								<h:outputText value="测量范围："></h:outputText>
+								<p:inputText value="#{bzglBzqMb.varchObj.clfw}" maxlength="200"
+									size="20" readonly="#{!bzglBzqMb.detailShow}"></p:inputText>
+								<h:outputText value="不确定度："></h:outputText>
+								<p:inputText value="#{bzglBzqMb.varchObj.bqdd}" maxlength="200"
+									onclick="GetId(this)" size="20"
+									readonly="#{!bzqxxMb.detailShow}"></p:inputText>
+								<h:panelGroup>
+									<h:outputText value="计量标准证书号："></h:outputText>
+									<h:outputText value="*" style="color:red" />
+								</h:panelGroup>
+								<p:inputText value="#{bzglBzqMb.varchObj.jlbzzsh}"
+									readonly="#{!bzglBzqMb.detailShow}" required="true"
+									requiredMessage="计量标准证书号：不能为空！" maxlength="200" size="20"></p:inputText>
+								<h:outputText value="计量标准单位："></h:outputText>
+								<p:inputText value="#{bzglBzqMb.varchObj.jlbzdw}"
+									maxlength="200" size="20" readonly="#{!bzglBzqMb.detailShow}"></p:inputText>
+								<h:panelGroup>
+									<h:outputText value="发证机关："></h:outputText>
+									<h:outputText value="*" style="color:red" />
+								</h:panelGroup>
+								<p:inputText value="#{bzglBzqMb.varchObj.fzjg}" required="true"
+									readonly="#{!bzglBzqMb.detailShow}"
+									requiredMessage="发证机关：不能为空！" maxlength="200" size="20"></p:inputText>
+								<h:outputText value="发证日期："></h:outputText>
+								<p:calendar label="发证日期" value="#{bzglBzqMb.varchObj.fzrq}"
+									navigator="true" pattern="yyyy-MM-dd"
+									readonly="#{!bzglBzqMb.detailShow}"></p:calendar>
+								<h:outputText value="负责人："></h:outputText>
+								<p:inputText value="#{bzglBzqMb.varchObj.fzr}" maxlength="20"
+									size="20" readonly="#{!bzglBzqMb.detailShow}"></p:inputText>
+								<h:outputText value="使用人员："></h:outputText>
+								<p:inputText value="#{bzglBzqMb.varchObj.syry}" maxlength="20"
+									size="20" readonly="#{!bzglBzqMb.detailShow}"></p:inputText>
+								<h:outputText value="文字说明："></h:outputText>
+								<p:inputText value="#{bzglBzqMb.varchObj.wzsm}" maxlength="100"
+									size="20" readonly="#{!bzglBzqMb.detailShow}"></p:inputText>
+								<h:outputText value="有效期："></h:outputText>
+								<p:calendar label="有效期" value="#{bzglBzqMb.varchObj.yxq}"
+									navigator="true" pattern="yyyy-MM-dd"
+									readonly="#{!bzglBzqMb.detailShow}"></p:calendar>
+								<h:outputText value="依据的计量技术规范代号及名称："></h:outputText>
+								<p:inputText value="#{bzglBzqMb.varchObj.jljsgfdh}"
+									maxlength="1000" size="20" readonly="#{!bzglBzqMb.detailShow}"></p:inputText>
+								<h:outputText value="准确度等级或最大允许误差："></h:outputText>
+								<p:inputText value="#{bzglBzqMb.varchObj.cljd}" maxlength="1000"
+									onclick="GetId(this)" size="20"
+									readonly="#{!bzglBzqMb.detailShow}"></p:inputText>
+								<h:panelGroup>
+									<h:outputText value="确认间隔："></h:outputText>
+									<h:outputText value="*" style="color:red" />
+								</h:panelGroup>
+								<h:panelGroup>
+									<p:inputText value="#{bzglBzqMb.varchObj.qrjg}" maxlength="20"
+										size="17" readonly="#{!bzglBzqMb.detailShow}"></p:inputText>
+									<h:outputText value="月"/>
+								</h:panelGroup>
+								<h:outputText value="筹建起止日期："></h:outputText>
+								<p:calendar label="筹建起止日期" value="#{bzglBzqMb.varchObj.cjqzrq}"
+									navigator="true" pattern="yyyy-MM-dd"
+									readonly="#{!bzglBzqMb.detailShow}"></p:calendar>
+								<h:outputText value="使用部门："></h:outputText>
+								<p:inputText value="#{bzglBzqMb.varchObj.sybm.bmmc}"
+									maxlength="100" size="20" readonly="#{!bzglBzqMb.detailShow}"></p:inputText>
+							</h:panelGrid>
+							<h:panelGrid columns="2">
+								<h:outputText value="备注："></h:outputText>
+								<p:inputTextarea value="#{bzglBzqMb.varchObj.bz}" rows="4"
+									cols="80" label="备注" maxlength="1000"
+									readonly="#{!bzglBzqMb.detailShow}"></p:inputTextarea>
+							</h:panelGrid>
+							<h:panelGroup>
+								<p:commandButton value="保存"
+									actionListener="#{bzglBzqMb.saveObj}"
+									update=":form:table :tabform:tabview"
+									rendered="#{bzglBzqMb.detailShow}" style="margin-left: 400px" />
+							</h:panelGroup>
+						</p:panelGrid>
+					</p:tab>
+
+					<p:tab title="设备信息">
+						<h:panelGrid width="99%">
+							<p:dataTable id="sbdata" var="sb" editable="true"
+								value="#{bzglBzqMb.targetSbxxs}" paginator="true" rows="8"
+								widgetVar="cellSbxx" rowsPerPageTemplate="8,15,20"
+								rowIndexVar="rowVar" filterDelay="300" resizableColumns="true "
+								lliveResize="true" paginatorPosition="bottom"
+								currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+								paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+								lazy="true">
+
+								<p:column exportable="false" style="width:70px" headerText="操作">
+									<h:panelGroup>
+										<p:commandButton actionListener="#{bzglBzqMb.openSbxxDetails}"
+											oncomplete="PF('displaydlg').show()" ajax="true"
+											update=":dlg1" title="详情" icon="ui-icon-search"
+											immediate="true">
+											<f:param name="JLBH" value="#{sb.jlbh}"></f:param>
+										</p:commandButton>										
+									</h:panelGroup>
+								</p:column>
+								<p:column headerText="序号" style="width:50px;">
+									<h:outputText value="#{rowVar+1}" />
+								</p:column>
+								<p:column headerText="计量编号" style="width:120px">
+									<h:outputText value="#{sb.jlbh}"></h:outputText>
+								</p:column>
+								<p:column headerText="设备名称" style="width:120px">
+									<h:outputText value="#{sb.sbmc}"></h:outputText>
+								</p:column>
+								<p:column headerText="规格型号" style="width:120px">
+									<h:outputText value="#{sb.ggxh}"></h:outputText>
+								</p:column>
+								<p:column headerText="管理类别" style="width:70px">
+									<h:outputText value="#{sb.gllb}"></h:outputText>
+								</p:column>
+								<p:column headerText="生产厂家" style="width:110px">
+									<h:outputText value="#{sb.sccj}"></h:outputText>
+								</p:column>
+								<p:column headerText="使用部门" style="width:120px">
+									<h:outputText value="#{sb.sybmmc}"></h:outputText>
+								</p:column>
+								<p:column headerText="确认间隔" style="width:120px">
+									<h:outputText value="#{sb.qrjg}"></h:outputText>
+								</p:column>
+								<p:column headerText="有效日期" style="width:90px">
+									<h:outputText value="#{sb.fyxrq}">
+									<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+									timeZone="GMT+8" /></h:outputText>
+								</p:column>
+								<p:column headerText="检定方式" style="width:70px">
+									<h:outputText value="#{sb.jdfs}"></h:outputText>
+								</p:column>
+								<p:column headerText="状态" style="width:80px">
+									<h:outputText value="#{sb.sbzt}"></h:outputText>
+								</p:column>
+							</p:dataTable>
+						</h:panelGrid>
+					</p:tab>					
+				</p:tabView>
+
+			</h:form>
+		</p:dialog>
+
+
+		<p:dialog id="dlg1" header="测量设备详细信息" widgetVar="displaydlg">
+			<h:form>
+				<h:panelGrid columns="1">
+					<p:panel>
+						<h:panelGrid columns="4" width="800px" align="left">
+							<h:panelGroup>
+								<h:outputText value="计量编号："></h:outputText>
+								<h:outputText value="*" style="color: red" />
+							</h:panelGroup>
+							<p:inputText value="#{bzglBzqMb.sbxx.jlbh}" required="true"
+								size="20" maxlength="50" readonly="true"></p:inputText>
+							<h:panelGroup>
+								<h:outputText value="设备名称："></h:outputText>
+								<h:outputText value="*" style="color: red" />
+							</h:panelGroup>
+							<p:inputText value="#{bzglBzqMb.sbxx.sbmc}" required="true"
+								size="20" maxlength="50" readonly="true"></p:inputText>
+							<h:outputText value="状态："></h:outputText>
+							<p:inputText value="#{bzglBzqMb.sbxx.sbzt}" required="true"
+								size="20" maxlength="50" readonly="true"></p:inputText>
+							<h:panelGroup>
+								<h:outputText value="标准器名称："></h:outputText>
+								<h:outputText value="*" style="color: red" />
+							</h:panelGroup>
+							<p:inputText value="#{bzglBzqMb.varchObj.jlbzmc}" required="true"
+								size="20" maxlength="50" readonly="true"></p:inputText>
+							<h:outputText value="检定方式："></h:outputText>
+							<p:inputText value="#{bzglBzqMb.sbxx.jdfs}" size="20"
+								maxlength="50" readonly="true"></p:inputText>
+							<h:outputText value="是否标准器："></h:outputText>
+							<p:inputText value="#{bzglBzqMb.sbxx.sfbzq}" size="20"
+								maxlength="50" readonly="true"></p:inputText>
+						</h:panelGrid>
+					</p:panel>
+					<p:panel>
+						<h:panelGrid columns="4" width="800px" align="left">
+							<h:outputText value="测量范围："></h:outputText>
+							<p:inputText value="#{bzglBzqMb.sbxx.clfw}" size="20"
+								maxlength="50" readonly="true"></p:inputText>
+							<h:outputText value="准确度："></h:outputText>
+							<p:inputText value="#{bzglBzqMb.sbxx.zqd}" size="20"
+								maxlength="50" readonly="true"></p:inputText>
+							<h:outputText value="设备型号："></h:outputText>
+							<p:inputText value="#{bzglBzqMb.sbxx.ggxh}" size="20"
+								maxlength="50" readonly="true"></p:inputText>
+							<h:outputText value="分类编号："></h:outputText>
+							<p:inputText value="#{bzglBzqMb.sbxx.sbfl}" size="20"
+								maxlength="50" readonly="true"></p:inputText>
+							<h:outputText value="生产厂家："></h:outputText>
+							<p:inputText value="#{bzglBzqMb.sbxx.sccj}" size="20"
+								maxlength="50" readonly="true"></p:inputText>
+							<h:outputText value="使用部门："></h:outputText>
+							<p:inputText value="#{bzglBzqMb.sbxx.sybmmc}" size="20"
+								maxlength="50" readonly="true"></p:inputText>
+						</h:panelGrid>
+					</p:panel>
+					<p:panel>
+						<h:panelGrid columns="4" width="800px" align="left">
+							<h:outputText value="管理类别："></h:outputText>
+							<p:inputText value="#{bzglBzqMb.sbxx.gllb}" size="20"
+								maxlength="50" readonly="true"></p:inputText>
+							<h:outputText value="确认间隔："></h:outputText>
+							<p:inputText value="#{bzglBzqMb.sbxx.qrjg}" size="20"
+								maxlength="50" readonly="true"></p:inputText>
+							<h:outputText value="确认人员："></h:outputText>
+							<p:inputText value="#{bzglBzqMb.sbxx.qrry}" size="20"
+								maxlength="50" readonly="true"></p:inputText>
+							<h:outputText value="出厂编号："></h:outputText>
+							<p:inputText value="#{bzglBzqMb.sbxx.ccbh}" size="20"
+								maxlength="50" readonly="true"></p:inputText>
+							<h:outputText value="有效日期："></h:outputText>
+							<p:inputText value="#{bzglBzqMb.sbxx.fyxrq}" size="20"
+								maxlength="50" readonly="true">
+								<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+									timeZone="GMT+8" />
+							</p:inputText>
+							<h:outputText value="检定日期："></h:outputText>
+							<p:inputText value="#{bzglBzqMb.sbxx.fjdrq}" size="20"
+								maxlength="50" readonly="true">
+								<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+									timeZone="GMT+8" />
+							</p:inputText>
+							<h:outputText value="入库日期："></h:outputText>
+							<p:inputText value="#{bzglBzqMb.sbxx.rkrq}" size="20"
+								maxlength="50" readonly="true">
+								<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+									timeZone="GMT+8" />
+							</p:inputText>
+						</h:panelGrid>
+					</p:panel>
+					<h:panelGrid columns="2">
+						<h:outputText value="备注："></h:outputText>
+						<p:inputTextarea value="#{bzglBzqMb.sbxx.bz}" rows="4" cols="100"
+							label="备注" maxlength="1000" readonly="true"></p:inputTextarea>
+					</h:panelGrid>
+					<p:commandButton style="margin-left: 350px"
+						oncomplete="PF('displaydlg').hide()" immediate="true" value="关闭">
+					</p:commandButton>
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+	</h:body>
+</f:view>
+</html>

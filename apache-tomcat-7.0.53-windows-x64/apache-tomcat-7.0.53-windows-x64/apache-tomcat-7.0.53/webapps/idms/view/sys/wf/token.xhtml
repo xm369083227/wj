@@ -1,0 +1,246 @@
+<%@ include file="/common/include/taglibs.jsp"%>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="GB2312"%>
+<f:view>
+	<HTML>
+	<%@include file="/common/include/head.inc"%>
+	<BODY>
+	<t:saveState value="#{moniDetails.processInstance}" />
+	<t:saveState value="#{moniDetails.moreItems}" />
+	<t:saveState value="#{moniDetails.tokenSelected}" />
+	<t:saveState value="#{moniDetails.viewtask.processDefinition}" />
+	<t:saveState value="#{moniDetails.viewtask.processInstance}" />
+	<t:saveState value="#{moniDetails.viewtask.taskInstance}" />
+	<t:saveState value="#{moniDetails.viewtask.form}" />
+	<t:saveState value="#{moniDetails.viewtask.signatureHistory}" />
+	<t:saveState value="#{moniDetails.viewtask.formUrl}" />
+
+		<H1><h:outputText value="#{wf.processMonitor}" />
+		<HR />
+		</H1>
+		<b><h:messages /></b>
+		<H2><h:outputText value="#{wf.console}" /></H2>
+		<HR>
+		<t:panelTabbedPane id="moniDetails" style=""
+			serverSideTabSwitch="false" styleClass="tabbedPane"
+			activeTabStyleClass="activeTab" inactiveTabStyleClass="inactiveTab"
+			disabledTabStyleClass="disabledTab" activeSubStyleClass="activeSub"
+			inactiveSubStyleClass="inactiveSub" tabContentStyleClass="tabContent">
+			<t:panelTab id="summary" label="#{wf.summary}">
+			<h:form>
+				<h:panelGrid id="pd" columns="4">
+					<h:outputText value="#{wf.processInstanceID}" />
+					<h:outputText value="#{moniDetails.processInstance.id}"
+						style="font-weight: bolder" />
+					<h:outputText value="#{wf.processName}" />
+					<h:outputText value="#{moniDetails.processInstance.name}"
+						style="font-weight: bolder" />
+					<h:outputText value="#{wf.startDate}" />
+					<h:outputText value="#{moniDetails.processInstance.start}"
+						style="font-weight: bolder" />
+					<h:outputText value="#{wf.endDate}" />
+					<h:outputText value="#{moniDetails.processInstance.end}"
+						style="font-weight: bolder" />
+				</h:panelGrid>
+
+				<t:dataTable value="#{moniDetails.token}" var="token" width="700px"
+					styleClass="dqiqsDataTable" columnClasses="dqiqsDataTableTd"
+					rowClasses="dqiqsDataTableRow1,dqiqsDataTableRow2"
+					headerClass="dqiqsDataTableHead" cellpadding="0" cellspacing="0"
+					rows="10">
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="ID" />
+						</f:facet>
+						<h:outputText value="#{token.id}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{wf.currentPosition}" />
+						</f:facet>
+						<h:outputText value="#{token.currentNode}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{wf.enterDate}" />
+						</f:facet>
+						<h:outputText value="#{token.start}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{wf.leaveDate}" />
+						</f:facet>
+						<h:outputText value="#{token.end}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{wf.currentActor}" />
+						</f:facet>
+						<h:outputText value="#{token.actor}" />
+					</h:column>
+					
+					<authz:AuthorizeInvisibleTag funcString="sclc">
+						<h:column>
+							<h:commandLink   immediate="true" actionListener="#{moniDetails.updateItems}" style="color: #046DFB">
+								<t:updateActionListener property="#{moniDetails.tokenSelected}"
+									value="#{token}" />
+								<h:outputText value="#{wf.chooseAction}" />
+							</h:commandLink> 
+						</h:column>
+					</authz:AuthorizeInvisibleTag>
+				</t:dataTable>
+
+				<h:panelGroup id="movetoken" rendered="#{moniDetails.moreItems}">
+
+					<h:commandLink action="#{moniDetails.moveToken}" style="color: #046DFB">
+						<h:outputText value="#{wf.forcetoend}" />
+					</h:commandLink>
+
+
+
+					<h:dataTable var="transition"
+						value="#{moniDetails.tokenSelected.transitions}" width="700px"
+						styleClass="dqiqsDataTable" columnClasses="dqiqsDataTableTd"
+						rowClasses="dqiqsDataTableRow1,dqiqsDataTableRow2"
+						headerClass="dqiqsDataTableHead" cellpadding="0" cellspacing="0"
+						rows="10">
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="ID" />
+							</f:facet>
+							<h:outputText value="#{transition.id}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{wf.transitionName}" />
+							</f:facet>
+							<h:outputText value="#{transition.name}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{wf.destinationNode}" />
+							</f:facet>
+							<h:commandLink action="#{moniDetails.signalToken}" style="color: #046DFB">
+								<t:updateActionListener
+									property="#{moniDetails.transitionSelected}"
+									value="#{transition}" />
+								<h:outputText value="#{transition.to}" />
+							</h:commandLink>
+						</h:column>
+					</h:dataTable>
+				</h:panelGroup>
+				</h:form>
+			</t:panelTab>
+     
+
+
+
+
+
+			<t:panelTab id="graph" label="#{wf.graph}">
+				<f:verbatim>
+					<jbpm:processimageToken
+						token="${moniDetails.processInstance.rootToken.id}" />
+				</f:verbatim>
+			</t:panelTab>
+
+
+
+
+
+			<t:panelTab id="histroy" label="#{wf.taskHistory}">
+			<h:form>
+				<t:dataTable id="taskhistroy" value="#{moniDetails.taskInstances}"
+					var="taskInstance" width="700px" styleClass="dqiqsDataTable"
+					columnClasses="dqiqsDataTableTd"
+					rowClasses="dqiqsDataTableRow1,dqiqsDataTableRow2"
+					headerClass="dqiqsDataTableHead" cellpadding="0" cellspacing="0"
+					rows="6">
+					<%-- nitrox:varType="org.jbpm.taskmgmt.exe.TaskInstance" --%>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="ID" />
+						</f:facet>
+						<h:outputText value="#{taskInstance.id}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{wf.taskName}" />
+						</f:facet>
+						<h:outputText value="#{taskInstance.name}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{wf.actor}" />
+						</f:facet>
+						<h:outputText value="#{taskInstance.actorId}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{wf.createDate}" />
+						</f:facet>
+						<h:outputText value="#{taskInstance.create}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{wf.startDate}" />
+						</f:facet>
+						<h:outputText value="#{taskInstance.start}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{wf.endDate}" />
+						</f:facet>
+						<h:outputText value="#{taskInstance.end}" />
+					</h:column>
+				</t:dataTable>
+				<h:panelGrid width="100%" style="text-align:right;">
+					<t:htmlTag value="br" style="font-size: 2px" />
+					<h:panelGrid columns="2">
+						<t:dataScroller id="scroll_1" for="taskhistroy" fastStep="10"
+							immediate="true" styleClass="page" paginator="false"
+							paginatorMaxPages="5" paginatorTableClass="paginator"
+							pageCountVar="pageCount" pageIndexVar="pageIndex"
+							rowsCountVar="rowsCount" style="font:12px"
+							displayedRowsCountVar="displayedRowsCountVar"
+							firstRowIndexVar="firstRowIndex" lastRowIndexVar="lastRowIndex">
+							<f:facet name="first">
+								<h:outputText value="#{megs.first}" />
+							</f:facet>
+							<f:facet name="last">
+								<h:outputText value="#{megs.last}" />
+							</f:facet>
+							<f:facet name="previous">
+								<h:outputText value="#{megs.previous}" />
+							</f:facet>
+							<f:facet name="next">
+								<h:outputText value="#{megs.next}" />
+							</f:facet>
+						</t:dataScroller>
+						<t:dataScroller id="scroll_2" for="taskhistroy" fastStep="10"
+							immediate="false" styleClass="page" paginator="false"
+							paginatorMaxPages="5" paginatorTableClass="paginator"
+							pageCountVar="pageCount" pageIndexVar="pageIndex"
+							rowsCountVar="rowsCount" style="font:12px"
+							displayedRowsCountVar="displayedRowsCountVar"
+							firstRowIndexVar="firstRowIndex" lastRowIndexVar="lastRowIndex">
+							<h:outputFormat value="#{megs.datascroller}" styleClass="page">
+								<f:param value="#{rowsCount}" />
+								<f:param value="#{pageIndex}" />
+								<f:param value="#{pageCount}" />
+							</h:outputFormat>
+						</t:dataScroller>
+					</h:panelGrid>
+				</h:panelGrid>
+				</h:form>
+			</t:panelTab>
+
+
+		</t:panelTabbedPane>
+
+		<HR>
+
+
+
+	</BODY>
+	</HTML>
+</f:view>

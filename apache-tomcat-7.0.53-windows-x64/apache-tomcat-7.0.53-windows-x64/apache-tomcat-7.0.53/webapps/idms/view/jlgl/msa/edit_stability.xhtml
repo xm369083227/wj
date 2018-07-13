@@ -1,0 +1,282 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+	<ui:include src="/common/templates/ui.xhtml"></ui:include>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+</h:head>
+<h:body>
+	<h2>
+		<h:outputText value="稳定性" />
+	</h2>
+	<p:growl id="growlid" showDetail="false" sticky="true"
+		autoUpdate="true" />
+
+	<h:form id="form" enctype="multipart/form-data">
+		<h:panelGrid columns="1">
+			<p:tabView id="jbxx" scrollable="true" style="width:1000px"
+				activeIndex="#{stabMB.activeIndex}">
+				<p:tab title="基本信息" titleStyle="width:200px">
+					<p:panelGrid columns="1" style="width:900px">
+						<p:panelGrid style="text-align:center">
+							<h:outputText value="稳定性基本数据(带"
+								style=" font-size:15px; font-weight border;color:gray;" />
+							<h:outputText value="*"
+								style="font-size:15px; font-weight border;color:red;" />
+							<h:outputText value="为必填)"
+								style="font-size:15px; font-weight border;color:gray;" />
+						</p:panelGrid>
+						<h:panelGrid id="sbgl" columns="4" style="width:900px">
+							<h:panelGroup>
+								<h:outputText value="设备编码:" />
+								<h:outputText value="*" style="color:red" />
+							</h:panelGroup>
+							<p:inputText value="#{stabMB.jbxx.sbbm}" size="35">
+							</p:inputText>
+							<h:panelGroup>
+								<h:outputText value="设备名称:" />
+								<h:outputText value="*" style="color:red" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<p:inputText value="#{stabMB.jbxx.sbmc}" size="35" />
+								<p:commandButton title="查询"
+									onclick="PF('displaydlg').show();return false;"
+									icon="ui-icon-search" />
+							</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText value="设备类型:" />
+								<h:outputText value="*" style="color:red" />
+							</h:panelGroup>
+							<p:inputText value="#{stabMB.jbxx.sblx}" size="35"
+								required="true">
+							</p:inputText>
+						</h:panelGrid>
+						<h:panelGrid columns="4" style="width:900px">
+							<h:outputText value="特性名称:" />
+							<p:inputText value="#{stabMB.jbxx.txmc}" size="35"
+								required="true">
+							</p:inputText>
+							<h:outputText value="分析日期:" />
+							<p:calendar value="#{stabMB.jbxx.fxrq}" size="35"
+								navigator="true" pattern="yyyy-MM-dd">
+							</p:calendar>
+							<h:outputText value="零件编号:" />
+							<p:inputText value="#{stabMB.jbxx.ljbh}" size="35">
+							</p:inputText>
+							<h:outputText value="零件名称:" />
+							<p:inputText value="#{stabMB.jbxx.ljmc}" size="35">
+							</p:inputText>
+							<h:outputText value="零件变差:" />
+							<p:inputText value="#{stabMB.jbxx.ljbc}" size="35">
+							</p:inputText>
+							<h:outputText value="操作人员:" />
+							<p:inputText value="#{stabMB.jbxx.czry}" size="35">
+							</p:inputText>
+							<h:outputText value="操作人数:" />
+							<p:inputText value="#{stabMB.jbxx.czrs}" size="35">
+							</p:inputText>
+
+							<h:outputText value="零件数目:" />
+
+
+							<p:inputText value="#{stabMB.jbxx.ljsm}" size="35">
+							</p:inputText>
+							<h:panelGroup>
+								<h:outputText value="测量次数:" />
+								<h:outputText value="*" style="color:red" />
+							</h:panelGroup>
+							<p:inputText value="#{stabMB.jbxx.clcs}" size="35" />
+
+
+							<h:panelGroup>
+								<h:outputText value="采集次数:" />
+								<h:outputText value="*" style="color:red" />
+							</h:panelGroup>
+							<p:inputText value="#{stabMB.jbxx.cjcs}" size="35">
+							</p:inputText>
+							<h:outputText value="起始日期:" />
+							<p:calendar value="#{stabMB.jbxx.qsrq}" size="35"
+								navigator="true" pattern="yyyy-MM-dd">
+							</p:calendar>
+							<h:outputText value="时间间隔" />
+							<h:panelGroup>
+								<p:inputText value=" " size="35">
+								</p:inputText>
+								<h:outputText value="天" />
+							</h:panelGroup>
+
+
+						</h:panelGrid>
+						<h:panelGrid>
+							<p:commandButton value="下一步-->"
+								actionListener="#{stabMB.nextOption()}" ajax="false"
+								style="font-size:14px;font-weight: bolder;" />
+						</h:panelGrid>
+
+					</p:panelGrid>
+				</p:tab>
+				<p:tab title="分析数据" titleStyle="width:200px">
+					<p:panelGrid columns="1" style="width:900px">
+						<p:row>
+							<h:panelGroup>
+								<h:commandButton value="输入数据" action="#{stabMB.editValues}"
+									rendered="#{!stabMB.mEditValues}" immediate="true"
+									style="font-weight:bolder;" styleClass="standard" />
+								<f:verbatim>&nbsp;&nbsp;&nbsp;</f:verbatim>
+								<h:commandButton value="编辑数据" action="#{stabMB.editValues}"
+									rendered="#{stabMB.mEditValues}" style="font-weight:bolder;"
+									styleClass="standard" />
+								<f:verbatim>&nbsp;&nbsp;&nbsp;</f:verbatim>
+								<h:commandButton value="保存数据" action="#{stabMB.saveDate}"
+									style="font-weight:bolder;" styleClass="standard" />
+								<f:verbatim>&nbsp;&nbsp;&nbsp;</f:verbatim>
+								<h:commandButton value="分析数据" action="#{stabMB.analysisData}"
+									style="font-weight:bolder;" styleClass="standard" />
+								<f:verbatim>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</f:verbatim>
+							</h:panelGroup>
+						</p:row>
+					</p:panelGrid>
+					<p:panelGrid columns="4">
+						<p:row>
+							<h:panelGroup>
+								<f:verbatim>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</f:verbatim>
+								<h:outputText value="从Excel文件导入数据" style="font-weight:bold" />
+								<p:fileUpload value="#{stabMB.uploadedFile}" mode="simple"
+									skinSimple="true" />
+
+								<h:commandButton value="导入..."
+									actionListener="#{stabMB.importExcel}"
+									style="font-weight:bolder;color:gray;" />
+
+								<h:commandButton value="不显示Excel"
+									rendered="#{not stabMB.showExcelFile }"
+									actionListener="#{stabMB.getExcelExample}"
+									style="font-weight:bolder;color:gray;" />
+								<h:commandButton value="显示Excel帮助"
+									rendered="#{stabMB.showExcelFile }"
+									actionListener="#{stabMB.getExcelExample}"
+									style="font-weight:bolder;color:gray;" />
+							</h:panelGroup>
+
+
+						</p:row>
+
+					</p:panelGrid>
+					<p:panel>
+
+						<h:outputText value="分析数据列表："
+							style="font-size:14px; font-weight: bolder; color:  gray" />
+					</p:panel>
+
+					<p:dataTable id="datas" var="data" value="#{stabMB.dataList}"
+						widgetVar="carsTable" rowIndexVar="index"
+						style="text-align:center;">
+
+						<p:columns value="#{stabMB.columns}" var="column"
+							columnIndexVar="colIndex">
+							<f:facet name="header">
+								<h:outputText value="#{column.header}" />
+							</f:facet>
+							<h:outputText value="#{data.cjsj}" size="15"
+								rendered="#{colIndex==0 and stabMB.mEditValues}">
+								<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+									timeZone="GMT+8" />
+							</h:outputText>
+							<p:calendar value="#{data.cjsj}" size="15"
+								rendered="#{colIndex==0 and !stabMB.mEditValues}"
+								navigator="true" pattern="yyyy-MM-dd">
+							</p:calendar>
+							<h:outputText value="#{data[column.property]}"
+								rendered="#{stabMB.mEditValues and colIndex!=0}" />
+							<p:inputText value="#{data[column.property]}"
+								rendered="#{!stabMB.mEditValues and colIndex!=0}"
+								style="width:100px"></p:inputText>
+						</p:columns>
+					</p:dataTable>
+
+
+
+
+					<p:panelGrid columns="1" rendered="#{not stabMB.showExcelFile }">
+						<h:panelGroup>
+							<h:outputText value="Excel文件格式如下图所示："
+								style="font-size:14px;font-weight:bold;color:#ff0000" />
+						</h:panelGroup>
+						<h:graphicImage url="/common/images/msa/importStab.jpg" />
+					</p:panelGrid>
+
+
+				</p:tab>
+				<p:tab title="稳定性结论" titleStyle="width:200px">
+					<p:panelGrid columns="1" style="width:900px">
+						<p:chart type="line" model="#{stabMB.stabBean.lineModel}"
+							rendered="#{stabMB.stabBean.lineModel!=null}"
+							style="height:400px;" />
+						<p:chart type="line" model="#{stabMB.stabBean.lineModel1}"
+							rendered="#{stabMB.stabBean.lineModel1!=null}"
+							style="height:400px;" />
+					</p:panelGrid>
+					<p:panelGrid columns="2" style="width:900px">
+						<h:outputText value="判断结果的标准：" />
+						<f:verbatim>若所有X值和R值都在控制上下线以内，则可以接受；<br />
+								若有任何一个X值和R值在控制限以外，则不可用接受。
+								</f:verbatim>
+						<h:outputText value="得出结论：" />
+						<p:inputTextarea value=" " style="width:600px"></p:inputTextarea>
+					</p:panelGrid>
+				</p:tab>
+			</p:tabView>
+		</h:panelGrid>
+	</h:form>
+
+	<p:dialog id="dlg1" header="显示设备" widgetVar="displaydlg" modal="true">
+		<h:form>
+			<p:dataTable id="data" var="sb" style="width:600px"
+				value="#{sbglSbxxQb.lazyDataModel}" paginator="true" rows="10"
+				widgetVar="cellSbxx" selectionMode="single" rowKey="#{sb.id}"
+				rowIndexVar="rowVar" filterDelay="300" resizableColumns="true "
+				liveResize="true" paginatorPosition="bottom"
+				currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+				paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				lazy="true">
+				<p:ajax event="rowSelect" listener="#{stabMB.onRowSelect}"
+					update=":form:jbxx:sbgl" oncomplete="PF('displaydlg').hide()"
+					immediate="true" />
+				<p:column headerText="序号" style="width:20px">
+					<h:outputText value="#{rowVar+1}"></h:outputText>
+				</p:column>
+				<p:column sortBy="#{sb.jlbh}" filterBy="#{sb.jlbh}"
+					style="width:#{sys.sbxx.jlbh.xskd}px"
+					rendered="#{sys.sbxx.jlbh.sfsx}" headerText="#{sys.sbxx.jlbh.zdms}">
+					<h:outputText value="#{sb.jlbh}"></h:outputText>
+				</p:column>
+				<p:column sortBy="#{sb.sbmc}" filterBy="#{sb.sbmc}"
+					style="width:100px" rendered="#{sys.sbxx.sbmc.sfsx}"
+					headerText="#{sys.sbxx.sbmc.zdms}">
+					<h:outputText value="#{sb.sbmc}"></h:outputText>
+				</p:column>
+
+				<p:column sortBy="#{sb.sbzt}" filterBy="#{sb.sbzt}"
+					rendered="#{sys.sbxx.sbzt.sfsx}" headerText="#{sys.sbxx.sbzt.zdms}"
+					style="width:#{sys.sbxx.sbzt.xskd}px">
+					<h:outputText value="#{sb.sbzt}"></h:outputText>
+				</p:column>
+				<p:column sortBy="#{sb.sbfl}" filterBy="#{sb.sbfl}"
+					rendered="#{sys.sbxx.sbfl.sfsx}" headerText="#{sys.sbxx.sbfl.zdms}"
+					style="width:#{sys.sbxx.sbfl.xskd}px">
+					<h:outputText value="#{sb.sbfl}"></h:outputText>
+				</p:column>
+
+
+			</p:dataTable>
+		</h:form>
+	</p:dialog>
+
+
+</h:body>
+</html>

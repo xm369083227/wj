@@ -1,0 +1,25 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>Facelet Title1</title>
+	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/tree/dtree.css" />
+</h:head>
+<h:body>
+	<h:form>
+		<p:growl id="messages" showDetail="true" />
+		<p:tree id="docTree" value="#{funcTreeBean.root}" var="doc">
+			<p:treeNode  expandedIcon="ui-icon-folder-open"
+				collapsedIcon="ui-icon-folder-collapsed">
+				<h:outputText value="#{doc.jdmc}" />
+			</p:treeNode>
+				<p:treeNode type="document" icon="ui-icon-document">
+						<h:outputText value="#{doc.jdmc}" />
+			</p:treeNode>
+					
+		</p:tree>
+	</h:form>
+</h:body>
+</html>

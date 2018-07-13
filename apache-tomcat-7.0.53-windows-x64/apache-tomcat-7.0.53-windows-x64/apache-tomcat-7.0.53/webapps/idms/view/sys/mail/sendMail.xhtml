@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	<h:head>
+		<title>发送邮件</title>
+		
+		<style>
+			.column1{
+				width:80px;
+				text-align:right;
+			}
+			.column2{
+				text-align:left;
+			}
+		</style>
+		<script type="text/javascript">
+		 var input_;
+		 var address;
+		 function getFocus(_id){
+		 	input_id=_id.getAttribute("id");
+		 	input_=input_id;
+		 }
+		 window.onload = function setFocus() {
+			document.getElementById("sendMailForm:toAddress").focus();
+		 }
+		 function setAddress() {
+			var email=document.getElementById("treeform:hidden").value;
+			if (email.length>0){
+				email+=";";
+				if(input_!=null){
+					address = document.getElementById(input_).value;
+					if (address.indexOf(email)==-1) {
+						address ? address+=email : address=email;
+						document.getElementById(input_).value=address;
+					}
+				} 
+			} 
+			
+		 }
+		</script>
+		
+		
+	</h:head>
+	<h:body>
+		<p:layout fullPage="true" collapseTitle="" expandTitle="">
+			<p:layoutUnit position="center">
+				<h:form id="sendMailForm" >
+					<p:growl id="growl" sticky="true" autoUpdate="true"/>
+					<h:panelGrid columns="2" style="width:100%;" columnClasses="column1,column2">
+						<h:panelGroup>
+							<h:outputText value="收件人："/>
+							<h:outputText value="*" style="color:red"/>
+						</h:panelGroup>
+						<p:inputText id="toAddress" value="#{sendMailBean.mail.toAddress}" required="true" label="收件人" maxlength="1000" style="width:99%;" onfocus="getFocus(this);"/>
+						<h:outputText value="抄送："/>
+						<p:inputText id="ccAddress" value="#{sendMailBean.mail.ccAddress}" style="width:99%;" onfocus="getFocus(this);"/>
+						<h:panelGroup>
+							<h:outputText value="主题："/>
+							<h:outputText value="*" style="color:red"/>
+						</h:panelGroup>
+						<p:inputText value="#{sendMailBean.mail.subject}" required="true" label="主题" maxlength="200" style="width:99%;"/>
+						<h:outputText value="附件："/>
+						<p:commandLink value="添加附件"/>
+						<h:outputText value="正文：" style="valign:top;"/>
+						<p:editor value="#{sendMailBean.mail.content}"  widgetVar="editorWidget" style="width:99%;" height="420"/>
+					</h:panelGrid>
+					<div style="margin-left:100px;" >
+						<h:outputText value="发件人："/>
+						<h:outputText value="*" style="color:red"/>	
+						<h:outputText rendered="#{sendMailBean.mailConfig.mailAddress!=null}" value="#{sendMailBean.mailConfig.mailAddress}"/>
+						<h:outputText rendered="#{sendMailBean.mailConfig.mailAddress==null}" value="？？？（请配置邮箱！）" style="color:red"/>
+					</div>
+					<div>
+						<p:commandButton value="发送" onclick=""  rendered="#{sendMailBean.mailConfig.mailAddress!=null}"  action="#{sendMailBean.sendMail}"/>
+					</div>
+				</h:form>
+			</p:layoutUnit>
+			<p:layoutUnit position="east" collapsible="true" header="通讯录" size="310">
+				<h:form id="treeform">
+						<h:inputHidden id="hidden" value="#{sendMailBean.mailAddress}" />
+					<p:tree id="tree" value="#{sendMailBean.root}" var="obj" dynamic="true" selectionMode="single" animate="true">
+						<p:treeNode>
+							<h:outputText value="#{obj.bmmc}"  />
+						</p:treeNode>
+						<p:treeNode type="user" icon="ui-icon ui-icon-person">
+							<h:outputText value="#{obj.bmmc}" title="#{obj.bmmc}"/>
+						</p:treeNode>
+						<p:ajax event="select" listener="#{sendMailBean.onNodeSelect}"  update=":treeform:hidden" oncomplete="setAddress();">
+						</p:ajax>
+    					<p:ajax event="unselect" listener="#{sendMailBean.onNodeUnSelect}"></p:ajax>
+    					<p:ajax event="expand" listener="#{sendMailBean.onNodeExpand}"></p:ajax>
+    					<p:ajax event="collapse" listener="#{sendMailBean.onNodeCollapse}"></p:ajax>
+						
+					</p:tree>
+				</h:form>
+			</p:layoutUnit>
+		
+		
+		
+		
+		
+		</p:layout>	
+	</h:body>
+</html>

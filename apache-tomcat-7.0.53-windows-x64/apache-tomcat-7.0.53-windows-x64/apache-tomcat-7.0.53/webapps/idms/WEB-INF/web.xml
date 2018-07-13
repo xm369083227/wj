@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath*:config/*.xml</param-value>
+  </context-param>
+  <context-param>
+    <param-name>javax.faces.CONFIG_FILES</param-name>
+    <param-value>/WEB-INF/faces-config-jlgl.xml,/WEB-INF/faces-config-pzgl.xml,/WEB-INF/faces-config-base.xml,/WEB-INF/faces-config-mail.xml,/WEB-INF/faces-config-gcgl.xml,/WEB-INF/faces-config-gskh.xml,/WEB-INF/faces-config-msa.xml</param-value>
+  </context-param>
+  <context-param>
+    <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+    <param-value>client</param-value>
+  </context-param>
+  <context-param>
+    <param-name>primefaces.PRIVATE_CAPTCHA_KEY</param-name>
+    <param-value>6LfwZwoAAAAAAEhRyntKF1PBzysAJLzqp2v-GMRR</param-value>
+  </context-param>
+  <context-param>
+    <param-name>primefaces.PUBLIC_CAPTCHA_KEY</param-name>
+    <param-value>6LfwZwoAAAAAAI-oUHpdvRnkMfu9fXQHxc0P7IBu</param-value>
+  </context-param>
+  <context-param>
+    <param-name>javax.faces.PROJECT_STAGE</param-name>
+    <param-value>Development</param-value>
+  </context-param>
+  <context-param>
+    <param-name>primefaces.THEME</param-name>
+    <param-value>cupertino</param-value>
+  </context-param>
+  <env-entry>
+  	<env-entry-name>jsf/ClientSideSecretKey</env-entry-name>
+  	<env-entry-type>java.lang.String</env-entry-type>
+  	<env-entry-value>d5eejzjPlLoTD4QtbtRMhA==</env-entry-value>
+  </env-entry>
+  
+    <!-- jBPM FileServlet -->
+	<servlet>
+		<servlet-name>processImageServlet</servlet-name>
+		<servlet-class>idms.webapp.common.taglib.ProcessImageServlet</servlet-class>
+	</servlet>
+	 <servlet-mapping>
+        <servlet-name>processImageServlet</servlet-name>
+         <url-pattern>/jbpm/processImageServlet</url-pattern>
+  </servlet-mapping>
+  	<servlet>
+		<servlet-name>jbpmImageServle</servlet-name>
+		<servlet-class>idms.webapp.common.taglib.JbpmImageServlet</servlet-class>
+	</servlet>
+	 <servlet-mapping>
+        <servlet-name>jbpmImageServle</servlet-name>
+         <url-pattern>/jbpm/jbpmImageServlet</url-pattern>
+  </servlet-mapping>
+    <!-- jBPM DeployServlet -->
+	<servlet>
+		<servlet-name>ProcessUploadServlet</servlet-name>
+		<servlet-class>org.jbpm.webapp.servlet.ProcessUploadServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ProcessUploadServlet</servlet-name>
+		<!-- URL used by GPD -->
+		<!-- GPD expects just a piece of text as a reply -->
+		<url-pattern>/upload</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ProcessUploadServlet</servlet-name>
+		<url-pattern>/uploadDefinition</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>CloseJbpmConfigurationServlet</servlet-name>
+		<servlet-class>org.jbpm.web.CloseJbpmConfigurationServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	 
+
+<listener>
+  <listener-class>
+    org.springframework.security.web.session.HttpSessionEventPublisher
+  </listener-class>
+</listener>
+
+	 
+	 
+  
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <listener>
+    <listener-class>
+    	org.springframework.web.util.IntrospectorCleanupListener
+    	</listener-class>
+  </listener>
+   <listener>
+     <listener-class>idms.webapp.jlsbgl.acom.PlanTimerListener</listener-class>
+  </listener>
+  <servlet>
+    <servlet-name>Faces Servlet</servlet-name>
+    <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Faces Servlet</servlet-name>
+    <url-pattern>*.xhtml</url-pattern>
+  </servlet-mapping>
+  <filter>
+    <filter-name>springSecurityFilterChain</filter-name>
+    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>springSecurityFilterChain</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <filter>
+    <filter-name>opensession</filter-name>
+    <filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>
+    <init-param>
+      <param-name>singleSession</param-name>
+      <param-value>true</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>opensession</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <filter>
+    <filter-name>characterEncodingFilter</filter-name>
+    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+    <init-param>
+      <param-name>ForceEncoding</param-name>
+      <param-value>true</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>characterEncodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <session-config>
+    <session-timeout>35</session-timeout>
+  </session-config>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+  <error-page>
+    <error-code>403</error-code>
+    <location>/error500.html</location>
+  </error-page>
+  <error-page>
+    <error-code>404</error-code>
+    <location>/error500.html</location>
+  </error-page>
+  <error-page>
+    <error-code>500</error-code>
+    <location>/error500.html</location>
+  </error-page>
+  <resource-ref>
+    <res-ref-name>jdbc/iqs</res-ref-name>
+    <res-type>javax.sql.DataSource</res-type>
+    <res-auth>Container</res-auth>
+    <res-sharing-scope>Shareable</res-sharing-scope>
+  </resource-ref>
+</web-app>

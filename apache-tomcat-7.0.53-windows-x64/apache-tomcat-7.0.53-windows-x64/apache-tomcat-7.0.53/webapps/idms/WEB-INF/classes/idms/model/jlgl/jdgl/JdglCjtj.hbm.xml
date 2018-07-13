@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+<class  name="idms.model.jlgl.jdgl.JdglCjtj"    table="JDGL_CJTJ">
+ 
+       <id name="id" type="java.lang.Long">
+            <column name="ID" precision="22" scale="0" />
+            <generator class="sequence">
+				<param name="sequence">S_JDGL_CJTJ</param>
+			</generator>
+        </id>
+        <property name="xkfl" type="java.lang.String">
+           <column name="XKFL"></column>
+        </property>
+        <property name="zyzs" type="java.lang.Integer">
+           <column name="ZYZS"></column>
+        </property>
+        <property name="cjsm" type="java.lang.Integer">
+           <column name="CJSM"></column>
+        </property>
+        <property name="cjbl" type="java.lang.Integer">
+           <column name="CJBL"></column>
+        </property>
+        <property name="jhid" type="java.lang.Long">
+           <column name="JHID"></column>
+        </property>
+
+</class>
+</hibernate-mapping>

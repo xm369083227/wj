@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<b:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:b="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/security 
+    http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+
+	<http auto-config="true" access-denied-page="/index.html">
+		<!-- 不要过滤图片等静态资源 -->
+		<intercept-url pattern="/**/*.jpg" filters="none" />
+		<intercept-url pattern="/**/*.png" filters="none" />
+		<intercept-url pattern="/**/*.gif" filters="none" />
+		<intercept-url pattern="/**/*.css" filters="none" />
+		<intercept-url pattern="/**/*.js" filters="none" />
+		<!-- 登录页面和忘记密码页面不过滤  -->
+		<intercept-url pattern="/login.xhtml" filters="none" />
+		<intercept-url pattern="/index.html" filters="none" />  
+			
+		<form-login login-page="/login.xthml"
+			authentication-failure-url="/login.xhtml?error=true"
+			default-target-url="/view/sys/main.xhtml" />
+		<!-- "记住我"功能，采用持久化策略（将用户的登录信息存放在数据库表中） -->
+		<!-- 检测失效的sessionId,超时时定位到另外一个URL -->
+		<logout logout-url="/j_spring_security_logout" logout-success-url="/login.xhtml" invalidate-session="true"/>
+		<session-management session-fixation-protection=" none"  invalid-session-url="/view/sys/main.xhtml" >
+			 <concurrency-control max-sessions="1" error-if-maximum-exceeded="false" expired-url="/error.html"/> 
+		</session-management> 
+	</http>
+	
+
+	<b:bean id="rememberMeServices"
+	  class="org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices">
+	  <b:property name="userDetailsService" ref="userDao" />
+	  <b:property name="key" value="springsecurityCookies1" />
+	  <b:property name="alwaysRemember" value="false"></b:property>
+	  <b:property name="tokenValiditySeconds" value="86400"></b:property>
+	  <b:property name="parameter" value="_spring_security_remember_me"></b:property>
+	 </b:bean>
+	 
+	  <b:bean id="rememberMeAuthenticationProvider"
+       class="org.springframework.security.authentication.RememberMeAuthenticationProvider">
+       <b:property name="key" value="springsecurityCookies1" />
+ </b:bean>
+ 
+	<!-- 注意能够为authentication-manager 设置alias别名  -->
+	<authentication-manager  alias="authenticationManager" >
+		<authentication-provider  user-service-ref="userDao">
+		</authentication-provider>
+	</authentication-manager>
+   
+    <!-- 启用用户的缓存功能 -->
+	<b:bean id="userCache"
+		class="org.springframework.security.core.userdetails.cache.EhCacheBasedUserCache">
+		<b:property name="cache" ref="userEhCache" />
+	</b:bean>
+	
+	<b:bean id="userEhCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+		<b:property name="cacheName" value="userCache" />
+		<b:property name="cacheManager" ref="cacheManager" />
+	</b:bean>
+	<b:bean id="cacheManager"
+		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" />
+</b:beans>

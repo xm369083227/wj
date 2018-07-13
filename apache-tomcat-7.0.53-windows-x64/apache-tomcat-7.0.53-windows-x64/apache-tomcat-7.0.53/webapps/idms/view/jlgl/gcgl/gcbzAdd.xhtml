@@ -1,0 +1,288 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<f:view contentType="text/html">
+	
+
+	<h:head>
+		<title>IDMS</title>
+		<ui:include src="/common/templates/ui.xhtml"></ui:include>
+	</h:head>
+	<h:body>
+		<p:growl id="growlid" sticky="true" autoUpdate="true" />
+		<h:form id="form"
+			style="margin-bottom:10px;width:1230px;margin-top:10px">
+			<h:panelGrid columns="1">
+				<p:tabView id="tabview" scrollable="true" style="width:1230px">
+					<p:tab title="测量过程准入">
+						<h:panelGrid style="width:1200px">
+
+
+							<font color="red">常用特殊字符: </font>&nbsp;&nbsp; 
+					 		<a href="javascript:insert('∠')">∠</a>
+							&nbsp;&nbsp;<a href="javascript:insert('Φ')">Φ</a>
+							&nbsp;&nbsp;<a href="javascript:insert('%')">%</a>
+							&nbsp;&nbsp;<a href="javascript:insert('‰')">‰</a>
+							&nbsp;&nbsp;<a href="javascript:insert('±')">±</a>
+							&nbsp;&nbsp;<a href="javascript:insert('°')">°</a>
+							&nbsp;&nbsp;<a href="javascript:insert('℃')">℃</a>
+							&nbsp;&nbsp;<a href="javascript:insert('≤')">≤</a>
+							&nbsp;&nbsp;<a href="javascript:insert('≥')">≥</a>
+							&nbsp;&nbsp;<a href="javascript:insert('&#8486;')">&#8486;</a>
+							&nbsp;&nbsp;<a href="javascript:insert('m&sup3;')">m&sup3;</a>
+							&nbsp;&nbsp;<a href="javascript:insert('m&sup3;/h')">m&sup3;/h</a>
+							&nbsp;&nbsp;<a href="javascript:insert('σ')">σ</a>
+							&nbsp;&nbsp;<a href="javascript:insert('\'')">'</a>
+							&nbsp;&nbsp;<a href="javascript:insert('α')">α</a>
+							&nbsp;&nbsp;<a href="javascript:insert('β')">β</a>
+							&nbsp;&nbsp;<a href="javascript:insert('γ')">γ</a>
+							&nbsp;&nbsp;<a href="javascript:insert('Ⅰ')">Ⅰ</a>
+							&nbsp;&nbsp;<a href="javascript:insert('Ⅱ')">Ⅱ</a>
+							&nbsp;&nbsp;<a href="javascript:insert('Ⅲ')">Ⅲ</a>
+							&nbsp;&nbsp;<a href="javascript:insert('Ⅳ')">Ⅳ</a>
+							&nbsp;&nbsp;<a href="javascript:insert('Ⅴ')">Ⅴ</a>
+							&nbsp;&nbsp;<a href="javascript:insert('Ⅵ')">Ⅵ</a>
+							&nbsp;&nbsp;<a href="javascript:insert('Ⅶ')">Ⅶ</a>
+							&nbsp;&nbsp;<a href="javascript:insert('Ⅷ')">Ⅷ</a>
+							&nbsp;&nbsp;<a href="javascript:insert('Ⅸ')">Ⅸ</a>
+							&nbsp;&nbsp;<a href="javascript:insert('Ⅹ')">Ⅹ</a>
+							<script>
+								var id;
+								function insert(v) {
+									try {
+										document.getElementById(id).value += v;
+										document.getElementById(id).focus();
+									} catch (e) {
+										;
+									}
+								}
+								function GetId(obj) {
+									id = obj.id;
+								}
+							</script>
+
+
+							<h:panelGrid columns="4" width="1200px" align="left">
+								<h:panelGroup>
+									<h:outputText value="测量过程编号："></h:outputText>
+									<h:outputText value="*" style="color: red" />
+								</h:panelGroup>
+								<p:inputText value="#{gcglClgcMb.clgcVarchobj.bh}"
+									required="true" label="测量过程编号" size="45" maxlength="50"></p:inputText>
+								<h:panelGroup>
+									<h:outputText value="测量过程名称："></h:outputText>
+									<h:outputText value="*" style="color: red" />
+								</h:panelGroup>
+								<p:inputText value="#{gcglClgcMb.clgcVarchobj.mc}"
+									required="true" label="测量过程名称" size="45" maxlength="250"></p:inputText>
+								<h:panelGroup>
+									<h:outputText value="测量地点："></h:outputText>
+								</h:panelGroup>
+								<p:inputText value="#{gcglClgcMb.clgcVarchobj.cldd}"
+									required="flase" label="测量地点" size="45" maxlength="100"></p:inputText>
+								<h:outputText value="测量过程管理部门："></h:outputText>
+								<p:inputText value="#{gcglClgcMb.clgcVarchobj.glbm}" size="45"></p:inputText>
+								<h:outputText value="提出测量要求的文件："></h:outputText>
+								<p:inputTextarea cols="45" rows="2"
+									value="#{gcglClgcMb.clgcVarchobj.clyqwj}" maxlength="250"></p:inputTextarea>
+								<h:outputText value="测量过程实施部门："></h:outputText>
+								<p:inputTextarea cols="45" rows="2"
+									value="#{gcglClgcMb.clgcVarchobj.ssbm}" maxlength="100"></p:inputTextarea>
+								<h:panelGroup>
+									<h:outputText value="状态："/>
+									<h:outputText value="*" style="color: red" />
+								</h:panelGroup>
+								<p:selectOneRadio required="true" label="状态" value="#{gcglClgcMb.clgcVarchobj.zt}">
+									<f:selectItem itemLabel="在用" itemValue="在用"></f:selectItem>
+									<f:selectItem itemLabel="停用" itemValue="停用"></f:selectItem>
+								</p:selectOneRadio>
+							</h:panelGrid>
+
+
+						</h:panelGrid>
+
+						<h:panelGrid columns="2">
+							<p:commandButton id="add" value="增加测量参数信息"
+								actionListener="#{gcglClgcMb.addGccs()}" immediate="true"
+								update=":form:tabview:data1" />
+						</h:panelGrid>
+						<h:panelGrid width="1100px" align="left">
+							<p:dataTable style="width:1050px" id="data1" var="gccs"
+								value="#{gcglClgcMb.gccsList}" rowIndexVar="rowVar"
+								filterDelay="300" resizableColumns="true " liveResize="true"
+								paginatorPosition="bottom">
+
+								<p:column headerText="序号" style="width:50px;">
+									<h:outputText value="#{rowVar+1}"></h:outputText>
+									
+								</p:column>
+								<p:column headerText="设备名称" style="width:145px;">
+									<h:outputText value="*" style="color:red"></h:outputText>
+									<p:inputText value="#{gccs.sbmc}" onclick="GetId(this)"
+										maxlength="100" style="width:80%"></p:inputText>
+								</p:column>
+								<p:column headerText="型号规格" style="width:145px;">
+									<h:outputText value="*" style="color:red"></h:outputText>
+									<p:inputText value="#{gccs.xhgg}" onclick="GetId(this)"
+										maxlength="100" style="width:80%"></p:inputText>
+								</p:column>
+								<p:column headerText="准确度" style="width:145px;">
+									<h:outputText value="*" style="color:red"></h:outputText>
+									<p:inputText value="#{gccs.zqd}" onclick="GetId(this)"
+										maxlength="100" style="width:80%"></p:inputText>
+								</p:column>
+								<p:column headerText="测量名称" style="width:145px;">
+									<h:outputText value="*" style="color:red"></h:outputText>
+									<p:inputText value="#{gccs.clmc}" onclick="GetId(this)"
+										maxlength="100" style="width:80%"></p:inputText>
+								</p:column>
+								<p:column headerText="测量范围" style="width:145px;">
+									<h:outputText value="*" style="color:red"></h:outputText>
+									<p:inputText value="#{gccs.clfw}" onclick="GetId(this)"
+										maxlength="100" style="width:80%"></p:inputText>
+								</p:column>
+								<p:column headerText="允许误差" style="width:145px;">
+									<h:outputText value="*" style="color:red"></h:outputText>
+									<p:inputText value="#{gccs.yxwc}" onclick="GetId(this)"
+										maxlength="100" style="width:80%"></p:inputText>
+								</p:column>
+								<p:column headerText="操作">
+									<h:panelGroup>
+										<p:commandButton style="margin-left:10px;" title="删除"
+											action="#{gcglClgcMb.reduceGccs}" icon="ui-icon-trash"
+											ajax="true" update=":form:tabview:data1" immediate="true">
+											<f:param name="id" value="#{gccs.id}"></f:param>
+											<p:confirm icon="ui-icon-alert" message="确定删除吗?"></p:confirm>
+										</p:commandButton>
+									</h:panelGroup>
+								</p:column>
+							</p:dataTable>
+						</h:panelGrid>
+
+						<h:panelGrid columns="4" width="1200px" align="left">
+							<h:panelGroup>
+								<h:outputText value="测量方法文件编号：" />
+								<h:outputText value="*" style="color:red"/>
+							</h:panelGroup>
+							<p:inputTextarea id="jsffmc" rows="1" cols="55"
+								value="#{gcglClgcMb.clgcVarchobj.wjbh}" style="width:317px"
+								maxlength="250" 
+								required="true"/>
+							<h:outputText value="测 量 环 境：" style="width:100px" />
+							<p:inputTextarea id="jsssbf" rows="1" cols="55"
+								value="#{gcglClgcMb.clgcVarchobj.hjtj}" style="width:317px"
+								maxlength="250" />
+							<h:outputText value="重&nbsp;&nbsp;&nbsp;要&nbsp;&nbsp;&nbsp;度&nbsp;&nbsp;&nbsp;类;&nbsp;&nbsp;别：" 
+								style="width:100px" />
+							
+							<p:selectOneRadio value="#{gcglClgcMb.clgcVarchobj.zydlb}">
+                                <f:selectItem itemLabel="A" itemValue="A"></f:selectItem>
+                                <f:selectItem itemLabel="B" itemValue="B"></f:selectItem>
+                            </p:selectOneRadio>
+							
+							<h:outputText value="单 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位：" 
+								style="width:100px"/>
+							<p:inputText id="ssbm" value="#{gcglClgcMb.clgcVarchobj.dw}"
+								size="10" style="width:317px" maxlength="20" />
+							
+							<h:outputText value="登 &nbsp;&nbsp;&nbsp;&nbsp;记 &nbsp;&nbsp;&nbsp;&nbsp;人&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;员：" 
+								style="width:100px" />
+							<p:inputText value="#{gcglClgcMb.clgcVarchobj.djry}" size="10"
+								style="width:317px" maxlength="20" readonly="true" />
+							
+							<h:outputText value="登 记 日 期：" style="width:100px" />
+							<p:inputText value="#{gcglClgcMb.clgcVarchobj.djrq}" size="50"
+								style="width:317px" readonly="true">
+								<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+									timeZone="GMT+8" />
+							</p:inputText>
+							
+						</h:panelGrid>
+						<h:panelGrid >
+							<h:panelGroup >
+								<p:commandButton value="保存"
+									actionListener="#{gcglClgcMb.saveObjs}" update=":growlid"
+									style="margin-left:450px" />
+								
+							</h:panelGroup>
+						</h:panelGrid>
+					</p:tab>
+					
+					<p:tab title="上传附件">
+						<h:panelGrid width="1100px"
+							style="margin-top: -10px;margin-left:-17px;">
+							<h:panelGrid width="100%">
+								<p:fileUpload multiple="true" update=":form:tabview:filePaneId"
+									fileUploadListener="#{gcglClgcMb.handleFileUpload}"
+									style="width:100%;" mode="advanced" label="浏览" cancelLabel="取消"
+									uploadLabel="上传" sizeLimit="10240000" var="file"
+									invalidSizeMessage="文件必须小于10M" invalidFileMessage="格式不支持"
+									dragDropSupport="false"
+									allowTypes="/(\.|\/)(gif|jpe?g|png|pdf|txt|rar|zip|doc|docx|xls|xlsx)$/">
+								</p:fileUpload>
+								<p:dataTable id="filePaneId" paginator="true"
+									value="#{gcglClgcMb.fileBean.files}" rows="10"
+									rowIndexVar="rowVar" filterDelay="300" resizableColumns="true "
+									liveResize="true" paginatorPosition="bottom" var="file"
+									currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+									paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+									lazy="true" rowsPerPageTemplate="5,10,15">
+
+									<p:column headerText="序号" style="width:40px;">
+										<h:outputText value="#{rowVar+1}" />
+									</p:column>
+
+									<p:column headerText="附件名称" style="width:50%">
+										<h:outputText value="#{file.wjmc}" />
+									</p:column>
+
+									<p:column headerText="上传人员">
+										<p:outputLabel value="#{file.scyhid}"></p:outputLabel>
+									</p:column>
+									<p:column headerText="上传时间">
+										<h:outputText value="#{file.scrq}">
+											<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+												timeZone="GMT+8" />
+										</h:outputText>
+									</p:column>
+									<p:column headerText="操作" style="width:8%">
+										<h:panelGroup>
+											<p:commandButton id="downId" ajax="false"
+												action="#{gcglClgcMb.fileBean.downFile}"
+												icon="ui-icon-arrowthick-1-s" immediate="true">
+												<f:setPropertyActionListener
+													target="#{gcglClgcMb.fileBean.file}" value="#{file}"></f:setPropertyActionListener>
+
+											</p:commandButton>
+											<h:outputText value="  "></h:outputText>
+											<p:commandButton id="deleteId" ajax="false"
+												action="#{gcglClgcMb.fileBean.deleteFile}"
+												icon="ui-icon-trash" immediate="true">
+												<p:confirm icon="ui-icon-alert" message="确定删除吗?"></p:confirm>
+												<f:setPropertyActionListener
+													target="#{gcglClgcMb.fileBean.file}" value="#{file}"></f:setPropertyActionListener>
+											</p:commandButton>
+										</h:panelGroup>
+									</p:column>
+								</p:dataTable>
+								<h:panelGroup>
+									<p:commandButton value="保存"
+										actionListener="#{gcglClgcMb.saveObjs}" update=":growlid"
+										style="margin-left: 500px" />
+								</h:panelGroup>
+							</h:panelGrid>
+						</h:panelGrid>
+					</p:tab>
+				</p:tabView>
+			</h:panelGrid>
+		</h:form>
+
+	</h:body>
+</f:view>
+</html>

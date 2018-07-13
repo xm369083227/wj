@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+     <ui:include src="/common/templates/ui.xhtml"></ui:include>
+     <meta name="viewport" content="width=device-width, initial-scale=1"/>
+     <style>a:link{color:#000000;text-decoration:none}</style>
+</h:head>
+<h:body>
+	<h2>
+		<h:outputText value="不确定度" />
+	</h2>
+	<p:growl id="growlid" showDetail="false" sticky="true" 	autoUpdate="true"/>
+	
+	<h:form id="form" enctype="multipart/form-data">
+	    <h:panelGrid columns="1">
+		   <p:tabView id="jbxx" scrollable="true" style="width:1000px" activeIndex="#{stabMB.activeIndex}">
+			<p:tab title="基本信息" titleStyle="width:200px">
+			  <p:panelGrid columns="1" style="width:900px">
+			  <p:panelGrid style="text-align:center">
+					<h:outputText value="不确定度评定基本数据(带"
+						style=" font-size:15px; font-weight border;color:gray;" />
+					<h:outputText value="*"
+						style="font-size:15px; font-weight border;color:red;" />
+					<h:outputText value="为必填)"
+						style="font-size:15px; font-weight border;color:gray;" />
+						<f:verbatim><br/></f:verbatim>
+						<font color="red">常用特殊字符: </font>&nbsp;&nbsp; 
+					&nbsp;&nbsp;<a href="javascript:insert('%')" >%</a>
+      											   &nbsp;&nbsp;<a href="javascript:insert('‰')">‰</a>
+      											   &nbsp;&nbsp;<a href="javascript:insert('±')">±</a>
+      											   &nbsp;&nbsp;<a href="javascript:insert('°')">°</a>
+      											   &nbsp;&nbsp;<a href="javascript:insert('℃')">℃</a>      											   
+      											   &nbsp;&nbsp;<a href="javascript:insert('&#8486;')">&#8486;</a>
+      											   &nbsp;&nbsp;<a href="javascript:insert('m&sup3;')">m&sup3;</a>      												
+      												&nbsp;&nbsp;<a href="javascript:insert('mg/m&sup3;')">mg/m&sup3;</a>
+      												&nbsp;&nbsp;<a href="javascript:insert('g/cm&sup3;')">g/cm&sup3;</a>	
+      												&nbsp;&nbsp;<a href="javascript:insert('kg/m&sup3;')">kg/m&sup3;</a>
+      												&nbsp;&nbsp;<a href="javascript:insert('μ')">μ</a>				
+                                                   &nbsp;&nbsp;<a href="javascript:insert('μg;/L')">μg/L</a>
+                                                   &nbsp;&nbsp;<a href="javascript:insert('μs')">μs</a>
+                                                   &nbsp;&nbsp;<a href="javascript:insert('kW*h')">kW*h</a>
+							<br/>
+		                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		                                             <a href="javascript:insert('10^-1')">10 <sup>-1</sup> </a> 
+		                                            &nbsp;&nbsp;<a href="javascript:insert('10^-2')">10<sup>-2</sup> </a> 
+		                                            &nbsp;&nbsp;<a href="javascript:insert('10^-3')">10<sup>-3</sup> </a> 
+		                                            &nbsp;&nbsp;<a href="javascript:insert('10^-4')">10<sup>-4</sup> </a>
+		                                            &nbsp;&nbsp;<a href="javascript:insert('10^-5')">10<sup>-5</sup> </a>
+		                                            &nbsp;&nbsp;<a href="javascript:insert('10^-10')">10 <sup>-10</sup> </a>
+		                                             &nbsp;&nbsp;<a href="javascript:insert('10^3')">10 <sup>2</sup> </a> 
+		                                            &nbsp;&nbsp;<a href="javascript:insert('10^3')">10 <sup>3</sup> </a> 
+		                                            &nbsp;&nbsp;<a href="javascript:insert('10^4')">10 <sup>4</sup> </a>  
+		                                            &nbsp;&nbsp;<a href="javascript:insert('10^5')">10 <sup>5</sup> </a> 
+		                                            &nbsp;&nbsp;<a href="javascript:insert('10^10')">10 <sup>10</sup> </a>
+
+					<script>
+						var id;
+						function insert(v) {
+							try {
+								document.getElementById(id).value += v;
+								document.getElementById(event.srcElement.id)
+										.focus();
+							} catch (e) {
+								;
+							}
+						}
+						function GetId() {
+							id = event.srcElement.id;
+							
+						}
+					</script>
+				</p:panelGrid>
+				<p:panelGrid columns="4" style="width:900px" >
+				<h:panelGroup>
+				<h:outputText value="被测对象"/>
+				<h:outputText value="*" style="color:red"/>
+				</h:panelGroup>
+				<p:inputText value="" size="35" />
+				<h:outputText value="所属学科"/>
+				<p:inputText value="" size="35"/>
+				<h:panelGroup>
+				<h:outputText value="示值测量点"/>
+				<h:outputText value="*" style="color:red"/>
+				</h:panelGroup>
+				<p:inputText value="" size="35"/>
+				<h:panelGroup>
+				<h:outputText value="量纲"/>
+				<h:outputText value="*" style="color:red"/>
+				</h:panelGroup>
+				<p:inputText value="" size="35"/>
+				<h:panelGroup>
+				<h:outputText value="测量依据"/>
+				<h:outputText value="*" style="color:red"/>
+				</h:panelGroup>
+				<p:inputText value="" size="35"/>
+				<h:panelGroup>
+				<h:outputText value="环境条件"/>
+				<h:outputText value="*" style="color:red"/>
+				</h:panelGroup>
+				<p:inputText value="" size="35"/>
+				<h:panelGroup>
+				<h:outputText value="测量标准"/>
+				<h:outputText value="*" style="color:red"/>
+				</h:panelGroup>
+				<p:inputText value="" size="35"/>
+				<h:panelGroup>
+				<h:outputText value="输入量数目"/>
+				<h:outputText value="*" style="color:red"/>
+				</h:panelGroup>
+				<p:inputText value="" size="35"/>
+				<h:outputText value="零件编码："/>
+				<p:inputText value="" size="35"/>
+				<h:outputText value="操作人员："/>
+				<p:inputText value="系统管理员" size="35"/>
+				<h:outputText value="分析日期"/>
+				<p:calendar value="#{msaRarMb.jbxx.fxrq}" size="35" navigator="true" pattern="yyyy/MM/dd"></p:calendar>
+				
+				
+				</p:panelGrid>
+				<p:commandButton value="保存基本信息" ajax="false"  style="font-size:14px;font-weight:bolder;"/>
+				
+				</p:panelGrid>
+				</p:tab>
+				<p:tab title="A类方法评定" titleStyle="width:200px">
+				</p:tab>
+				<p:tab title="B类方法评定" titleStyle="width:200px">
+				</p:tab>
+				</p:tabView>
+				</h:panelGrid>
+				</h:form>
+				</h:body>
+				</html>
+			
+				

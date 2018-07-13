@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="idms.model.base.Role" table="BASE_ROLE">
+	   <cache usage="nonstrict-read-write"/>
+		<id name="jsbm" type="string" column="JSBM" length="20">
+		</id>
+		
+		<property name="jsmc" type="java.lang.String">
+			<column name="JSMC" length="25" />
+		</property>
+		<property name="jsfl" type="java.lang.String">
+			<column name="JSFL" length="200" />
+		</property>
+		<property name="xtjs" type="java.lang.Boolean">
+			<column name="XTJS" length="1" />
+		</property>
+	
+		
+		<set name="yhs" table="BASE_USER_ROLE" lazy="extra" inverse="true"
+			cascade="save-update" batch-size="5">
+			<key>
+				<column name="JSBM" not-null="true" />
+			</key>
+			<many-to-many class="idms.model.base.User" column="YHBM"
+				outer-join="auto" />
+		</set>
+		<set name="gns" table="BASE_ROLE_FUNCTION" lazy="extra"
+			cascade="save-update" batch-size="5">
+			<key>
+				<column name="JSBM" not-null="true" />
+			</key>
+			<many-to-many class="idms.model.base.Function" column="GNBM"
+				outer-join="auto" />
+		</set>
+	</class>
+</hibernate-mapping>

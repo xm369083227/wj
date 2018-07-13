@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	<h:head>
+	        <title>IDMS</title>
+	        <ui:include src="/common/templates/ui.xhtml"></ui:include>
+	</h:head>
+   <h:body >
+                   <h:form id="plan">
+		                  <p:panel header="条件查询">
+                             <h:panelGrid columns="6">
+                                  <h:outputText value="计划编号："></h:outputText>
+                                  <p:inputText value="#{checkPlanMonitor.queryObj.jhbm}"  size="25"></p:inputText>
+                                  
+                                  <h:outputText value="制定用户："></h:outputText>
+                                  <p:inputText value="#{checkPlanMonitor.queryObj.zdry}"  size="25"></p:inputText>
+                                  <h:outputText value="制定日期："></h:outputText>
+                                  <h:panelGroup>
+				                          <p:calendar label="制定日期" value="#{checkPlanMonitor.startDate}"  size="8" readonlyInput="false" navigator="true" pattern="yyyy-MM-dd" />
+						                                  至<p:calendar label="制定日期" value="#{checkPlanMonitor.endDate}"   size="8" readonlyInput="false" navigator="true"  pattern="yyyy-MM-dd" />
+				                  </h:panelGroup>
+                               	  <h:outputText value="计划类型"></h:outputText>
+                               	   <p:selectOneMenu value="#{checkPlanMonitor.queryObj.jhlx}">
+                               	            <f:selectItem itemLabel="请选择计划类型" itemValue="0"></f:selectItem>
+                               	            <f:selectItem itemLabel="周检计划" itemValue="1"></f:selectItem>
+                               	            <f:selectItem itemLabel="抽检计划" itemValue="2"></f:selectItem>
+                               	            <f:selectItem itemLabel="临时送检" itemValue="3"></f:selectItem>
+                               	   </p:selectOneMenu>
+                                   <h:outputText value="制定类型"></h:outputText>
+                               	   <p:selectOneMenu value="#{checkPlanMonitor.queryObj.zdlx}">
+                               	             <f:selectItem itemLabel="请选择制定类型" itemValue="0"></f:selectItem>
+                               	             <f:selectItem itemLabel="手动制定" itemValue="1"></f:selectItem>
+                               	             <f:selectItem itemLabel="系统制定" itemValue="2"></f:selectItem>
+                               	   </p:selectOneMenu>
+                               	   <h:outputText value="计划状态"></h:outputText>
+                               	   <p:selectOneMenu value="#{checkPlanMonitor.queryObj.jhzt}">
+                               	           <f:selectItem itemLabel="请选择计划状态" itemValue="0"></f:selectItem>
+                               	            <f:selectItem itemLabel="已制定" itemValue="1"></f:selectItem>
+                               	            <f:selectItem itemLabel="已发布" itemValue="2"></f:selectItem>
+                               	            <f:selectItem itemLabel="运行中" itemValue="3"></f:selectItem>
+                               	            <f:selectItem itemLabel="已结束" itemValue="4"></f:selectItem>
+                               	   </p:selectOneMenu>
+                             </h:panelGrid>
+                              <p:commandButton value="查询" ajax="false" action="#{checkPlanMonitor.doSearch}"></p:commandButton>
+                        </p:panel>     
+					                        
+					                        
+		              <p:dataTable  id="data" var="obj" scrollable="true"  style="width:100%" 
+		                   scrollWidth="99%" scrollHeight="520"  
+		                    value="#{checkPlanMonitor.jdrwList}" rows="1000"  
+		                    widgetVar="cellSbxx"   rowKey="#{obj.id}" 
+		                    rowIndexVar="rowVar"    >
+						  <p:column headerText="序号" width="20" >
+						             <h:outputText value="#{rowVar+1}"></h:outputText>
+						  </p:column>
+						    
+						    <p:column  sortBy="#{obj.ksrq}"  width="80"
+						             headerText="任务创建日期"  >
+								      <h:outputText value="#{obj.ksrq}">
+								      	<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN" timeZone="GMT+8"/>
+								      </h:outputText>
+						    </p:column>
+						  
+						    <p:column  sortBy="#{obj.rwzt}"  width="80"
+						             headerText="检定任务状态"  >
+								      <h:outputText value="#{obj.rwztmc}" style="color:red"></h:outputText>
+						  </p:column>
+						  
+						   <p:column  sortBy="#{obj.ksrq}"  width="80"
+						              headerText="截止送检日期"  >
+								      <h:outputText value="#{obj.jzsjrq}">
+								      	<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN" timeZone="GMT+8"/>
+								      </h:outputText>
+						    </p:column>
+						    
+						  <p:column  sortBy="#{obj.sbxx.jlbh}"  width="80"
+						       rendered="#{sys.sbxx.jlbh.sfsx}"  headerText="#{sys.sbxx.jlbh.zdms}"  >
+								      <h:outputText value="#{obj.sbxx.jlbh}" ></h:outputText>
+						  </p:column>
+						  <p:column sortBy="#{obj.sbxx.sbmc}" width="80" 
+						       rendered="#{sys.sbxx.sbmc.sfsx}"  headerText="#{sys.sbxx.sbmc.zdms}"  >
+								       <h:outputText  value="#{obj.sbxx.sbmc}" ></h:outputText>
+						  </p:column>
+						    <p:column sortBy="#{obj.sbxx.sybm}" width="80" 
+						       rendered="#{sys.sbxx.sybmmc.sfsx}"  headerText="#{sys.sbxx.sybmmc.zdms}"  >
+								       <h:outputText  value="#{obj.sbxx.sybmmc}" ></h:outputText>
+						  </p:column>
+						    <p:column sortBy="#{obj.sbxx.xkflp}" width="100" rendered="#{sys.sbxx.xkfl.sfsx}" 
+						             headerText="#{sys.sbxx.xkfl.zdms}"    >
+								<h:outputText value="#{obj.sbxx.xkflmcs}"></h:outputText>
+						    </p:column>
+						    
+						    <p:column sortBy="#{obj.sbxx.gllb}" width="50" rendered="#{sys.sbxx.gllb.sfsx}" 
+						             headerText="#{sys.sbxx.gllb.zdms}"    >
+								      <h:outputText value="#{obj.sbxx.gllb}" ></h:outputText>
+						   </p:column>
+						    <p:column sortBy="#{obj.sbxx.sbzt}" width="50"  rendered="#{sys.sbxx.sbzt.sfsx}" 
+						             headerText="#{sys.sbxx.sbzt.zdms}"    >
+								<h:outputText value="#{obj.sbxx.sbzt}"></h:outputText>
+						    </p:column>
+						      <p:column sortBy="#{obj.sbxx.sfqj}" width="50"  rendered="#{sys.sbxx.sfqj.sfsx}" 
+						             headerText="#{sys.sbxx.sfqj.zdms}"    >
+								<h:outputText value="#{obj.sbxx.sfqj?'是':'否'}" style="color:#{obj.sbxx.sfqj?'red':'green'}"></h:outputText>
+						    </p:column>
+						      <p:column sortBy="#{obj.sbxx.sfbzq}" width="50"  rendered="#{sys.sbxx.sfbzq.sfsx}" 
+						             headerText="#{sys.sbxx.sfbzq.zdms}"    >
+								<h:outputText value="#{obj.sbxx.sfbzq?'是':'否'}" style="color:#{obj.sbxx.sfbzq?'red':'green'}"></h:outputText>
+						    </p:column>
+						    
+						     <p:column sortBy="#{obj.sbxx.sbfl}" width="50"  rendered="#{sys.sbxx.sbfl.sfsx}" 
+						             headerText="#{sys.sbxx.sbfl.zdms}"   >
+								<h:outputText value="#{obj.sbxx.sbfl}"></h:outputText>
+						    </p:column>
+						      <p:column sortBy="#{obj.sbxx.fyxrq}" width="55"   rendered="#{sys.sbxx.fyxrq.sfsx}" 
+						             headerText="#{sys.sbxx.fyxrq.zdms}"    >
+								<h:outputText value="#{obj.sbxx.fyxrq}">
+									<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN" timeZone="GMT+8"/>
+								</h:outputText>
+						    </p:column>
+						    
+						    <p:column sortBy="#{obj.sbxx.jdfs}" width="50"   rendered="#{sys.sbxx.jdfs.sfsx}" 
+						             headerText="#{sys.sbxx.jdfs.zdms}"    >
+								<h:outputText value="#{obj.sbxx.jdfs}" ></h:outputText>
+						    </p:column>
+						    
+						     <p:column sortBy="#{obj.sbxx.sccj}" width="70" rendered="#{sys.sbxx.sccj.sfsx}" 
+						             headerText="#{sys.sbxx.sccj.zdms}"    >
+									<h:outputText value="#{obj.sbxx.sccj}"></h:outputText>
+						    </p:column>
+						
+					</p:dataTable>  
+                   </h:form>
+	 </h:body>
+	 
+	</html>

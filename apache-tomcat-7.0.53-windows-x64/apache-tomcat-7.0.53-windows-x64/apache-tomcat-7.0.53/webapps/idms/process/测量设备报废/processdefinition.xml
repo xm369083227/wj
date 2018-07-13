@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process-definition xmlns="urn:jbpm.org:jpdl-3.2"
+	name="测量设备报废">
+	<start-state name="开始">
+		<transition name="提交" to="计量管理员申请"></transition>
+	</start-state>
+	<task-node name="计量管理员申请">
+		<task name="计量管理员申请">
+			<assignment class="idms.workflow.jlgl.SbBfHandler"></assignment>
+			<controller>
+				<variable name="formBean" mapped-name="zttzClsbBfJBean"></variable>
+			</controller>
+		</task>
+		<transition name="取消" to="结束"></transition>
+		<transition to="检定员检定" name="提交"></transition>
+	</task-node>
+	<!--<task-node name="检定员检定"> <task name="检定员检定"> <assignment class="idms.workflow.jlgl.SbBfHandler"></assignment> 
+		<controller> <variable name="formBean" mapped-name="zttzClsbBfJBean"></variable> 
+		</controller> </task> <transition name="提交" to="是否外送"></transition> </task-node> -->
+	<!-- -->
+	<task-node name="检定员检定" create-tasks="no" signal="last">
+		<task name="检定员检定" />
+		<event type="node-enter">
+			<action class="idms.workflow.jlgl.SbBfHqHandler"></action>
+		</event>
+		<transition to="结束" name="提交"></transition>
+	</task-node>
+	<end-state name="结束"></end-state>
+</process-definition>

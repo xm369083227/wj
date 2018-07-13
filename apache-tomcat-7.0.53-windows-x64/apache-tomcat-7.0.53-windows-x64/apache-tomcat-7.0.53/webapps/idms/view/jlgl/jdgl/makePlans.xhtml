@@ -1,0 +1,407 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+	<title>IDMS</title>
+	<link id="themes" rel="stylesheet" type="text/css"
+		href="#{request.contextPath}/common/jQuery/themes/cupertino/easyui.css" />
+	<script type="text/javascript" charset="utf-8"
+		src="#{request.contextPath}/common/jQuery/jquery.easyui.min.js"></script>
+	<script type="text/javascript" charset="utf-8"
+		src="#{request.contextPath}/common/jQuery/locale/easyui-lang-zh_CN.js"></script>
+	<ui:include src="/common/templates/ui.xhtml"></ui:include>
+	<script type="text/javascript" charset="utf-8">
+	             function selectRow(obj){		
+				        var checks=document.getElementsByTagName("input");
+		 		        var sum = checks.length;
+		 		         var j=0;
+	 		            for (j = 0; j&lt; checks.length; j++) {			
+					       if(checks[j].type=="checkbox")  {
+					           if(checks[j].id!=obj.id){
+						           if(obj.checked){
+					                   checks[j].checked=true;  
+						           }else{
+			  				          checks[j].checked=false;  
+						           }
+					           }   
+					        } 
+		  		        }
+	                }
+	             
+	             function start() {
+	            	    window['progress'] = setInterval(function() {
+	            	        var pbClient = PF('pbClient'),
+	            	        oldValue = pbClient.getValue(),
+	            	        newValue = oldValue + 10;
+	            	        pbClient.setValue(pbClient.getValue() + 10);
+	            	        if(newValue === 100) {
+	            	            clearInterval(window['progress']);
+	            	        }
+	            	 
+	            	    }, 1000);
+	            	}
+	             function cancel() {
+	     		    clearInterval(window['progress']);
+	     		    PF('pbClient').setValue(0);
+	     		   
+	     		}
+	        </script>
+</h:head>
+<h:body class="easyui-layout">
+	<p:dialog id="prodialogPub" modal="true" height="30"
+		style="position: absolute;" closable="false" widgetVar="proDiaWidPub"
+		width="300px" resizable="false">
+		<p:progressBar id="progressBarClientPub" labelTemplate="处理中。。。请稍后。。。"
+			widgetVar="pbClient" style="width:270px;" />
+	</p:dialog>
+	<p:dialog id="dialogid" modal="true" height="520px"  maximizable="true"
+		style="position: absolute;" closable="true" widgetVar="dialogid"
+		width="1000px" resizable="false">
+	<h:form id="diaform">
+				<p:dataTable id="data" var="sb" style="width:1300px;"
+					value="#{verificationPlan.sbxxList}" paginator="true"
+					widgetVar="cellSbxx" rowKey="#{sb.id}"
+					selection="#{verificationPlan.selectSbxxs}" rowIndexVar="rowVar"
+					filterDelay="300" resizableColumns="true" liveResize="true"
+					paginatorPosition="bottom" rows="100" scrollable="true"  scrollHeight="400"
+					currentPageReportTemplate=" 总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+					paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					lazy="true" rowsPerPageTemplate="100,200,500">
+					<p:column headerText="序号" width="20">
+						<h:outputText value="#{rowVar+1}"></h:outputText>
+					</p:column>
+					<p:column width="80" rendered="#{sys.sbxx.jlbh.sfsx}"
+						headerText="#{sys.sbxx.jlbh.zdms}">
+						<h:outputText value="#{sb.jlbh}"></h:outputText>
+					</p:column>
+					<p:column width="80" rendered="#{sys.sbxx.sbmc.sfsx}"
+						headerText="#{sys.sbxx.sbmc.zdms}">
+						<h:outputText value="#{sb.sbmc}"></h:outputText>
+					</p:column>
+					<p:column width="80" rendered="#{sys.sbxx.sybmmc.sfsx}"
+						headerText="#{sys.sbxx.sybmmc.zdms}">
+						<h:outputText value="#{sb.sybmmc}"></h:outputText>
+					</p:column>
+					<p:column width="110" rendered="#{sys.sbxx.zdyzd1.sfsx}"
+						headerText="#{sys.sbxx.zdyzd1.zdms}">
+						<h:outputText value="#{sb.zdyzd1}"></h:outputText>
+					</p:column>
+					<p:column width="100" rendered="#{sys.sbxx.xkfl.sfsx}"
+						headerText="#{sys.sbxx.xkfl.zdms}">
+						<h:outputText value="#{sb.xkflmcs}"></h:outputText>
+					</p:column>
+
+					<p:column width="50" rendered="#{sys.sbxx.gllb.sfsx}"
+						headerText="#{sys.sbxx.gllb.zdms}">
+						<h:outputText value="#{sb.gllb}"></h:outputText>
+					</p:column>
+					<p:column width="50" rendered="#{sys.sbxx.sbzt.sfsx}"
+						headerText="#{sys.sbxx.sbzt.zdms}">
+						<h:outputText value="#{sb.sbzt}"></h:outputText>
+					</p:column>
+					<p:column width="50" rendered="#{sys.sbxx.sfqj.sfsx}"
+						headerText="#{sys.sbxx.sfqj.zdms}">
+						<h:outputText value="#{sb.sfqj?'是':'否'}"
+							style="color:#{sb.sfqj?'red':'green'}"></h:outputText>
+					</p:column>
+					<p:column width="50" rendered="#{sys.sbxx.sfbzq.sfsx}"
+						headerText="#{sys.sbxx.sfbzq.zdms}">
+						<h:outputText value="#{sb.sfbzq?'是':'否'}"
+							style="color:#{sb.sfbzq?'red':'green'}"></h:outputText>
+					</p:column>
+
+					<p:column width="60" rendered="#{sys.sbxx.fyxrq.sfsx}"
+						headerText="#{sys.sbxx.fyxrq.zdms}">
+						<h:outputText value="#{sb.fyxrq}">
+							<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+								timeZone="GMT+8" />
+						</h:outputText>
+					</p:column>
+
+					<p:column width="50" rendered="#{sys.sbxx.jdfs.sfsx}"
+						headerText="#{sys.sbxx.jdfs.zdms}">
+						<h:outputText value="#{sb.jdfs}"></h:outputText>
+					</p:column>
+
+					<p:column width="50" rendered="#{sys.sbxx.qrjg.sfsx}"
+						headerText="#{sys.sbxx.qrjg.zdms}">
+						<h:outputText value="#{sb.qrjg}"></h:outputText>
+					</p:column>
+
+
+					
+
+				</p:dataTable>
+				</h:form>
+				</p:dialog>
+	<p:growl id="growlid" showDetail="false" sticky="true"
+		autoUpdate="true"></p:growl>
+	<div id="cc" class="easyui-layout"
+		style="width:100%;height:100%;min-width: 1200px">
+		<div data-options="region:'center',split:false"
+			style="overflow: hidden;">
+			<h:form id="plan">
+				<p:tabView id="queryfrom">
+					<p:tab title="周检计划">
+						<h:panelGrid columns="6">
+							<h:outputText value="使用部门"></h:outputText>
+							<p:selectOneMenu value="#{verificationPlan.sybm}">
+								<f:selectItem itemLabel="请选择使用部门" itemValue=""></f:selectItem>
+								<f:selectItems value="#{selectDeptBean.ssbmByCs}" var="obj"
+									itemLabel="#{obj.bmmc}" itemValue="#{obj.bmbm}"></f:selectItems>
+							</p:selectOneMenu>
+
+
+							<h:outputText value="管理类型："></h:outputText>
+							<p:selectOneMenu value="#{verificationPlan.gllb}"
+								style="width:130px">
+								<f:selectItems value="#{selectSbxxBean.gllbItems}" var="gllb"
+									itemLabel="#{gllb.key}" itemValue="#{gllb.value}"></f:selectItems>
+							</p:selectOneMenu>
+
+							<h:outputText value="有效期："></h:outputText>
+							<h:panelGroup>
+								<p:calendar label="有效期" value="#{verificationPlan.startDate}"
+									size="8" readonlyInput="false" navigator="true"
+									pattern="yyyy-MM-dd" />
+									                                  至<p:calendar label="有效期"
+									value="#{verificationPlan.endDate}" size="8"
+									readonlyInput="false" navigator="true" pattern="yyyy-MM-dd" />
+							</h:panelGroup>
+
+							<h:outputText value="#{sys.sbxx.jdfs.zdms}："
+								rendered="#{sys.sbxx.jdfs.sfsx}" />
+							<h:panelGrid columns="3">
+                                
+                                <p:selectOneRadio value="#{verificationPlan.jdfs}">
+                                        <f:selectItem itemLabel="外送" itemValue="外送"></f:selectItem>
+                                        <f:selectItem itemLabel="自检" itemValue="自检"></f:selectItem>
+                                </p:selectOneRadio>
+								<!-- 
+							                            <h:outputText value="#{sys.sbxx.qrjg.zdms}：" rendered="#{sys.sbxx.qrjg.sfsx}"/>
+							                            <p:selectOneMenu value="#{verificationPlan.qrjg}"   style="width:100px" rendered="#{sys.sbxx.qrjg.sfsx}">
+							                                  <f:selectItems value="#{selectSbxxBean.qrjgItems}" var="qrjg"
+							                                   itemLabel="#{qrjg.key}" itemValue="#{qrjg.value}"
+							                                ></f:selectItems>
+							                            </p:selectOneMenu>  -->
+							</h:panelGrid>
+							<h:outputText value="#{sys.sbxx.sfqj.zdms}："
+								rendered="#{sys.sbxx.sfqj.sfsx}" />
+
+							<h:panelGrid columns="3">
+								<p:selectBooleanCheckbox value="#{verificationPlan.sfqj}"
+									style="width:50px" rendered="#{sys.sbxx.sfqj.sfsx}" />
+								<h:outputText value="#{sys.sbxx.sfbzq.zdms}："
+									rendered="#{sys.sbxx.sfbzq.sfsx}" />
+								<p:selectBooleanCheckbox value="#{verificationPlan.sfbzq}"
+									style="width:50px" rendered="#{sys.sbxx.sfbzq.sfsx}" />
+							</h:panelGrid>
+
+							<h:outputText value="#{sys.sbxx.xkfl.zdms}："
+								rendered="#{sys.sbxx.xkfl.sfsx}" />
+							<h:panelGroup>
+								<p:selectOneMenu value="#{verificationPlan.sbflParent}"
+									valueChangeListener="#{selectXkflBean.handValueChangeEvent}">
+									<f:selectItems value="#{selectXkflBean.parents}" var="obj"
+										itemLabel="#{obj.key}" itemValue="#{obj.value}"></f:selectItems>
+									<p:ajax event="change" update=":plan:queryfrom:children" />
+								</p:selectOneMenu>
+
+								<p:selectOneMenu id="children"
+									value="#{verificationPlan.sbflChirdren}">
+									<f:selectItems value="#{selectXkflBean.childrens}" var="obj"
+										itemLabel="#{obj.key}" itemValue="#{obj.value}"></f:selectItems>
+								</p:selectOneMenu>
+							</h:panelGroup>
+
+							<h:outputText value="提前送检天数："></h:outputText>
+							<p:inputText value="#{verificationPlan.sjts}" label="提前送检天数"
+								size="20">
+								<f:validateLongRange minimum="3" maximum="30" />
+							</p:inputText>
+
+						</h:panelGrid>
+
+
+
+						<p:commandButton value="查询" ajax="true"
+							update=":form:data :planlist"
+							action="#{verificationPlan.doSearch}"></p:commandButton>
+					</p:tab>
+				</p:tabView>
+
+				<p:toolbar id="toolbarid">
+					<f:facet name="left">
+						<p:commandButton value="保存计划"
+							disabled="#{verificationPlan.jdjh!=null}" ajax="false"
+							widgetVar="startButton"
+							action="#{verificationPlan.makePlanAll()}"
+							onclick="PF('proDiaWidPub').show();start();"></p:commandButton>
+						<h:panelGroup id="curentJdjh">
+							<h:outputLabel value="当前计划："
+								rendered="#{verificationPlan.jdjh!=null}"></h:outputLabel>
+							<h:outputLabel value="提醒项目："
+								rendered="#{verificationPlan.txxm!=null}"></h:outputLabel>
+							<h:outputText value="#{verificationPlan.jdjh.jhbm}"
+								style="color:green"></h:outputText>
+							<h:outputText value="#{verificationPlan.txxm}"
+								rendered="#{verificationPlan.txxm!=null}" style="color:green"></h:outputText>
+						</h:panelGroup>
+					</f:facet>
+				</p:toolbar>
+			</h:form>
+			<h:form id="form">
+			<p:toolbar id="toolbarid" >
+			<f:facet name="left"> 
+						<p:commandButton value="导出为Excel" ajax="false">
+							<p:dataExporter type="xls" target="data" fileName="plans_jdrw" />
+						</p:commandButton>
+			</f:facet>
+		</p:toolbar>
+		
+		
+				<p:dataTable id="data" var="sb" style="width:1230px;"
+					value="#{verificationPlan.lazyDataModel}" paginator="true"
+					widgetVar="cellSbxx" rowKey="#{sb.id}"
+					selection="#{verificationPlan.selectSbxxs}" rowIndexVar="rowVar"
+					filterDelay="300" resizableColumns="true" liveResize="true"
+					paginatorPosition="bottom" rows="100" scrollable="true" scrollWidth="950" scrollHeight="270"
+					currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+					paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					lazy="true" rowsPerPageTemplate="100,200,500">
+					<p:column headerText="序号" width="20">
+						<h:outputText value="#{rowVar+1}"></h:outputText>
+					</p:column>
+					<p:column width="80" rendered="#{sys.sbxx.jlbh.sfsx}"
+						headerText="#{sys.sbxx.jlbh.zdms}">
+						<h:outputText value="#{sb.jlbh}"></h:outputText>
+					</p:column>
+					<p:column width="80" rendered="#{sys.sbxx.sbmc.sfsx}"
+						headerText="#{sys.sbxx.sbmc.zdms}">
+						<h:outputText value="#{sb.sbmc}"></h:outputText>
+					</p:column>
+					<p:column width="80" rendered="#{sys.sbxx.sybmmc.sfsx}"
+						headerText="#{sys.sbxx.sybmmc.zdms}">
+						<h:outputText value="#{sb.sybmmc}"></h:outputText>
+					</p:column>
+					<p:column width="80" rendered="#{sys.sbxx.zdyzd1.sfsx}"
+						headerText="#{sys.sbxx.zdyzd1.zdms}">
+						<h:outputText value="#{sb.zdyzd1}"></h:outputText>
+					</p:column>
+					<p:column width="100" rendered="#{sys.sbxx.xkfl.sfsx}"
+						headerText="#{sys.sbxx.xkfl.zdms}">
+						<h:outputText value="#{sb.xkflmcs}"></h:outputText>
+					</p:column>
+
+					<p:column width="50" rendered="#{sys.sbxx.gllb.sfsx}"
+						headerText="#{sys.sbxx.gllb.zdms}">
+						<h:outputText value="#{sb.gllb}"></h:outputText>
+					</p:column>
+					<p:column width="50" rendered="#{sys.sbxx.sbzt.sfsx}"
+						headerText="#{sys.sbxx.sbzt.zdms}">
+						<h:outputText value="#{sb.sbzt}"></h:outputText>
+					</p:column>
+					<p:column width="50" rendered="#{sys.sbxx.sfqj.sfsx}"
+						headerText="#{sys.sbxx.sfqj.zdms}">
+						<h:outputText value="#{sb.sfqj?'是':'否'}"
+							style="color:#{sb.sfqj?'red':'green'}"></h:outputText>
+					</p:column>
+					<p:column width="50" rendered="#{sys.sbxx.sfbzq.sfsx}"
+						headerText="#{sys.sbxx.sfbzq.zdms}">
+						<h:outputText value="#{sb.sfbzq?'是':'否'}"
+							style="color:#{sb.sfbzq?'red':'green'}"></h:outputText>
+					</p:column>
+
+					<p:column width="55" rendered="#{sys.sbxx.fyxrq.sfsx}"
+						headerText="#{sys.sbxx.fyxrq.zdms}">
+						<h:outputText value="#{sb.fyxrq}">
+							<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+								timeZone="GMT+8" />
+						</h:outputText>
+					</p:column>
+
+					<p:column width="50" rendered="#{sys.sbxx.jdfs.sfsx}"
+						headerText="#{sys.sbxx.jdfs.zdms}">
+						<h:outputText value="#{sb.jdfs}"></h:outputText>
+					</p:column>
+
+					<p:column width="50" rendered="#{sys.sbxx.qrjg.sfsx}"
+						headerText="#{sys.sbxx.qrjg.zdms}">
+						<h:outputText value="#{sb.qrjg}"></h:outputText>
+					</p:column>
+
+
+					
+
+				</p:dataTable>
+			</h:form>
+		</div>
+		<div data-options="region:'east',split:false"
+			style="height:100%;width: 300px">
+			<p:panel header="设备检定到期提醒">
+				<h:form id="sbjddqtx">
+					<p:tree value="#{verificationPlan.root}"
+						style="width:280px;margin-left:-10px" var="node" dynamic="true"
+						selectionMode="single">
+						<p:ajax  event="select" update=":diaform:data"
+							listener="#{verificationPlan.onNodeSelect}" oncomplete="PF('dialogid').show()"/>
+						<p:treeNode expandedIcon="ui-icon ui-icon-folder-open"
+							collapsedIcon="ui-icon ui-icon-folder-collapsed">
+							<h:outputText value="#{node}" />
+						</p:treeNode>
+						<p:treeNode type="document" icon="ui-icon ui-icon-document">
+							<h:outputText value="#{node}" />
+						</p:treeNode>
+					</p:tree>
+				</h:form>
+			</p:panel>
+			<p:panel header="本月内已制定的周检计划">
+				<h:form id="planlist">
+					<p:dataList value="#{verificationPlan.jdjhList}"
+						style="width:270px;margin-left:-10px" var="plan" type="unordered"
+						itemType="none" rows="500" styleClass="paginated">
+						<h:outputText value="&nbsp;&nbsp;&nbsp;"></h:outputText>
+						<p:commandLink
+							actionListener="#{verificationPlan.publishPlan(plan)}"
+							update=":planlist" disabled="#{plan.jhzt==1?false:true}"
+							value="#{plan.jhztmcStr}"
+							style="color:#{plan.jhzt==1?'red':'green'}">
+							<f:param name="JDJH_ID" value="#{plan.id}"></f:param>
+						</p:commandLink>
+						<h:outputText value="&nbsp;"></h:outputText>
+						<p:outputLabel
+							value="#{plan.jhzt==2?jc.selected_flag:jc.list_flag}" />
+						<h:outputText value="&nbsp;"></h:outputText>
+						<p:commandLink value="#{plan.jhbm}" immediate="true"
+							actionListener="#{verificationPlan.viewPlanSbxxes(plan)}"
+							update=":form:data :plan:toolbarid"
+							onclick="PF('proDiaWidPub').show();start();"
+							oncomplete="PF('proDiaWidPub').hide();cancel();">
+							<f:param name="JDJH_ID" value="#{plan.id}"></f:param>
+						</p:commandLink>
+						<p:commandLink value="&nbsp;&nbsp;删除" 
+							style="color:red" disabled="#{plan.jhzt!=1}"
+							actionListener="#{verificationPlan.deletePlan(plan.id,plan.jhbm)}"
+							immediate="true" update=":planlist :sbjddqtx"
+							onclick="PF('proDiaWidPub').show();start();"
+							oncomplete="PF('proDiaWidPub').hide();cancel();">
+							<p:confirm icon="ui-icon-alert" message="确定删除吗?"></p:confirm>
+						</p:commandLink>
+					</p:dataList>
+				</h:form>
+			</p:panel>
+
+
+		</div>
+
+	</div>
+</h:body>
+
+
+</html>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process-definition xmlns="urn:jbpm.org:jpdl-3.2"
+	name="测量设备转移">
+	<start-state name="开始">
+		<transition name="提交" to="计量管理员（原部门）申请"></transition>
+	</start-state>
+	<task-node name="计量管理员（原部门）申请">
+		<task name="计量管理员（原部门）申请">
+			<assignment class="idms.workflow.jlgl.SbSsbmZyHandler"></assignment>
+			<controller>
+				<variable name="formBean" mapped-name="zttzClsbSsbmZyJBean"></variable>
+			</controller>
+		</task>
+		<transition name="提交" to="主管领导（原部门）审批"></transition>
+      <transition name="取消" to="结束"></transition>
+	</task-node>
+	<task-node name="主管领导（原部门）审批">
+		<task name="主管领导（原部门）审批">
+			<assignment class="idms.workflow.jlgl.SbSsbmZyHandler"></assignment>
+			<controller>
+				<variable name="formBean" mapped-name="zttzClsbSsbmZyJBean"></variable>
+			</controller>
+		</task>
+		<transition name="提交" to="计量管理员（接收部门）审批"></transition>
+	</task-node>
+	<task-node name="计量管理员（接收部门）审批">
+		<task name="计量管理员（接收部门）审批">
+			<assignment class="idms.workflow.jlgl.SbSsbmZyHandler"></assignment>
+			<controller>
+				<variable name="formBean" mapped-name="zttzClsbSsbmZyJBean"></variable>
+			</controller>
+		</task>
+		<transition name="提交" to="主管领导（接收部门）审批"></transition>
+	</task-node>
+	<task-node name="主管领导（接收部门）审批">
+		<task name="主管领导（接收部门）审批">
+			<assignment class="idms.workflow.jlgl.SbSsbmZyHandler"></assignment>
+			<controller>
+				<variable name="formBean" mapped-name="zttzClsbSsbmZyJBean"></variable>
+			</controller>
+		</task>
+		<transition name="提交" to="计量科长审批"></transition>
+	</task-node>
+	<task-node name="计量科长审批">
+		<task name="计量科长审批">
+			<assignment class="idms.workflow.jlgl.SbSsbmZyHandler"></assignment>
+			<controller>
+				<variable name="formBean" mapped-name="zttzClsbSsbmZyJBean"></variable>
+			</controller>
+		</task>
+		<transition name="提交" to="专业组确认"></transition>
+	</task-node>
+	<task-node name="专业组确认" create-tasks="no" signal="last">
+		<task name="专业组确认" />
+			<event type="node-enter">
+			<action class="idms.workflow.jlgl.SbZyZyzHandler"></action>
+			</event>
+		<transition name="结束申请" to="结束"></transition>
+	</task-node>
+	<end-state name="结束"></end-state>
+</process-definition>

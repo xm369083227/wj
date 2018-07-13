@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+	<ui:include src="/common/templates/ui.xhtml"></ui:include>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+</h:head>
+<h:body>
+
+	<h:form id="form">
+		<p:growl id="growlid" showDetail="true" sticky="true"
+			autoUpdate="true"></p:growl>
+		<h:panelGrid columns="1">
+			<h2 style="margin-top: 2px">基础配置列表</h2>
+			<p:dataTable style="width:100%" id="data" var="zdpz"
+				value="#{jcxtZdpzMb.lazyDataModel}" paginator="true" rows="20"
+				editable="true" rowIndexVar="rowVar" filterDelay="300"
+				resizableColumns="true" liveResize="true" paginatorPosition="bottom"
+				currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+				paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				lazy="true" rowsPerPageTemplate="15,30,50">
+				<p:ajax event="rowEdit" listener="#{jcxtZdpzMb.onRowEdit}"
+					update=":form:growlid"></p:ajax>
+				<p:column sortBy="#{zdpz.zdmc}" filterBy="#{zdpz.zdmc}"
+					style="width:100px" headerText="字段名称">
+					#{zdpz.zdmc}
+			  </p:column>
+			
+			  
+			  
+				<p:column sortBy="#{zdpz.zdms}" filterBy="#{zdpz.zdms}"
+					style="width:200px" headerText="字段描述">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{zdpz.zdms}"></h:outputText>
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{zdpz.zdms}" style="width:90%"></p:inputText>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column sortBy="#{zdpz.zdlx}" filterBy="#{zdpz.zlx}"
+					style="width:100px" headerText="字段类型">
+					#{zdpz.zdlx}
+			  </p:column>
+				<p:column sortBy="#{zdpz.zdcd}" filterBy="#{zdpz.zdcd}"
+					style="width:100px" headerText="字段长度">
+					#{zdpz.zdcd}
+			  </p:column>
+				<p:column sortBy="#{zdpz.xskd}" filterBy="#{zdpz.xskd}"
+					style="width:100px" headerText="显示宽度">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{zdpz.xskd}"></h:outputText>
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{zdpz.xskd}" style="width:90%"></p:inputText>
+						</f:facet>
+					</p:cellEditor>
+
+				</p:column>
+
+
+				<p:column sortBy="#{zdpz.sfsx}" filterBy="#{zdpz.sfsx}"
+					style="width:100px" headerText="全局是否生效">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{zdpz.sfsx?'是':'否'}"
+								style="color:#{zdpz.sfsx?'green':'red'}"></h:outputText>
+						</f:facet>
+						<f:facet name="input">
+							<p:selectOneRadio value="#{zdpz.sfsx}">
+								<f:selectItem itemLabel="是" itemValue="true"></f:selectItem>
+								<f:selectItem itemLabel="否" itemValue="false"></f:selectItem>
+							</p:selectOneRadio>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				<p:column sortBy="#{zdpz.sjzdsx}" filterBy="#{zdpz.sjzdsx}"
+					style="width:100px" headerText="数据字典是否生效">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{zdpz.sjzdsx?'是':'否'}"
+								style="color:#{zdpz.sjzdsx?'green':'red'}"></h:outputText>
+						</f:facet>
+						<f:facet name="input">
+							<p:selectOneRadio value="#{zdpz.sjzdsx}">
+								<f:selectItem itemLabel="是" itemValue="true"></f:selectItem>
+								<f:selectItem itemLabel="否" itemValue="false"></f:selectItem>
+							</p:selectOneRadio>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column sortBy="#{zdpz.gjcxsx}" filterBy="#{zdpz.gjcxsx}"
+					style="width:100px" headerText="高级查询是否生效">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{zdpz.gjcxsx?'是':'否'}"
+								style="color:#{zdpz.gjcxsx?'green':'red'}"></h:outputText>
+						</f:facet>
+						<f:facet name="input">
+							<p:selectOneRadio value="#{zdpz.gjcxsx}">
+								<f:selectItem itemLabel="是" itemValue="true"></f:selectItem>
+								<f:selectItem itemLabel="否" itemValue="false"></f:selectItem>
+							</p:selectOneRadio>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				  
+			  	<p:column sortBy="#{zdpz.tcpx}" filterBy="#{zdpz.tcpx}"
+					style="width:50px" headerText="同层排序">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{zdpz.tcpx}"></h:outputText>
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{zdpz.tcpx}" style="width:90%"></p:inputText>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				
+				<p:column sortBy="#{zdpz.glbd}" filterBy="#{zdpz.glbd}"
+					style="width:100px" headerText="管理表单">
+					#{zdpz.glbd}
+			  </p:column>
+				<p:column style="width:60px">
+					<p:rowEditor></p:rowEditor>
+				</p:column>
+			</p:dataTable>
+		</h:panelGrid>
+	</h:form>
+</h:body>
+</html>

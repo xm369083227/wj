@@ -1,0 +1,168 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+	<ui:include src="/common/templates/ui.xhtml"></ui:include>
+</h:head>
+<body>
+	<p:growl id="growlid" showDetail="true" sticky="true" autoUpdate="true"></p:growl>
+	<p:dialog maximizable="true" style="margin-left:20px;top:20px"
+		showEffect="true" hideEffect="true" id="basicdig"
+		visible="#{wfprosInstBean.showLovDiv}"
+		header="流程名称：#{wfprosInstBean.processName}" widgetVar="dlgProdef"
+		height="400px" width="80%" position="left">
+		<p:graphicImage cache="false"
+			url="/jbpm/jbpmImageServlet?tokenId=#{wfprosInstBean.tokenId}&amp;definitionId=#{wfprosInstBean.processDefId}"></p:graphicImage>
+	</p:dialog>
+	<p:dialog maximizable="true" style="margin-left:20px;top:20px"
+		showEffect="true" hideEffect="true" id="dlgspls"
+		header="流程名称：#{wfprosInstBean.processName}" widgetVar="dlgspls"
+		height="400px">
+		<h:panelGrid
+			style="text-align: left;margin-left: -17px;margin-top: -10px;">
+			<h:panelGrid width="752px;">
+				<p:dataTable var="qzjl" value="#{wfprosInstBean.jcqzList}" rows="50"
+					rowIndexVar="rowVar" style="width:752px;" lazy="true">
+					<p:column headerText="序号" style="width:40px;">
+						<h:outputText value="#{rowVar+1}" />
+					</p:column>
+					<p:column headerText="签字用户">
+						<h:outputText value="#{qzjl.qzry.zsmc}" />
+					</p:column>
+					<p:column headerText="签字日期">
+						<h:outputText value="#{qzjl.qzsj}"
+							converter="javax.faces.DateTime" />
+					</p:column>
+					<p:column headerText="签字内容">
+						<h:outputText value="#{qzjl.qznr}" />
+					</p:column>
+					<p:column headerText="审批结论">
+						<h:outputText value="#{qzjl.jlmc}" />
+					</p:column>
+					<p:column headerText="当前节点">
+						<h:outputText value="#{qzjl.nodeName}" />
+					</p:column>
+					<p:column headerText="操作指令">
+						<h:outputText value="#{qzjl.transitionName}" />
+					</p:column>
+
+				</p:dataTable>
+			</h:panelGrid>
+		</h:panelGrid>
+	</p:dialog>
+	<h:form id="processform" style="min-width: 1024px">
+		<p:panel header="查询条件">
+			<h:panelGrid columns="6" width="90%">
+				<p:outputLabel value="审批单号：" />
+				<p:inputText value="#{wfprosInstBean.ywno}" />
+				<p:outputLabel value="开  单  人：" />
+				<p:inputText value="#{wfprosInstBean.sqr}" />
+				<p:outputLabel value="发起时间：" />
+				<h:panelGroup>
+						 从<p:calendar pattern="yyyy-MM-dd" value="#{wfprosInstBean.start}" />
+						至<p:calendar pattern="yyyy-MM-dd" value="#{wfprosInstBean.end}" />
+				</h:panelGroup>
+
+			</h:panelGrid>
+			<h:panelGroup>
+				<p:commandButton value="查询" update=":processform:data"
+					action="#{wfprosInstBean.doSearch}" style=" margin-left:15%" />
+				<p:commandButton type="reset" style=" margin-left:10%" value="重置"></p:commandButton>
+			</h:panelGroup>
+		</p:panel>
+
+
+		<p:dataTable id="data" value="#{wfprosInstBean.lazyDataModel}"
+			var="obj" paginator="true" rows="#{wfprosInstBean.pageSize}"
+			rowIndexVar="rowIndex" liveResize="true" paginatorPosition="bottom"
+			currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+			paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			lazy="true" rowsPerPageTemplate="15,30,50">
+			<p:column headerText="序号" width="3%">
+				<h:outputText value="#{rowIndex+1}" />
+			</p:column>
+			<p:column headerText="审批单号" width="8%">
+				<h:outputText value="#{obj.ywno}" />
+			</p:column>
+
+			<p:column headerText="开单人" width="4%">
+				<h:outputText value="#{obj.sqrmc}" />
+			</p:column>
+
+			<p:column headerText="申请单位" width="8%">
+				<h:outputText value="#{obj.sqdw}" />
+			</p:column>
+
+			<p:column headerText="发起时间" width="5%">
+				<h:outputText value="#{obj.start}" converter="javax.faces.DateTime" />
+			</p:column>
+
+			<p:column headerText="结束时间" width="5%">
+				<h:outputText value="#{obj.end}" converter="javax.faces.DateTime" />
+			</p:column>
+
+			<p:column headerText="当前位置" width="12%">
+
+				<h:outputText value="#{obj.currentPosition}" />
+			</p:column>
+
+			<p:column headerText="待办工作中心" width="20%">
+				<h:outputText value="#{obj.currentActor}" />
+			</p:column>
+
+			<p:column headerText="流程名称" width="8%">
+				<h:outputText value="#{obj.name}" />
+			</p:column>
+
+			<p:column headerText="审批状态" width="6%">
+				<h:outputText value="#{obj.currentPosition=='结束'?'已完成':'审批中'}"
+					style="color:#{obj.currentPosition=='结束'?'green':'red'}" />
+			</p:column>
+
+
+			<p:column headerText="操作" width="10%">
+				<p:commandLink id="buttJkID" value="监控"
+					action="#{wfprosInstBean.openJbpmImgage}" update=":basicdig"
+					ajax="true" style="color: orange;">
+					<f:param name="taskInstanceId" value="#{obj.ywid}"></f:param>
+					<f:param name="processDefName" value="#{obj.name}"></f:param>
+				</p:commandLink>
+
+				<h:outputText value=" | "></h:outputText>
+				<p:commandLink value="审批历史" update=":dlgspls"
+					oncomplete="PF('dlgspls').show()"
+					action="#{wfprosInstBean.viewSplogs}" style="color: orange;">
+					<f:param name="taskInstanceId" value="#{obj.ywid}"></f:param>
+					<f:setPropertyActionListener
+						target="#{wfprosInstBean.processInstance}" value="#{obj}"></f:setPropertyActionListener>
+				</p:commandLink>
+				<h:outputText value=" | "></h:outputText>
+				<p:commandLink rendered="#{!obj.supend}" value="暂停"
+					update=":processform:data" disabled="#{obj.currentPosition=='结束'}"
+					action="#{wfprosInstBean.processInstanceSuspend}"
+					style="color: green;">
+					<f:setPropertyActionListener
+						target="#{wfprosInstBean.processInstance}" value="#{obj}"></f:setPropertyActionListener>
+					<h:outputText value=" | "></h:outputText>
+				</p:commandLink>
+				<p:commandLink rendered="#{obj.supend}" value="运行"
+					update=":processform:data"
+					action="#{wfprosInstBean.processInstanceResume}"
+					style="color: red;">
+					<f:setPropertyActionListener
+						target="#{wfprosInstBean.processInstance}" value="#{obj}"></f:setPropertyActionListener>
+				</p:commandLink>
+
+			</p:column>
+
+		</p:dataTable>
+	</h:form>
+
+</body>
+</html>
+

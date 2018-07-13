@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="2.2"
+              xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+	
+	<navigation-rule>
+        <from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>go_task</from-outcome>
+			<to-view-id>/view/sys/wf/task.xhtml</to-view-id>
+		</navigation-case>
+   </navigation-rule>
+   	<managed-bean>
+		<managed-bean-name>selectUserDataUb</managed-bean-name>
+		<managed-bean-class>
+			idms.webapp.common.UserDataUb
+		</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>	
+	
+	<managed-bean>
+		<managed-bean-name>selectDeptBean</managed-bean-name>
+		<managed-bean-class>
+			idms.webapp.common.SelectDeptBean
+		</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>	
+	<managed-bean>
+		<managed-bean-name>selectBaseBean</managed-bean-name>
+		<managed-bean-class>
+			idms.webapp.common.SelectBaseBean
+		</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>homeBean</managed-bean-name>
+		<managed-bean-class>
+			idms.webapp.system.wfcter.HomeBean
+		</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	
+	
+	<managed-bean>
+		<managed-bean-name>deptTreeUb</managed-bean-name>
+		<managed-bean-class>
+			idms.webapp.common.DeptTreeUb
+		</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>selectUserMpb</managed-bean-name>
+		<managed-bean-class>
+			idms.webapp.common.SelectUserMpb
+		</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>jcRoleMb</managed-bean-name>
+		<managed-bean-class>
+			idms.webapp.system.authority.RoleMb
+		</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>jcUserMb</managed-bean-name>
+		<managed-bean-class>
+			idms.webapp.system.authority.UserMb 
+		</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>jcdeptMb</managed-bean-name>
+		<managed-bean-class>
+			idms.webapp.system.authority.DeptMb
+		</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>alterPass</managed-bean-name>
+		<managed-bean-class>idms.webapp.system.authority.AlterPass</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>authorQb</managed-bean-name>
+		<managed-bean-class>idms.webapp.system.authority.AuthorQb</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>workItems</managed-bean-name>
+		<managed-bean-class>idms.webapp.system.authority.WorkItemsMb</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	
+	
+</faces-config>

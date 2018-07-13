@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+<f:view contentType="text/html">
+	<h:head>
+		<title>IDMS</title>
+		<ui:include src="/common/templates/ui.xhtml"></ui:include>
+	</h:head>
+	<h:body>
+		<h:form id="form">
+
+			<h:panelGrid width="99%">
+				<p:panel header="条件查询">
+					<h:panelGrid columns="6">
+						<h:outputText value="规范名称："></h:outputText>
+						<p:inputText value="#{jlzdJdgfMb.queryObj.gfmc}" size="25"></p:inputText>
+						<h:outputText value="规范代号："></h:outputText>
+						<p:inputText value="#{jlzdJdgfMb.queryObj.gfdh}" size="25"></p:inputText>
+
+						<h:outputText value="录入用户："></h:outputText>
+						<p:inputText value="#{jlzdJdgfMb.queryObj.lrry}" size="25"></p:inputText>
+						<h:outputText value="录入日期："></h:outputText>
+						<h:panelGroup>
+							<p:calendar label="录入日期" value="#{jlzdJdgfMb.startTime}" size="8"
+								readonlyInput="false" navigator="true" pattern="yyyy-MM-dd" />
+						                                  至<p:calendar label="录入日期"
+								value="#{jlzdJdgfMb.endTime}" size="8" readonlyInput="false"
+								navigator="true" pattern="yyyy-MM-dd" />
+						</h:panelGroup>
+						<h:outputText value="学科分类："></h:outputText>
+						<h:panelGroup>
+							<p:selectOneMenu value="#{jlzdJdgfMb.queryObj.xkflp}"
+								valueChangeListener="#{selectXkflBean.handValueChangeEvent}">
+								<f:selectItems value="#{selectXkflBean.parents}" var="obj"
+									itemLabel="#{obj.key}" itemValue="#{obj.value}"></f:selectItems>
+								<p:ajax event="change" update=":form:children" />
+							</p:selectOneMenu>
+
+							<p:selectOneMenu id="children"
+								value="#{jlzdJdgfMb.queryObj.xkfl}">
+								<f:selectItems value="#{selectXkflBean.allChildrens}" var="obj"
+									itemLabel="#{obj.key}" itemValue="#{obj.value}"></f:selectItems>
+							</p:selectOneMenu>
+						</h:panelGroup>
+
+						<h:outputText value="有效期："></h:outputText>
+						<h:panelGroup>
+							<p:calendar label="有效期" value="#{jlzdJdgfMb.startYxq}" size="8"
+								readonlyInput="false" navigator="true" pattern="yyyy-MM-dd" />
+						                                  至<p:calendar label="有效期"
+								value="#{jlzdJdgfMb.endYxq}" size="8" readonlyInput="false"
+								navigator="true" pattern="yyyy-MM-dd" />
+						</h:panelGroup>
+					</h:panelGrid>
+					<p:commandButton value="查询" ajax="false"
+						action="#{jlzdJdgfMb.doSearch}"></p:commandButton>
+				</p:panel>
+				<p:dataTable id="table" paginator="true" rows="13"
+					value="#{jlzdJdgfMb.lazyDataModel}" style="width:100%;" var="item"
+					rowsPerPageTemplate="13,30,50" rowIndexVar="rowVar"
+					filterDelay="300" resizableColumns="true " liveResize="true"
+					paginatorPosition="bottom"
+					currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+					paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					lazy="true">
+					<p:column headerText="序号" sortBy="#{item.id}" style="width:50px;">
+						<h:outputText value="#{rowVar+1}" />
+					</p:column>
+					<p:column headerText="规范名称" sortBy="#{item.gfmc}">
+						<h:outputText value="#{item.gfmc}"></h:outputText>
+					</p:column>
+					<p:column headerText="规范代号" sortBy="#{item.gfdh}">
+						<h:outputText value="#{item.gfdh}"></h:outputText>
+					</p:column>
+					<p:column headerText="有效期" sortBy="#{item.yxq}">
+						<h:outputText value="#{item.yxq}">
+							<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+								timeZone="GMT+8" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="学科分类" sortBy="#{item.xkfl}">
+						<h:outputText value="#{item.xkflfcms}"></h:outputText>
+					</p:column>
+					<p:column headerText="录入人员" sortBy="#{item.lrry}">
+						<p:outputLabel value="#{item.lrry}"></p:outputLabel>
+					</p:column>
+					<p:column headerText="录入时间" sortBy="#{item.lrsj}">
+						<h:outputText value="#{item.lrsj}">
+							<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+								timeZone="GMT+8" />
+						</h:outputText>
+					</p:column>
+				</p:dataTable>
+			</h:panelGrid>
+		</h:form>
+	</h:body>
+</f:view>
+</html>

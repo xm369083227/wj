@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="idms.model.jlgl.gskh.GrgsTstj" table="GSKH_TSTJ">
+		<id name="id" type="java.lang.Long" column="ID" length="22">
+			<generator class="sequence">
+				<param name="sequence">S_GSKH_GRTSTJ</param>
+			</generator>
+		</id>
+		<many-to-one name="djry" class="idms.model.base.User">
+			<column name="DJRY" />
+		</many-to-one>
+		<many-to-one name="gzry" class="idms.model.base.User">
+			<column name="GZRY" />
+		</many-to-one>
+		<many-to-one name="ssbm" class="idms.model.base.Dept">
+			<column name="SSBM" />
+		</many-to-one>
+
+		<property name="djsj" type="java.util.Date" column="DJSJ"
+			length="7" />
+		<property name="gzsj" type="java.util.Date" column="GZSJ"
+			length="7" />
+
+		<property name="zt" type="java.lang.Integer" column="ZT" />
+		<property name="gzlx" type="java.lang.String" column="GZLX" />
+		<property name="rwms" type="java.lang.String" column="RWMS" />
+		<property name="gzl" type="java.lang.String" column="GZL" />
+		<property name="zgs" type="java.lang.Double" column="ZGS" />
+
+
+	</class>
+</hibernate-mapping>

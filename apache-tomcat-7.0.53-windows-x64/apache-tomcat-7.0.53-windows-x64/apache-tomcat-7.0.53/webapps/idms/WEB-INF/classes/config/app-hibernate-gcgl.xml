@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	
+	 <bean id="gcglBhggcDao" class="idms.dao.hibernate.jlgl.gcgl.GcglBhggcDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	 <bean id="gcglClgcDao" class="idms.dao.hibernate.jlgl.gcgl.GcglClgcDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	 <bean id="gcglGcysDao" class="idms.dao.hibernate.jlgl.gcgl.GcglGcysDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	 <bean id="gcglGccsDao" class="idms.dao.hibernate.jlgl.gcgl.GcglGccsDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+
+</beans>

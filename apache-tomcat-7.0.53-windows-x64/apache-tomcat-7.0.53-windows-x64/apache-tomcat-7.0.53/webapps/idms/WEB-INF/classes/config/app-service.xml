@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+   
+	
+	<bean id="serviceLocator"
+		class="idms.service.ServiceLocatorImpl" lazy-init="false">
+	</bean>
+	
+	
+	<bean id="deptService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.base.DeptServiceImpl">
+				<property name="dao" ref="deptDao" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="functionService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.base.FunctionServiceImpl">
+				<property name="dao" ref="functionDao" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="roleService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.base.RoleServiceImpl">
+				<property name="dao" ref="roleDao" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="userService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.base.UserServiceImpl">
+				<property name="dao" ref="userDao" />
+			</bean>
+		</property>
+	</bean>
+
+    <bean id="menuService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.base.MenuServiceImpl">
+				<property name="dao" ref="menuDao" />
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="jcxtSjzdService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.base.JcxtSjzdServiceImpl">
+				<property name="dao" ref="jcxtSjzdDao" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="jcxtWjxxService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.base.JcxtWjxxServiceImpl">
+				<property name="dao" ref="jcxtWjxxDao" />
+			</bean>
+		</property>
+	</bean>
+
+    <bean id="jcxtZdpzService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.base.JcxtZdpzServiceImpl">
+				<property name="dao" ref="jcxtZdpzDao" />
+			</bean>
+		</property>
+	</bean>
+	
+     <bean id="wfSpjlService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.wf.WfSpjlServiceImpl">
+				<property name="dao"  ref="wfSpjlDao" />
+			</bean>
+		</property>
+	</bean>
+	
+		<bean id="wfGzxService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.wf.WfGzxServiceImpl">
+				<property name="dao"  ref="wfGzxDao" />
+			</bean>
+		</property>
+	</bean>
+		
+		<bean id="signaService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.base.SignatureServiceImpl">
+				<property name="dao"  ref="signaDao" />
+			</bean>
+		</property>
+	</bean>
+	
+		<bean id="activeTaskService" parent="baseTransactionProxy">
+			<property name="target">
+				<bean class="idms.service.base.timer.ActiveTaskServiceImpl">
+					<property name="dao"  ref="activeTaskDao" />
+				</bean>
+			</property>
+		</bean>
+		
+	    <bean id="tasksLogsService" parent="baseTransactionProxy">
+			<property name="target">
+				<bean class="idms.service.base.timer.TasksLogsServiceImpl">
+					<property name="dao"  ref="tasksLogsDao" />
+				</bean>
+			</property>
+		</bean>
+		   <bean id="trigCondService" parent="baseTransactionProxy">
+			<property name="target">
+				<bean class="idms.service.base.timer.TrigCondServiceImpl">
+					<property name="dao"  ref="trigCondDao" />
+				</bean>
+			</property>
+		</bean>
+</beans>

@@ -1,0 +1,34 @@
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="idms.model.base.Function" table="BASE_FUNCTION">
+	    <cache usage="read-only"/>
+		<id name="gnbm" type="string" column="GNBM" length="20">
+		</id>
+
+		<set name="jses" table="BASE_FUNCTION" lazy="extra" inverse="true"
+			cascade="save-update" batch-size="5">
+			<key>
+				<column name="GNBM" not-null="true" />
+			</key>
+			<many-to-many class="idms.model.base.Role" column="JSBM"
+				outer-join="auto" />
+		</set>
+
+		<many-to-one name="sjgn" class="idms.model.base.Function"
+			lazy="proxy">
+			<column name="SJGN" precision="22" scale="0" />
+		</many-to-one>
+        <property name="gnfl" type="java.lang.Long">
+			<column name="GNFL" precision="22" scale="0" />
+		</property>
+				<property name="gnmc" type="java.lang.String">
+			<column name="GNMC" length="30" />
+		</property>
+		
+		
+        
+	</class>
+</hibernate-mapping>

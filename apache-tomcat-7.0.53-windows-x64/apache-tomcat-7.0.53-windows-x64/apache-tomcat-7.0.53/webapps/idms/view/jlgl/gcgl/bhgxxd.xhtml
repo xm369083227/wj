@@ -1,0 +1,112 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:form id="pdd">
+	<p:panelGrid columns="1">
+		<f:facet name="header">
+			<h:outputText value="测量设备不合格信息反馈单"
+				style="text-align: center;font-size:25px;"></h:outputText>
+		</f:facet>
+		<h:panelGrid columns="4">
+			<h:outputText value="使用单位（User the unit）："></h:outputText>
+			<p:inputText value="#{sbrzBfsbMb.varchObj.sqr}" size="20"
+				readonly="true"></p:inputText>
+			<h:outputText value="反馈单号（Feedback No.）："></h:outputText>
+			<p:inputText value="#{sbrzBfsbMb.varchObj.sqr}" size="20"
+				readonly="true"></p:inputText>			
+		</h:panelGrid>
+		<h:outputText value="测量设备基本信息：" style="width:100%;" />
+		<h:panelGrid columns="6" align="left" width="800px">
+			<h:outputText value="测量设备编码：" />
+			<p:inputText value="#{gcglBhggcMb.editObj.pddxh}" maxlength="22"
+				readonly="#{!gcglBhggcMb.edit}" />
+			<h:outputText value="测量设备名称：" />
+			<p:inputText value="#{gcglBhggcMb.editObj.clgc.ssbm}"
+				readonly="#{!gcglBhggcMb.edit}" />
+			<h:outputText value="型号规格：" />
+			<p:inputText value="#{gcglBhggcMb.editObj.pddxh}" maxlength="22"
+				readonly="#{!gcglBhggcMb.edit}" />
+			<h:outputText value="精度等级：" />
+			<p:inputText value="#{gcglBhggcMb.editObj.clgc.ssbm}"
+				readonly="#{!gcglBhggcMb.edit}" />
+			<h:outputText value="出厂编号：" />
+			<p:inputText value="#{gcglBhggcMb.editObj.pddxh}" maxlength="22"
+				readonly="#{!gcglBhggcMb.edit}" />
+			<h:outputText value="制造厂：" />
+			<p:inputText value="#{gcglBhggcMb.editObj.clgc.ssbm}"
+				readonly="#{!gcglBhggcMb.edit}" />			
+		</h:panelGrid>		
+		<h:panelGrid columns="1" width="700px" align="left">		
+			<h:outputText value="测量设备不合格情况描述（Reason of the measuring equipment to the unqualified）：" style="width:100%;" />			
+			<p:inputTextarea style="width:700px;"
+				value="#{gcglBhggcMb.editObj.bhgxxms}" required="true"
+				label="测量设备不合格情况描述" maxlength="500" readonly="#{!gcglBhggcMb.edit}" />
+		</h:panelGrid>
+        <h:panelGrid columns="4" width="900px" align="left">
+			<h:outputText value="发现人（Finding people）："></h:outputText>
+			<p:inputText size="20" readonly="true"></p:inputText>
+			<h:outputText value="发现时间（Finding time）："></h:outputText>
+			<p:inputText readonly="true">
+				<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+					timeZone="GMT+8" />
+			</p:inputText>
+		</h:panelGrid>
+		<h:panelGrid columns="1" width="700px" align="left">			
+			<h:outputText value="不合格测量设备评价（Unqualified measurement equipment appraisal）：" style="width:100%;" />				
+			<p:inputTextarea style="width:700px;"
+				value="#{gcglBhggcMb.editObj.bhgyy}" required="true"
+				label="不合格产生的可能原因" maxlength="500" readonly="#{!gcglBhggcMb.edit}" />
+		</h:panelGrid>
+		<h:panelGrid columns="4" width="900px" align="left">
+			<h:outputText value="计量责任工程师（Measuring responsibility engineer）："></h:outputText>
+			<p:inputText size="20" readonly="true"></p:inputText>
+			<h:outputText value="时间（time）："></h:outputText>
+			<p:inputText readonly="true">
+				<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+					timeZone="GMT+8" />
+			</p:inputText>
+		</h:panelGrid>
+		<h:panelGrid columns="1" width="700px" align="left">			
+			<h:outputText value="产品（或检测、实验数据）追踪情况（Tracing of Products or Measuring/Experimentation Data）：" style="width:100%;" />			
+			<p:inputTextarea style="width:700px;"
+				value="#{gcglBhggcMb.editObj.fxpg}" maxlength="500"
+				readonly="#{!gcglBhggcMb.edit}" />
+		</h:panelGrid>
+		<h:panelGrid columns="4" width="900px" align="left">
+			<h:outputText value="追踪核查人（Inspector people）："></h:outputText>
+			<p:inputText size="20" readonly="true"></p:inputText>
+			<h:outputText value="时间（time）："></h:outputText>
+			<p:inputText readonly="true">
+				<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+					timeZone="GMT+8" />
+			</p:inputText>
+		</h:panelGrid>
+		<h:panelGrid columns="1" width="700px" align="left">			
+			<h:outputText value="对是否产生风险的评价（Valuation to producing risk or not）：" style="width:1000px;" />			
+			<p:inputTextarea style="width:700px;"
+				value="#{gcglBhggcMb.editObj.jzyfcs}" required="true"
+				label="对是否产生风险的评价" maxlength="500" readonly="#{!gcglBhggcMb.edit}" />
+		</h:panelGrid>	
+		<h:panelGrid columns="1" width="700px" align="left">			
+			<h:outputText value="处理结果（Disposal result）：" style="width:100%;" />			
+			<p:inputTextarea style="width:700px;"
+				value="#{gcglBhggcMb.editObj.fxpg}" maxlength="500"
+				readonly="#{!gcglBhggcMb.edit}" />
+		</h:panelGrid>
+		<h:panelGrid columns="4" width="900px" align="left">
+			<h:outputText value="分析处理人（Approver people）："></h:outputText>
+			<p:inputText size="20" readonly="true"></p:inputText>
+			<h:outputText value="时间（time）："></h:outputText>
+			<p:inputText readonly="true">
+				<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+					timeZone="GMT+8" />
+			</p:inputText>
+		</h:panelGrid>		
+	</p:panelGrid>
+</h:form>
+
+</html>

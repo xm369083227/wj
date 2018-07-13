@@ -1,0 +1,270 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+	<ui:include src="/common/templates/ui.xhtml"></ui:include>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+</h:head>
+<h:body>
+	<p:growl id="growlid" sticky="true" autoUpdate="true"></p:growl>
+
+	<p:dialog id="dialogid" header="设备借用记录" widgetVar="dialog"
+		visible="#{sbrzJysbMb.showLovDiv}" maximizable="true" height="400px"
+		width="700px" modal="true">
+		<h:form id="dialogform" enctype="multipart/form-data">
+			<p:tabView id="tabview">
+				<p:tab title="设备借用记录">
+					<p:panelGrid columns="1">
+						<h:panelGrid columns="4">
+							<h:outputText value="设备名称："></h:outputText>
+							<p:inputText value="#{sbrzJysbMb.varchObj.sbglSbxx.sbmc}"
+								size="20" readonly="true"></p:inputText>
+							<h:outputText value="计量编号："></h:outputText>
+							<p:inputText value="#{sbrzJysbMb.varchObj.sbglSbxx.jlbh}"
+								size="20" readonly="true"></p:inputText>
+							<h:outputText value="借用日期："></h:outputText>
+							<p:calendar label="借用日期" value="#{sbrzJysbMb.varchObj.jyrq}"
+								readonlyInput="false" navigator="true" required="true"
+								pattern="yyyy-MM-dd"></p:calendar>
+							<h:outputText value="归还日期："></h:outputText>
+							<p:calendar label="归还日期" value="#{sbrzJysbMb.varchObj.ghrq}"
+								readonlyInput="false" navigator="true" required="true"
+								pattern="yyyy-MM-dd"></p:calendar>
+							<h:outputText value="借用人员："></h:outputText>
+							<p:inputText value="#{sbrzJysbMb.varchObj.syry}"></p:inputText>
+						</h:panelGrid>
+						<h:panelGrid columns="2">
+							<h:outputText value="借用原因："></h:outputText>
+							<p:inputTextarea value="#{sbrzJysbMb.varchObj.jyyy}" rows="4"
+								cols="70"></p:inputTextarea>
+						</h:panelGrid>
+					</p:panelGrid>
+				</p:tab>
+
+				<p:tab title="附件管理">
+					<h:panelGrid width="670px"
+						style="margin-top: -10px;margin-left:-17px;">
+						<h:panelGrid width="100%">
+							<p:fileUpload multiple="true"
+								update=":dialogform:tabview:filePaneId"
+								fileUploadListener="#{sbrzJysbMb.handleFileUpload}"
+								style="width:100%;" mode="advanced" label="浏览" cancelLabel="取消"
+								uploadLabel="上传" sizeLimit="10240000"
+								invalidSizeMessage="文件必须小于10M" invalidFileMessage="格式不支持"
+								dragDropSupport="false"
+								allowTypes="/(\.|\/)(gif|jpe?g|png|pdf|txt|rar|zip|doc|docx|xls|xlsx)$/">
+							</p:fileUpload>
+							<p:dataTable id="filePaneId" paginator="true"
+								value="#{sbrzJysbMb.fileBean.files}" style="width:100%;"
+								rows="15" rowIndexVar="rowVar" filterDelay="300"
+								resizableColumns="true " liveResize="true"
+								paginatorPosition="bottom" var="file"
+								currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+								paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+								lazy="true" rowsPerPageTemplate="15,30,50">
+
+								<p:column headerText="序号" style="width:40px;">
+									<h:outputText value="#{rowVar+1}" />
+								</p:column>
+
+								<p:column headerText="附件名称" style="width:50%">
+									<h:outputText value="#{file.wjmc}" />
+								</p:column>
+
+								<p:column headerText="上传人员">
+									<p:outputLabel value="#{file.scyhid}"></p:outputLabel>
+								</p:column>
+								<p:column headerText="上传时间">
+									<h:outputText value="#{file.scrq}">
+										<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+											timeZone="GMT+8" />
+									</h:outputText>
+								</p:column>
+								<p:column headerText="操作" style="width:10%">
+									<h:panelGroup>
+										<p:commandButton id="downId" ajax="false"
+											action="#{sbrzJysbMb.fileBean.downFile}"
+											icon="ui-icon-arrowthick-1-s" immediate="true">
+											<f:setPropertyActionListener
+												target="#{sbrzJysbMb.fileBean.file}" value="#{file}"></f:setPropertyActionListener>
+										</p:commandButton>
+										<h:outputText value="  "></h:outputText>
+										<p:commandButton id="deleteId" ajax="true"
+											action="#{sbrzJysbMb.fileBean.deleteFile}"
+											icon="ui-icon-trash" oncomplete="PF('dialog').show()"
+											update=":dialogform:tabview:filePaneId">
+											<p:confirm icon="ui-icon-alert" message="确定删除吗?"></p:confirm>
+											<f:setPropertyActionListener
+												target="#{sbrzJysbMb.fileBean.file}" value="#{file}"></f:setPropertyActionListener>
+										</p:commandButton>
+									</h:panelGroup>
+								</p:column>
+							</p:dataTable>
+						</h:panelGrid>
+					</h:panelGrid>
+				</p:tab>
+
+
+			</p:tabView>
+			<p:commandButton value="保存" update=":form:table :dialogid"
+				ajax="true" actionListener="#{sbrzJysbMb.addObj}"></p:commandButton>
+		</h:form>
+	</p:dialog>
+
+
+
+
+	<h:form id="form">
+		<p:dataTable id="data" var="sb" style="width:1230px;"
+			value="#{sbglSbxxQb.lazyDataModel}" paginator="true" rows="5"
+			widgetVar="cellSbxx" selectionMode="single" rowKey="#{sb.id}"
+			rowIndexVar="rowVar" filterDelay="300" resizableColumns="true"
+			liveResize="true" paginatorPosition="top"
+			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			lazy="true">
+			<p:ajax event="rowSelect" listener="#{sbrzJysbMb.onRowSelect}"
+				update=":form:table" />
+			<p:column headerText="序号" style="width:20px">
+				<h:outputText value="#{rowVar+1}"></h:outputText>
+			</p:column>
+			<p:column sortBy="#{sb.jlbh}" filterBy="#{sb.jlbh}"
+				style="width:#{sys.sbxx.jlbh.xskd}px"
+				rendered="#{sys.sbxx.jlbh.sfsx}" headerText="#{sys.sbxx.jlbh.zdms}">
+				<h:outputText value="#{sb.jlbh}"></h:outputText>
+			</p:column>
+			<p:column sortBy="#{sb.sbmc}" filterBy="#{sb.sbmc}"
+				style="width:#{sys.sbxx.sbmc.xskd}px"
+				rendered="#{sys.sbxx.sbmc.sfsx}" headerText="#{sys.sbxx.sbmc.zdms}">
+				<h:outputText value="#{sb.sbmc}"></h:outputText>
+			</p:column>
+
+			<p:column sortBy="#{sb.gllb}" filterBy="#{sb.gllb}"
+				rendered="#{sys.sbxx.gllb.sfsx}" headerText="#{sys.sbxx.gllb.zdms}"
+				style="width:#{sys.sbxx.gllb.xskd}px">
+				<h:outputText value="#{sb.gllb}"></h:outputText>
+			</p:column>
+			<p:column sortBy="#{sb.cysj}" filterBy="#{sb.cysj}"
+				rendered="#{sys.sbxx.cysj.sfsx}" headerText="#{sys.sbxx.cysj.zdms}"
+				style="width:#{sys.sbxx.sbzt.xskd}px">
+				<h:outputText value="#{sb.cysjMc}"></h:outputText>
+			</p:column>
+			<p:column sortBy="#{sb.sbzt}" filterBy="#{sb.sbzt}"
+				rendered="#{sys.sbxx.sbzt.sfsx}" headerText="#{sys.sbxx.sbzt.zdms}"
+				style="width:#{sys.sbxx.sbzt.xskd}px">
+				<h:outputText value="#{sb.sbzt}"></h:outputText>
+			</p:column>
+			<p:column sortBy="#{sb.sbfl}" filterBy="#{sb.sbfl}"
+				rendered="#{sys.sbxx.sbfl.sfsx}" headerText="#{sys.sbxx.sbfl.zdms}"
+				style="width:#{sys.sbxx.sbfl.xskd}px">
+				<h:outputText value="#{sb.sbfl}"></h:outputText>
+			</p:column>
+			<p:column sortBy="#{sb.ggxh}" filterBy="#{sb.ggxh}"
+				rendered="#{sys.sbxx.ggxh.sfsx}" headerText="#{sys.sbxx.ggxh.zdms}"
+				style="width:#{sys.sbxx.ggxh.xskd}px">
+				<h:outputText value="#{sb.ggxh}"></h:outputText>
+			</p:column>
+
+			<p:column sortBy="#{sb.ggxh}" filterBy="#{sb.ggxh}"
+				rendered="#{sys.sbxx.ggxh.sfsx}" headerText="#{sys.sbxx.ggxh.zdms}"
+				style="width:#{sys.sbxx.ggxh.xskd}px">
+				<h:outputText value="#{sb.ggxh}"></h:outputText>
+			</p:column>
+			<p:column sortBy="#{sb.sccj}" filterBy="#{sb.sccj}"
+				rendered="#{sys.sbxx.sccj.sfsx}" headerText="#{sys.sbxx.sccj.zdms}"
+				style="width:#{sys.sbxx.sccj.xskd}px">
+				<h:outputText value="#{sb.sccj}"></h:outputText>
+			</p:column>
+			<p:column sortBy="#{sb.ccbh}" filterBy="#{sb.ccbh}"
+				rendered="#{sys.sbxx.ccbh.sfsx}" headerText="#{sys.sbxx.ccbh.zdms}"
+				style="width:#{sys.sbxx.ccbh.xskd}px">
+				<h:outputText value="#{sb.ccbh}"></h:outputText>
+			</p:column>
+
+		</p:dataTable>
+		<p:toolbar>
+			<f:facet name="left">
+				<p:commandButton value="录入借用记录" ajax="true" update=":dialogid"
+					actionListener="#{sbrzJysbMb.openAddPanal}">
+				</p:commandButton>
+			</f:facet>
+		</p:toolbar>
+
+
+		<p:dataTable id="table" var="obj" style="width:1230px;"
+			value="#{sbrzJysbMb.lazyDataModel}" paginator="true" rows="8"
+			widgetVar="cellObj" rowIndexVar="rowVar" filterDelay="300"
+			resizableColumns="true" liveResize="true" paginatorPosition="bottom"
+			currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+			paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			lazy="true">
+
+
+			<p:column headerText="序号" style="width:20px">
+				<h:outputText value="#{rowVar+1}"></h:outputText>
+			</p:column>
+			<p:column headerText="计量编号">
+				<h:outputText value="#{obj.sbglSbxx.jlbh}"></h:outputText>
+			</p:column>
+			<p:column headerText="设备名称">
+				<h:outputText value="#{obj.sbglSbxx.sbmc}"></h:outputText>
+			</p:column>
+
+
+			<p:column headerText="借用日期" sortBy="#{obj.jyrq}"
+				filterBy="#{obj.jyrq}">
+				<h:outputText value="#{obj.jyrq}">
+					<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+						timeZone="GMT+8" />
+				</h:outputText>
+			</p:column>
+			<p:column headerText="归还日期" sortBy="#{obj.ghrq}"
+				filterBy="#{obj.ghrq}">
+				<h:outputText value="#{obj.ghrq}">
+					<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+						timeZone="GMT+8" />
+				</h:outputText>
+			</p:column>
+
+
+
+			<p:column headerText="操作人" sortBy="#{obj.czy}" filterBy="#{obj.czy}">
+				<h:outputText value="#{obj.czy}"></h:outputText>
+			</p:column>
+
+			<p:column headerText="操作时间" sortBy="#{obj.czrq}"
+				filterBy="#{obj.czrq}">
+				<h:outputText value="#{obj.czrq}">
+					<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+						timeZone="GMT+8" />
+				</h:outputText>
+			</p:column>
+
+
+
+			<p:column headerText="操作" style="width:60px">
+				<p:commandButton actionListener="#{sbrzJysbMb.openEditPanal}"
+					ajax="true" update=":dialogid" title="修改" icon="ui-icon-gear"
+					immediate="true">
+					<f:param name="ID" value="#{obj.id}"></f:param>
+				</p:commandButton>
+
+				<h:outputText value="  "></h:outputText>
+				<p:commandButton id="deleteId" ajax="true" update=":form:table"
+					action="#{sbrzJysbMb.delObj}" title="删除" icon="ui-icon-trash"
+					immediate="true">
+					<f:param name="ID" value="#{obj.id}"></f:param>
+					<p:confirm icon="ui-icon-alert" message="确定删除吗?"></p:confirm>
+				</p:commandButton>
+			</p:column>
+		</p:dataTable>
+
+	</h:form>
+</h:body>
+</html>

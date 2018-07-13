@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean id="deptDao" class="idms.dao.hibernate.base.DeptDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="functionDao" class="idms.dao.hibernate.base.FunctionDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="roleDao" class="idms.dao.hibernate.base.RoleDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<bean id="userDao" class="idms.dao.hibernate.base.UserDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="menuDao"
+		class="idms.dao.hibernate.base.MenuDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="jcxtSjzdDao" class="idms.dao.hibernate.base.JcxtSjzdDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<bean id="jcxtWjxxDao" class="idms.dao.hibernate.base.JcxtWjxxDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="jcxtZdpzDao"
+		class="idms.dao.hibernate.base.JcxtZdpzDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+    <bean id="wfGzxDao" class="idms.dao.hibernate.wf.WfGzxDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	  <bean id="wfSpjlDao" class="idms.dao.hibernate.wf.WfSpjlDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+    <bean id="signaDao" class="idms.dao.hibernate.base.SignatureDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	   <bean id="activeTaskDao" class="idms.dao.hibernate.base.timer.ActiveTaskDaoImpl">
+		  <property name="sessionFactory" ref="sessionFactory"></property>
+		</bean>
+		<bean id="tasksLogsDao" class="idms.dao.hibernate.base.timer.TasksLogsDaoImpl">
+			<property name="sessionFactory" ref="sessionFactory"></property>
+		</bean>
+		<bean id="trigCondDao" class="idms.dao.hibernate.base.timer.TrigCondDaoImpl">
+			<property name="sessionFactory" ref="sessionFactory"></property>
+		</bean>
+</beans>

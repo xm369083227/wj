@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="idms.model.wf.WfGzx" lazy="false" table="WF_GZX" >
+		<id name="id" type="long" column="ID">
+			<generator class="sequence">
+				<param name="sequence">S_WF_GZX</param>
+			</generator>
+		</id>
+		<property name="ysfqr" type="java.lang.String"  length="100" />
+		<property name="fqr" type="java.lang.String"  length="100" />
+		<property name="jsr" type="java.lang.String"  length="100" />
+		<property name="zxr" type="java.lang.String"  length="100" />
+		<property name="gzzx" type="java.lang.String"  length="100" />
+		<property name="gnbm"  type="java.lang.String" length="100" />
+			
+		<property name="fqsj" type="java.util.Date" column="FQSJ" />
+		<property name="lx"   type="integer" column="LX" />
+		<property name="ywlx" type="integer" column="YWLX" />
+		<property name="ywid" type="java.lang.Long" column="YWID" length="11" />
+		<property name="zt" type="integer" column="ZT" />
+		<property name="ztm" type="string" column="ZTM" length="200" />
+		<property name="zxsj" type="java.util.Date" column="ZXSJ" />
+		<property name="pend" type="java.util.Date" column="PEND" />
+		
+		<property name="url"  type="string" column="URL" length="200" />
+		<property name="bq"   type="string" column="BQ" length="100" />
+		<property name="tznr" type="string" column="TZNR" length="1000" />
+		<property name="jshz" type="string" column="JSHZ" length="1" />
+		<property name="ywno" type="string" column="YWNO" length="100" />
+		<property name="ywnr" type="string" column="YWNR" length="1000" />
+		<property name="gllc" type="string" column="GLLC" length="100" />
+		
+		<property name="sqbm" type="string" column="SQBM" length="200" />
+		<property name="bdyw" type="integer" column="BDYW" />
+		<property name="del"  type="integer" column="DEL" />
+		
+		<property name="lszxr"  type="java.lang.String" length="30" />
+		<property name="curacts"  type="java.lang.String" length="300" />
+		<property name="curnodes"  type="java.lang.String" length="300" />
+		<property name="curgnbms"  type="java.lang.String" length="300" />
+		
+	</class>
+</hibernate-mapping>

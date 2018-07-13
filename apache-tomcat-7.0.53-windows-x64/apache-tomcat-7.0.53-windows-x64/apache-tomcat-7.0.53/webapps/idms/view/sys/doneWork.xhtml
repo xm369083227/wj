@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<ui:include src="/common/templates/ui.xhtml"></ui:include>
+</h:head>
+<body>
+	<p:growl id="growlid" showDetail="true" sticky="true" autoUpdate="true"></p:growl>
+	<p:dialog maximizable="true" style="margin-left:20px;top:20px"
+		showEffect="true" hideEffect="true" id="basicdig"
+		visible="#{doneWorkBean.showLovDiv}" width="80%"
+		header="流程名称：#{doneWorkBean.processName}" widgetVar="dlgProdef"
+		height="400px" position="left">
+		<p:graphicImage
+			url="/jbpm/jbpmImageServlet?tokenId=#{doneWorkBean.tokenId}&amp;definitionId=#{doneWorkBean.processDefId}"></p:graphicImage>
+	</p:dialog>
+	
+
+	<h:form id="processform" style="min-width: 1024px">
+		<p:panel header="查询条件" style="min-width:800px">
+			<h:panelGrid columns="1">
+
+				<h:panelGrid columns="6">
+					<p:outputLabel value="审批单号：" style="text-align: right;width:50px"></p:outputLabel>
+					
+						<p:inputText value="#{doneWorkBean.ywno}"
+							style=" margin-right:30px;"></p:inputText>
+					
+					<p:outputLabel value="发起 人  ：" style="text-align: right"></p:outputLabel>
+					<p:inputText value="#{doneWorkBean.sqr}"
+						style=" margin-right:30px;"></p:inputText>
+					
+                   <p:outputLabel value="发起时间："></p:outputLabel>
+					<h:panelGroup>
+						<p:calendar value="#{doneWorkBean.start}" locale="de"
+							navigator="true" pattern="yyyy-MM-dd" />
+								至<p:calendar value="#{doneWorkBean.end}" locale="de"
+							navigator="true" pattern="yyyy-MM-dd" />
+
+					</h:panelGroup>
+
+                    <p:outputLabel value="主题名" />
+                    <p:inputText value="#{doneWorkBean.ztm}"
+							style=" margin-right:30px;"></p:inputText>
+					<p:outputLabel value="流程名称："></p:outputLabel>
+					<p:selectOneMenu value="#{doneWorkBean.bdlx}">
+						<f:selectItem itemLabel="" itemValue="0"></f:selectItem>
+						<f:selectItems value="#{selectJbpmBean.lcms}"></f:selectItems>
+					</p:selectOneMenu>
+					
+					<p:outputLabel value="业务内容"></p:outputLabel>
+					<p:inputText value="#{doneWorkBean.ywnr}"/>												
+				</h:panelGrid>
+
+				<h:panelGroup>
+					<p:commandButton value="查询" update=":processform:data"
+						action="#{doneWorkBean.doSearch}" style=" margin-left:320px;" />
+					<p:commandButton value="重置" style="margin-left:5%;" type="reset"></p:commandButton>
+				</h:panelGroup>
+			</h:panelGrid>
+		</p:panel>
+
+
+		<p:dataTable id="data" style="min-width:800px"
+			value="#{doneWorkBean.lazyDataModel}" var="obj" paginator="true"
+			rows="#{doneWorkBean.pageSize}" rowIndexVar="rowIndex"
+			liveResize="true" paginatorPosition="bottom"
+			currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+			paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			lazy="true" rowsPerPageTemplate="15,30,50">
+			<p:column headerText="序号" width="4%">
+				<h:outputText value="#{rowIndex+1}" />
+			</p:column>
+			<p:column headerText="审批单号" width="10%">
+				<h:outputText value="#{obj.ywno}" />
+			</p:column>
+				<p:column headerText="主题" width="10%">
+				<h:commandLink  value="#{obj.ztm}" action="#{homeBean.goTask}"   style="color: orange">
+					  <!--  <f:param name="taskInstanceId" id="taskInstanceId" value="#{obj.ywid}"></f:param>
+					    <f:param name="currentGzxId" id="currentGzxId" value="#{obj.wfid}"></f:param> -->
+					    <f:param name="TASK_URL" value="#{obj.url}"></f:param>
+						<f:param name="TASK_GZXID" value="#{obj.wfid}"></f:param>
+						<f:param name="TASK_YWID" value="#{obj.ywid}"></f:param>
+						<f:param name="TASK_LX" value="#{obj.lx}"></f:param>
+									   				
+					</h:commandLink>
+			</p:column>
+			<p:column headerText="业务内容" width="20%">
+				<h:outputText value="#{obj.ywnr}"></h:outputText>
+			</p:column>
+			<p:column headerText="发起人" width="7%">
+				<h:outputText value="#{obj.sqrmc}"></h:outputText>
+			</p:column>			
+			<p:column headerText="发起时间" width="7%">
+				<h:outputText value="#{obj.start}" converter="javax.faces.DateTime" />
+			</p:column>
+			<p:column headerText="结束时间" width="7%">
+				<h:outputText value="#{obj.end}" converter="javax.faces.DateTime" />
+			</p:column>
+			
+			<p:column headerText="当前位置" width="10%">
+				<h:outputText value="#{obj.currentPosition}"></h:outputText>
+			</p:column>
+			<p:column headerText="待办人" width="12%">
+				 <h:outputText value="#{obj.currentActor}" style="color: orange;" ></h:outputText>
+			</p:column>
+			<p:column headerText="流程名称" width="9%">
+				<h:outputText value="#{obj.name}" />
+			</p:column>
+			<p:column headerText="任务状态" width="5%">
+				<h:outputText value="已完成" style="color:green" />
+			</p:column>
+			<p:column headerText="操作" width="3%" >
+				<p:commandLink id="buttJkID" value="监控" rendered="#{obj.lx==1}"
+					action="#{doneWorkBean.openJbpmImgage}" update=":basicdig"
+					ajax="true" style="color: orange;">
+					<f:param name="taskInstanceId" value="#{obj.ywid}"></f:param>
+					<f:param name="processDefName" value="#{obj.name}"></f:param>
+					<f:setPropertyActionListener
+						target="#{doneWorkBean.processName}" value="#{obj.name}"></f:setPropertyActionListener>
+				</p:commandLink>
+			</p:column>
+
+		</p:dataTable>
+	</h:form>
+
+</body>
+</html>

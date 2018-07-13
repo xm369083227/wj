@@ -1,0 +1,66 @@
+<!DOCTYPE html [
+    <!ENTITY nbsp "&#160;">
+    <!ENTITY bull "&#8226;">
+    <!ENTITY rsaquo "&#162;">
+    <!ENTITY copy "&#163;">
+]>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<f:view contentType="text/html">
+
+	<h:head>
+        <f:facet name="first">
+              <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+              <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+              <meta name="apple-mobile-web-app-capable" content="yes" />
+            <title>测量设备管理系统</title>
+        </f:facet>
+        <f:loadBundle basename="config/resource_base" var="jc" />
+        <link rel="stylesheet" type="text/css" href="#{request.contextPath}/common/jQuery/themes/icon.css"/>
+		<ui:insert name="head"></ui:insert>
+		 <script type="text/javascript">
+		function start(){			
+		    window['progress'] = setInterval(function() {
+		        var pbClient = PF('pbClient'),
+		        oldValue = pbClient.getValue(),
+		        newValue = oldValue + 5; 
+		        pbClient.setValue(pbClient.getValue() + 5);
+		        if(newValue === 90) {
+		            if(newValue == 90) {
+		        	pbClient.setValue(98);
+		            clearInterval(window['progress']);
+		            // start();
+		        }
+		        } 
+		 
+		    }, 100);
+       }
+
+	  function cancel() {
+		    clearInterval(window['progress']);
+		    PF('pbClient').setValue(0);
+		   
+		}
+</script>
+	</h:head>
+     <p:ajaxStatus  style="width:64px;height:64px;position:fixed;right:5px;top:5px">
+			<f:facet name="start">
+			 <p:graphicImage url="/common/templates/loader.gif" />
+			</f:facet>
+			<f:facet name="complete">
+			  <h:outputText value="" />
+			</f:facet>
+       </p:ajaxStatus>
+       <h:form>
+       <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"></p:commandButton>
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"></p:commandButton>
+       </p:confirmDialog>  
+       </h:form>
+</f:view>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Facelet Title1</title>
+        <style>
+
+            table {
+                font-family: 宋体;
+                font-size: 9pt;
+
+            }
+
+            /*body {
+	scrollbar-base-color: #dae7f4;
+	scrollbar-arrow-color: #377cbd;
+	scrollbar-track-color: #dae7f4;/* 滚动条的底色
+	scrollbar-3dlight-color: #8eb7de;/* 滑块的边框色
+	scrollbar-darkshadow-color: #7da6cd;/* 滑块的边框色
+	scrollbar-face-color: #e7f0f8;/* 滑块的底色
+	scrollbar-shadow-color: #377cbd;
+	background: #FFFFFF;
+            }*/
+
+            body {
+                scrollbar-base-color: #F8F8F8;
+                scrollbar-arrow-color: #BABABA;
+                scrollbar-track-color: #EEEEEE;
+                scrollbar-3dlight-color: #B6B6B6;
+                scrollbar-darkshadow-color: #B6B6B6;
+                scrollbar-face-color: #F8F8F8;
+                scrollbar-shadow-color: #BABABA;
+                background: #FFFFFF;
+                margin: 0;
+                padding:0;
+            }
+
+            .Top_bg {
+                height: 46px;
+                background-image: url("#{resource['images/logo3.jpg']}");/*top页的底线背景*/
+                background-position: left;
+            }
+            .Top_bg1 {
+                background: #367ab9;/**修改顶端的粗线颜色**/
+                height: 3px;
+            }
+
+            .Top_bg2 {
+                FILTER: progid:DXImageTransform.Microsoft.Gradient(gradientType=0,startColorStr=#6fa4d5,endColorStr=#3980c3);
+                background: #6ea3d5;
+                height: 20px;
+            }
+
+            .Top_bg3 {
+                background: #367ab9;/**修改顶端的细线颜色**/
+                height: 1px;
+            }
+
+            .Top_mid1 {
+                background: #FFFFFF;
+                height: 1px;
+            }
+
+            .Top_mid2 {
+                background: #FFFFFF;
+                height: 1px;
+            }
+
+            .top_online_title {
+                color: #FFFFFF;
+            }
+
+            .top_font {
+                color: #FFFFFF;
+            }
+
+            .top_parting_line1 {
+                background: #2d659a;
+                width: 1px;
+            }
+
+            .top_parting_line2 {
+                background: #FFEDD3;
+                width: 1px;
+            }
+
+            a{
+                cursor:  pointer;
+            }
+            A:link {
+                COLOR: white; TEXT-DECORATION: none
+            }
+            A:visited {
+                COLOR: #000000; TEXT-DECORATION: none
+            }
+            A:active {
+                COLOR: #0f7ab2; TEXT-DECORATION: none
+            }
+            A:hover {
+                COLOR: #Ff7ab2; TEXT-DECORATION: underline;
+            }
+
+        </style>
+
+        <script>
+           function  doExitTips(){
+               if(window.confirm("确定要退出系统！")){
+                 // window.open("#{request.contextPath}/company/exit.jsf", "", "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,width=500px,height=500px,top=0,left=0");
+                 location.href = "#{request.contextPath}/company/exit.jsf";
+          }
+           }
+           
+           function  doModifyPassword(){
+              //window.open("#{request.contextPath}/company/modifyPasswordView.jsf", "win", "height=400, width=500, top=100, left=380, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no");
+              window.showModalDialog("#{request.contextPath}/company/modifyPasswordView.jsf","","dialogWidth:500px;dialogHeight:350px")
+           }
+        </script>
+    </h:head>
+    <h:body styleClass="PageBody">
+    <h:form>
+        <table border="0" cellpadding="0" cellspacing="0" width="100%" class="Top_bg" >
+            <tr height="48" >
+                <td ></td>
+                <td align="right" valign="bottom">
+                    <table cellpadding="0" cellspacing="0" border="0">
+                        <tr>
+                            <td align="right">
+
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td class="Top_bg1"></td>
+            </tr>
+            <tr>
+                <td class="Top_bg_mid1"></td>
+            </tr>
+            <tr>
+                <td class="Top_bg2">
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                        <tr height="20">
+                            <td width="165" align="center" Valign="center" class="top_font"><span id="linkweb"></span><script>setInterval("document.getElementById('linkweb').innerHTML=new Date().toLocaleString()",1000);
+                                </script></td>
+                            <td class="top_parting_line1"></td>
+                            <td class="top_parting_line2"></td>
+                            <td width="20" align="center"></td>
+                            <td valign="center" align="left" class="top_font">您好，#{loginBB.employeeBO.companyName}&nbsp;>>&nbsp;#{loginBB.employeeBO.name}</td> 
+
+                            <td width="130" valign="center">
+
+                                <div class="top_online_title"><a href="javascript:doModifyPassword();">密码修改</a>&nbsp;|
+                                    <a href="javascript:void(0);" onclick="doExitTips();return false;">安全退出</a></div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td class="Top_bg_mid2"></td>
+            </tr>
+            <tr height="1">
+                <td class="Top_bg3"></td>
+            </tr>
+        </table>
+
+    </h:form>
+</h:body>
+</html>

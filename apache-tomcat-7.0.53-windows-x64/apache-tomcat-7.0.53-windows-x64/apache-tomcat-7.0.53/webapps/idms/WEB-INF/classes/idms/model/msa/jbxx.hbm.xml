@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+<class 
+    name="idms.model.msa.Jbxx" table="MSA_JBXX">
+    <id name="fxid"  type="java.lang.Long"  column="FXID"  length="10">
+        <generator class="sequence">
+            <param name="sequence">S_JBXX</param>
+        </generator>
+    </id>
+    <property name="txmc" type="java.lang.String">
+        <column name="TXMC" length="100" />
+    </property>
+    <property name="qsrq" type="java.util.Date">
+        <column name="QSRQ" length="20" />
+    </property>
+    <property name="blzd5" type="java.lang.String">
+        <column name="BLZD5" length="20" />
+    </property>
+    <property name="jzz" type="java.lang.Double">
+        <column name="JZZ" length="20" />
+    </property> 
+    <property name="czrs" type="java.lang.Integer">
+        <column name="CZRS" length="22" />
+    </property>
+    <property name="czry" type="java.lang.String">
+        <column name="CZRY" length="100" />
+    </property>
+    <property name="clcs" type="java.lang.Integer">
+        <column name="CLCS" length="22" />
+    </property>
+    <property name="fxrq" type="java.util.Date">
+        <column name="FXRQ" length="20" />
+    </property>
+    <property name="ljbc" type="java.lang.String">
+        <column name="LJBC" length="40" />
+    </property>
+    <property name="ggsx" type="java.lang.String">
+        <column name="GGSX" length="40" />
+    </property>
+    <property name="ggxx" type="java.lang.String">
+        <column name="GGXX" length="40" />
+    </property>
+    <property name="ljbh" type="java.lang.String">
+        <column name="LJBH" length="40" />
+    </property>
+    <property name="ljmc" type="java.lang.String">
+        <column name="LJMC" length="40" />
+    </property>
+    <property name="ljsm" type="java.lang.Integer">
+        <column name="LJSM" length="22" />
+    </property>
+    <property name="sbbm" type="java.lang.String">
+        <column name="SBBM" length="100" />
+    </property>
+    <property name="sbmc" type="java.lang.String">
+        <column name="SBMC" length="100" />
+    </property>
+    <property name="sblx" type="java.lang.String">
+        <column name="SBLX" length="100" />
+    </property>
+    
+    <!-- bi-directional one-to-many association to Fxsj -->
+    <set name="jlfxsjs" table="T_FXSJ" cascade="all" inverse="true" lazy="false">
+    	<key column="FXID" ><!-- 外键列名 -->		
+    	</key>
+    	<one-to-many class="idms.model.msa.Fxsj"/>
+    </set>
+    <!-- bi-directional one-to-one association to SbglSbxx -->
+    <one-to-one name="sbxx" class="idms.model.jlgl.sbgl.SbglSbxx"></one-to-one>
+
+</class>
+</hibernate-mapping>

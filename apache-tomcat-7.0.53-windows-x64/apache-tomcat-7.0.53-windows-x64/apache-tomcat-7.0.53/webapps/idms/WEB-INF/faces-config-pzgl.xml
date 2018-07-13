@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="2.2"
+              xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+	
+	<managed-bean>
+		<managed-bean-name>activeTaskMb</managed-bean-name>
+		<managed-bean-class>
+			idms.webapp.jlsbgl.timer.ActiveTaskMb
+		</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>selectColumns</managed-bean-name>
+		<managed-bean-class>
+			idms.webapp.system.config.SelectColumnsBean
+		</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>sys</managed-bean-name>
+		<managed-bean-class>
+			idms.webapp.system.config.SystemConfig
+		</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	
+    <managed-bean>
+		<managed-bean-name>jcxtZdpzMb</managed-bean-name>
+		<managed-bean-class>
+			idms.webapp.system.config.JcxtZdpzMb
+		</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	 <managed-bean>
+    <managed-bean-name>jcxtJlzdMb</managed-bean-name>
+		<managed-bean-class>
+			idms.webapp.system.config.JcxtJlzdMb
+		</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+</faces-config>

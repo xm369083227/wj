@@ -1,0 +1,120 @@
+<%@ include file="/common/include/taglibs.jsp"%>
+<f:view>
+	<HTML>
+	<%@include file="/common/include/head.inc"%>
+
+	<BODY>
+	<t:saveState value="#{moniVersion.processDefinitionName}" />
+
+	<h:form id="processdefinitionversion">
+
+		<H1><h:outputText value="#{wf.processMonitor}" />
+		<HR />
+		</H1>
+
+		<H2><h:outputText value="#{wf.versionView}" /></H2>
+		<HR />
+		<h:panelGrid id="pd" columns="2">
+			<h:outputText value="#{wf.processDefinitionName}" />
+			<h:outputText value="#{moniVersion.processDefinitionName}"
+				style="font-weight: bolder" />
+		</h:panelGrid>
+
+
+		<HR>
+
+
+		<t:dataTable id="processDefinitionv"
+			value="#{moniVersion.processDefinitions}" var="processDefinitionv"
+			width="100%" styleClass="dqiqsDataTable"
+			columnClasses="dqiqsDataTableTd"
+			rowClasses="dqiqsDataTableRow1,dqiqsDataTableRow2"
+			headerClass="dqiqsDataTableHead" cellpadding="0" cellspacing="0"
+			rows="10">
+			<%-- nitrox:varType="iqs.webapp.wf.ProcessDefinitionBean" --%>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="ID" />
+				</f:facet>
+				<h:commandLink action="pinstance">
+					<t:updateActionListener
+						property="#{moniProcessInstances.processDefinition}"
+						value="#{processDefinitionv}" />
+					<h:outputText value="#{processDefinitionv.id}" />
+				</h:commandLink>
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="#{wf.processStartTask}" />
+				</f:facet>
+				<h:outputText value="#{processDefinitionv.startTask}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="#{wf.version}" />
+				</f:facet>
+				<h:outputText value="#{processDefinitionv.version}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="#{wf.instanceMount}" />
+				</f:facet>
+				<h:outputText value="#{processDefinitionv.instancesCount}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="#{wf.processDescription}" />
+				</f:facet>
+				<h:outputText value="#{processDefinitionv.description}" />
+			</h:column>
+			<h:column>
+				<h:commandLink
+					action="#{processDefinitionv.deleteProcessDefinition}">
+					<h:outputText value="#{wf.delete}" />
+				</h:commandLink>
+			</h:column>
+		</t:dataTable>
+		<h:panelGrid width="100%" style="text-align:right;">
+			<t:htmlTag value="br" style="font-size: 2px" />
+			<h:panelGrid columns="2">
+				<t:dataScroller id="scroll_1" for="processDefinitionv" fastStep="10"
+					immediate="true" styleClass="page" paginator="false"
+					paginatorMaxPages="5" paginatorTableClass="paginator"
+					pageCountVar="pageCount" pageIndexVar="pageIndex"
+					rowsCountVar="rowsCount" style="font:12px"
+					displayedRowsCountVar="displayedRowsCountVar"
+					firstRowIndexVar="firstRowIndex" lastRowIndexVar="lastRowIndex">
+					<f:facet name="first">
+						<h:outputText value="#{megs.first}" />
+					</f:facet>
+					<f:facet name="last">
+						<h:outputText value="#{megs.last}" />
+					</f:facet>
+					<f:facet name="previous">
+						<h:outputText value="#{megs.previous}" />
+					</f:facet>
+					<f:facet name="next">
+						<h:outputText value="#{megs.next}" />
+					</f:facet>
+				</t:dataScroller>
+				<t:dataScroller id="scroll_2" for="processDefinitionv" fastStep="10"
+					immediate="false" styleClass="page" paginator="false"
+					paginatorMaxPages="5" paginatorTableClass="paginator"
+					pageCountVar="pageCount" pageIndexVar="pageIndex"
+					rowsCountVar="rowsCount" style="font:12px"
+					displayedRowsCountVar="displayedRowsCountVar"
+					firstRowIndexVar="firstRowIndex" lastRowIndexVar="lastRowIndex">
+					<h:outputFormat value="#{megs.datascroller}" styleClass="page">
+						<f:param value="#{rowsCount}" />
+						<f:param value="#{pageIndex}" />
+						<f:param value="#{pageCount}" />
+					</h:outputFormat>
+				</t:dataScroller>
+			</h:panelGrid>
+		</h:panelGrid>
+	</h:form>
+
+	</BODY>
+	</HTML>
+</f:view>

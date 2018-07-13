@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+	<ui:include src="/common/templates/ui.xhtml"></ui:include>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+</h:head>
+<h:body>
+	<p:growl id="growlid" showDetail="false" sticky="true"
+		autoUpdate="true" />
+	<h:form id="form">
+		<h:panelGrid id="search" width="80%">
+			<p:panel header="测量系统分析--查询">
+				<h:panelGrid columns="2">
+					<h:outputText value="特性名称:" />
+					<p:selectOneMenu id="txmc" value="#{queryBean.jbxx.txmc}">
+						<f:selectItems value="#{queryBean.txmcList}">
+						</f:selectItems>
+					</p:selectOneMenu>
+					<h:outputText value="设备编码:" />
+					<p:inputText id="sbbm" value="#{queryBean.jbxx.sbbm}" size="35" />
+					<h:outputText value="零件编号:" />
+					<p:inputText id="ljbh" value="#{queryBean.jbxx.ljbh}" size="35" />
+					<h:outputText value="零件名称:" />
+					<p:inputText id="ljmc" value="#{queryBean.jbxx.ljmc}" size="35" />
+
+					<h:outputText value="分析日期在:" />
+					<h:panelGroup>
+						<p:calendar value="#{queryBean.jbxx.fxrq}" size="35"
+							navigator="true" pattern="yyyy-MM-dd">
+						</p:calendar>
+						<h:selectOneRadio>
+							<f:selectItem itemLabel="之前" itemValue="之前" />
+							<f:selectItem itemLabel="之后" itemValue="之后" />
+							<f:selectItem itemLabel="无日期限制" itemValue="无日期限制" />
+						</h:selectOneRadio>
+					</h:panelGroup>
+				</h:panelGrid>
+				<p:commandButton value="查询" action="#{queryBean.doSearch}"
+					ajax="false" update=":form:table" />
+				<p:commandButton value="取消" ajax="true" update="" />
+			</p:panel>
+		</h:panelGrid>
+		<p:dataTable id="table" var="jbxx" value="#{queryBean.lazyDataModel}"
+			paginator="true" rows="15" style="width:80%;text-align:center;"
+			resizableColumns="true" paginatorPosition="bottom"
+			rowIndexVar="rowVar" filterDelay="300" liveResize="true"
+			currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+			paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			lazy="true" rowsPerPageTemplate="15,30,50">
+			<p:column headerText="序号">
+				<h:outputText value="#{rowVar+1}" />
+			</p:column>
+			<p:column headerText="设备编码">
+				<h:outputText value="#{jbxx.sbbm}" />
+			</p:column>
+			<p:column headerText="特性名称">
+				<h:outputText value="#{jbxx.txmc}" />
+			</p:column>
+			<p:column headerText="分析日期">
+				<h:outputText value="#{jbxx.fxrq}">
+					<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+						timeZone="GMT+8" />
+				</h:outputText>
+			</p:column>
+			<p:column headerText="操作人员">
+				<h:outputText value="#{jbxx.czry}" />
+			</p:column>
+
+			<p:column headerText="结论">
+				<h:outputText value="" style="color:yellow" />
+			</p:column>
+		</p:dataTable>
+
+	</h:form>
+</h:body>
+</html>

@@ -1,0 +1,366 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+<f:view contentType="text/html">
+	<h:head>
+		<title>IDMS</title>
+		<ui:include src="/common/templates/ui.xhtml"></ui:include>
+	</h:head>
+	<h:body>
+		<p:growl id="growlid" sticky="true" autoUpdate="true" />
+		<p:dialog id="gdzclr" header="固定资产" widgetVar="dialog1"
+			maximizable="true" height="530px" width="800px" modal="true">		
+			<h:form id="gdzcform" enctype="multipart/form-data">
+				<p:tabView id="tabview">
+					<p:tab title="固定资产">
+						<p:panelGrid columns="1">
+							<h:panelGrid columns="6" width="100%">
+								<h:panelGroup>
+									<h:outputText value="资产编号："></h:outputText>
+									<h:outputText value="*" style="color:red" />
+								</h:panelGroup>
+								<p:inputText value="#{gdzcMb.varchObj.bh}" required="true"
+									requiredMessage="资产编号：不能为空！" maxlength="50" size="15"
+									readonly="#{gdzcMb.edit}"></p:inputText>
+								<h:panelGroup>
+									<h:outputText value="资产名称："></h:outputText>
+									<h:outputText value="*" style="color:red" />
+								</h:panelGroup>
+								<p:inputText value="#{gdzcMb.varchObj.zcmc}" required="true"
+									requiredMessage="资产名称：不能为空！" maxlength="50" size="15"></p:inputText>
+								<h:outputText value="规格型号："></h:outputText>
+								<p:inputText value="#{gdzcMb.varchObj.ggxh}" maxlength="200"
+									size="15"></p:inputText>
+							</h:panelGrid>
+
+
+							<h:panelGrid columns="6" width="100%">
+								<h:outputText value="计划号："></h:outputText>
+								<p:inputText value="#{gdzcMb.varchObj.jhh}" maxlength="200"
+									size="15"></p:inputText>
+								<h:outputText value="建造单位："></h:outputText>
+								<p:inputText value="#{gdzcMb.varchObj.jzdw}" maxlength="200"
+									size="15"></p:inputText>
+								<h:outputText value="使用单位："></h:outputText>
+								<p:inputText value="#{gdzcMb.varchObj.sydw}" maxlength="200"
+									size="15"></p:inputText>
+								<h:outputText value="使用地点："></h:outputText>
+								<p:inputText value="#{gdzcMb.varchObj.sydd}" maxlength="200"
+									size="15"></p:inputText>
+								<h:outputText value="使用状况："></h:outputText>
+								<p:selectOneMenu value="#{gdzcMb.varchObj.syzt}"
+									style="width:90%">
+									<f:selectItem itemLabel="---请选择类型" />
+									<f:selectItem itemLabel="非正常" itemValue="非正常" />
+									<f:selectItem itemLabel="正常用" itemValue="正常用" />
+								</p:selectOneMenu>
+								<h:outputText value="出厂年月："></h:outputText>
+								<p:inputText value="#{gdzcMb.varchObj.ccny}" size="15" 
+							        maxlength="250"/>
+								<h:outputText value="出厂号："></h:outputText>
+								<p:inputText value="#{gdzcMb.varchObj.cch}" maxlength="100"
+									size="15"></p:inputText>
+								<h:outputText value="投入时间："></h:outputText>
+								<p:inputText value="#{gdzcMb.varchObj.trsj}" size="15" 
+							        maxlength="250"/>							
+								<h:outputText value="盘点人："></h:outputText>
+								<p:inputText value="#{gdzcMb.varchObj.pdr}" maxlength="1000"
+									size="15"></p:inputText>
+							</h:panelGrid>
+
+							<h:panelGrid columns="6" width="100%">
+								<h:outputText value="资产原值：(&yen;)"></h:outputText>
+								<p:inputText value="#{gdzcMb.varchObj.zcyz}" maxlength="1000"
+									size="15"></p:inputText>
+								<h:outputText value="账面净值：(&yen;)"></h:outputText>
+								<p:inputText value="#{gdzcMb.varchObj.zmjz}" maxlength="1000"
+									size="15"></p:inputText>
+								<h:outputText value="账外资产："></h:outputText>
+								<p:inputText value="#{gdzcMb.varchObj.zwzc}" maxlength="1000"
+									size="15"></p:inputText>
+								<h:outputText value="累计折旧："></h:outputText>
+								<p:inputText value="#{gdzcMb.varchObj.ljzj}" maxlength="1000"
+									size="15"></p:inputText>
+								<h:outputText value="闲置资产："></h:outputText>
+								<p:inputText value="#{gdzcMb.varchObj.xzzc}" maxlength="1000"
+									size="15"></p:inputText>
+								<h:outputText value="亏盘及毁损："></h:outputText>
+								<p:inputText value="#{gdzcMb.varchObj.pkjhs}" maxlength="1000"
+									size="15"></p:inputText>
+							</h:panelGrid>
+
+
+							<h:panelGrid columns="6" width="100%">
+								<h:outputText value="计划用年限："></h:outputText>
+								<p:inputText value="#{gdzcMb.varchObj.jhynx}" maxlength="1000"
+									size="15"></p:inputText>
+								<h:outputText value="转固时间："></h:outputText>
+								<p:inputText value="#{gdzcMb.varchObj.zgsj}" size="15" 
+							        maxlength="250"/>
+								<h:outputText value="非生产和生产："></h:outputText>
+								<p:selectOneMenu value="#{gdzcMb.varchObj.fschsc}"
+									style="width:95%">
+									<f:selectItem itemLabel="---请选择类型" />
+									<f:selectItem itemLabel="非生产" itemValue="非生产" />
+									<f:selectItem itemLabel="生产用" itemValue="生产用" />
+								</p:selectOneMenu>
+								<h:outputText value="封存及年月："></h:outputText>
+								<p:inputText value="#{gdzcMb.varchObj.fcjny}" size="15" 
+							        maxlength="250"/>
+								<h:outputText value="报废及年月："></h:outputText>
+								<p:inputText value="#{gdzcMb.varchObj.bfny}" size="15" 
+							        maxlength="250"/>
+								<h:outputText value="不良及年月："></h:outputText>
+								<p:inputText value="#{gdzcMb.varchObj.bljny}" size="15" 
+							        maxlength="250"/>
+							</h:panelGrid>
+
+
+							<h:panelGrid columns="2">
+								<h:outputText value="报废原因："></h:outputText>
+								<p:inputTextarea value="#{gdzcMb.varchObj.bfyy}" rows="4"
+									cols="80" label="报废原因" maxlength="1000"></p:inputTextarea>
+								<h:outputText value="备注："></h:outputText>
+								<p:inputTextarea value="#{gdzcMb.varchObj.bz}" rows="4"
+									cols="80" label="备注" maxlength="1000"></p:inputTextarea>
+							</h:panelGrid>
+						</p:panelGrid>
+					</p:tab>
+
+					<p:tab title="附件管理">
+						<h:panelGrid width="670px"
+							style="margin-top: -10px;margin-left:-17px;">
+							<h:panelGrid width="100%">
+								<p:fileUpload multiple="true"
+									update=":gdzcform:tabview:filePaneId"
+									fileUploadListener="#{gdzcMb.handleFileUpload}"
+									style="width:100%;" mode="advanced" label="浏览" cancelLabel="取消"
+									uploadLabel="上传" sizeLimit="10240000"
+									invalidSizeMessage="文件必须小于10M" invalidFileMessage="格式不支持"
+									dragDropSupport="false"
+									allowTypes="/(\.|\/)(gif|jpe?g|png|pdf|txt|rar|zip|doc|docx|xls|xlsx)$/">
+								</p:fileUpload>
+								<p:dataTable id="filePaneId" paginator="true"
+									value="#{gdzcMb.fileBean.files}" style="width:100%;"
+									filterDelay="300" lazy="false" var="file" rows="15"
+									rowIndexVar="rowVar" resizableColumns="true " liveResize="true"
+									paginatorPosition="bottom"
+									currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+									paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+									rowsPerPageTemplate="15,30,50">
+									<p:column headerText="序号" style="width:40px;">
+										<h:outputText value="#{rowVar+1}" />
+									</p:column>
+
+									<p:column headerText="附件名称" style="width:50%">
+										<h:outputText value="#{file.wjmc}" />
+									</p:column>
+
+									<p:column headerText="上传人员" style="width:70px">
+										<p:outputLabel value="#{file.scyhid}"></p:outputLabel>
+									</p:column>
+									<p:column headerText="上传时间" style="width:70px">
+										<h:outputText value="#{file.scrq}">
+											<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+												timeZone="GMT+8" />
+										</h:outputText>
+									</p:column>
+									<p:column headerText="操作" style="width:10%">
+										<h:panelGroup>
+											<p:commandButton id="downId" ajax="false"
+												action="#{gdzcMb.fileBean.downFile}"
+												icon="ui-icon-arrowthick-1-s" immediate="true">
+												<f:setPropertyActionListener
+													target="#{gdzcMb.fileBean.file}" value="#{file}"></f:setPropertyActionListener>
+											</p:commandButton>
+											<h:outputText value="  "></h:outputText>
+											<p:commandButton id="deleteId" ajax="true"
+												action="#{gdzcMb.fileBean.deleteFile}" icon="ui-icon-trash"
+												oncomplete="PF('dialog').show()"
+												update=":gdzcform:tabview:filePaneId">
+												<f:setPropertyActionListener
+													target="#{gdzcMb.fileBean.file}" value="#{file}"></f:setPropertyActionListener>
+											</p:commandButton>
+										</h:panelGroup>
+									</p:column>
+								</p:dataTable>
+							</h:panelGrid>
+						</h:panelGrid>
+					</p:tab>
+				</p:tabView>
+					<p:commandButton value="保存"  style="margin-left: 350px" ajax="true"
+					  update=":form:table" oncomplete="PF('dialog1').hide()"
+					  actionListener="#{gdzcMb.addObj}" >
+				     </p:commandButton>
+			</h:form>
+			</p:dialog>
+				
+		<h:form id="form">
+			<p:toolbar id="toolbarid" style="width:90%;">
+			<f:facet name="left"> 
+			 <h:outputText value="固定资产录入"/>										
+			</f:facet>
+		</p:toolbar>			
+				<p:dataTable id="table" paginator="true" editable="true"
+					value="#{gdzcMb.lazyDataModel}" style="width:90%;" rows="15"
+					rowIndexVar="rowVar" filterDelay="300" resizableColumns="true "
+					liveResize="true" paginatorPosition="bottom" var="item"
+					currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+					paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					lazy="true" rowsPerPageTemplate="15,30,50">
+					<p:ajax event="rowEdit" 
+						listener="#{gdzcMb.onRowEdit}"></p:ajax>
+					<p:column style="width:30px">
+						<p:rowEditor></p:rowEditor>
+					</p:column>
+
+					<p:column headerText="操作" style="width:50px">	
+					  <f:facet name="header">
+							<p:commandButton actionListener="#{gdzcMb.openAddPanal}"
+								oncomplete="PF('dialog1').show()" ajax="true"
+								update=":gdzclr" immediate="true" value="录入">
+							</p:commandButton>
+						</f:facet>				
+						<h:panelGroup>
+							<p:commandButton actionListener="#{gdzcMb.openEditPanal(item.bh)}"
+								oncomplete="PF('dialog1').show()" ajax="true" update=":gdzclr"
+								title="修改" icon="ui-icon-gear" immediate="true">
+							</p:commandButton>
+							<h:outputText value="  "></h:outputText>
+							<p:commandButton id="delete" ajax="true" update=":form:table"
+								action="#{gdzcMb.delObj(item)}" title="删除" icon="ui-icon-trash"
+								immediate="true">
+								
+								<p:confirm icon="ui-icon-alert" message="确定删除吗?"></p:confirm>
+							</p:commandButton>
+						</h:panelGroup>
+					</p:column>
+
+
+					<p:column headerText="序号" resizable="false" style="width:20px;">
+						<h:outputText value="#{rowVar+1}" />
+					</p:column>
+					<p:column headerText="资产编号" filterBy="#{item.bh}"
+						sortBy="#{item.bh}" style="width:80px">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{item.bh}"></h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{item.bh}" style="width:90%" label="计量标准编号"
+									required="true" maxlength="50"></p:inputText>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="资产名称" filterBy="#{item.zcmc}"
+						sortBy="#{item.zcmc}" style="width:80px">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{item.zcmc}"></h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{item.zcmc}" style="width:90%" label="资产名称"
+									required="true" maxlength="50"></p:inputText>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="计划号" filterBy="#{item.jhh}"
+						sortBy="#{item.jhh}" style="width:80px;">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{item.jhh}"></h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{item.jhh}" style="width:90%" label="计划号"
+									maxlength="200"></p:inputText>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="规格型号" filterBy="#{item.ggxh}"
+						sortBy="#{item.ggxh}" style="width:80px;">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{item.ggxh}"></h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{item.ggxh}" style="width:90%" label="规格型号"
+									maxlength="200"></p:inputText>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="投入时间" filterBy="#{item.trsj}"
+						sortBy="#{item.trsj}" style="width:76px;">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{item.trsj}">
+								</h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{item.trsj}" style="width:90%" label="投入时间"
+									maxlength="250">
+									</p:inputText>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="资产原值" filterBy="#{item.zcyz}"
+						sortBy="#{item.zcyz}" style="width:80px;">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="&yen;#{item.zcyz}"></h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{item.zcyz}" style="width:90%" label="资产原值"
+									required="true" maxlength="200"></p:inputText>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="净值" filterBy="#{item.zmjz}"
+						sortBy="#{item.zmjz}" style="width:80px;">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="&yen;#{item.zmjz}"></h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{item.zmjz}" style="width:90%" label="净值"
+									required="true" maxlength="200"></p:inputText>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="使用单位" filterBy="#{item.sydw}"
+						sortBy="#{item.sydw}" style="width:70px;">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{item.sydw}"></h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{item.sydw}" style="width:90%" label="使用单位"
+									maxlength="20"></p:inputText>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="资产状态" style="width:80px;">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{item.zt}"></h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{item.zt}" style="width:90%" label="资产状态"
+									maxlength="200"></p:inputText>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					
+				</p:dataTable>
+		</h:form>
+
+	</h:body>
+</f:view>
+</html>

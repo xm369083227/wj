@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="idms.model.jlgl.gskh.GrgsBztj" table="GSKH_BZTJ">
+		<id name="id" type="java.lang.Long" column="ID" length="22">
+			<generator class="sequence">
+				<param name="sequence">S_GSKH_BZTJ</param>
+			</generator>
+		</id>
+		<many-to-one name="jdjh" class="idms.model.jlgl.jdgl.JdglJdjh">
+			<column name="JDJH" />
+		</many-to-one>
+		<many-to-one name="debz" class="idms.model.jlgl.gskh.Gskhbz">
+			<column name="DEBZ" />
+		</many-to-one>
+		<many-to-one name="sbxx" class="idms.model.jlgl.sbgl.SbglSbxx">
+			<column name="SBXX" />
+		</many-to-one>
+
+		<many-to-one name="djry" class="idms.model.base.User">
+			<column name="DJRY" />
+		</many-to-one>
+		<many-to-one name="gzry" class="idms.model.base.User">
+			<column name="GZRY" />
+		</many-to-one>
+		<many-to-one name="ssbm" class="idms.model.base.Dept">
+			<column name="SSBM" />
+		</many-to-one>
+
+		<property name="djsj" type="java.util.Date" column="DJSJ"
+			length="7" />
+		<property name="gzsj" type="java.util.Date" column="GZSJ"
+			length="7" />
+
+		<property name="zt" type="java.lang.Integer" column="ZT" />
+		<property name="bz" type="string" length="250" column="BZ" />
+		<property name="gzl" type="java.lang.Double" column="GZL" />
+		<property name="zgs" type="java.lang.Double" column="ZGS" />
+		<property name="gslx" type="string" length="250" column="GSLX" />
+		<property name="djgs" type="java.lang.Double" column="DJGS" />
+		<property name="ywid" type="java.lang.Long" column="YWID" />
+		<property name="jdrwId" type="java.lang.Long" column="JDRWID" />
+		<property name="ywlx" type="java.lang.Integer" column="YWLX" />
+		<property name="sjly" type="java.lang.Integer" column="SJLY" />
+	</class>
+</hibernate-mapping>

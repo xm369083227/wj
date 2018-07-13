@@ -1,0 +1,299 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+<f:view contentType="text/html">
+	<h:head>
+		<title>IDMS</title>
+		<ui:include src="/common/templates/ui.xhtml"></ui:include>
+	</h:head>
+	<h:body>
+		<p:growl id="growlid" showDetail="false" sticky="true"
+			autoUpdate="true" />
+
+		<p:dialog id="dialogid" header="检定计划" widgetVar="dialogid"
+			maximizable="true" height="520px" width="1200px" modal="true">
+			<h:form id="plan">
+				<table>
+					<tr>
+						<td style="float: left;" width="760px"><p:dataTable id="data"
+								var="obj" value="#{checkPlanMonitor.jdrwsQb.lazyDataModel}"
+								scrollable="true" style="width:100%;" scrollWidth="100%"
+								scrollHeight="360" rowsPerPageTemplate="15,30,50"
+								paginator="true" paginatorPosition="bottom"
+								currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+								paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+					                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+								lazy="true" rows="15" widgetVar="cellSbxx" rowKey="#{obj.id}"
+								rowIndexVar="rowVar">
+								<f:facet name="header">
+									<h:outputText value="检定任务列表"></h:outputText>
+								</f:facet>
+
+								<p:column headerText="序号" width="20">
+									<h:outputText value="#{rowVar+1}"></h:outputText>
+								</p:column>
+								<p:column headerText="操作" width="30">
+									<p:commandLink update=":plan:data :dialogid :form:table"
+										actionListener="#{checkPlanMonitor.dropCheckSbxx}" value=" 删除"
+										style="color:orange" disabled="#{!(obj.rwzt==0)}">
+										<f:param name="JDRW_ID" value="#{obj.id}"></f:param>
+										<f:param name="SBXX_ID" value="#{obj.sbxx.id}"></f:param>
+										<f:param name="JDJH_ID"
+											value="#{checkPlanMonitor.varchObj.id}"></f:param>
+										<f:param name="JDJH_JHBM"
+											value="#{checkPlanMonitor.varchObj.jhbm}"></f:param>
+										<p:confirm icon="ui-icon-alert" message="确定删除吗?"></p:confirm>
+									</p:commandLink>
+								</p:column>
+
+								<p:column sortBy="#{obj.sbxx.jlbh}" width="80"
+									rendered="#{sys.sbxx.jlbh.sfsx}"
+									headerText="#{sys.sbxx.jlbh.zdms}">
+									<h:outputText value="#{obj.sbxx.jlbh}"></h:outputText>
+								</p:column>
+								<p:column sortBy="#{obj.sbxx.sbmc}" width="80"
+									rendered="#{sys.sbxx.sbmc.sfsx}"
+									headerText="#{sys.sbxx.sbmc.zdms}">
+									<h:outputText value="#{obj.sbxx.sbmc}"></h:outputText>
+								</p:column>
+								<p:column sortBy="#{obj.ksrq}" width="80" headerText="任务创建日期">
+									<h:outputText value="#{obj.ksrq}">
+										<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+											timeZone="GMT+8" />
+									</h:outputText>
+								</p:column>
+
+								<p:column sortBy="#{obj.rwzt}" width="80" headerText="检定任务状态">
+									<h:outputText value="#{obj.rwztmc}" style="color:red"></h:outputText>
+								</p:column>
+
+								<p:column sortBy="#{obj.ksrq}" width="80" headerText="截止送检日期">
+									<h:outputText value="#{obj.jzsjrq}">
+										<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+											timeZone="GMT+8" />
+									</h:outputText>
+								</p:column>
+
+								<p:column sortBy="#{obj.sbxx.sybmmc}" width="80"
+									rendered="#{sys.sbxx.sybmmc.sfsx}"
+									headerText="#{sys.sbxx.sybmmc.zdms}">
+									<h:outputText value="#{obj.sbxx.sybmmc}"></h:outputText>
+								</p:column>
+								<p:column sortBy="#{obj.sbxx.xkflp}" width="100"
+									rendered="#{sys.sbxx.xkfl.sfsx}"
+									headerText="#{sys.sbxx.xkfl.zdms}">
+									<h:outputText value="#{obj.sbxx.xkflmcs}"></h:outputText>
+								</p:column>
+
+								<p:column sortBy="#{obj.sbxx.gllb}" width="30"
+									rendered="#{sys.sbxx.gllb.sfsx}"
+									headerText="#{sys.sbxx.gllb.zdms}">
+									<h:outputText value="#{obj.sbxx.gllb}"></h:outputText>
+								</p:column>
+								<p:column sortBy="#{obj.sbxx.sbzt}" width="50"
+									rendered="#{sys.sbxx.sbzt.sfsx}"
+									headerText="#{sys.sbxx.sbzt.zdms}">
+									<h:outputText value="#{obj.sbxx.sbzt}"></h:outputText>
+								</p:column>
+								<p:column sortBy="#{obj.sbxx.sfqj}" width="30"
+									rendered="#{sys.sbxx.sfqj.sfsx}"
+									headerText="#{sys.sbxx.sfqj.zdms}">
+									<h:outputText value="#{obj.sbxx.sfqj?'是':'否'}"
+										style="color:#{obj.sbxx.sfqj?'red':'green'}"></h:outputText>
+								</p:column>
+								<p:column sortBy="#{obj.sbxx.sfbzq}" width="30"
+									rendered="#{sys.sbxx.sfbzq.sfsx}"
+									headerText="#{sys.sbxx.sfbzq.zdms}">
+									<h:outputText value="#{obj.sbxx.sfbzq?'是':'否'}"
+										style="color:#{obj.sbxx.sfbzq?'red':'green'}"></h:outputText>
+								</p:column>
+
+								<p:column sortBy="#{obj.sbxx.sbfl}" width="50"
+									rendered="false"
+									headerText="#{sys.sbxx.sbfl.zdms}">
+									<h:outputText value="#{obj.sbxx.sbfl}"></h:outputText>
+								</p:column>
+								<p:column sortBy="#{obj.sbxx.fyxrq}" width="65"
+									rendered="#{sys.sbxx.fyxrq.sfsx}"
+									headerText="#{sys.sbxx.fyxrq.zdms}">
+									<h:outputText value="#{obj.sbxx.fyxrq}">
+										<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+											timeZone="GMT+8" />
+									</h:outputText>
+								</p:column>
+
+								<p:column sortBy="#{obj.sbxx.jdfs}" width="30"
+									rendered="#{sys.sbxx.jdfs.sfsx}"
+									headerText="#{sys.sbxx.jdfs.zdms}">
+									<h:outputText value="#{obj.sbxx.jdfs}"></h:outputText>
+								</p:column>
+
+								<p:column sortBy="#{obj.sbxx.sccj}" width="70"
+									rendered="#{sys.sbxx.sccj.sfsx}"
+									headerText="#{sys.sbxx.sccj.zdms}">
+									<h:outputText value="#{obj.sbxx.sccj}"></h:outputText>
+								</p:column>
+
+							</p:dataTable></td>
+						<td style="float: right;" width="400px"><h:panelGrid
+								columns="4" style="margin-left:20px;margin-top:20px">
+								<p:outputLabel value="计划编号：" style="font-weight: bold;"></p:outputLabel>
+								<h:outputText value="#{checkPlanMonitor.varchObj.jhbm}"></h:outputText>
+								<h:outputText value="制定用户：" style="font-weight: bold;"></h:outputText>
+								<h:outputText value="#{checkPlanMonitor.varchObj.zdry}"></h:outputText>
+								<h:outputText value="制定日期：" style="font-weight: bold;"></h:outputText>
+								<h:outputText value="#{checkPlanMonitor.varchObj.zdrq}">
+									<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+										timeZone="GMT+8" />
+								</h:outputText>
+								<h:outputText value="计划类型：" style="font-weight: bold;"></h:outputText>
+								<h:outputText value="#{checkPlanMonitor.varchObj.jhlxmc}"></h:outputText>
+								<h:outputText value="制定类型：" style="font-weight: bold;"></h:outputText>
+								<h:outputText value="#{checkPlanMonitor.varchObj.zdlxmc}"></h:outputText>
+								<h:outputText value="计划状态：" style="font-weight: bold;"></h:outputText>
+								<h:outputText value="#{checkPlanMonitor.varchObj.jhztmc}"></h:outputText>
+								<!-- <h:outputText value="计量管理员：" style="font-weight: bold;"></h:outputText>
+								<h:outputText value="#{checkPlanMonitor.jlglys}"></h:outputText>
+								<h:outputText value="计量检定员：" style="font-weight: bold;"></h:outputText>
+								<h:outputText value="#{checkPlanMonitor.jljdys}"></h:outputText> -->
+							</h:panelGrid> <p:chart type="pie"
+								style="width:380px;height:300px;margin-left:16px;margin-top:20px"
+								rendered="#{checkPlanMonitor.pieChartModel!=null}"
+								model="#{checkPlanMonitor.pieChartModel}" /></td>
+					</tr>
+				</table>
+
+			</h:form>
+		</p:dialog>
+
+
+
+
+
+
+
+
+
+
+
+
+
+		<h:form id="form">
+			<h:panelGrid width="99%">
+				<p:panel header="条件查询">
+					<h:panelGrid columns="6">
+						<h:outputText value="计划编号："></h:outputText>
+						<p:inputText value="#{checkPlanMonitor.queryObj.jhbm}" size="25"></p:inputText>
+
+						<h:outputText value="制定用户："></h:outputText>
+						<p:inputText value="#{checkPlanMonitor.queryObj.zdry}" size="25"></p:inputText>
+						<h:outputText value="制定日期："></h:outputText>
+						<h:panelGroup>
+							<p:calendar label="制定日期" value="#{checkPlanMonitor.startDate}"
+								size="8" readonlyInput="false" navigator="true"
+								pattern="yyyy-MM-dd" />
+						                                  至<p:calendar label="制定日期"
+								value="#{checkPlanMonitor.endDate}" size="8"
+								readonlyInput="false" navigator="true" pattern="yyyy-MM-dd" />
+						</h:panelGroup>
+						<h:outputText value="计划类型"></h:outputText>
+						<p:selectOneMenu value="#{checkPlanMonitor.queryObj.jhlx}">
+							<f:selectItem itemLabel="请选择计划类型" itemValue="0"></f:selectItem>
+							<f:selectItem itemLabel="周检计划" itemValue="1"></f:selectItem>
+							<f:selectItem itemLabel="抽检计划" itemValue="2"></f:selectItem>
+							<f:selectItem itemLabel="临时送检" itemValue="3"></f:selectItem>
+						</p:selectOneMenu>
+						<h:outputText value="制定类型"></h:outputText>
+						<p:selectOneMenu value="#{checkPlanMonitor.queryObj.zdlx}">
+							<f:selectItem itemLabel="请选择制定类型" itemValue="0"></f:selectItem>
+							<f:selectItem itemLabel="手动制定" itemValue="1"></f:selectItem>
+							<f:selectItem itemLabel="系统制定" itemValue="2"></f:selectItem>
+						</p:selectOneMenu>
+						<h:outputText value="计划状态"></h:outputText>
+						<p:selectOneMenu value="#{checkPlanMonitor.queryObj.jhzt}">
+							<f:selectItem itemLabel="请选择计划状态" itemValue="0"></f:selectItem>
+							<f:selectItem itemLabel="已制定" itemValue="1"></f:selectItem>
+							<f:selectItem itemLabel="已发布" itemValue="2"></f:selectItem>
+							<f:selectItem itemLabel="运行中" itemValue="3"></f:selectItem>
+							<f:selectItem itemLabel="已结束" itemValue="4"></f:selectItem>
+						</p:selectOneMenu>
+					</h:panelGrid>
+					<p:commandButton value="查询" ajax="false"
+						action="#{checkPlanMonitor.doSearch}"></p:commandButton>
+				</p:panel>
+
+				<p:dataTable id="table" paginator="true"
+					value="#{checkPlanMonitor.lazyDataModel}" style="width:100%;"
+					var="item" rows="15" rowIndexVar="rowVar" filterDelay="300"
+					resizableColumns="true " liveResize="true"
+					paginatorPosition="bottom"
+					currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+					paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					lazy="true" rowsPerPageTemplate="20,30,50">
+					<p:column headerText="序号" sortBy="#{item.id}" style="width:50px;">
+						<h:outputText value="#{rowVar+1}" />
+					</p:column>
+					<p:column headerText="计划编码" sortBy="#{item.jhbm}"
+						style="width:80px">
+						<h:outputText value="#{item.jhbm}"></h:outputText>
+					</p:column>
+					<p:column headerText="制定人员" sortBy="#{item.zdry}"
+						style="width:50px">
+						<h:outputText value="#{item.zdry}"></h:outputText>
+					</p:column>
+					<p:column headerText="制定日期" sortBy="#{item.zdrq}"
+						style="width:40px;">
+						<h:outputText value="#{item.zdrq}">
+							<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+								timeZone="GMT+8" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="计划类型" sortBy="#{item.jhlx}"
+						style="width:50px">
+						<h:outputText value="#{item.jhlxmc}"></h:outputText>
+					</p:column>
+					<p:column headerText="制定类型" sortBy="#{item.zdlx}"
+						style="width:100px">
+						<h:outputText value="#{item.zdlxmc}"></h:outputText>
+					</p:column>
+
+					<p:column headerText="计划状态" sortBy="#{item.jhzt}"
+						style="width:60px">
+						<h:outputText value="#{item.jhztmc}"></h:outputText>
+					</p:column>
+
+
+					<p:column headerText="操作" style="width:100px">
+						<h:panelGroup>
+							<p:commandLink style="color:orange" ajax="true" id="rwjkId"
+								update=":dialogid" title="任务监控" value="任务监控"
+								oncomplete="PF('dialogid').show()"
+								actionListener="#{checkPlanMonitor.viewPlanDetail(item)}"
+								immediate="true">
+								<f:param name="JDJH_ID" value="#{item.id}"></f:param>
+							</p:commandLink>
+							<h:outputText value=" | " style="color:blue"></h:outputText>
+							<p:commandLink style="color:orange" ajax="true" id="deletePlanId"
+								update=":form:table" title="撤销" value="删除计划" disabled="#{item.jhzt!=1}"
+								actionListener="#{checkPlanMonitor.cancelPlan}" immediate="true">
+								<f:param name="JDJH_ID" value="#{item.id}"></f:param>
+								<f:param name="JDJH_JHBM" value="#{item.jhbm}"></f:param>
+								<p:confirm icon="ui-icon-alert" message="确定删除吗?"></p:confirm>
+							</p:commandLink>
+
+						</h:panelGroup>
+					</p:column>
+				</p:dataTable>
+
+			</h:panelGrid>
+
+		</h:form>
+
+	</h:body>
+</f:view>
+</html>

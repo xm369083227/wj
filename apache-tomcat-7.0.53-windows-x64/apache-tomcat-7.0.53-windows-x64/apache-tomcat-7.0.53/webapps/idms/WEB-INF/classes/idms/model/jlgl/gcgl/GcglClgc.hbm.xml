@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class  name="idms.model.jlgl.gcgl.GcglClgc" table="GCGL_CLGC">
+	<!-- schema相当于用户，a它决定了表所生成的位置，它的值是pl/sql中对应的USER，此处为idms,即项目名
+	一般不写，默认为所在项目用户下生成 -->
+		<id name="id" type="java.lang.Long">
+			<column name="ID" precision="22" scale="0" />
+			<generator class="sequence">
+				<param name="sequence">S_GCGL_CLGC</param>
+			</generator>
+		</id>
+		<property name="bh" type="java.lang.String">
+			<column name="BH" length="50" />
+		</property>
+		<property name="mc" type="java.lang.String">
+			<column name="MC" length="250" />
+		</property>
+		<property name="clgcyj" type="java.lang.String">
+			<column name="CLGCYJ" length="100" />
+		</property>
+		<property name="clcx" type="java.lang.String">
+			<column name="CLCX" length="100" />
+		</property>
+		<property name="czjn" type="java.lang.String">
+			<column name="CZJN" length="250" />
+		</property>
+		<property name="kzhd" type="java.lang.String">
+			<column name="KZHD" length="100" />
+		</property>
+		<property name="jsffmc" type="java.lang.String">
+			<column name="JSFFMC" length="250" />
+		</property>
+		<property name="jsssbf" type="java.lang.String">
+			<column name="JSSSBF" length="500" />
+		</property>
+		<property name="hjtj" type="java.lang.String">
+			<column name="HJTJ" length="100" />
+		</property>
+		<property name="pdzz" type="java.lang.String">
+			<column name="PDZZ" length="100" />
+		</property>
+		<property name="jsjl" type="java.lang.String">
+			<column name="JSJL" length="20" />
+		</property>
+		<property name="djry" type="java.lang.String">
+        	<column name="DJRY" length="20" />
+        </property>
+        <property name="ssbm" type="java.lang.String">
+			<column name="SSBM" length="20" />
+		</property>
+		<property name="djrq" type="java.util.Date">
+			<column name="DJRQ" length="7" />
+		</property>
+		<property name="cldd" type="java.lang.String">
+			<column name="cldd" length="20" />
+		</property>
+		<property name="glbm" type="java.lang.String">
+			<column name="GLBM" length="20" />
+		</property>
+		<property name="clyqwj" type="java.lang.String">
+			<column name="CLYQWJ" length="200" />
+		</property>
+		<property name="dw" type="java.lang.String">
+			<column name="DW" length="20" />
+		</property>
+		<property name="zydlb" type="java.lang.String">
+			<column name="ZYDLB" length="20" />
+		</property>
+		<property name="zt" type="java.lang.String">
+			<column name="ZT" length="20" />
+		</property>
+		<property name="wjbh" type="java.lang.String">
+			<column name="WJBH" length="20" />
+		</property>
+        <!-- 单向的一对多关系只需在一方进行映射配置；<set>元素描述的字段对应的类型为java.util.Set;name代表多方的字段名，table为关联表名，
+         table为关联表的名称，inverse用于表示双向关联中被动的一方，inverse值为false的一方负责维护关联关系，inverse默认值为false;
+         lazy表示是否 延迟加载，cascade代表级联操作，sort为排序关系，<key>子元素的column属性指定关联表的外键
+         <one-to many>子元素的class属性指定了关联类的名称 -->
+		<set name="gccs" inverse="true" cascade="all">
+			<key>
+				<column name="CLGC" />
+			</key>
+			<one-to-many class="idms.model.jlgl.gcgl.GcglGccs" />
+		</set>
+		 <set name="gcys" inverse="true" cascade="all" >
+			<key>
+				<column name="CLGC" />
+			</key>
+			<one-to-many class="idms.model.jlgl.gcgl.GcglGcys" />
+		</set> 
+		
+	</class>
+</hibernate-mapping>

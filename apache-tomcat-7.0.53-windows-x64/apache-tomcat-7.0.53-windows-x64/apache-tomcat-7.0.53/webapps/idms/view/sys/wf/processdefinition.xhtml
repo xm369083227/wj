@@ -1,0 +1,145 @@
+<%@ page language="java" pageEncoding="gb2312"
+	contentType="text/html;charset=UTF-8"%>
+<%@ include file="/common/include/taglibs.jsp"%>
+<f:view>
+	<html>
+	<head>
+	<title>添加新测量过程</title>
+	<link rel="stylesheet" type="text/css"
+		href="<%=request.getContextPath() %>/common/cssStyle/Skin/orange/css.css">
+	<link href="<%=request.getContextPath() %>/common/cssStyle/example.css"
+		rel="stylesheet" type="text/css" />
+	<link
+		href="<%=request.getContextPath() %>/common/cssStyle/coolbutton.css"
+		rel="stylesheet" type="text/css" />
+	<link href="<%=request.getContextPath() %>/common/cssStyle/style.css"
+		rel="stylesheet" type="text/css" />
+	<link
+		href="<%=request.getContextPath() %>/common/cssStyle/Skin/blue/content.css"
+		rel="stylesheet" type="text/css" />
+	<link
+		href="<%=request.getContextPath() %>/common/cssStyle/Skin/blue/tab.css"
+		rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="/common/scripts/jlelse.js"></script>
+	<script language="javascript" type="text/javascript">
+function listYh(){
+//wid =calculateCenterWidth(340);
+    //hi=calculateCenterHeight(160);
+
+popup=window.open("listYh.jsf","list","height=340,width=340,toolbar=no,left=500,top=250,menubar=no,scrollbars=yes");
+    popup.focus();
+    //return false;
+}
+ </script>
+	</head>
+	<t:saveState value="#{monitorBean}"/>
+	<h:form id="processdefinition">
+		<H1><h:outputText value="#{wf.processMonitor}" />
+		<HR />
+		</H1>
+		<b><h:messages /></b>
+		<H2><h:outputText value="#{wf.processDefinition}" /></H2>
+		<HR>
+		<h:panelGroup>
+			<h:outputText value="流程名称：" style="color: #ff8000; font: bold; font-size: small" />
+			<h:inputText value="#{monitorBean.processname}"/>
+			<t:commandLink actionListener="#{monitorBean.search}" onclick="submit();" >
+				<t:swapImage id="xggys" style="border: 0px" swapImageUrl="/common/images/btns/2/bt_index1.gif"
+					url="/common/images/btns/1/bt_index.gif" />
+			</t:commandLink>
+		</h:panelGroup>
+		<t:dataTable id="processDefinition" rowIndexVar="index"
+			value="#{monitorBean.latestProcessDefinitions}"
+			var="processDefinition" width="100%" styleClass="dqiqsDataTable"
+			columnClasses="dqiqsDataTableTd"
+			rowClasses="dqiqsDataTableRow1,dqiqsDataTableRow2"
+			headerClass="dqiqsDataTableHead" rows="10" cellpadding="0"
+			cellspacing="0">
+			<%-- nitrox:varType="iqs.webapp.wf.ProcessDefinitionBean" --%>
+			<h:column>
+				<h:outputText value="#{index+1}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="ID" />
+				</f:facet>
+				<h:outputText value="#{processDefinition.id}" />
+			</h:column>
+			<t:column>
+				<f:facet name="header">
+					<h:outputText value="#{wf.processName}" />
+				</f:facet>
+				<t:commandLink id="pname" action="pinstance"  actionListener="#{monitorBean.goprocessname}" immediate="true">
+					
+					<h:outputText value="#{processDefinition.name}"  style="color: darkorange"/>
+				</t:commandLink>
+			</t:column>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="#{wf.processStartTask}" />
+				</f:facet>
+				<h:outputText value="#{processDefinition.startTask}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="#{wf.version}" />
+				</f:facet>
+				<h:commandLink action="version" immediate="true">
+					<t:updateActionListener
+						property="#{moniVersion.processDefinitionName}"
+						value="#{processDefinition.name}" />
+					<h:outputText value="#{processDefinition.version}" style="color: darkorange"/>
+				</h:commandLink>
+			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="#{wf.instanceMount}" />
+				</f:facet>
+				<h:outputText value="#{processDefinition.instancesCount}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="#{wf.processDescription}" />
+				</f:facet>
+				<h:outputText value="#{processDefinition.description}" />
+			</h:column>
+				<h:column>
+					<h:commandLink
+						action="#{monitorBean.deleteProcessDefinition}"
+						immediate="true">
+						<h:outputText value="#{wf.delete}" style="color: darkorange"/>
+						<t:updateActionListener value="#{processDefinition }" property="#{monitorBean.processDefinitionBean }"></t:updateActionListener>
+					</h:commandLink>
+				</h:column>
+		</t:dataTable>
+		<HR>
+		<h:panelGrid width="100%" style="text-align:right;">
+							<t:htmlTag value="br" style="font-size: 2px" />
+							<h:panelGrid columns="2">
+							<t:dataScroller id="scroll_1" for="processDefinition" fastStep="10" immediate="false" styleClass="page"
+					paginator="false" paginatorMaxPages="5" paginatorTableClass="paginator" pageCountVar="pageCount"
+					pageIndexVar="pageIndex" rowsCountVar="rowsCount" style="font:12px" displayedRowsCountVar="displayedRowsCountVar"
+					firstRowIndexVar="firstRowIndex" lastRowIndexVar="lastRowIndex">
+					<f:facet name="first">
+						<h:outputText value="#{megs.first}" />
+					</f:facet>
+					<f:facet name="last">
+						<h:outputText value="#{megs.last}" />
+					</f:facet>
+					<f:facet name="previous">
+						<h:outputText value="#{megs.previous}" />
+					</f:facet>
+					<f:facet name="next">
+						<h:outputText value="#{megs.next}" />
+					</f:facet>
+					<h:outputFormat value="#{megs.datascroller}" styleClass="standard" style="text-align: right; width: 100%">
+						<f:param value="#{rowsCount}" />
+						<f:param value="#{pageIndex}" />
+						<f:param value="#{pageCount}" />
+					</h:outputFormat>
+				</t:dataScroller>
+							</h:panelGrid>
+						</h:panelGrid>
+	</h:form>
+	</HTML>
+</f:view>

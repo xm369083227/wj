@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process-diagram name="检定周期调整" width="979" height="641">
+  <node name="开始" x="144" y="24" width="181" height="40">
+    <transition name="提交">
+      <label x="5" y="-10"/>
+    </transition>
+  </node>
+  <node name="计量管理员申请" x="144" y="96" width="181" height="40">
+    <transition name="提交">
+      <label x="5" y="-10"/>
+    </transition>
+    <transition name="取消">
+      <label x="5" y="-10"/>
+      <bendpoint w1="219" h1="3" w2="219" h2="-295"/>
+      <bendpoint w1="221" h1="181" w2="221" h2="-117"/>
+      <bendpoint w1="221" h1="296" w2="221" h2="-2"/>
+      <bendpoint w1="222" h1="509" w2="222" h2="5"/>
+    </transition>
+  </node>
+  <node name="主管领导审批" x="144" y="168" width="181" height="40">
+    <transition name="提交">
+      <label x="5" y="-10"/>
+    </transition>
+  </node>
+  <node name="责任工程师审批" x="144" y="240" width="181" height="40">
+    <transition name="提交">
+      <label x="5" y="-10"/>
+    </transition>
+  </node>
+  <node name="计量科长审批" x="144" y="312" width="181" height="40">
+    <transition name="提交">
+      <label x="5" y="-10"/>
+    </transition>
+  </node>
+  <node name="检定员确认" x="144" y="384" width="181" height="37">
+    <transition name="提交">
+      <label x="5" y="-10"/>
+    </transition>
+  </node>
+  <node name="是否外送" x="144" y="456" width="181" height="40">
+    <transition name="是">
+      <label x="5" y="-10"/>
+    </transition>
+    <transition name="否">
+      <label x="5" y="-10"/>
+      <bendpoint w1="164" h1="2" w2="164" h2="-140"/>
+      <bendpoint w1="164" h1="129" w2="164" h2="-13"/>
+    </transition>
+  </node>
+  <node name="分厂人员确认" x="144" y="528" width="181" height="40">
+    <transition name="结束申请">
+      <label x="5" y="-10"/>
+    </transition>
+  </node>
+  <node name="结束" x="144" y="600" width="181" height="40"/>
+</process-diagram>

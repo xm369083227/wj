@@ -1,0 +1,123 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+<f:view contentType="text/html">
+	<h:head>
+		<title>IDMS</title>
+		<ui:include src="/common/templates/ui.xhtml"></ui:include>
+	</h:head>
+	<h:body>
+		<p:growl id="growlid" sticky="true" autoUpdate="true" />
+		<p:dialog id="dlg1" header="#{gcglBhggcMb.edit?'修改':'详情'}"
+			widgetVar="opendlg" height="550px" width="900px" modal="true">
+			<ui:include src="/view/jlgl/gcgl/bhggcEdit.xhtml"></ui:include>
+		</p:dialog>
+		<h:form id="form"
+			style="margin-bottom:10px;width:1230px;margin-top:10px">
+			<h:panelGrid width="99%">
+				<p:panel header="不合格过程相关信息检索">
+					<h:panelGrid columns="6" width="1200px" align="left">
+						<h:outputText value="评定单序号："></h:outputText>
+						<p:inputText value="#{gcglBhggcMb.queryObj.pddxh}" size="25"></p:inputText>
+						<h:outputText value="测量过程名称："></h:outputText>
+						<p:inputText value="#{gcglBhggcMb.gcmc}" size="25"></p:inputText>
+						<h:outputText value="实施部门："></h:outputText>
+						<p:inputText id="tid" value="#{gcglBhggcMb.ssbms}"
+							style="width:125px"></p:inputText>
+						<h:outputText value="登记时间："></h:outputText>
+						<h:panelGroup>
+							<p:calendar label="登记时间" value="#{gcglBhggcMb.startTime}"
+								size="8" readonlyInput="false" navigator="true"
+								pattern="yyyy-MM-dd" />
+										             至<p:calendar label="登记时间"
+								value="#{gcglBhggcMb.endTime}" size="8" readonlyInput="false"
+								navigator="true" pattern="yyyy-MM-dd" />
+						</h:panelGroup>
+					</h:panelGrid>
+					<h:panelGroup>
+						<p:commandButton value="查询" ajax="true"
+							action="#{gcglBhggcMb.doSearch}" update=":form:data" />
+					</h:panelGroup>
+				</p:panel>
+
+				<p:toolbar>
+					<f:facet name="left">
+						<p:commandButton type="button" value="打印" icon="ui-icon-print">
+							<p:printer target="data" />
+						</p:commandButton>
+						<p:commandButton value="导出为PDF" ajax="false">
+							<p:dataExporter type="pdf" target="data" fileName="bhggc" />
+						</p:commandButton>
+						<p:commandButton value="导出为Excel" ajax="false">
+							<p:dataExporter type="xls" target="data" fileName="bhggc" />
+						</p:commandButton>
+						<p:commandButton value="导出单页Excel" ajax="false">
+							<p:dataExporter type="xls" target="data" fileName="bhggc"
+								pageOnly="true" />
+						</p:commandButton>
+					</f:facet>
+				</p:toolbar>
+				<p:dataTable style="width:1230px" id="data" var="item"
+					value="#{gcglBhggcMb.lazyDataModel}" paginator="true" rows="15"
+					rowIndexVar="rowVar" filterDelay="300" resizableColumns="true "
+					liveResize="true" paginatorPosition="bottom" 			
+					currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+					paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					lazy="true" rowsPerPageTemplate="15,30,50">
+                              
+                              
+               		<p:column headerText="序号" style="width:50px;">
+						<h:outputText value="#{rowVar+1}"></h:outputText>
+					</p:column>
+					<p:column filterBy="#{item.pddxh}" sortBy="#{item.pddxh}"
+						headerText="评定单序号" style="width:220px">
+						<h:outputText value="#{item.pddxh}"></h:outputText>
+					</p:column>
+					<p:column filterBy="#{item.clgc.mc}" sortBy="#{item.mc}"
+						headerText="测量过程名称" style="width:220px">
+						<h:outputText value="#{item.clgc.mc}"></h:outputText>
+					</p:column>
+					<p:column filterBy="#{item.ssbm}" sortBy="#{item.ssbm}"
+						headerText="实施部门" style="width:220px">
+						<h:outputText value="#{item.clgc.ssbm}"></h:outputText>
+					</p:column>
+					<p:column filterBy="#{item.pdsj}" sortBy="#{item.pdsj}"
+						headerText="评定时间" style="width:220px">
+						<h:outputText value="#{item.pdsj}">
+							<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+								timeZone="GMT+8"></f:convertDateTime>
+						</h:outputText>
+					</p:column>
+					<p:column headerText="操作">
+						<h:panelGroup>
+							<p:commandButton actionListener="#{gcglBhggcMb.openPanal}"
+								oncomplete="PF('opendlg').show()" ajax="true" update=":dlg1"
+								title="详情" icon="ui-icon-search">
+								<f:param name="pddid" value="#{item.pddid}"></f:param>
+							</p:commandButton>
+							<p:commandButton actionListener="#{gcglBhggcMb.editPanal}"
+								oncomplete="PF('opendlg').show()" ajax="true" update=":dlg1"
+								title="修改" icon="ui-icon-gear" immediate="true">
+								<f:param name="pddid" value="#{item.pddid}"></f:param>
+							</p:commandButton>
+							<p:commandButton style="margin-left:10px;" title="删除"
+								action="#{gcglBhggcMb.delete}" icon="ui-icon-trash" ajax="true"
+								update=":form:data">
+								<f:param name="pddid" value="#{item.pddid}"></f:param>
+								<p:confirm icon="ui-icon-alert" message="确定删除吗?"></p:confirm>
+							</p:commandButton>
+						</h:panelGroup>
+					</p:column>
+
+				</p:dataTable>
+			</h:panelGrid>
+		</h:form>
+
+	</h:body>
+</f:view>
+</html>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	  <class name="idms.model.base.timer.TasksLogs" table="TIMER_TASKSLOGS" >
+        <id name="id" type="java.lang.Long" column="ID">
+			<generator class="sequence">
+				<param name="sequence">S_TIMER</param>
+			</generator>
+		</id>
+	   <property name="taskName" type="java.lang.String"></property>
+	   <property name="yxjg" type="java.lang.String"></property>
+	   <property name="cfz" type="java.lang.String"></property>
+	   <property name="startDate" type="java.util.Date"></property>
+	   <property name="endDate" type="java.util.Date"></property>
+	   <property name="taskId" type="java.lang.Long"></property>
+	</class>
+</hibernate-mapping>

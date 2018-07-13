@@ -1,0 +1,343 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+	<title>IDMS</title>
+	<ui:include src="/common/templates/ui.xhtml"></ui:include>
+</h:head>
+<h:body>
+	<p:growl id="growlid" showDetail="false" sticky="true"
+		autoUpdate="true"></p:growl>
+	<h:form id="plan">
+
+		<p:toolbar rendered="#{checkConfirmMb.currentTask.zt==1}">
+			<f:facet name="left"> 
+			                               &nbsp;&nbsp;&nbsp;&nbps;
+				<h:outputLabel value="#{checkConfirmMb.jdjh.jhbm}"></h:outputLabel>
+			                               &nbsp;&nbsp;
+			                              <h:outputLabel value="需提前："></h:outputLabel>
+				<h:outputLabel value="#{checkConfirmMb.jdjh.tqsjts}"
+					style="color:red"></h:outputLabel>
+			                               &nbsp;&nbsp;
+			                              <h:outputLabel value="天送检！"></h:outputLabel>
+			                              <p:commandButton value="导出为Excel" ajax="false">
+							<p:dataExporter type="xls" target="data" fileName="jljdy_jdrw" />
+						</p:commandButton>
+						<p:commandButton value=" 设 备 送  检 " update=":plan:data"
+					actionListener="#{checkConfirmMb.sendCheckSbxx}" >
+					<f:param name="ID" value="#{checkConfirmMb.varchObj.id}"></f:param>
+					</p:commandButton>
+				<p:commandButton value=" 设 备 检定 " 
+					action="#{checkConfirmMb.sbxxCheckAction()}" rendered="#{checkConfirmMb.renderd}">
+				</p:commandButton>
+				<p:commandButton action="#{checkConfirmMb.submitTasks}" ajax="true"
+					update=":plan:data" value="提交任务" rendered="#{checkConfirmMb.renderd}">
+					<f:param name="ID" value="#{checkConfirmMb.varchObj.id}" ></f:param>
+				</p:commandButton>
+				<p:commandButton value="关闭当前待办项"
+					action="#{checkConfirmMb.endTasks()}">
+				</p:commandButton>
+				
+			</f:facet>
+		</p:toolbar>
+		<p:panel>
+			
+			<h:outputLabel value="全选"
+				style="color: brown; font-size: x-small; font-weight: normal" />
+			<f:verbatim>
+				<input type="checkbox" onclick="selectall(this)" />
+				<script>   
+		            function   selectall(obj)
+		            {   
+		                  var obj=document.getElementsByTagName("input");    
+		                  for(i=0;i&lt;obj.length;i++){
+		                     if(obj[i].type=='checkbox' ){
+		                        if(obj[i].disabled==false)
+		                        {
+		                                obj[i].setAttribute('checked', 'checked'); //setAttribute设置自定义属性
+		                        }
+		                      } 
+		                   }  
+		                  
+		               }
+                   </script>
+			</f:verbatim>			
+		</p:panel>
+				
+		
+
+		<p:dataTable id="data" var="obj" style="width:1300px;"
+			value="#{checkConfirmMb.lazyDataModel}" paginator="true"
+			rows="#{checkConfirmMb.pageSize}" widgetVar="cellSbxx"
+			rowKey="#{obj.id}" filterDelay="300" resizableColumns="true"
+			liveResize="true" paginatorPosition="bottom" rowIndexVar="rowVar"
+			paginatorTemplate="总数：#{checkConfirmMb.lazyDataModel.rowCount} {CurrentPageReport} 
+							            {FirstPageLink} {PreviousPageLink} {PageLinks}
+		                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			lazy="true" rowsPerPageTemplate="20,50,100">
+
+
+			<p:column  width="15" >
+				<h:selectBooleanCheckbox
+					valueChangeListener="#{checkConfirmMb.onRowSelect(obj)}"
+					disabled="#{(obj.rwzt==6||obj.rwzt==29||obj.rwzt==15||obj.rwzt==16||obj.rwzt==20||obj.rwzt==22||obj.rwzt==23
+					||obj.rwzt==11||obj.rwzt==12||obj.rwzt==13||obj.rwzt==17||obj.rwzt==18||obj.rwzt==19||obj.rwzt==31)}"
+					value="#{obj.marked}">
+					<p:ajax event="change" update=":plan:data"></p:ajax>
+				</h:selectBooleanCheckbox>
+			</p:column>
+			<p:column headerText="序号" width="15">
+				<h:outputText value="#{rowVar+1}"></h:outputText>
+			</p:column>
+
+
+			<p:column filterBy="#{obj.jlbh}"
+				width="70"
+				rendered="#{sys.sbxx.jlbh.sfsx}" headerText="#{sys.sbxx.jlbh.zdms}">
+				<h:outputText value="#{obj.sbxx.jlbh}"></h:outputText>
+			</p:column>
+			<p:column  filterBy="#{obj.sbmc}"
+			   width="70" 
+				rendered="#{sys.sbxx.sbmc.sfsx}" headerText="#{sys.sbxx.sbmc.zdms}">
+				<h:outputText value="#{obj.sbxx.sbmc}"></h:outputText>
+			</p:column>
+			<p:column  filterBy="#{obj.sybmmc}"
+				width="70" rendered="#{sys.sbxx.sybmmc.sfsx}"
+				headerText="#{sys.sbxx.sybmmc.zdms}">
+				<h:outputText value="#{obj.sbxx.sybmmc}"></h:outputText>
+			</p:column>
+			<p:column  filterBy="#{obj.zdyzd1}"
+				width="70" rendered="#{sys.sbxx.zdyzd1.sfsx}"
+				headerText="#{sys.sbxx.zdyzd1.zdms}">
+				<h:outputText value="#{obj.sbxx.zdyzd1}"></h:outputText>
+			</p:column>
+			<p:column width="50" rendered="#{sys.sbxx.jdzq.sfsx}"
+				headerText="#{sys.sbxx.jdzq.zdms}" style="text-align:center">
+				<h:outputText value="#{obj.sbxx.jdzq}月"></h:outputText>
+			</p:column>
+			<p:column  width="70" filterBy="#{obj.ggxh}"
+				rendered="#{sys.sbxx.ggxh.sfsx}" headerText="#{sys.sbxx.ggxh.zdms}"
+				style="text-align:center">
+				<h:outputText value="#{obj.sbxx.ggxh}"></h:outputText>
+			</p:column>
+			<p:column  width="40"
+				rendered="#{sys.sbxx.gllb.sfsx}" headerText="#{sys.sbxx.gllb.zdms}"
+				style="text-align:center">
+				<h:outputText value="#{obj.sbxx.gllb}"></h:outputText>
+			</p:column>
+			<p:column  width="50"
+				rendered="#{sys.sbxx.sbzt.sfsx}" headerText="#{sys.sbxx.sbzt.zdms}"
+				style="text-align:center">
+				<h:outputText value="#{obj.sbxx.sbzt}"></h:outputText>
+			</p:column>
+			<p:column  width="50"
+				rendered="#{sys.sbxx.ccbh.sfsx}" headerText="#{sys.sbxx.ccbh.zdms}"
+				style="text-align:center">
+				<h:outputText value="#{obj.sbxx.ccbh}"></h:outputText>
+			</p:column>
+			<!-- <p:column  width="30" 
+				rendered="#{sys.sbxx.sfqj.sfsx}" headerText="#{sys.sbxx.sfqj.zdms}"
+				style="text-align:center">
+				<h:outputText value="#{obj.sbxx.sfqj?'是':'否'}"
+					style="color:#{obj.sbxx.sfqj?'red':'green'}"></h:outputText>
+			</p:column>
+			<p:column  width="40"
+				rendered="#{sys.sbxx.sfbzq.sfsx}"
+				headerText="#{sys.sbxx.sfbzq.zdms}" style="text-align:center">
+				<h:outputText value="#{obj.sbxx.sfbzq?'是':'否'}"
+					style="color:#{obj.sbxx.sfbzq?'red':'green'}"></h:outputText>
+			</p:column> -->
+			<p:column  width="55"
+				rendered="#{sys.sbxx.fyxrq.sfsx}"
+				headerText="#{sys.sbxx.fyxrq.zdms}">
+				<h:outputText value="#{obj.sbxx.fyxrq}">
+					<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+						timeZone="GMT+8" />
+				</h:outputText>
+			</p:column>
+
+			<p:column  width="50"
+				rendered="#{sys.sbxx.jdfs.sfsx}" headerText="#{sys.sbxx.jdfs.zdms}"
+				style="text-align:center">
+				<h:outputText value="#{obj.sbxx.jdfs}"></h:outputText>
+			</p:column>
+			<p:column  width="70" headerText="检定状态"
+				style="text-align:center" filterBy="#{obj.rwztmc}">
+				<f:facet name="filter">
+			                <p:selectOneMenu  onchange="PF('cellSbxx').filter()">
+			                    <f:selectItem itemLabel="" itemValue="#{null}" noSelectionOption="true" />
+			                    <f:selectItems value="#{selectSbxxBean.rwztItems}" var="obj"
+			                    itemLabel="#{obj.key}" itemValue="#{obj.key}"></f:selectItems>
+			                    
+			                </p:selectOneMenu>
+			                </f:facet>
+				<h:outputText value="#{obj.rwztmc}"
+					style="color:#{ obj.rwzt eq 5?'green':'red'}"></h:outputText>
+
+			</p:column>
+
+			<p:column  width="50" headerText="检定结果">
+				<h:outputText value="#{obj.jdjg}" style="text-align:center"></h:outputText>
+			</p:column>
+			<p:column width="80" headerText="操作"
+				rendered="#{checkConfirmMb.jdjh.jhlx!=4}">
+				<p:commandLink value="报废"
+					actionListener="#{checkConfirmMb.applySbbf}" immediate="true"
+					rendered="#{(obj.jdjg=='报废'||obj.rwzt==14||obj.rwzt==15||obj.rwzt==16||obj.rwzt==25||obj.rwzt==28)}"
+					update=":sbbfform" oncomplete="PF('dialogSbbf').show()"
+					style="color:orange">
+					<f:param name="TASK_ID" value="#{obj.id}"></f:param>
+				</p:commandLink>
+				<h:outputText value="报废"
+					rendered="#{!(obj.rwzt==5||obj.rwzt==14||obj.rwzt==15||obj.rwzt==16||obj.rwzt==25||obj.rwzt==28)}" />
+				&nbps;
+				&nbps;&nbsp;
+				 <p:commandLink value="维修"
+					actionListener="#{checkConfirmMb.applySbwx}" immediate="true"
+					rendered="#{obj.jdjg=='维修'||obj.rwzt==27||obj.rwzt==20||obj.rwzt==21||obj.rwzt==25||obj.rwzt==28}"
+					style="color:orange" update=":sbwxform"
+					oncomplete="PF('dialogSbwx').show()">
+					<f:param name="TASK_ID" value="#{obj.id}"></f:param>
+				</p:commandLink>
+				<h:outputText value="维修"
+					rendered="#{!(obj.rwzt==5||obj.rwzt==27||obj.rwzt==20||obj.rwzt==21||obj.rwzt==25||obj.rwzt==28)}" />
+			</p:column>
+		</p:dataTable>
+
+	</h:form>
+
+
+	<p:dialog id="dialogidSbbf" header="设备报废" widgetVar="dialogSbbf"
+		maximizable="true" height="400px" width="700px" modal="true">
+		<h:form id="sbbfform" enctype="multipart/form-data">
+			<p:tabView id="tabview">
+				<p:tab title="设备报废">
+					<p:panelGrid columns="1">
+						<h:panelGrid columns="4">
+							<h:outputText value="申请人："></h:outputText>
+							<p:inputText value="#{checkConfirmMb.varchObj.sqr}" size="20"
+								readonly="true"></p:inputText>
+							<h:outputText value="申请时间："></h:outputText>
+							<p:inputText value="#{checkConfirmMb.varchObj.kssj}" size="20"
+								readonly="true">
+								<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+									timeZone="GMT+8"></f:convertDateTime>
+							</p:inputText>
+							<h:outputText value="设备名称："></h:outputText>
+							<p:inputText value="#{checkConfirmMb.varchObj.sbglSbxx.sbmc}"
+								size="20" readonly="true"></p:inputText>
+							<h:outputText value="计量编号："></h:outputText>
+							<p:inputText value="#{checkConfirmMb.varchObj.sbglSbxx.jlbh}"
+								size="20" readonly="true"></p:inputText>
+							<h:outputText value="出厂编号："></h:outputText>
+							<p:inputText value="#{checkConfirmMb.varchObj.sbglSbxx.ccbh}"
+								size="20" readonly="true"></p:inputText>
+							<h:outputText value="使用部门："></h:outputText>
+							<p:inputText value="#{checkConfirmMb.varchObj.sbglSbxx.sybmmc}"
+								size="20" readonly="true"></p:inputText>
+						</h:panelGrid>
+						<h:panelGrid columns="2">
+							<h:panelGroup>
+								<h:outputText value="报废原因："></h:outputText>
+								<h:outputText value="*" style="color: red" />
+							</h:panelGroup>
+							<p:inputTextarea value="#{checkConfirmMb.varchObj.xgyy}" rows="4"
+								cols="70" required="true" requiredMessage="报废原因：不能为空！"></p:inputTextarea>
+							</h:panelGrid>
+						<h:panelGrid columns="2">
+						<h:outputText value="请选择责任工程师:"></h:outputText>
+						<p:selectOneMenu value="#{checkConfirmMb.selectedZrgcs}" rendered="#{(checkConfirmMb.jdrw.rwzt==5||checkConfirmMb.jdrw.rwzt==14)}">
+							<f:selectItems value="#{checkConfirmMb.zrgcs}" var="obj"
+							 itemValue="#{obj.zsmc}" itemLabel="#{obj.zsmc}"></f:selectItems>
+						</p:selectOneMenu>
+						<p:inputText value="#{checkConfirmMb.varchObj.pzr}" size="20"
+						rendered="#{!(checkConfirmMb.jdrw.rwzt==14||checkConfirmMb.jdrw.rwzt==5)}" readonly="true"/>
+						</h:panelGrid>
+					</p:panelGrid>
+				</p:tab>
+			</p:tabView>
+			<h:inputHidden id="lovdiv" value="#{checkConfirmMb.showLovDiv}" />
+			<p:commandButton value="保存" update=":plan:data :sbbfform:lovdiv"
+				ajax="true" actionListener="#{checkConfirmMb.saveSbbf}"
+				rendered="#{!(checkConfirmMb.jdrw.rwzt==15||checkConfirmMb.jdrw.rwzt==16)}"
+				oncomplete="if ('false'==$('#sbbfform\\:lovdiv').val()){PF('dialogSbbf').hide()}"
+				style="margin-left: 260px"></p:commandButton>
+				&nbsp;&nbsp;
+		 <p:commandButton value="取消" update=":plan :sbbfform" ajax="true"
+				actionListener="#{checkConfirmMb.cancelSbbf}"
+				rendered="#{!(checkConfirmMb.jdrw.rwzt==15||checkConfirmMb.jdrw.rwzt==16)}"
+				oncomplete="{PF('dialogSbbf').hide()}"></p:commandButton>
+		</h:form>
+	</p:dialog>
+
+	<p:dialog id="dialogidSbwx" header="设备维修" widgetVar="dialogSbwx"
+		maximizable="true" height="400px" width="700px" modal="true">
+		<h:form id="sbwxform" enctype="multipart/form-data">
+			<p:tabView id="tabview">
+				<p:tab title="设备维修">
+					<p:panelGrid columns="1">
+						<h:panelGrid columns="4">
+							<h:outputText value="设备名称："></h:outputText>
+							<p:inputText value="#{checkConfirmMb.varchObj.sbglSbxx.sbmc}"
+								size="20" readonly="true"></p:inputText>
+							<h:outputText value="计量编号："></h:outputText>
+							<p:inputText value="#{checkConfirmMb.varchObj.sbglSbxx.jlbh}"
+								size="20" readonly="true"></p:inputText>
+							<h:outputText value="出厂编号："></h:outputText>
+							<p:inputText value="#{checkConfirmMb.varchObj.sbglSbxx.ccbh}"
+								size="20" readonly="true"></p:inputText>
+							<h:outputText value="使用部门："></h:outputText>
+							<p:inputText value="#{checkConfirmMb.varchObj.sbglSbxx.sybmmc}"
+								size="20" readonly="true"></p:inputText>
+							<h:outputText value="修理单位："></h:outputText>
+							<p:inputText value="#{checkConfirmMb.sbrzWxjl.xldw}" size="20"></p:inputText>
+							<h:outputText value="修理部门："></h:outputText>
+							<p:inputText value="#{checkConfirmMb.sbrzWxjl.xlbm}" size="20"></p:inputText>
+						</h:panelGrid>
+						<h:panelGrid columns="2">
+							<h:panelGroup>
+								<h:outputText value="维修原因："></h:outputText>
+								<h:outputText value="*" style="color:red" />
+							</h:panelGroup>
+							<p:inputTextarea value="#{checkConfirmMb.varchObj.xgyy}" rows="3"
+								cols="70" label="维修原因" required="true"></p:inputTextarea>
+						</h:panelGrid>
+						<h:panelGrid columns="2">
+						<h:outputText value="请选择维修人员:"></h:outputText>
+						<p:selectOneMenu value="#{checkConfirmMb.sbrzWxjl.xlry}" rendered="#{(checkConfirmMb.jdrw.rwzt==5||checkConfirmMb.jdrw.rwzt==27)}">
+							<f:selectItems value="#{checkConfirmMb.wxrys}" var="obj"
+							 itemValue="#{obj.zsmc}" itemLabel="#{obj.zsmc}"></f:selectItems>
+						</p:selectOneMenu>
+						<p:inputText value="#{checkConfirmMb.sbrzWxjl.xlry}" size="20"
+						rendered="#{!(checkConfirmMb.jdrw.rwzt==5||checkConfirmMb.jdrw.rwzt==27)}" readonly="true"/>
+						</h:panelGrid>
+					</p:panelGrid>
+				</p:tab>
+			</p:tabView>
+			<h:inputHidden id="lovdiv" value="#{checkConfirmMb.showLovDiv}" />
+			<p:commandButton value="保存" update=":plan :sbwxform:lovdiv"
+				ajax="true" actionListener="#{checkConfirmMb.saveSbwx}"
+				rendered="#{!(checkConfirmMb.jdrw.rwzt==20||checkConfirmMb.jdrw.rwzt==21)}"
+				oncomplete="if ('false'==$('#sbwxform\\:lovdiv').val()){PF('dialogSbwx').hide()}"
+				style="margin-left: 260px"></p:commandButton>
+				&nbsp;&nbsp;
+		 <p:commandButton value="取消" update=":plan :sbwxform" ajax="true"
+				actionListener="#{checkConfirmMb.cancelSbwx}"
+				rendered="#{!(checkConfirmMb.jdrw.rwzt==20||checkConfirmMb.jdrw.rwzt==21)}"
+				oncomplete="{PF('dialogSbwx').hide()}"></p:commandButton>
+		</h:form>
+	</p:dialog>
+
+
+
+
+
+
+
+</h:body>
+
+</html>

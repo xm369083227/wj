@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="idms.model.jlgl.gskh.Ryzz" table="GSKH_RYZZ">
+		<id name="id" type="java.lang.Long" column="ID" length="22">
+			<generator class="sequence">
+				<param name="sequence">S_GSKH_RYZZ</param>
+			</generator>
+		</id>
+		<many-to-one name="yhbm" class="idms.model.base.User">
+			<column name="YHBM" />
+		</many-to-one>
+		<property name="jsmcs" type="java.lang.String"  />
+		<property name="zrfwsbfl" type="java.lang.String"  />
+		<property name="zrfwgxbm" type="java.lang.String"  />
+		<property name="zsbh" type="java.lang.String" column="ZSBH" />
+		<property name="yxq" type="java.util.Date" column="YXQ"	length="7" />
+		<property name="khdw" type="java.lang.String" column="KHDW" length="250" />
+		<property name="khnr" type="java.lang.String" column="KHNR" length="250" />
+		<property name="khsj" type="java.util.Date" column="KHSJ" length="7" />
+		<property name="xs" type="java.lang.Integer" column="XS" />
+
+	</class>
+</hibernate-mapping>

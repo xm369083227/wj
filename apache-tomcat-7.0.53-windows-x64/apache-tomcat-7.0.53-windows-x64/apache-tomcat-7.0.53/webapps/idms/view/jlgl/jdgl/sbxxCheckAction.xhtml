@@ -1,0 +1,296 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+	<title>IDMS</title>
+	<ui:include src="/common/templates/ui.xhtml"></ui:include>
+</h:head>
+<h:body>
+	<p:growl id="growlid" showDetail="false" sticky="true" autoUpdate="true"></p:growl>
+	<p:layout>
+		<p:layoutUnit position="center">
+			<h:form id="dialogform" enctype="multipart/form-data">
+				<p:tabView id="tabview">
+					<p:tab title="检定记录">
+						<p:panelGrid columns="2"
+							style="height: 360px;width:850px;margin-left:-12px;">
+							<h:panelGrid columns="1" style="height: 360px;width:600px">
+								<h:panelGrid columns="4">
+									<h:outputText value="计量编号："></h:outputText>
+									<p:outputLabel value="#{checkSbxxAction.jdjl.sbxx.jlbh}"></p:outputLabel>
+									<h:outputText value="设备名称："></h:outputText>
+									<p:outputLabel value="#{checkSbxxAction.jdjl.sbxx.sbmc}"></p:outputLabel>
+
+									<h:outputText value="确认间隔："></h:outputText>
+									<p:outputLabel value="#{checkSbxxAction.jdjl.xqrjg}"></p:outputLabel>
+									<h:outputText value="规格型号："></h:outputText>
+									<p:outputLabel value="#{checkSbxxAction.jdjl.sbxx.ggxh}"></p:outputLabel>
+									<h:outputText value="出厂编号："></h:outputText>
+									<p:outputLabel value="#{checkSbxxAction.jdjl.sbxx.ccbh}"></p:outputLabel>
+                                    <h:panelGroup>
+									<h:outputText value="环境温度："></h:outputText>
+									<h:outputText value="*" style="color: red" />
+									</h:panelGroup>
+									
+									
+									<p:inputText value="#{checkSbxxAction.jdjl.hjwd}" required="true" requiredMessage="环境温度：不能为空！" size="20"></p:inputText>
+									<h:outputText value="环境湿度："></h:outputText>
+									<p:inputText value="#{checkSbxxAction.jdjl.hjsd}" size="20"></p:inputText>
+									<h:outputText value="大气压力：" rendered="false"></h:outputText>
+									<p:inputText value="#{checkSbxxAction.jdjl.dqyl}" size="20" rendered="false"></p:inputText>
+									
+	                                <h:outputText value="原有效期："></h:outputText>
+									<p:inputText  value="#{checkSbxxAction.jdjl.sbxx.fyxrq}" size="20" readonly="true" >
+										 <f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN" timeZone="GMT+8"/>
+									 </p:inputText>
+									
+										<h:outputText value="检定周期"></h:outputText>
+										<h:panelGroup>
+										<p:inputText value="#{checkSbxxAction.jdjl.sbxx.jdzq}" size="18" readonly="true"/>
+										<h:outputText value="月"/>
+										</h:panelGroup>
+									<h:outputText value="新有效期："></h:outputText>
+									<p:inputText  value="#{checkSbxxAction.jdjl.xyxq}" size="20" readonly="true" >
+										 <f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN" timeZone="GMT+8"/>
+										 </p:inputText>
+									<h:outputText value="检定日期："></h:outputText>
+									<p:calendar label="检定日期" value="#{checkSbxxAction.jdjl.xjdrq}"
+										readonlyInput="false" navigator="true" pattern="yyyy-MM-dd" />
+								    <h:panelGroup  rendered="#{checkSbxxAction.jdjh.jhlx!=4}">
+									<h:outputText value="检定结果："></h:outputText>
+									<h:outputText value="*" style="color: red" />
+									</h:panelGroup>
+									<p:selectOneMenu value="#{checkSbxxAction.jdjl.xjdjg}" rendered="#{checkSbxxAction.jdjh.jhlx!=4}"
+									     required="true" requiredMessage="检定结果：不能为空！">
+										<f:selectItems value="#{selectSbxxBean.jdjgItems}" var="obj"
+											itemLabel="#{obj.key}" itemValue="#{obj.value}" ></f:selectItems>
+									</p:selectOneMenu>
+
+
+
+									<h:outputText value="检定单位：" rendered="false"></h:outputText>
+									<p:inputText value="#{checkSbxxAction.jdjl.xjddw}" size="20" rendered="false"></p:inputText>
+									<h:outputText value="检定员："></h:outputText>
+									<p:inputText value="#{checkSbxxAction.jdjl.jdry}" size="20"></p:inputText>
+									<h:outputText value="检定证书：" rendered="false"></h:outputText>
+									<p:inputText value="#{checkSbxxAction.jdjl.xjdzs}" size="20" rendered="false"></p:inputText>
+									<h:outputText value="检定地点：" rendered="false"></h:outputText>
+									<p:inputText value="#{checkSbxxAction.jdjl.jddd}" size="20" rendered="false"></p:inputText>
+								</h:panelGrid>
+								
+							<h:panelGrid id="gskh" columns="1" style="width:900px" rendered="#{checkSbxxAction.jdjh.jhlx!=4}">
+									<h:panelGroup>
+										<h:panelGroup>
+											<h:outputText value="工时类型"/>
+											<h:outputText value="*" style="color:red"/>
+										</h:panelGroup>
+										<p:inputText value="#{checkSbxxAction.selectGskhbz.lx}" readonly="true" size="35"
+											required="true"></p:inputText>
+										<h:panelGroup>
+											<h:outputText value="工时名称"/>
+											<h:outputText value="*" style="color:red"/>
+										</h:panelGroup>
+										<p:inputText value="#{checkSbxxAction.selectGskhbz.mc}" readonly="true" size="18"></p:inputText>
+										<h:outputText value="规格等级"/>
+										<h:panelGroup>
+										<p:inputText value="#{checkSbxxAction.selectGskhbz.ggdj}" readonly="true" size="15"></p:inputText>
+											<p:commandButton id="dd" onclick="PF('displaydlg').show();return false;"
+												title="查询" icon="ui-icon-search" rendered="#{!checkSbxxAction.grgsbd}"/>
+										</h:panelGroup>
+									</h:panelGroup>
+									<h:panelGroup>
+										<h:outputText value="工时(小时)"/>
+					                	<p:inputText value="#{checkSbxxAction.selectGskhbz.zqjdgs}" readonly="true" size="8"/>
+							        </h:panelGroup>
+							</h:panelGrid>
+							
+							
+							<!-- <h:panelGrid columns="2" rendered="#{checkSbxxAction.jdjh.jhlx!=4}">
+								<h:outputText value="工时（小时）：" />
+								<p:inputText id="djgs" value="#{checkSbxxAction.grgs.djgs}" readonly="true"/>					
+							</h:panelGrid> -->	
+					
+					
+								
+								<h:panelGrid columns="2">
+									<h:outputText value="备注："></h:outputText>
+									<p:inputTextarea value="#{checkSbxxAction.jdjl.bz}" rows="4"
+										cols="80"></p:inputTextarea>
+								</h:panelGrid>
+							</h:panelGrid>
+							<!-- <h:panelGrid columns="2" style="height: 360px">
+								<h:outputLabel value="自动下一行" style="float:right"></h:outputLabel>
+								<p:selectBooleanCheckbox value="#{checkSbxxAction.autoNextRow}"></p:selectBooleanCheckbox>
+							</h:panelGrid> -->
+						</p:panelGrid>
+					</p:tab>
+					<p:tab title="附件管理">
+						<h:panelGrid width="750px"
+							style="margin-top: -10px;margin-left:-17px;">
+							<h:panelGrid width="100%">
+								<p:fileUpload multiple="true"
+									update=":dialogform:tabview:filePaneId"
+									fileUploadListener="#{checkSbxxAction.handleFileUpload}"
+									style="width:100%;" mode="advanced" label="浏览" cancelLabel="取消"
+									uploadLabel="上传" sizeLimit="10240000"
+									invalidSizeMessage="文件必须小于10M" invalidFileMessage="格式不支持"
+									dragDropSupport="false"
+									allowTypes="/(\.|\/)(gif|jpe?g|png|pdf|txt|rar|zip|doc|docx|xls|xlsx)$/">
+								</p:fileUpload>
+								<p:dataTable id="filePaneId" paginator="true"
+									rowIndexVar="rowVar" paginatorPosition="bottom"
+									value="#{checkSbxxAction.fileBean.files}" style="width:100%;"
+									lazy="false" var="file" rows="15" resizableColumns="true "
+									liveResize="true" 
+									currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+									paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+									rowsPerPageTemplate="20,30,50">
+									<p:column headerText="序号" style="width:40px;">
+										<h:outputText value="#{rowVar+1}" />
+									</p:column>
+
+									<p:column headerText="附件名称" style="width:50%">
+										<h:outputText value="#{file.wjmc}" />
+									</p:column>
+
+									<p:column headerText="上传人员" style="width:70px">
+										<p:outputLabel value="#{file.scyhid}"></p:outputLabel>
+									</p:column>
+									<p:column headerText="上传时间" style="width:70px">
+										<h:outputText value="#{file.scrq}">
+											<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+												timeZone="GMT+8" />
+										</h:outputText>
+									</p:column>
+									<p:column headerText="操作" style="width:10%">
+										<h:panelGroup>
+											<p:commandButton id="downId" ajax="false"
+												action="#{checkSbxxAction.fileBean.downFile}"
+												icon="ui-icon-arrowthick-1-s" immediate="true">
+												<f:setPropertyActionListener
+													target="#{checkSbxxAction.fileBean.file}" value="#{file}"></f:setPropertyActionListener>
+											</p:commandButton>
+											<h:outputText value="  "></h:outputText>
+											<p:commandButton id="deleteId" ajax="false"
+												action="#{checkSbxxAction.fileBean.deleteFile}"
+												icon="ui-icon-trash" oncomplete="PF('dialog').show()"
+												update=":dialogform:tabview:filePaneId">
+												<f:setPropertyActionListener
+													target="#{checkSbxxAction.fileBean.file}" value="#{file}"></f:setPropertyActionListener>
+											</p:commandButton>
+										</h:panelGroup>
+									</p:column>
+								</p:dataTable>
+							</h:panelGrid>
+						</h:panelGrid>
+					</p:tab>
+
+
+				</p:tabView>
+				<p:commandButton value="保存检定记录" update=":list :dialogform"
+					ajax="true" actionListener="#{checkSbxxAction.saveJdjl}" onclick="">
+					<!-- <p:ajax update=":dialogform:tabview:dd"
+										immediate="true" /> -->
+					</p:commandButton>
+                           &nbsp;&nbsp;&nbsp;&nbsp;
+                          <p:commandButton value=" 返 回 " immediate="true"
+					 action="#{checkSbxxAction.goBack()}"></p:commandButton>
+
+			</h:form>
+		</p:layoutUnit>
+		<p:layoutUnit position="east" header="检定任务列表">
+			<h:form id="list">
+				<h:panelGrid columns="1" width="100%"
+					styleClass="ui-widget-content-my">
+					<h:panelGrid columns="5">
+						<h:outputLabel value="计量编号："></h:outputLabel>
+						<p:inputText value="#{checkSbxxAction.jlbh}" size="5"></p:inputText>
+						<h:outputLabel value="使用部门："></h:outputLabel>
+						<p:inputText value="#{checkSbxxAction.sybmmc}" size="5"></p:inputText>
+						<p:commandButton value="检索" update=":list:jdrwList"
+							actionListener="#{checkSbxxAction.findJdrwByConditon()}"></p:commandButton>
+					</h:panelGrid>
+					
+					<p:dataList id="jdrwList" value="#{checkSbxxAction.jdrwList}"
+						paginator="true" rows="20"
+						style="width:100%;border: 0px solid #DDD;" var="obj"
+						rowIndexVar="index" type="unordered" itemType="none"
+						paginatorPosition="bottom" styleClass="paginated">
+						<h:outputText value="&nbsp;&nbsp;&nbsp;"></h:outputText>
+						<h:outputText value="#{index+1}"></h:outputText>
+						<h:outputText value="&nbsp;&nbsp;&nbsp;"></h:outputText>
+						<h:outputText value="#{obj.rwztmc}"
+							style="color:#{obj.rwzt==5?'green':'red'}" ></h:outputText>
+						<h:outputText value="&nbsp;&nbsp;&nbsp;"></h:outputText>
+						<p:outputLabel value="#{obj.marked?jc.selected_flag:jc.list_flag}"
+							style="font-size: large;" />
+						<h:outputText value="&nbsp;&nbsp;&nbsp;"></h:outputText>
+
+						<p:commandLink value="#{obj.sbxx.jlbh}" 
+							style="color:#{obj.marked?'orange':''};"
+							update=":list :dialogform" 
+							actionListener="#{checkSbxxAction.viewJdrw(obj.id)}">
+							<f:param name="JDRW_ID" value="#{obj.id}"></f:param>
+						</p:commandLink>
+						&nbsp;
+						<p:commandLink value="&nbsp;&nbsp;#{obj.sbxx.sbmc}"
+							style="color:#{obj.marked?'orange':''};"
+							update=":list :dialogform"
+							actionListener="#{checkSbxxAction.viewJdrw(obj.id)}">
+							<f:param name="JDRW_ID" value="#{obj.id}"></f:param>
+						</p:commandLink>
+						<h:outputText value="&nbsp;&nbsp;&nbsp;"></h:outputText>
+						<h:outputText value="#{obj.sbxx.sybmmc}" ></h:outputText>
+
+					</p:dataList>
+				</h:panelGrid>
+			</h:form>
+		</p:layoutUnit>
+
+	</p:layout>
+	<p:dialog id="dlg" header="工时定额标准" widgetVar="displaydlg" modal="true">
+			<h:form>
+				<p:dataTable id="data1" var="gs" style="width:600px"
+					value="#{gskhQb.lazyDataModel}" paginator="true"
+					widgetVar="gskh" selectionMode="single" rowKey="#{gs.id}"
+					rows="10" rowIndexVar="rowVar" filterDelay="300"
+					resizableColumns="true " liveResize="true"
+					paginatorPosition="bottom"
+					currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+					paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					lazy="true" rowsPerPageTemplate="20,30,50">
+					<p:ajax event="rowSelect" listener="#{checkSbxxAction.onRowSelect}"
+						update=":dialogform:tabview:gskh"
+						oncomplete="PF('displaydlg').hide()" immediate="true" />
+					<p:column headerText="序号" style="width:26px">
+						<h:outputText value="#{rowVar+1}"></h:outputText>
+					</p:column>
+					<p:column sortBy="#{gs.lx}" filterBy="#{gs.lx}"
+						headerText="工时类型">
+						<h:outputText value="#{gs.lx}"></h:outputText>
+					</p:column>
+					<p:column sortBy="#{gs.mc}" filterBy="#{gs.mc}"
+						headerText="工时标准名称">
+						<h:outputText value="#{gs.mc}"></h:outputText>
+					</p:column>
+					<p:column sortBy="#{gs.ggdj}" filterBy="#{gs.ggdj}"
+						headerText="规格等级">
+						<h:outputText value="#{gs.ggdj}"></h:outputText>
+					</p:column>
+					<p:column sortBy="#{gs.zqjdgs}" filterBy="#{gs.zqjdgs}"
+						headerText="周期检定工时">
+						<h:outputText value="#{gs.zqjdgs}"></h:outputText>
+					</p:column>
+					
+				</p:dataTable>
+			</h:form>
+		</p:dialog>
+</h:body>
+
+</html>

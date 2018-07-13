@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="idms.model.jlgl.gcgl.GcglGcys" table="GCGL_GCYS"
+		lazy="false">
+		<id name="id" type="long" column="ID" length="22">
+			<generator class="sequence">
+				<param name="sequence">S_GCGL_GCYS</param>
+			</generator>
+		</id>
+		<!-- 多对一映射：会在多的一端（gcys）加入外键，指向一的一端(clgc)，外键的定义由column属性决定，若无，则默认与实体属性一致 -->
+		<many-to-one name="clgc" class="idms.model.jlgl.gcgl.GcglClgc" not-null="true"  column="CLGC"/>
+		<property name="clsb" type="string" column="CLSB" length="100" />
+		<property name="clfw" type="string" column="CLFW" length="100" />
+		<property name="zqd" type="string" column="ZQD" length="100" />
+		<property name="fbl" type="string" column="FBL" length="100" />
+		<!-- Associations -->
+	</class>
+</hibernate-mapping>
+ 

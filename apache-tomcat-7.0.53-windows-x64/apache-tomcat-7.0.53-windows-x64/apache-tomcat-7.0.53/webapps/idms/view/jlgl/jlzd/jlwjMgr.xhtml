@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+<f:view contentType="text/html">
+
+	<h:head>
+		<title>IDMS</title>
+		<ui:include src="/common/templates/ui.xhtml"></ui:include>
+	</h:head>
+	<h:body>
+		<h:form id="form">
+
+			<h:panelGrid width="99%">
+				<p:panel header="条件查询">
+					<h:panelGrid columns="6">
+						<h:outputText value="文件名称："></h:outputText>
+						<p:inputText value="#{jlzdWjxxMb.varObj.wjmc}" size="25"></p:inputText>
+						<h:outputText value="上传用户："></h:outputText>
+						<p:inputText value="#{jlzdWjxxMb.varObj.scyhid}" size="25"></p:inputText>
+						<h:outputText value="上传日期："></h:outputText>
+						<h:panelGroup>
+							<p:calendar label="上传日期" value="#{jlzdWjxxMb.startTime}" size="8"
+								readonlyInput="false" navigator="true" pattern="yyyy-MM-dd" />
+						                                  至<p:calendar label="上传日期"
+								value="#{jlzdWjxxMb.endTime}" size="8" readonlyInput="false"
+								navigator="true" pattern="yyyy-MM-dd" />
+						</h:panelGroup>
+						<h:outputText value="文件类型："></h:outputText>
+						<p:selectOneMenu value="#{jlzdWjxxMb.varObj.wjlx}"
+							style="width:186px">
+							<f:selectItems value="#{selectSbxxBean.wjlxItems}" var="obj"
+								itemLabel="#{obj.key}" itemValue="#{obj.value}"></f:selectItems>
+						</p:selectOneMenu>
+						<h:outputText value="有效期："></h:outputText>
+						<h:panelGroup>
+							<p:calendar label="有效期" value="#{jlzdWjxxMb.startYxq}" size="8"
+								readonlyInput="false" navigator="true" pattern="yyyy-MM-dd" />
+						                                  至<p:calendar label="有效期"
+								value="#{jlzdWjxxMb.endYxq}" size="8" readonlyInput="false"
+								navigator="true" pattern="yyyy-MM-dd" />
+						</h:panelGroup>
+					</h:panelGrid>
+					<p:commandButton value="查询" ajax="false"
+						action="#{jlzdWjxxMb.doSearch}"></p:commandButton>
+				</p:panel>
+				<p:fileUpload multiple="true" update=":form:filePaneId"
+					fileUploadListener="#{jlzdWjxxMb.handleFileUpload}"
+					style="width:100%;min-width:1200px" mode="advanced" label="浏览"
+					cancelLabel="取消" uploadLabel="上传" sizeLimit="10240000000"
+					invalidSizeMessage="文件必须小于10000M" invalidFileMessage="格式不支持"
+					dragDropSupport="false"
+					allowTypes="/(\.|\/)(gif|jpe?g|png|pdf|txt|rar|zip|doc|docx|xls|xlsx|mp4|avi)$/">
+				</p:fileUpload>
+				<p:dataTable id="filePaneId" paginator="true" rows="13"
+					editable="true" value="#{jlzdWjxxMb.lazyDataModel}"
+					style="width:100%;" var="file" rowsPerPageTemplate="13,30,50"
+					rowIndexVar="rowVar" filterDelay="300"
+					resizableColumns="true " liveResize="true"
+					paginatorPosition="bottom"
+					currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+					paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					lazy="true">
+					<p:ajax event="rowEdit" update=":form:filePaneId"
+						listener="#{jlzdWjxxMb.onRowEdit}"></p:ajax>
+					<p:column headerText="序号" sortBy="#{file.id}" style="width:50px;">
+						<h:outputText value="#{rowVar+1}" />
+					</p:column>
+					<p:column headerText="附件名称" sortBy="#{file.wjmc}" style="width:45%">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{file.wjmc}"></h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{file.wjmc}" style="width:90%"></p:inputText>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="有效期" sortBy="#{file.yxq}" style="width:80px">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{file.yxq}">
+									<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+										timeZone="GMT+8" />
+								</h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:calendar label="有效期" value="#{file.yxq}" style="width:99%"
+									size="8" readonlyInput="false" navigator="true"
+									pattern="yyyy-MM-dd" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="文件类型" sortBy="#{file.wjlx}"
+						style="width:100px">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{file.wjlx}"></h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:selectOneMenu value="#{file.wjlx}" style="width:107px">
+									<f:selectItems value="#{selectSbxxBean.wjlxItems}" var="obj"
+										itemLabel="#{obj.key}" itemValue="#{obj.value}"></f:selectItems>
+								</p:selectOneMenu>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="上传人员" sortBy="#{scyhid}">
+						<p:outputLabel value="#{file.scyhid}"></p:outputLabel>
+					</p:column>
+					<p:column headerText="上传时间" sortBy="#{file.scrq}">
+						<h:outputText value="#{file.scrq}">
+							<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+								timeZone="GMT+8" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="操作" style="width:70px">
+						<h:panelGroup>
+							<p:commandButton id="downId" ajax="false"
+								action="#{jlzdWjxxMb.downFile}" icon="ui-icon-arrowthick-1-s"
+								immediate="true">
+								<f:param name="WJLJ" value="#{file.wjlj}"></f:param>
+								<f:setPropertyActionListener target="#{jlzdWjxxMb.file}"
+									value="#{file}"></f:setPropertyActionListener>
+							</p:commandButton>
+							<h:outputText value="  "></h:outputText>
+							<p:commandButton id="deleteId" ajax="true"
+								actionListener="#{jlzdWjxxMb.delObj}" icon="ui-icon-trash"
+								immediate="true" update=":form:filePaneId">
+								<f:param name="ID" value="#{file.id}"></f:param>
+								<p:confirm icon="ui-icon-alert" message="确定删除吗?"></p:confirm>
+							</p:commandButton>
+						</h:panelGroup>
+
+					</p:column>
+					<p:column style="width:40px">
+						<p:rowEditor></p:rowEditor>
+					</p:column>
+				</p:dataTable>
+
+			</h:panelGrid>
+
+		</h:form>
+
+	</h:body>
+</f:view>
+</html>

@@ -1,0 +1,24 @@
+<!-- The contents of this file will be loaded for each web application -->
+<Context>
+
+    <!-- Default set of monitored resources -->
+    <WatchedResource>WEB-INF/web.xml</WatchedResource>
+	
+    <!-- Uncomment this to disable session persistence across Tomcat restarts -->
+    <!--
+    <Manager pathname="" />
+    -->
+<Resource
+			name="jdbc/iqs"
+			type="javax.sql.DataSource"
+			username="idms"
+			password="idms"
+			driverClassName="oracle.jdbc.OracleDriver"
+			url="jdbc:oracle:thin:@58.206.97.101:1521:jde"
+			maxActive="200"
+			maxIdle="10"
+			maxWait="10000"
+		/>
+
+
+</Context>

@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<ui:include src="/common/templates/ui.xhtml"></ui:include>
+</h:head>
+<body>
+	<p:growl id="growlid" showDetail="false" sticky="true"
+		autoUpdate="true"></p:growl>
+
+
+	<h:form id="processform" style="width: 1200px">
+		<p:panel header="查询条件" style="width:1200px">
+			<h:panelGrid columns="1">
+
+				<h:panelGrid columns="8">
+
+					<p:outputLabel value="主题名" />
+					<p:inputText value="#{packWorkB.ztm}" style=" margin-right:30px;"></p:inputText>
+					<p:outputLabel value="申请部门" />
+					<p:inputText value="#{packWorkB.sqbmmc}" style=" margin-right:30px;"></p:inputText>
+					<p:outputLabel value="流程名称："></p:outputLabel>
+					<p:selectOneMenu value="#{packWorkB.bdlx}">
+						<f:selectItem itemLabel="" itemValue="0"></f:selectItem>
+						<f:selectItems value="#{selectJbpmBean.lcms}"></f:selectItems>
+					</p:selectOneMenu>
+					<p:commandButton value="查询" update=":form:data"
+						action="#{packWorkB.doSearch}" style=" margin-left:200px;" />
+					<p:commandButton value="重置" style="margin-left:5%;" type="reset"></p:commandButton>
+				</h:panelGrid>
+			</h:panelGrid>
+		</p:panel>
+	</h:form>
+	<h:form id="form" style="width: 1200px">
+		<p:dataTable id="data" style="width:1200px" value="#{packWorkB.data}"
+			var="obj" paginator="true" rows="10" rowIndexVar="rowIndex"
+			rowKey="#{obj.gzxid}" liveResize="true" paginatorPosition="bottom"
+			selection="#{packWorkB.selectGzxs}" scrollable="true"
+			scrollHeight="60%"
+			currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+			paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			lazy="true" rowsPerPageTemplate="5,20,30">
+			<p:column selectionMode="multiple" width="2%"
+				style="width:16px;text-align:center" />
+			<p:column headerText="序号" width="2%">
+				<h:outputText value="#{rowIndex+1}" />
+			</p:column>
+			<p:column headerText="主题名" width="15%">
+				<h:outputText value="#{obj.ztm}" />
+			</p:column>
+			<p:column headerText="审批单号" width="15%">
+				<h:outputText value="#{obj.ywno}" />
+			</p:column>
+			<p:column headerText="计量编号" width="8%">
+				<h:outputText value="#{obj.jlbh}"></h:outputText>
+			</p:column>
+			<p:column headerText="设备名称" width="10%">
+				<h:outputText value="#{obj.sbmc}"></h:outputText>
+			</p:column>
+			<p:column headerText="申请部门" width="7%">
+				<h:outputText value="#{obj.sqbmmc}" />
+			</p:column>
+			<p:column headerText="调整类型" width="5%">
+				<h:outputText value="#{obj.tzlx}" />
+			</p:column>
+
+			<p:column headerText="申请原因" width="20%">
+				<h:outputText value="#{obj.xgyy}"></h:outputText>
+			</p:column>
+
+			<p:column headerText="事件内容" width="20%">
+				<h:outputText value="#{obj.sjnrs}" />
+			</p:column>
+			<p:column headerText="操作" width="3%">
+				<p:commandLink id="buttJkID" value="详情" action="#{homeBean.goTask}"
+					style="color: orange" immediate="true">
+					<f:param name="TASK_GZXID" value="#{obj.gzxid}"></f:param>
+					<f:param name="TASK_YWID" value="#{obj.ywid}"></f:param>
+					<f:param name="TASK_LX" value="#{obj.lx}"></f:param>
+				</p:commandLink>
+			</p:column>
+		</p:dataTable>
+		<p:panel style="border:1px solid #ADADAD">
+			<h:panelGrid columns="4" width="1000">
+				<h:outputText value="计量科长："></h:outputText>
+				<p:inputText value="#{packWorkB.spjl_A.qzyhmc}" size="20"
+					readonly="true"></p:inputText>
+				<h:outputText value="审批日期："></h:outputText>
+				<p:inputText label="审批日期" value="#{packWorkB.spjl_A.qzrq}"
+					readonly="true">
+					<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+						timeZone="GMT+8" />
+				</p:inputText>
+			</h:panelGrid>
+			<h:panelGrid columns="2" width="1000">
+				<h:panelGroup>
+					<h:outputText value="审批意见："></h:outputText>
+					<h:outputText value="*" style="color:red" />
+				</h:panelGroup>
+				<p:inputTextarea rows="3" required="true" value="#{packWorkB.qznr}"
+					requiredMessage="审批意见不能为空！" cols="100" maxlength="200"></p:inputTextarea>
+			</h:panelGrid>
+		</p:panel>
+		<h:panelGrid columns="4" style="margin-left: 400px;">
+			<h:panelGroup>
+				<p:commandButton value="提交" ajax="true" update=":form:data"
+					action="#{packWorkB.submit(false)}">
+				</p:commandButton>
+				&nbps;
+				&nbps;&nbsp;
+				<p:commandButton value="退回修改" ajax="true" update=":form:data"
+					action="#{packWorkB.submit(true)}">
+				</p:commandButton>
+			</h:panelGroup>
+
+		</h:panelGrid>
+
+	</h:form>
+
+</body>
+</html>

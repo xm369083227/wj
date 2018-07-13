@@ -1,0 +1,252 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+	<title>IDMS</title>
+	<ui:include src="/common/templates/ui.xhtml"></ui:include>
+</h:head>
+<h:body>
+	<p:growl id="growlid" showDetail="false" sticky="true"
+		autoUpdate="true"></p:growl>
+
+	<p:layout style="min-width:400px;min-height:600px;">
+		<p:layoutUnit position="center">
+			<h:form id="plan1">
+				<p:tabView id="fieldset">
+					<p:tab title="设置">
+						<h:panelGrid columns="4">
+							<p:outputLabel value="任务名称："></p:outputLabel>
+							<p:inputText required="true" maxlength="255"
+								requiredMessage="计划名称不能为空！"
+								value="#{activeTaskMb.activeTask.taskName}"></p:inputText>
+							<p:outputLabel value="开始时间："></p:outputLabel>
+							<p:calendar label="开始时间" id="datetime" required="true"
+								requiredMessage="开始时间不能为空！"
+								value="#{activeTaskMb.activeTask.startTime}" locale="zh_CN"
+								readonlyInput="false" navigator="true"
+								pattern="yyyy-MM-dd HH:mm:ss" />
+							<p:outputLabel value="执行周期："></p:outputLabel>
+							<p:selectOneRadio required="true" requiredMessage="执行周期不能为空！"
+								value="#{activeTaskMb.activeTask.cycle}">
+								<f:selectItem itemLabel="每天（D）" itemValue="24"></f:selectItem>
+								<f:selectItem itemLabel="每周（W）" itemValue="168"></f:selectItem>
+								<f:selectItem itemLabel="每月（M）" itemValue="744"></f:selectItem>
+							</p:selectOneRadio>
+							<h:panelGroup style="margin-left:50px">
+								<h:outputLabel value="启用"></h:outputLabel>
+								<p:selectBooleanCheckbox
+									value="#{activeTaskMb.activeTask.enable}"
+									style="margin-left:4px"></p:selectBooleanCheckbox>
+							</h:panelGroup>
+						</h:panelGrid>
+						<h:panelGrid columns="2">
+							<p:outputLabel value="任务描述"></p:outputLabel>
+							<p:inputTextarea value="#{activeTaskMb.activeTask.taskDescribe}"
+								cols="80" rows="5" label="任务描述" maxlength="2550"></p:inputTextarea>
+						</h:panelGrid>
+					</p:tab>
+
+					<p:tab title="周检计划">
+						<h:panelGrid columns="4">
+							<h:outputText value="使用部门"></h:outputText>
+							<p:selectOneMenu value="#{activeTaskMb.trigCond.sybm}">
+								<f:selectItem itemLabel="所有部门" itemValue=""></f:selectItem>
+								<f:selectItems value="#{selectSbxxBean.jlsbSybmsFFFF}" var="obj"
+									itemLabel="#{obj.key}" itemValue="#{obj.value}"></f:selectItems>
+							</p:selectOneMenu>
+
+
+							<h:outputText value="管理类型："></h:outputText>
+							<p:selectOneMenu value="#{activeTaskMb.trigCond.gllb}"
+								style="width:130px">
+								<f:selectItem itemLabel="-------------------" itemValue=""></f:selectItem>
+								<f:selectItems value="#{selectSbxxBean.gllbItemsFFFF}"
+									var="gllb" itemLabel="#{gllb.key}" itemValue="#{gllb.value}"></f:selectItems>
+							</p:selectOneMenu>
+
+							<h:outputText value="检定方式：" />
+							<h:panelGrid columns="3">
+								<p:selectOneMenu value="#{activeTaskMb.trigCond.jdfs}"
+									style="width:100px">
+									<f:selectItem itemLabel="-------------------" itemValue=""></f:selectItem>
+									<f:selectItems value="#{selectSbxxBean.jdfsItemsFFFF}"
+										var="jdfs" itemLabel="#{jdfs.key}" itemValue="#{jdfs.value}"></f:selectItems>
+								</p:selectOneMenu>
+								<h:outputText value="确认结果：" />
+								<p:selectOneMenu value="#{activeTaskMb.trigCond.qrjg}"
+									style="width:100px">
+									<f:selectItem itemLabel="-------------------" itemValue=""></f:selectItem>
+									<f:selectItems value="#{selectSbxxBean.qrjgItemsFFFF}"
+										var="qrjg" itemLabel="#{qrjg.key}" itemValue="#{qrjg.value}"></f:selectItems>
+								</p:selectOneMenu>
+							</h:panelGrid>
+							<h:outputText value="是否强检：" />
+
+							<h:panelGrid columns="3">
+								<p:selectBooleanCheckbox value="#{activeTaskMb.sfqj}"
+									style="width:50px" />
+								<h:outputText value="是否标准器：" />
+								<p:selectBooleanCheckbox value="#{activeTaskMb.sfbzq}"
+									style="width:50px" />
+							</h:panelGrid>
+
+							<h:outputText value="学科分类：" rendered="#{sys.sbxx.xkfl.sfsx}" />
+							<h:panelGroup>
+								<p:selectOneMenu value="#{activeTaskMb.trigCond.xkflp}"
+									valueChangeListener="#{selectXkflBean.handValueChangeEvent}">
+									<f:selectItem itemLabel="-------------------" itemValue=""></f:selectItem>
+									<f:selectItems value="#{selectXkflBean.parentsFFFF}" var="obj"
+										itemLabel="#{obj.key}" itemValue="#{obj.value}"></f:selectItems>
+									<p:ajax event="change" update=":plan1:fieldset:children" />
+								</p:selectOneMenu>
+
+								<p:selectOneMenu id="children"
+									value="#{activeTaskMb.trigCond.xkfl}">
+									<f:selectItem itemLabel="-------------------" itemValue=""></f:selectItem>
+									<f:selectItems value="#{selectXkflBean.childrensFFFF}"
+										var="obj" itemLabel="#{obj.key}" itemValue="#{obj.value}"></f:selectItems>
+								</p:selectOneMenu>
+							</h:panelGroup>
+							<h:outputText value="提前送检天数："></h:outputText>
+							<p:inputText value="#{activeTaskMb.trigCond.tqsj}" label="提前送检天数"
+								size="20">
+								<f:validateLongRange minimum="3" maximum="30" />
+							</p:inputText>
+						</h:panelGrid>
+					</p:tab>
+				</p:tabView>
+				<p:commandButton id="button"
+					value="#{activeTaskMb.activeTask.id==null ? '添加任务' : '更新任务'}"
+					update=":plan:data" ajax="false"
+					actionListener="#{activeTaskMb.saveTask}"></p:commandButton>
+			</h:form>
+
+			<h:form id="plan">
+				<p:tabView>
+					<p:tab title="活动任务">
+						<h:panelGrid columns="2">
+							<p:outputLabel value="在以下时间段启动的任务状态："></p:outputLabel>
+							<p:outputLabel
+								value="摘要：总数  #{activeTaskMb.activeTaskCount.sumCount}个 ， #{activeTaskMb.activeTaskCount.qyCount} 个正在运行，#{activeTaskMb.activeTaskCount.cgCount} 个成功，#{activeTaskMb.activeTaskCount.ztCount} 个停止，#{activeTaskMb.activeTaskCount.sbCount} 个失败"></p:outputLabel>
+						</h:panelGrid>
+
+					</p:tab>
+				</p:tabView>
+				<p:dataTable id="data" var="obj"
+					value="#{activeTaskMb.lazyDataModel}" paginator="true" rows="5"
+					rowIndexVar="rowVar" filterDelay="300" resizableColumns="true"
+					liveResize="true" paginatorPosition="bottom"
+					currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+					paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					lazy="true" rowsPerPageTemplate="5,10,15">
+
+					<p:column headerText="序号" width="20">
+						<h:outputText value="#{rowVar+1}"></h:outputText>
+					</p:column>
+					<p:column headerText="任务名">
+						<h:outputText value="#{obj.taskName}"></h:outputText>
+					</p:column>
+					<p:column headerText="任务状态" width="50">
+						<h:outputText value="#{obj.enable?'启用':'暂停'}"
+							style="color:#{obj.enable?'green':'red'}"></h:outputText>
+					</p:column>
+
+					<p:column headerText="下次运行时间" width="120">
+						<h:outputText value="#{obj.nextTime}" style="color:red">
+							<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" locale="zh_CN"
+								timeZone="GMT+8" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="上次运行时间" width="120">
+						<h:outputText value="#{obj.lastTime}">
+							<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" locale="zh_CN"
+								timeZone="GMT+8" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="上次运行结果" width="80">
+						<h:outputText value="#{obj.lastYxjg}"></h:outputText>
+					</p:column>
+
+					<p:column width="150">
+						<f:facet name="header">
+							<p:commandButton actionListener="#{activeTaskMb.createTask}"
+								update=":plan1" style="color:red" value="创建"></p:commandButton>
+						</f:facet>
+						<p:commandButton style="color:orange"
+							actionListener="#{activeTaskMb.doTask}" update=":plan:data"
+							value="#{obj.enable?'暂停':'运行'}">
+							<f:param name="TASK_ID" value="#{obj.id}"></f:param>
+						</p:commandButton>
+
+						<p:commandButton style="color:orange"
+							actionListener="#{activeTaskMb.openEditPanal}" update=":plan1"
+							value="修改">
+							<f:param name="TASK_ID" value="#{obj.id}"></f:param>
+							<f:setPropertyActionListener target="#{activeTaskMb.activeTask}"
+								value="#{obj}"></f:setPropertyActionListener>
+						</p:commandButton>
+						<p:commandButton actionListener="#{activeTaskMb.deleteTask}"
+							update=":plan:data" style="color:orange" value="删除">
+							<f:param name="TASK_ID" value="#{obj.id}"></f:param>
+							<p:confirm icon="ui-icon-alert" message="确定删除吗?"></p:confirm>
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</p:layoutUnit>
+
+
+		<p:layoutUnit position="east" header="任务执行历史" style="width:400px"
+			resizable="true" size="400" minSize="40" maxSize="400">
+			<h:form id="planlist">
+				<h:panelGrid columns="2">
+					<p:outputLabel value="在以下时间段启动的任务状态："></p:outputLabel>
+					<p:selectOneMenu
+						valueChangeListener="#{activeTaskMb.findTaskLogsByTime}">
+						<f:selectItem itemLabel="近24小时" itemValue="1"></f:selectItem>
+						<f:selectItem itemLabel="近7天" itemValue="7"></f:selectItem>
+						<f:selectItem itemLabel="近30天" itemValue="30"></f:selectItem>
+						<f:selectItem itemLabel="近60天" itemValue="60"></f:selectItem>
+						<f:ajax event="change" render="planlist"></f:ajax>
+					</p:selectOneMenu>
+					<p:outputLabel
+						value="摘要：总数  #{activeTaskMb.taskLogsCount.sumCount} 个-- #{activeTaskMb.taskLogsCount.qyCount} 个成功，#{activeTaskMb.taskLogsCount.sbCount}个失败"></p:outputLabel>
+				</h:panelGrid>
+
+
+				<p:dataTable id="data1" var="log"
+					value="#{activeTaskMb.taskLogsList}" rows="10" paginator="true"
+					paginatorPosition="bottom" widgetVar="cellSbxx"
+					rowIndexVar="rowVar">
+					<p:column headerText="任务名">
+							     #{log.taskName}
+							  </p:column>
+					<p:column headerText="运行结果">
+							     #{log.yxjg}
+							  </p:column>
+					<p:column headerText="运行开始时间">
+							     #{log.startDate}
+							  </p:column>
+					<p:column headerText="运行结束时间">
+							     #{log.endDate}
+							  </p:column>
+				</p:dataTable>
+			</h:form>
+		</p:layoutUnit>
+
+
+	</p:layout>
+
+
+
+
+
+
+</h:body>
+
+</html>

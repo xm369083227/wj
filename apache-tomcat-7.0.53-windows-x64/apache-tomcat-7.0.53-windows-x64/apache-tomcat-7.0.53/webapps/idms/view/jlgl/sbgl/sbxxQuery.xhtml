@@ -1,0 +1,482 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+	<ui:include src="/common/templates/ui.xhtml"></ui:include>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+</h:head>
+<h:body>
+	<p:dialog id="sbxxDialogId" header="计量设备详情" widgetVar="sbxxDialog" 
+		maximizable="true" height="500px" width="1000px" modal="true">
+		<ui:include src="/view/jlgl/sbgl/viewSbxx.xhtml"></ui:include>
+	</p:dialog>
+	<p:dialog id="sbllId" header="计量设备履历" widgetVar="sbllDialog"
+		maximizable="true" height="500px" width="900px">
+		<ui:include src="/view/jlgl/sbgl/sbllMgr.xhtml"></ui:include>
+	</p:dialog>
+	<p:dialog id="sbZrfwId" header="设备授权" widgetVar="sbZrfwDialog"
+		maximizable="true" height="300px" width="600px">
+		      <h:panelGrid>
+		        <h:form>
+		         <p:panelGrid columns="4">
+		             <h:outputText value="设备名称"></h:outputText>
+		               <p:inputText value="#{sbglSbxxMb.sbxxZrfwUtil.sbxx.sbmc}" readonly="true"></p:inputText>
+		             <h:outputText value="计量编号"></h:outputText>
+		               <p:inputText value="#{sbglSbxxMb.sbxxZrfwUtil.sbxx.jlbh}" readonly="true"></p:inputText>
+		             <h:outputText value="学科分类"></h:outputText>
+		               <p:inputText value="#{sbglSbxxMb.sbxxZrfwUtil.sbxx.xkflmmc}" readonly="true"></p:inputText>
+		             <h:outputText value="使用部门"></h:outputText>
+		               <p:inputText value="#{sbglSbxxMb.sbxxZrfwUtil.sbxx.sybmmc}" readonly="true"></p:inputText>
+		               <h:outputText value="检定方式"> </h:outputText>
+		                 <p:inputText value="#{sbglSbxxMb.sbxxZrfwUtil.sbxx.jdfs}"/>
+		         </p:panelGrid>
+		         </h:form>
+		           <p:fieldset  legend="检定计划"  style="margin-bottom:20px;width:70%;margin-top:10px">
+                            <p:dataList id="jdjhList" value="#{sbglSbxxMb.sbxxZrfwUtil.jdjhList}" 
+                                        rows="100" style="width:100%;border: 0px solid #DDD;"
+					       	            var="obj" rowIndexVar="index" type="unordered" itemType="none" 
+					       	             styleClass="paginated">
+					       	            <h:outputText value="&nbsp;&nbsp;&nbsp;"></h:outputText>
+					       	            <h:outputText value="#{index+1}"></h:outputText>
+					       	            <h:outputText value="&nbsp;&nbsp;&nbsp;"></h:outputText>
+					       	            <h:outputText value="#{obj.jhbm}" ></h:outputText>
+					       	            <h:outputText value="&nbsp;&nbsp;&nbsp;"></h:outputText>
+					       	            <h:outputText value="#{obj.zdrq}" ></h:outputText>
+					       	            <h:outputText value="&nbsp;&nbsp;&nbsp;"></h:outputText>
+					       	            <h:outputText value="#{obj.zdry}" ></h:outputText>
+						        </p:dataList>
+                   </p:fieldset>
+                   
+		          <p:fieldset  legend="计量管理员"  style="margin-bottom:20px;width:70%;margin-top:10px">
+                            
+                            <p:dataList id="jlGlyList" value="#{sbglSbxxMb.sbxxZrfwUtil.userJlGly}" 
+                                        rows="100" style="width:100%;border: 0px solid #DDD;"
+					       	            var="obj" rowIndexVar="index" type="unordered" itemType="none" 
+					       	             styleClass="paginated">
+					       	            <h:outputText value="&nbsp;&nbsp;&nbsp;"></h:outputText>
+					       	            <h:outputText value="#{index+1}"></h:outputText>
+					       	            <h:outputText value="&nbsp;&nbsp;&nbsp;"></h:outputText>
+					       	            <h:outputText value="#{obj.yhbm}" ></h:outputText>
+					       	            <h:outputText value="&nbsp;&nbsp;&nbsp;"></h:outputText>
+					       	            <h:outputText value="#{obj.zsmc}" ></h:outputText>
+					       	            <h:outputText value="&nbsp;&nbsp;&nbsp;"></h:outputText>
+					       	            <h:outputText value="#{obj.bmmc}" ></h:outputText>
+						        </p:dataList>
+                   </p:fieldset>
+                
+                   <p:fieldset  legend="计量检定员"  style="margin-bottom:20px;width:70%;margin-top:10px" rendered="#{sbglSbxxMb.sbxxZrfwUtil.sbxx.jdfs=='自检'}">
+                              <p:dataList id="jlJdyList" value="#{sbglSbxxMb.sbxxZrfwUtil.userJlJdy}" 
+                                       paginator="true" rows="20" style="width:100%;border: 0px solid #DDD;"
+					       	            var="obj" rowIndexVar="index" type="unordered" itemType="none" paginatorPosition="bottom"
+					       	             styleClass="paginated">
+					       	            <h:outputText value="&nbsp;&nbsp;&nbsp;"></h:outputText>
+					       	            <h:outputText value="#{index+1}"></h:outputText>
+					       	            <h:outputText value="&nbsp;&nbsp;&nbsp;"></h:outputText>
+					       	            <h:outputText value="#{obj.yhbm}" ></h:outputText>
+					       	            <h:outputText value="&nbsp;&nbsp;&nbsp;"></h:outputText>
+					       	            <h:outputText value="#{obj.zsmc}" ></h:outputText>
+					       	            <h:outputText value="&nbsp;&nbsp;&nbsp;"></h:outputText>
+					       	            <h:outputText value="#{obj.bmmc}" ></h:outputText>
+						        </p:dataList>
+                   </p:fieldset> 
+                    <p:fieldset  legend="外送检定员"  style="margin-bottom:20px;width:70%;margin-top:10px" rendered="#{sbglSbxxMb.sbxxZrfwUtil.sbxx.jdfs=='外送'}">
+                              <p:dataList id="wsJdyList" value="#{sbglSbxxMb.sbxxZrfwUtil.userWsJdy}" 
+                                       paginator="true" rows="20" style="width:100%;border: 0px solid #DDD;"
+					       	            var="obj" rowIndexVar="index" type="unordered" itemType="none" paginatorPosition="bottom"
+					       	             styleClass="paginated">
+					       	            <h:outputText value="&nbsp;&nbsp;&nbsp;"></h:outputText>
+					       	            <h:outputText value="#{index+1}"></h:outputText>
+					       	            <h:outputText value="&nbsp;&nbsp;&nbsp;"></h:outputText>
+					       	            <h:outputText value="#{obj.yhbm}" ></h:outputText>
+					       	            <h:outputText value="&nbsp;&nbsp;&nbsp;"></h:outputText>
+					       	            <h:outputText value="#{obj.zsmc}" ></h:outputText>
+					       	            <h:outputText value="&nbsp;&nbsp;&nbsp;"></h:outputText>
+					       	            <h:outputText value="#{obj.bmmc}" ></h:outputText>
+						        </p:dataList>
+                   </p:fieldset> 
+                     <p:fieldset   legend="外送确认员"  style="margin-bottom:20px;width:70%;margin-top:10px" rendered="#{sbglSbxxMb.sbxxZrfwUtil.sbxx.jdfs=='外送'}">
+                              <p:dataList id="jlQryList" value="#{sbglSbxxMb.sbxxZrfwUtil.userJlQry}" 
+                                       paginator="true" rows="20" style="width:100%;border: 0px solid #DDD;"
+					       	            var="obj" rowIndexVar="index" type="unordered" itemType="none" paginatorPosition="bottom"
+					       	             styleClass="paginated">
+					       	            
+					       	            <h:outputText value="&nbsp;&nbsp;&nbsp;"></h:outputText>
+					       	            <h:outputText value="#{index+1}"></h:outputText>
+					       	            <h:outputText value="&nbsp;&nbsp;&nbsp;"></h:outputText>
+					       	            <h:outputText value="#{obj.yhbm}" ></h:outputText>
+					       	            <h:outputText value="&nbsp;&nbsp;&nbsp;"></h:outputText>
+					       	            <h:outputText value="#{obj.zsmc}" ></h:outputText>
+					       	            <h:outputText value="&nbsp;&nbsp;&nbsp;"></h:outputText>
+					       	            <h:outputText value="#{obj.bmmc}" ></h:outputText>
+						        </p:dataList>
+                   </p:fieldset> 
+                    </h:panelGrid>
+                   
+	</p:dialog>
+	
+	<p:dialog id="exportxlsId" header="导出设备" widgetVar="exportxls"
+		maximizable="true" height="400px" width="800px" modal="true">
+		<h:form>
+			<p:selectManyCheckbox value="#{sbglSbxxMb.exportSelectItems}"
+				layout="grid" columns="8">
+				<f:selectItems var="obj" itemLabel="#{obj.key}"
+					itemValue="#{obj.value}" value="#{selectColumns.sbglSbxxColumns}"></f:selectItems>
+			</p:selectManyCheckbox>
+			<p:commandButton value="导出（xls）"
+				action="#{sbglSbxxMb.exportSbxxBySelectItmes}" ajax="false"></p:commandButton>
+		</h:form>
+	</p:dialog>
+
+	<p:growl id="growlid" showDetail="true" sticky="true" autoUpdate="true"></p:growl>
+	<h:form id="form">
+		<p:layout fullPage="true">
+			<p:layoutUnit position="center" style="width:130%">
+				<h:inputHidden id="lovdiv" value="#{jcUserMb.showLovDiv}"></h:inputHidden>
+				<h:panelGrid columns="1" width="130%"
+					style="text-align: left;margin-top: -1px;margin-left: -2px;margin-bottom: -2px;">
+					<p:toolbar>
+						<f:facet name="left">
+							<p:commandButton id="toggler"  rendered="false" type="button" value="显示列"
+								icon="ui-icon-calculator">
+							</p:commandButton>
+
+							<p:commandButton value="高级查询" ajax="true" actionListener="#{sbglSbxxMb.openPanal()}"
+								oncomplete="PF('gjcx').show();return false;"
+								update=":gjcx" immediate="true">
+							</p:commandButton>
+
+
+							<p:commandButton value="导出（xls）" ajax="false" rendered="false">
+								<p:dataExporter type="xls" target="data" fileName="users" />
+							</p:commandButton>
+
+							<p:commandButton value="导出ALL（xls）" ajax="false"
+								onclick="PF('exportxls').show();return false;">
+							</p:commandButton>
+
+							<p:columnToggler trigger="toggler" datasource="data"></p:columnToggler>
+						</f:facet>
+					</p:toolbar>
+				</h:panelGrid>
+				<p:contextMenu for="data" widgetVar="cMenu">
+					<p:menuitem value="详情" icon="ui-icon-search"></p:menuitem>
+				</p:contextMenu>
+				<p:dataTable id="data" var="sb" binding="#{sbglSbxxMb.dataTable}"
+					value="#{sbglSbxxMb.lazyDataModel}" paginator="true" rows="20"
+					widgetVar="cellSbxx" rowIndexVar="rowVar" filterDelay="300"
+					resizableColumns="true " liveResize="true"  
+					paginatorPosition="bottom" style="width:130%"
+					currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+					paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					lazy="true" rowsPerPageTemplate="50,100,300">
+					<p:column exportable="false" style="width:100px" headerText="操作">
+						<h:panelGroup>
+							<p:commandLink value="详情"
+								actionListener="#{sbglSbxxMb.openSbxxDetails(sb)}" ajax="true"
+								style="color: orange;" oncomplete="PF('sbxxDialog').show();"
+								update=":sbxxDialogId">
+								<f:param name="JLBH" value="#{sb.jlbh}"></f:param>
+							</p:commandLink>
+							<h:outputText value=" | "></h:outputText>
+							<p:commandLink value="履历"
+								actionListener="#{sbglSbxxMb.viewSblls(sb)}" ajax="true"
+								style="color: orange;" oncomplete="PF('sbllDialog').show()"
+								update=":sbllId">
+							</p:commandLink>
+								<h:outputText value=" | "></h:outputText>
+							<p:commandLink value="检定"
+								actionListener="#{sbglSbxxMb.viewSbxxZrfw(sb)}" ajax="true"
+								style="color: orange;" oncomplete="PF('sbZrfwDialog').show()"
+								update=":sbZrfwId">
+							</p:commandLink>
+							
+						</h:panelGroup>
+					</p:column>
+					<p:column sortBy="#{sb.jlbh}" filterBy="#{sb.jlbh}"
+						style="width:#{sys.sbxx.jlbh.xskd}px"
+						rendered="#{sys.sbxx.jlbh.sfsx}"
+						headerText="#{sys.sbxx.jlbh.zdms}">
+						<h:outputText value="#{sb.jlbh}"></h:outputText>
+					</p:column>
+					<p:column sortBy="#{sb.sbmc}" filterBy="#{sb.sbmc}"
+						style="width:#{sys.sbxx.sbmc.xskd}px"
+						rendered="#{sys.sbxx.sbmc.sfsx}"
+						headerText="#{sys.sbxx.sbmc.zdms}">
+						<h:outputText value="#{sb.sbmc}"></h:outputText>
+					</p:column>
+	               <p:column sortBy="#{sb.sybmmc}" filterBy="#{sb.sybmmc}"
+						style="width:100px"
+						headerText="使用部门">
+						<h:outputText value="#{sb.sybmmc}"></h:outputText>
+					</p:column>
+					<p:column sortBy="#{sb.zdyzd1}" filterBy="#{sb.zdyzd1}"
+						style="width:100px"
+						headerText="#{sys.sbxx.zdyzd1.zdms}">
+						<h:outputText value="#{sb.zdyzd1}"></h:outputText>
+					</p:column>
+					<p:column sortBy="#{sb.zdyzd2}" filterBy="#{sb.zdyzd2}"
+						style="width:100px"
+						headerText="#{sys.sbxx.zdyzd2.zdms}">
+						<h:outputText value="#{sb.zdyzd2}"></h:outputText>
+					</p:column>
+					<p:column sortBy="#{sb.fjdfy}" filterBy="#{sb.fjdfy}"
+						style="width:80px"
+						headerText="#{sys.sbxx.fjdfy.zdms}（元）">
+						<h:outputText value="#{sb.fjdfy}"></h:outputText>
+					</p:column>
+					<p:column sortBy="#{sb.gllb}" filterBy="#{sb.gllb}"
+						rendered="#{sys.sbxx.gllb.sfsx}"
+						headerText="#{sys.sbxx.gllb.zdms}"
+						style="width:#{80}px">
+						<h:outputText value="#{sb.gllb}"></h:outputText>
+					</p:column>
+					
+					 <p:column sortBy="#{sb.cysj}" filterBy="#{sb.cysj}"
+						style="width:100px"  filterMatchMode="exact"
+						headerText="参与事件">
+						<f:facet name="filter">
+			                <p:selectOneMenu  onchange="PF('cellSbxx').filter()">
+			                    <f:selectItem itemLabel="" itemValue="#{null}" noSelectionOption="true" />
+			                    <f:selectItems value="#{selectSbxxBean.cysjItems}" var="obj" 
+			                       itemLabel="#{obj.key}" itemValue="#{obj.value}"
+			                      ></f:selectItems>
+			                </p:selectOneMenu>
+			            </f:facet>
+						
+						<h:outputText value="#{sb.cysjMc}"></h:outputText>
+					</p:column>
+					
+					<p:column sortBy="#{sb.sbzt}" filterBy="#{sb.sbzt}"
+						rendered="#{sys.sbxx.sbzt.sfsx}"
+						headerText="#{sys.sbxx.sbzt.zdms}"
+						style="width:#{80}px; ">
+						<h:outputText value="#{sb.sbzt}"
+						 style="color:#{((sb.sbzt eq '报废')  or (sb.sbzt eq '封存'))?'red':''}">
+						 </h:outputText>
+					</p:column>
+				
+
+					<p:column sortBy="#{sb.qrjg}" filterBy="#{sb.qrjg}"
+						rendered="#{sys.sbxx.qrjg.sfsx}"
+						headerText="#{sys.sbxx.qrjg.zdms}"
+						style="width:#{sys.sbxx.qrjg.xskd}px">
+						<h:outputText value="#{sb.qrjg}"></h:outputText>
+					</p:column>
+					
+					<p:column headerText="检定员" sortBy="#{sb.jljdy}" 
+					style="width:70px">
+					<h:outputText value="#{sb.jljdy}"/>
+					</p:column>
+
+
+					<p:column sortBy="#{sb.jdfs}" filterBy="#{sb.jdfs}"
+						rendered="#{sys.sbxx.jdfs.sfsx}"
+						headerText="#{sys.sbxx.jdfs.zdms}"
+						style="width:#{sys.sbxx.jdfs.xskd}px">
+						<h:outputText value="#{sb.jdfs}"></h:outputText>
+					</p:column>
+	                <p:column sortBy="#{sb.fjdrq}" 
+						rendered="#{sys.sbxx.fjdrq.sfsx}"
+						headerText="#{sys.sbxx.fjdrq.zdms}"
+						style="width:#{sys.sbxx.fjdrq.xskd}px">
+						<h:outputText value="#{sb.fjdrq}">
+							<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+								timeZone="GMT+8" />
+						</h:outputText>
+					</p:column>
+					<p:column sortBy="#{sb.fyxrq}" 
+						rendered="#{sys.sbxx.fyxrq.sfsx}"
+						headerText="#{sys.sbxx.fyxrq.zdms}"
+						style="width:#{sys.sbxx.fyxrq.xskd}px">
+						<h:outputText value="#{sb.fyxrq}" 
+						style="color:#{((sbglSbxxMb.sysdate>sb.fyxrq) and (sb.sbzt eq '在用')  and (sb.qrjg eq '周期检定'))?'red':''}">
+							<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+								timeZone="GMT+8" />
+						</h:outputText>
+					</p:column>
+
+					<p:column sortBy="#{sb.zyxm}" filterBy="#{sb.zyxm}"
+						rendered="#{sys.sbxx.zyxm.sfsx}"
+						headerText="#{sys.sbxx.zyxm.zdms}"
+						style="width:#{sys.sbxx.zyxm.xskd}px">
+						<h:outputText value="#{sb.zyxm}"></h:outputText>
+					</p:column>
+					<p:column sortBy="#{sb.ggxh}" filterBy="#{sb.ggxh}"
+						rendered="#{sys.sbxx.ggxh.sfsx}"
+						headerText="#{sys.sbxx.ggxh.zdms}"
+						style="width:#{sys.sbxx.ggxh.xskd}px">
+						<h:outputText value="#{sb.ggxh}"></h:outputText>
+					</p:column>
+
+					<p:column sortBy="#{sb.sccj}" filterBy="#{sb.sccj}"
+						rendered="#{sys.sbxx.sccj.sfsx}"
+						headerText="#{sys.sbxx.sccj.zdms}"
+						style="width:#{sys.sbxx.sccj.xskd}px">
+						<h:outputText value="#{sb.sccj}"></h:outputText>
+					</p:column>
+					<p:column sortBy="#{sb.ccbh}" filterBy="#{sb.ccbh}"
+						rendered="#{sys.sbxx.ccbh.sfsx}"
+						headerText="#{sys.sbxx.ccbh.zdms}"
+						style="width:#{sys.sbxx.ccbh.xskd}px">
+						<h:outputText value="#{sb.ccbh}"></h:outputText>
+					</p:column>
+				</p:dataTable>
+			</p:layoutUnit>
+
+			<p:layoutUnit position="east" collapseSize="0" style="height:400px" rendered="false">
+				<p:panel header="设备检定到期提醒">
+					<p:tree value="#{sbglSbxxMb.root}"
+						style="width:280px;margin-left:-10px" var="node" dynamic="true"
+						selectionMode="single">
+						<p:ajax event="select" update=":form:data"
+							listener="#{sbglSbxxMb.onNodeSelect}" />
+						<p:treeNode expandedIcon="ui-icon ui-icon-folder-open"
+							collapsedIcon="ui-icon ui-icon-folder-collapsed">
+							<h:outputText value="#{node}" />
+						</p:treeNode>
+						<p:treeNode type="document" icon="ui-icon ui-icon-document">
+							<h:outputText value="#{node}" />
+						</p:treeNode>
+					</p:tree>
+				</p:panel>
+
+			</p:layoutUnit>
+		</p:layout>
+	</h:form>
+
+
+
+	<p:dialog id="gjcx" header="高级查询" widgetVar="gjcx" maximizable="true"
+		height="300px" width="720px">
+		<h:form id="form1">
+			<h:panelGrid columns="1">
+				<p:panelGrid columns="6" style="width:680px">
+					<h:outputText value="文本字段"></h:outputText>
+					<p:selectOneMenu value="#{sbglSbxxMb.textCondition.fieldName}">
+						<f:selectItems value="#{selectColumns.varchar2Columns()}"
+							var="ccol" itemLabel="#{ccol.zdms}" itemValue="#{ccol.zdms}"></f:selectItems>
+					</p:selectOneMenu>
+					<p:selectOneMenu value="#{sbglSbxxMb.textCondition.operator}">
+						<f:selectItems value="#{selectColumns.varchar2Options()}"
+							var="opt" itemLabel="#{opt.selname}" itemValue="#{opt.selval}"></f:selectItems>
+					</p:selectOneMenu>
+					<p:inputText value="#{sbglSbxxMb.textCondition.value}"></p:inputText>
+					<p:selectOneMenu value="#{sbglSbxxMb.textCondition.logic}">
+						<f:selectItem itemLabel="并且" itemValue="并且"></f:selectItem>
+						<f:selectItem itemLabel="或者" itemValue="或者"></f:selectItem>
+					</p:selectOneMenu>
+					<p:commandButton style="width:80px" value="添加"
+						actionListener="#{sbglSbxxMb.addTextCondition()}"
+						update=":form1:condition"></p:commandButton>
+					<h:outputText value="数值字段"></h:outputText>
+					<p:selectOneMenu
+						valueChangeListener="#{sbglSbxxMb.changeSelectNumConditon}"
+						value="#{sbglSbxxMb.numbCondition.fieldName}">
+						<f:selectItems value="#{selectColumns.numberColumns()}" var="ccol"
+							itemLabel="#{ccol.zdms}" itemValue="#{ccol.zdms}"></f:selectItems>
+						<f:ajax event="change"
+							render="form1:numberValue form1:numberOperator"></f:ajax>
+					</p:selectOneMenu>
+					<p:selectOneMenu id="numberOperator"
+						value="#{sbglSbxxMb.numbCondition.operator}">
+						<f:selectItems value="#{selectColumns.commonOptions()}" var="opt"
+							itemLabel="#{opt.selname}" itemValue="#{opt.selval}"></f:selectItems>
+					</p:selectOneMenu>
+
+					<h:panelGroup id="numberValue">
+						<p:inputText
+							rendered="#{!(sbglSbxxMb.selectNumKey eq '参与事件' || sbglSbxxMb.selectNumKey eq '使用年限' || 
+						                       sbglSbxxMb.selectNumKey eq '强检' || sbglSbxxMb.selectNumKey eq '标准器' || sbglSbxxMb.selectNumKey eq '' || sbglSbxxMb.selectNumKey ==null) }"
+							value="#{sbglSbxxMb.numbCondition.value}"></p:inputText>
+						<p:selectOneMenu
+							rendered="#{ (sbglSbxxMb.selectNumKey eq '参与事件')}"
+							value="#{sbglSbxxMb.numbCondition.value}">
+							<f:selectItems value="#{selectSbxxBean.cysjItems}" var="obj"
+								itemLabel="#{obj.key}" itemValue="#{obj.value}"></f:selectItems>
+						</p:selectOneMenu>
+						<p:selectOneMenu value="#{sbglSbxxMb.numbCondition.value}"
+							style="width:100px"
+							rendered="#{sys.sbxx.synx.sfsx and (sbglSbxxMb.selectNumKey eq '使用年限')}">
+							<f:selectItems value="#{selectSbxxBean.yearItems}" var="obj"
+								itemLabel="#{obj.key}" itemValue="#{obj.value}"></f:selectItems>
+						</p:selectOneMenu>
+						<p:selectBooleanCheckbox
+							rendered="#{(sbglSbxxMb.selectNumKey eq '强检') 
+					                          or (sbglSbxxMb.selectNumKey eq '标准器') or (sbglSbxxMb.selectNumKey ==null) || 
+						                      (sbglSbxxMb.selectNumKey =='') }"
+							value="#{sbglSbxxMb.numbCondition.value}" style="width:100px" />
+					</h:panelGroup>
+
+
+					<p:selectOneMenu value="#{sbglSbxxMb.numbCondition.logic}">
+						<f:selectItem itemLabel="并且" itemValue="并且"></f:selectItem>
+						<f:selectItem itemLabel="或者" itemValue="或者"></f:selectItem>
+					</p:selectOneMenu>
+					<p:commandButton style="width:80px" value="添加"
+						actionListener="#{sbglSbxxMb.addNumbCondition()}"
+						update=":form1:condition"></p:commandButton>
+					<h:outputText value="日期字段"></h:outputText>
+					<p:selectOneMenu value="#{sbglSbxxMb.dateCondition.fieldName}">
+						<f:selectItems value="#{selectColumns.dateColumns()}" var="ccol"
+							itemLabel="#{ccol.zdms}" itemValue="#{ccol.zdms}"></f:selectItems>
+					</p:selectOneMenu>
+					<p:selectOneMenu value="#{sbglSbxxMb.dateCondition.operator}">
+						<f:selectItems value="#{selectColumns.commonOptions()}" var="opt"
+							itemLabel="#{opt.selname}" itemValue="#{opt.selval}"></f:selectItems>
+					</p:selectOneMenu>
+					<p:calendar value="#{sbglSbxxMb.dateCondition.dateValue}"
+						readonlyInput="true" navigator="true" pattern="yyyy-MM-dd"></p:calendar>
+					<p:selectOneMenu value="#{sbglSbxxMb.dateCondition.logic}">
+						<f:selectItem itemLabel="并且" itemValue="并且"></f:selectItem>
+						<f:selectItem itemLabel="或者" itemValue="或者"></f:selectItem>
+					</p:selectOneMenu>
+					<p:commandButton style="width:80px" value="添加"
+						actionListener="#{sbglSbxxMb.addDateCondition()}"
+						update=":form1:condition"></p:commandButton>
+				</p:panelGrid>
+				<div style="margin-left: -10px;margin-right: -10px;float: right;"></div>
+				<p:panelGrid columns="2" style="width:680px">
+					<p:dataTable id="condition" var="cond"
+						style="height:100%;
+						            widht:620px;margin-left: -10px;margin-right: -10px"
+						value="#{sbglSbxxMb.pageConditions}" rows="200"
+						rowIndexVar="rowVar">
+						<p:column width="80" headerText="查询字段">#{cond.fieldName}</p:column>
+						<p:column width="80" headerText="查询方法">#{cond.operator}</p:column>
+						<p:column headerText="查询内容">
+							<h:outputText value="#{cond.dateValue}"
+								rendered="#{cond.zdlx eq 'date'}">
+								<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+									timeZone="GMT+8"></f:convertDateTime>
+							</h:outputText>
+							<h:outputText value="#{cond.value}"
+								rendered="#{cond.zdlx != 'date'}"></h:outputText>
+						</p:column>
+						<p:column width="80" headerText="关联条件">#{cond.logic}</p:column>
+						<p:column width="80" headerText="操作">
+							<p:commandButton value="删除" update=":form1:condition"
+								actionListener="#{sbglSbxxMb.deletePageConditions}"
+								style="width:80px">
+								<f:attribute name="pageCondtion" value="#{cond}"></f:attribute>
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+					<p:panelGrid style="width:83px;float:right;">
+						<p:commandButton value="删除全部" update=":form1:condition"
+							actionListener="#{sbglSbxxMb.clearPageConditions()}"
+							style="margin-top: 30px;width:80px"></p:commandButton>
+					</p:panelGrid>
+				</p:panelGrid>
+
+				<p:commandButton value="查询" ajax="true" oncomplete="PF('gjcx').hide()"
+					action="#{sbglSbxxMb.doSearch}" update=":form:data"></p:commandButton>
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+</h:body>
+</html>

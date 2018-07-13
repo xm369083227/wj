@@ -1,0 +1,416 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:form id="sbxxform">
+	<p:tabView id="sbxx" scrollable="true">
+		<p:tab title="基本信息">
+			<p:panelGrid columns="1" style="width:900px">
+				<p:row>
+					<h:panelGrid columns="6" style="width:900px">
+						<h:outputText value="#{sys.sbxx.jlbh.zdms}："
+							rendered="#{sys.sbxx.jlbh.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.jlbh}" size="20"
+							readonly="true" rendered="#{sys.sbxx.jlbh.sfsx}" />
+						<h:outputText value="#{sys.sbxx.sbmc.zdms}："
+							rendered="#{sys.sbxx.sbmc.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.sbmc}" size="20"
+							readonly="true" rendered="#{sys.sbxx.sbmc.sfsx}" />
+						<h:outputText value="#{sys.sbxx.ggxh.zdms}："
+							rendered="#{sys.sbxx.ggxh.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.ggxh}" size="20"
+							readonly="true" rendered="#{sys.sbxx.ggxh.sfsx}" />
+
+						<h:outputText value="#{sys.sbxx.sbfl.zdms}："
+							rendered="#{sys.sbxx.sbfl.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.sbfl}" size="20"
+							readonly="true" rendered="#{sys.sbxx.sbfl.sfsx}" />
+						<h:outputText value="#{sys.sbxx.clfw.zdms}："
+							rendered="#{sys.sbxx.clfw.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.clfw}" size="20"
+							readonly="true" rendered="#{sys.sbxx.clfw.sfsx}" />
+						<h:outputText value="#{sys.sbxx.fdz.zdms}："
+							rendered="#{sys.sbxx.fdz.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.fdz}" size="20"
+							readonly="true" rendered="#{sys.sbxx.fdz.sfsx}" />
+
+						<h:outputText value="#{sys.sbxx.zqd.zdms}："
+							rendered="#{sys.sbxx.zqd.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.zqd}" size="20"
+							readonly="true" rendered="#{sys.sbxx.zqd.sfsx}" />
+						<h:outputText value="#{sys.sbxx.zqddj.zdms}："
+							rendered="#{sys.sbxx.zqddj.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.zqddj}" size="20"
+							readonly="true" rendered="#{sys.sbxx.zqddj.sfsx}" />
+						<h:outputText value="#{sys.sbxx.yxwc.zdms}："
+							rendered="#{sys.sbxx.yxwc.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.yxwc}" size="20"
+							readonly="true" rendered="#{sys.sbxx.yxwc.sfsx}" />
+
+						<h:outputText value="#{sys.sbxx.synx.zdms}："
+							rendered="#{sys.sbxx.synx.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.synx}" size="20"
+							readonly="true" rendered="#{sys.sbxx.synx.sfsx}" />
+						<h:outputText value="#{sys.sbxx.sccj.zdms}："
+							rendered="#{sys.sbxx.sccj.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.sccj}" size="20"
+							readonly="true" rendered="#{sys.sbxx.sccj.sfsx}" />
+						<h:outputText value="#{sys.sbxx.ccbh.zdms}："
+							rendered="#{sys.sbxx.ccbh.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.ccbh}" size="20"
+							readonly="true" rendered="#{sys.sbxx.ccbh.sfsx}" />
+
+						<h:outputText value="#{sys.sbxx.ccrq.zdms}："
+							rendered="#{sys.sbxx.ccrq.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.ccrq}" size="20"
+							readonly="true" rendered="#{sys.sbxx.ccrq.sfsx}" />
+						<h:outputText value="#{sys.sbxx.xkfl.zdms}："
+							rendered="#{sys.sbxx.xkfl.sfsx}" />
+						<h:panelGroup rendered="#{sys.sbxx.xkfl.sfsx}">
+							<p:inputText value="#{sbglSbxxMb.sbxx.xkflPmmc}" size="9"
+								readonly="true" />
+							<p:inputText value="#{sbglSbxxMb.sbxx.xkflmmc}" size="15"
+								readonly="true" />
+						</h:panelGroup>
+						<h:outputText value="#{sys.sbxx.fjdfy.zdms}：" />
+								<h:panelGroup>	
+									<p:inputText value="#{sbglSbxxMb.sbxx.fjdfy}"
+									 size="20" readonly="true"
+									rendered="#{sys.sbxx.fjdfy.sfsx}" />
+									<h:outputText value="元" />
+									</h:panelGroup>
+									<h:outputText value="#{sys.sbxx.zdyzd1.zdms}："
+									rendered="#{sys.sbxx.zdyzd1.sfsx}" />
+								<p:inputText value="#{sbglSbxxMb.sbxx.zdyzd1}"
+									 size="20" readonly="true"
+									rendered="#{sys.sbxx.zdyzd1.sfsx}"></p:inputText>
+					</h:panelGrid>
+				</p:row>
+				<p:row>
+					<h:panelGrid columns="8" style="width:900px">
+						<h:outputText value="#{sys.sbxx.gllb.zdms}："
+							rendered="#{sys.sbxx.gllb.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.gllb}" size="10" readonly="true"
+							rendered="#{sys.sbxx.gllb.sfsx}" />
+						<h:outputText value="#{sys.sbxx.sbzt.zdms}："
+							rendered="#{sys.sbxx.sbzt.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.sbzt}" size="10" readonly="true"
+							rendered="#{sys.sbxx.sbzt.sfsx}" />
+						<h:outputText value="#{sys.sbxx.sfqj.zdms}："
+							rendered="#{sys.sbxx.sfqj.sfsx}" />
+						<p:selectBooleanCheckbox value="#{sbglSbxxMb.sbxx.sfqj}"
+							disabled="true" style="width:100px"
+							rendered="#{sys.sbxx.sfqj.sfsx}" />
+						<h:outputText value="#{sys.sbxx.sfbzq.zdms}："
+							rendered="#{sys.sbxx.sfbzq.sfsx}" />
+						<p:selectBooleanCheckbox value="#{sbglSbxxMb.sbxx.sfbzq}"
+							disabled="true" style="width:100px"
+							rendered="#{sys.sbxx.sfbzq.sfsx}" />
+
+						<h:outputText value="#{sys.sbxx.jdfs.zdms}："
+							rendered="#{sys.sbxx.jdfs.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.jdfs}" size="10" readonly="true"
+							rendered="#{sys.sbxx.jdfs.sfsx}" />
+						<h:outputText value="#{sys.sbxx.qrjg.zdms}："
+							rendered="#{sys.sbxx.qrjg.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.qrjg}" size="10" readonly="true"
+							rendered="#{sys.sbxx.qrjg.sfsx}" />
+							<h:outputText value="#{sys.sbxx.zdyzd2.zdms}："
+									rendered="#{sys.sbxx.zdyzd2.sfsx}" />
+								<p:inputText value="#{sbglSbxxMb.sbxx.zdyzd2}"
+									readonly="true" size="20"
+									rendered="#{sys.sbxx.zdyzd2.sfsx}" />
+						<h:outputText value="#{sys.sbxx.jdbmn.zdms}："
+							rendered="#{sys.sbxx.jdbmn.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.jdbmn}" size="20"
+							readonly="true" rendered="#{sys.sbxx.jdbmn.sfsx}" />
+						<h:outputText value="#{sys.sbxx.lxdh.zdms}："
+							rendered="#{sys.sbxx.lxdh.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.lxdh}" size="20"
+							readonly="true" rendered="#{sys.sbxx.lxdh.sfsx}" />
+					</h:panelGrid>
+				</p:row>
+
+				<p:row>
+					<h:panelGrid columns="4" style="width:900px">
+						<h:outputText value="#{sys.sbxx.fjdrq.zdms}："
+							rendered="#{sys.sbxx.fjdrq.sfsx}" />
+						<h:panelGrid columns="4">
+							<p:inputText value="#{sbglSbxxMb.sbxx.fjdrq}" size="10"
+								readonly="true" rendered="#{sys.sbxx.fjdrq.sfsx}">
+								<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+									timeZone="GMT+8" />
+							</p:inputText>
+
+							<h:outputText value="#{sys.sbxx.fjdjg.zdms}："
+								rendered="#{sys.sbxx.fjdjg.sfsx}" />
+							<p:inputText var="#{sbglSbxxMb.sbxx.fjdjg}" readonly="true"
+								rendered="#{sys.sbxx.fjdjg.sfsx}" />
+						</h:panelGrid>
+						<h:outputText value="#{sys.sbxx.jdzq.zdms}："
+							rendered="#{sys.sbxx.jdzq.sfsx}" />
+						<h:panelGrid columns="4">
+							<p:inputText value="#{sbglSbxxMb.sbxx.jdzq}" readonly="true"
+								size="4" rendered="#{sys.sbxx.jdzq.sfsx}" />
+							<h:outputText value="月"/>
+							<h:outputText value="#{sys.sbxx.fyxrq.zdms}："
+								rendered="#{sys.sbxx.fyxrq.sfsx}" />
+							<p:inputText value="#{sbglSbxxMb.sbxx.fyxrq}" readonly="true"
+								size="10" rendered="#{sys.sbxx.fyxrq.sfsx}">
+								<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+									timeZone="GMT+8" />
+							</p:inputText>
+						</h:panelGrid>
+						<h:outputText value="#{sys.sbxx.fjdr.zdms}："
+							rendered="#{sys.sbxx.fjdr.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.fjdr}" readonly="true"
+							size="10" rendered="#{sys.sbxx.fjdr.sfsx}" />
+					</h:panelGrid>
+					<h:panelGrid columns="4" style="width:900px">
+					<h:outputText value="工时定额标准"/>
+					<h:panelGroup>
+					<p:inputText value="#{sbglSbxxMb.sbxx.gsbz.mc}" readonly="true" size="35"/>
+					<p:inputText value="#{sbglSbxxMb.sbxx.gsbz.lx}" readonly="true" size="18"/>
+					<p:inputText value="#{sbglSbxxMb.sbxx.gsbz.ggdj}" readonly="true" size="15"/>
+					</h:panelGroup>
+					<h:outputText value="工时(小时)"/>
+					<p:inputText value="#{sbglSbxxMb.sbxx.gsbz.zqjdgs}" readonly="true" size="8"/>
+					</h:panelGrid>
+
+				</p:row>
+				<p:row>
+					<h:panelGrid columns="6" style="width:900px">
+						<h:outputText value="#{sys.sbxx.sybmmc.zdms}："
+							rendered="#{sys.sbxx.sybmmc.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.sybmmc}" readonly="true"
+							size="20" rendered="#{sys.sbxx.sybmmc.sfsx}" />
+						<h:outputText value="#{sys.sbxx.jlgly.zdms}："
+							rendered="#{sys.sbxx.jlgly.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.jlgly}" readonly="true"
+							size="20" rendered="#{sys.sbxx.jlgly.sfsx}" />
+						<h:outputText value="#{sys.sbxx.fjybm.zdms}："
+							rendered="#{sys.sbxx.fjybm.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.fjybm}" readonly="true"
+							size="20" rendered="#{sys.sbxx.fjybm.sfsx}" />
+
+						<h:outputText value="#{sys.sbxx.ccwz.zdms}："
+							rendered="#{sys.sbxx.ccwz.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.ccwz}" readonly="true"
+							size="20" rendered="#{sys.sbxx.ccwz.sfsx}" />
+						<h:outputText value="#{sys.sbxx.azwz.zdms}："
+							rendered="#{sys.sbxx.azwz.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.azwz}" readonly="true"
+							size="20" rendered="#{sys.sbxx.azwz.sfsx}" />
+						<h:outputText value="#{sys.sbxx.azwh.zdms}："
+							rendered="#{sys.sbxx.azwh.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.azwh}" readonly="true"
+							size="20" rendered="#{sys.sbxx.azwh.sfsx}" />
+
+						<h:outputText value="#{sys.sbxx.fjyr.zdms}："
+							rendered="#{sys.sbxx.fjyr.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.fjyr}" readonly="true"
+							size="11" rendered="#{sys.sbxx.fjyr.sfsx}" />
+						<h:outputText value="#{sys.sbxx.fjcrq.zdms}："
+							rendered="#{sys.sbxx.fjcrq.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.fjcrq}" readonly="true"
+							size="10" rendered="#{sys.sbxx.fjcrq.sfsx}">
+							<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+								timeZone="GMT+8" />
+						</p:inputText>
+						<h:outputText value="#{sys.sbxx.qyrq.zdms}："
+							rendered="#{sys.sbxx.qyrq.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.qyrq}" readonly="true"
+							size="10" rendered="#{sys.sbxx.qyrq.sfsx}">
+							<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+								timeZone="GMT+8" />
+						</p:inputText>
+
+						<h:outputText value="#{sys.sbxx.flyr.zdms}："
+							rendered="#{sys.sbxx.flyr.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.flyr}" size="11"
+							readonly="true" rendered="#{sys.sbxx.flyr.sfsx}" />
+						<h:outputText value="#{sys.sbxx.flyrq.zdms}："
+							rendered="#{sys.sbxx.flyrq.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.flyrq}" size="10"
+							readonly="true" rendered="#{sys.sbxx.flyrq.sfsx}">
+							<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+								timeZone="GMT+8" />
+						</p:inputText>
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<h:outputText value="#{sys.sbxx.zyxm.zdms}："
+							rendered="#{sys.sbxx.zyxm.sfsx}" />
+						<p:selectManyCheckbox value="#{sbglSbxxMb.sbxx.zyxms}" 
+							disabled="true" rendered="#{sys.sbxx.zyxm.sfsx}">
+							<f:selectItems value="#{selectSbxxBean.zyxmItems}" var="obj"
+								itemLabel="#{obj.key}" itemValue="#{obj.value}"></f:selectItems>
+						</p:selectManyCheckbox>
+					</h:panelGrid>
+				</p:row>
+			</p:panelGrid>
+		</p:tab>
+		<p:tab title="其他信息">
+			<p:panelGrid columns="1">
+				<p:row>
+					<h:panelGrid columns="4" style="width:800px">
+						<h:outputText value="#{sys.sbxx.cgbm.zdms}："
+							rendered="#{sys.sbxx.cgbm.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.cgbm}" readonly="true"
+							size="35" rendered="#{sys.sbxx.cgbm.sfsx}" />
+						<h:outputText value="#{sys.sbxx.cgjg.zdms}："
+							rendered="#{sys.sbxx.cgjg.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.cgjg}" readonly="true"
+							size="35" rendered="#{sys.sbxx.cgjg.sfsx}" />
+						<h:outputText value="#{sys.sbxx.cgy.zdms}："
+							rendered="#{sys.sbxx.cgy.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.cgy}" readonly="true"
+							size="35" rendered="#{sys.sbxx.cgy.sfsx}" />
+						<h:outputText value="#{sys.sbxx.cgrq.zdms}："
+							rendered="#{sys.sbxx.cgrq.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.cgrq}" readonly="true"
+							size="35" rendered="#{sys.sbxx.cgrq.sfsx}">
+							<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+								timeZone="GMT+8" />
+						</p:inputText>
+						<h:outputText value="#{sys.sbxx.zcbh.zdms}："
+							rendered="#{sys.sbxx.zcbh.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.zcbh}" readonly="true"
+							size="35" rendered="#{sys.sbxx.zcbh.sfsx}" />
+						<h:outputText value="#{sys.sbxx.bombm.zdms}："
+							rendered="#{sys.sbxx.bombm.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.bombm}" readonly="true"
+							size="35" rendered="#{sys.sbxx.bombm.sfsx}" />
+
+
+
+					</h:panelGrid>
+				</p:row>
+				<p:row>
+					<h:panelGrid columns="2" style="width:800px">
+						<h:outputText value="#{sys.sbxx.ptsb.zdms}："
+							rendered="#{sys.sbxx.ptsb.sfsx}" />
+						<p:inputTextarea value="#{sbglSbxxMb.sbxx.ptsb}" readonly="true"
+							cols="93" rows="3" rendered="#{sys.sbxx.ptsb.sfsx}" />
+						<h:outputText value="#{sys.sbxx.pjqd.zdms}："
+							rendered="#{sys.sbxx.pjqd.sfsx}" />
+						<p:inputTextarea value="#{sbglSbxxMb.sbxx.pjqd}" readonly="true"
+							cols="93" rows="3" rendered="#{sys.sbxx.pjqd.sfsx}" />
+						<h:outputText value="#{sys.sbxx.hybz.zdms}："
+							rendered="#{sys.sbxx.hybz.sfsx}" />
+						<p:inputTextarea value="#{sbglSbxxMb.sbxx.hybz}" readonly="true"
+							cols="93" rows="3" rendered="#{sys.sbxx.hybz.sfsx}" />
+						<h:outputText value="#{sys.sbxx.ckbz.zdms}："
+							rendered="#{sys.sbxx.ckbz.sfsx}" />
+						<p:inputTextarea value="#{sbglSbxxMb.sbxx.ckbz}" readonly="true"
+							cols="93" rows="3" rendered="#{sys.sbxx.ckbz.sfsx}" />
+						<h:outputText value="#{sys.sbxx.jlyq.zdms}："
+							rendered="#{sys.sbxx.jlyq.sfsx}" />
+						<p:inputTextarea value="#{sbglSbxxMb.sbxx.jlyq}" readonly="true"
+							cols="93" rows="3" rendered="#{sys.sbxx.jlyq.sfsx}" />
+					</h:panelGrid>
+				</p:row>
+				<!-- <p:row>
+					<h:panelGrid columns="4" style="width:800px">
+						<h:outputText value="#{sys.sbxx.zdyzd1.zdms}："
+							rendered="#{sys.sbxx.zdyzd1.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.zdyzd1}" size="32"
+							readonly="true" rendered="#{sys.sbxx.zdyzd1.sfsx}"></p:inputText>
+						<h:outputText value="#{sys.sbxx.zdyzd2.zdms}："
+							rendered="#{sys.sbxx.zdyzd2.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.zdyzd2}" size="31"
+							readonly="true" rendered="#{sys.sbxx.zdyzd2.sfsx}"></p:inputText>
+						<h:outputText value="#{sys.sbxx.zdyzd3.zdms}："
+							rendered="#{sys.sbxx.zdyzd3.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.zdyzd3}" size="32"
+							readonly="true" rendered="#{sys.sbxx.zdyzd3.sfsx}"></p:inputText>
+						<h:outputText value="#{sys.sbxx.zdyzd4.zdms}："
+							rendered="#{sys.sbxx.zdyzd4.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.zdyzd4}" size="31"
+							readonly="true" rendered="#{sys.sbxx.zdyzd4.sfsx}"></p:inputText>
+						<h:outputText value="#{sys.sbxx.zdyzd5.zdms}："
+							rendered="#{sys.sbxx.zdyzd5.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.zdyzd5}" size="32"
+							readonly="true" rendered="#{sys.sbxx.zdyzd5.sfsx}"></p:inputText>
+					</h:panelGrid>
+				</p:row> -->
+			</p:panelGrid>
+		</p:tab>
+
+		<p:tab title="上传附件">
+			<h:panelGrid width="800px"
+				style="margin-top: -10px;margin-left:-17px;">
+				<h:panelGrid width="100%">
+					<p:dataTable id="filePaneId" paginator="true"
+						value="#{sbglSbxxMb.fileBean.files}" style="width:100%;" rows="15"
+						rowIndexVar="rowVar" filterDelay="300" resizableColumns="true "
+						liveResize="true" paginatorPosition="bottom" var="file"
+						currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+						paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						lazy="true" rowsPerPageTemplate="15,30,50">
+
+						<p:column headerText="序号" style="width:40px;">
+							<h:outputText value="#{rowVar+1}" />
+						</p:column>
+
+						<p:column headerText="附件名称" style="width:50%">
+							<h:outputText value="#{file.wjmc}" />
+						</p:column>
+
+						<p:column headerText="上传人员">
+							<p:outputLabel value="#{file.scyhid}"></p:outputLabel>
+						</p:column>
+						<p:column headerText="上传时间">
+							<h:outputText value="#{file.scrq}">
+								<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+									timeZone="GMT+8" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="操作" style="width:4%">
+							<h:panelGroup>
+								<p:commandButton id="downId" ajax="false"
+									action="#{sbglSbxxMb.fileBean.downFile}" alt="下载" 
+									icon="ui-icon-arrowthick-1-s" immediate="true">
+									<f:setPropertyActionListener
+										target="#{sbglSbxxMb.fileBean.file}" value="#{file}"></f:setPropertyActionListener>
+								</p:commandButton>
+							</h:panelGroup>
+
+						</p:column>
+
+					</p:dataTable>
+
+				</h:panelGrid>
+			</h:panelGrid>
+
+		</p:tab>
+	</p:tabView>
+	<p:panel>
+		<p:panelGrid columns="1" style="width:99%; margin-left:6px;">
+			<p:row>
+				<h:panelGrid columns="6">
+					<h:outputText value="#{sys.sbxx.tzlrry.zdms}:"
+						rendered="#{sys.sbxx.tzlrry.sfsx}" />
+					<p:inputText value="#{sbglSbxxMb.sbxx.tzlrry}" size="15" readonly="true"
+						rendered="#{sys.sbxx.tzlrry.sfsx}" />
+					<h:outputText value="#{sys.sbxx.tzlrrq.zdms}:"
+						rendered="#{sys.sbxx.tzlrrq.sfsx}" />
+					<p:inputText value="#{sbglSbxxMb.sbxx.tzlrrq}" size="15" readonly="true" 
+						rendered="#{sys.sbxx.tzlrrq.sfsx}">
+						<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+							timeZone="GMT+8" />
+					</p:inputText>
+					<h:outputText value="#{sys.sbxx.bz.zdms}："
+						rendered="#{sys.sbxx.bz.sfsx}" />
+					<p:inputTextarea value="#{sbglSbxxMb.sbxx.bz}" readonly="true"
+						cols="35" rows="1" rendered="#{sys.sbxx.bz.sfsx}" />
+				</h:panelGrid>
+			</p:row>
+		</p:panelGrid>
+	</p:panel>
+</h:form>
+</html>

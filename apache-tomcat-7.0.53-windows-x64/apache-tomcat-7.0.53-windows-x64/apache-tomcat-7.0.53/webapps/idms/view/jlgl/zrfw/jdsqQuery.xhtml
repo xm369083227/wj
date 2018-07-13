@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+<f:view contentType="text/html">
+	<h:head>
+		<title>IDMS</title>
+		<ui:include src="/common/templates/ui.xhtml"></ui:include>
+	</h:head>
+	<h:body>		
+		<h:form id="form"
+			style="margin-bottom:10px;width:1200px;margin-top:10px">
+			<h:panelGrid>
+				<p:panel header="检定授权查询">
+					<h:panelGrid columns="8" width="1200px" align="left">						
+						<h:outputText value="学科分类："></h:outputText>
+						<p:inputText value="#{zrfwJdsqQb.queryObj.xkfl}"></p:inputText>
+						<h:outputText value="管辖部门："></h:outputText>
+						<p:inputText value="#{zrfwJdsqQb.queryObj.gxbm}"></p:inputText>
+						<h:outputText value="检定员/确认员："></h:outputText>
+						<p:inputText value="#{zrfwJdsqQb.queryObj.yhmc}"></p:inputText>
+					    <h:outputText value="角色：" rendered="false"></h:outputText>
+						<p:selectOneMenu value="#{zrfwJdsqQb.jsfl}" rendered="false">
+						   <f:selectItem itemLabel="" itemValue="#{null}"></f:selectItem>
+						   <f:selectItem itemLabel="计量检定员" itemValue="计量检定员"></f:selectItem>
+						   <f:selectItem itemLabel="计量确认员" itemValue="计量确认员"></f:selectItem>
+						</p:selectOneMenu>
+						<p:commandButton value="查询" ajax="true" update=":form:gxfw"
+							action="#{zrfwJdsqQb.doSearch}"></p:commandButton>
+					</h:panelGrid>
+				</p:panel>							
+				<p:dataTable  id="gxfw" var="gxfw" value="#{zrfwJdsqQb.lazyDataModel}"
+					paginator="true" rows="20" style="with:600px" rowIndexVar="rowVar"
+					rowKey="#{gxfw.id}" paginatorPosition="bottom" filterDelay="300"
+					resizableColumns="true " liveResize="true"
+					currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+					paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					lazy="true">
+					<p:column headerText="序号" width="5%">
+						<h:outputText value="#{rowVar+1}" />
+					</p:column>
+					<p:column headerText="学科分类" width="45%">
+						<h:outputText value="#{gxfw.xkfl}"
+							style="text-align: center; vertical-align: middle;" />
+					</p:column>
+					<p:column headerText="上级分类" width="20%">
+						<h:outputText value="#{gxfw.xkflp}"
+							style="text-align: center; vertical-align: middle;" />
+					</p:column>
+					<p:column headerText="管辖部门" width="20%">
+						<h:outputText value="#{gxfw.gxbm}"
+							style="text-align: center; vertical-align: middle;" />
+					</p:column>
+					<p:column headerText="检定员/确认员" width="20%">
+						<h:outputText value="#{gxfw.yhmc}"
+							style="text-align: center; vertical-align: middle;" />
+					</p:column>
+					<p:column headerText="角色" width="20%">
+						<h:outputText value="#{gxfw.jsfl}"
+							style="text-align: center; vertical-align: middle;" />
+					</p:column>
+					
+					<p:column headerText="操作" width="20%">
+						<p:commandButton value="删除" update=":form:gxfw" rendered="#{zrfwJdsqQb.yhbm eq 'admin'}"
+						   actionListener="#{zrfwJdsqQb.delete(gxfw.id)}"></p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</h:panelGrid>
+		</h:form>
+
+	</h:body>
+</f:view>
+</html>

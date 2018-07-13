@@ -1,0 +1,499 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+<f:view contentType="text/html">
+	<h:head>
+		<title>IDMS</title>
+		<ui:include src="/common/templates/ui.xhtml"></ui:include>
+	</h:head>
+	<h:body>
+		<p:growl id="growlid" showDetail="false" sticky="true"
+			autoUpdate="true"></p:growl>
+			<h:form id="form">
+
+			<h:panelGrid width="99%">
+				<p:panel header="条件查询">
+					<h:panelGrid columns="6">
+						<h:outputText value="计量编号："></h:outputText>
+						<p:inputText value="#{jdglJdjlMb.querySb.jlbh}" size="20"></p:inputText>
+						<h:outputText value="设备名称："></h:outputText>
+						<p:inputText value="#{jdglJdjlMb.querySb.sbbh}" size="20"></p:inputText>
+						<h:outputText value="环境温度："></h:outputText>
+						<p:inputText value="#{jdglJdjlMb.queryObj.hjwd}" size="20"></p:inputText>
+						<h:outputText value="环境湿度："></h:outputText>
+						<p:inputText value="#{jdglJdjlMb.queryObj.hjsd}" size="20"></p:inputText>
+						<h:outputText value="大气压力："></h:outputText>
+						<p:inputText value="#{jdglJdjlMb.queryObj.dqyl}" size="20"></p:inputText>
+						<h:outputText value="检定结果："></h:outputText>
+						<p:selectOneMenu value="#{jdglJdjlMb.queryObj.xjdjg}">
+							<f:selectItems value="#{selectSbxxBean.jdjgItems}" var="obj"
+								itemLabel="#{obj.key}" itemValue="#{obj.value}"></f:selectItems>
+						</p:selectOneMenu>
+						<h:outputText value="使用部门："></h:outputText>
+						<p:inputText value="#{jdglJdjlMb.querySb.sybmmc}" size="20"></p:inputText>
+						<h:outputText value="确认间隔："></h:outputText>
+						<p:selectOneMenu value="#{jdglJdjlMb.queryObj.xqrjg}">
+							<f:selectItems value="#{selectSbxxBean.qrjgItems}" var="obj"
+								itemLabel="#{obj.key}" itemValue="#{obj.value}"></f:selectItems>
+						</p:selectOneMenu>
+
+
+						<h:outputText value="检定单位：" rendered="false"></h:outputText>
+						<p:inputText value="#{jdglJdjlMb.queryObj.xjddw}" size="20" rendered="false"></p:inputText>
+						<h:outputText value="检定员："></h:outputText>
+						<p:inputText value="#{jdglJdjlMb.queryObj.jdry}" size="20"></p:inputText>
+						<h:outputText value="检定证书：" rendered="false"></h:outputText>
+						<p:inputText value="#{jdglJdjlMb.queryObj.xjdzs}" size="20" rendered="false"></p:inputText>
+						<h:outputText value="检定地点：" rendered="false"></h:outputText>
+						<p:inputText value="#{jdglJdjlMb.queryObj.jddd}" size="20" rendered="false"></p:inputText>
+
+						<h:outputText value="检定日期："></h:outputText>
+						<h:panelGroup>
+							<p:calendar label="检定日期" value="#{jdglJdjlMb.startJdrq}" size="8"
+								readonlyInput="false" navigator="true" pattern="yyyy-MM-dd" />
+							                                  至<p:calendar label="检定日期"
+								value="#{jdglJdjlMb.endJdrq}" size="8" readonlyInput="false"
+								navigator="true" pattern="yyyy-MM-dd" />
+						</h:panelGroup>
+
+						<h:outputText value="有效期："></h:outputText>
+						<h:panelGroup>
+							<p:calendar label="有效期" value="#{jdglJdjlMb.startYxq}" size="8"
+								readonlyInput="false" navigator="true" pattern="yyyy-MM-dd" />
+							                                  至<p:calendar label="有效期"
+								value="#{jdglJdjlMb.endYxq}" size="8" readonlyInput="false"
+								navigator="true" pattern="yyyy-MM-dd" />
+						</h:panelGroup>
+
+						<h:outputText value="录入用户："></h:outputText>
+						<p:inputText value="#{jdglJdjlMb.queryObj.lrry}" size="20"></p:inputText>
+						<h:outputText value="录入日期："></h:outputText>
+						<h:panelGroup>
+							<p:calendar label="录入日期" value="#{jdglJdjlMb.startTime}" size="8"
+								readonlyInput="false" navigator="true" pattern="yyyy-MM-dd" />
+							                                  至<p:calendar label="录入日期"
+								value="#{jdglJdjlMb.endTime}" size="8" readonlyInput="false"
+								navigator="true" pattern="yyyy-MM-dd" />
+						</h:panelGroup>
+
+
+					</h:panelGrid>
+					<p:commandButton value="查询" ajax="false"
+						action="#{jdglJdjlMb.doSearch}"></p:commandButton>
+						<p:commandButton value="导出" ajax="false">
+					<p:dataExporter type="xls" target="table" fileName="jdjlSearch" />
+				</p:commandButton>
+				</p:panel>
+				
+				<p:dataTable id="table" paginator="true" editable="true"
+					value="#{jdglJdjlMb.lazyDataModel}" style="width:100%;" var="item"
+					rows="15" rowIndexVar="rowVar" filterDelay="300"
+					resizableColumns="true " liveResize="true"
+					paginatorPosition="bottom"
+					currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+					paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					lazy="true" rowsPerPageTemplate="20,30,50">
+					<p:ajax event="rowEdit" update=":form:table"
+						listener="#{jdglJdjlMb.onRowEdit}"></p:ajax>
+					<p:column style="width:40px">
+						<p:rowEditor></p:rowEditor>
+					</p:column>
+
+					<p:column headerText="操作" style="width:70px">
+						<f:facet name="header">
+							<p:commandButton actionListener="#{jdglJdjlMb.openAddPanal}"
+								oncomplete="PF('dialog').show()" ajax="true" update=":dialogid"
+								immediate="true" value="增加" disabled="true">
+							</p:commandButton>
+						</f:facet>
+						<h:panelGroup>
+							<p:commandButton actionListener="#{jdglJdjlMb.openEditPanal}"
+								oncomplete="PF('dialog').show()" ajax="true" update=":dialogid"
+								title="修改" icon="ui-icon-gear" immediate="true">
+								<f:param name="ID" value="#{item.id}"></f:param>
+								<p:ajax event="dialogReturn"
+									listener="#{jdglJdjlMb.handleReturn}" />
+							</p:commandButton>
+
+							<h:outputText value="  "></h:outputText>
+							<p:commandButton id="deleteId" ajax="true" update=":form:table"
+								action="#{jdglJdjlMb.delObj}" title="删除" icon="ui-icon-trash"
+								immediate="true">
+								<f:param name="ID" value="#{item.id}"></f:param>
+								<p:confirm icon="ui-icon-alert" message="确定删除吗?"></p:confirm>
+							</p:commandButton>
+						</h:panelGroup>
+					</p:column>
+
+
+					<p:column headerText="序号" sortBy="#{item.id}" style="width:50px;">
+						<h:outputText value="#{rowVar+1}" />
+					</p:column>
+					<p:column headerText="计量编号" style="width:120px">
+						<h:outputText value="#{item.sbxx.jlbh}"></h:outputText>
+					</p:column>
+					<p:column headerText="设备名称" style="width:120px">
+						<h:outputText value="#{item.sbxx.sbmc}"></h:outputText>
+					</p:column>					 
+					<p:column headerText="价格（元）" style="width:120px">
+						<h:outputText value="#{item.sbxx.fjdfy}"></h:outputText>
+					</p:column>
+					<p:column sortBy="#{item.sbxx.sybmmc}" 
+						style="width:100px" headerText="使用部门">
+						<h:outputText value="#{item.sbxx.sybmmc}"></h:outputText>
+					</p:column>
+
+					<p:column headerText="环境温度" sortBy="#{item.hjwd}"
+						style="width:80px;">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{item.hjwd}"></h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{item.hjwd}" style="width:90%" label="环境温度"
+									maxlength="200"></p:inputText>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="环境湿度" sortBy="#{item.hjsd}"
+						style="width:80px;">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{item.hjsd}"></h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{item.hjsd}" style="width:90%" label="环境湿度"
+									maxlength="200"></p:inputText>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="大气压力" sortBy="#{item.dqyl}"
+						style="width:80px;">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{item.dqyl}"></h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{item.dqyl}" style="width:90%" label="大气压力"
+									maxlength="200"></p:inputText>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="检定结果" sortBy="#{item.xjdjg}"
+						style="width:80px;">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{item.xjdjg}"></h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:selectOneMenu value="#{item.xjdjg}" style="width:99%"
+									label="检定结果" required="true">
+									<f:selectItems value="#{selectSbxxBean.jdjgItems}" var="obj"
+										itemLabel="#{obj.key}" itemValue="#{obj.value}"></f:selectItems>
+								</p:selectOneMenu>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="确认间隔" sortBy="#{item.xqrjg}"
+						style="width:80px;">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{item.xqrjg}"></h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:selectOneMenu value="#{item.xqrjg}" style="width:99%"
+									label="确认间隔" required="true">
+									<f:selectItems value="#{selectSbxxBean.qrjgItems}" var="obj"
+										itemLabel="#{obj.key}" itemValue="#{obj.value}"></f:selectItems>
+								</p:selectOneMenu>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="检定员" sortBy="#{item.jdry}"
+						style="width:80px;">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{item.jdry}"></h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{item.jdry}" style="width:90%" label="检定员"
+									required="true" maxlength="20"></p:inputText>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="检定日期" sortBy="#{item.xjdrq}"
+						style="width:80px;">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{item.xjdrq}">
+									<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+										timeZone="GMT+8" />
+								</h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:calendar label="检定日期" required="true" value="#{item.xjdrq}"
+									style="width:99%" size="8" readonlyInput="false"
+									navigator="true" pattern="yyyy-MM-dd" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="有效期" sortBy="#{item.xyxq}"
+						style="width:80px;">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{item.xyxq}">
+									<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+										timeZone="GMT+8" />
+								</h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:calendar label="有效期" required="true" value="#{item.xyxq}"
+									style="width:90%" size="8" readonlyInput="false"
+									navigator="true" pattern="yyyy-MM-dd" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="检定证书" sortBy="#{item.xjdzs}"
+						style="width:100px;" rendered="false">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{item.xjdzs}"></h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{item.xjdzs}" style="width:92%"
+									label="检定证书" maxlength="200"></p:inputText>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="检定单位" sortBy="#{item.xjddw}"
+						style="width:100px;" rendered="false">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{item.xjddw}"></h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{item.xjddw}" style="width:92%"
+									label="检定单位" maxlength="20"></p:inputText>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="检定地点" sortBy="#{item.jddd}"
+						style="width:100px;" rendered="false">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{item.jddd}"></h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{item.jddd}" style="width:92%" label="检定地点"
+									maxlength="200"></p:inputText>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+
+					<p:column headerText="检定费用" sortBy="#{item.xjdfy}"
+						style="width:70px;" rendered="false">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{item.xjdfy}"></h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{item.xjdfy}" style="width:90%"
+									label="检定费用"></p:inputText>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+
+					<p:column headerText="录入人员" sortBy="#{item.lrry}"
+						style="width:70px">
+						<p:outputLabel value="#{item.lrry}"></p:outputLabel>
+					</p:column>
+					<p:column headerText="录入时间" sortBy="#{item.lrsj}"
+						style="width:70px">
+						<h:outputText value="#{item.lrsj}">
+							<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+								timeZone="GMT+8" />
+						</h:outputText>
+					</p:column>
+
+				</p:dataTable>
+
+			</h:panelGrid>
+
+		</h:form>
+		
+			
+		<p:dialog id="dialogid" header="检定记录" widgetVar="dialog"
+			maximizable="true" height="400px" width="700px" modal="true">
+			<h:form id="dialogform" enctype="multipart/form-data">
+				<p:tabView id="tabview">
+					<p:tab title="检定记录">
+						<p:panelGrid columns="1">
+							<p:messages id="mesgid" />
+							<h:panelGrid columns="4">
+								<h:panelGroup>
+									<h:outputText value="计量编号："></h:outputText>
+									<h:outputText value="*" style="color:red" />
+								</h:panelGroup>
+								<h:panelGroup>
+									<p:inputText id="jlbh" value="#{jdglJdjlMb.varchSb.jlbh}"
+										label="计量编号" required="true" maxlength="50" size="20"></p:inputText>
+									
+								</h:panelGroup>
+								<h:outputText value="设备名称："></h:outputText>
+								<p:inputText value="#{jdglJdjlMb.varchSb.sbmc}" readonly="true"
+									size="20"></p:inputText>
+								<h:outputText value="环境温度："></h:outputText>
+								<p:inputText value="#{jdglJdjlMb.varchObj.hjwd}" label="环境温度"
+									maxlength="200" size="20"></p:inputText>
+								<h:outputText value="环境湿度："></h:outputText>
+								<p:inputText value="#{jdglJdjlMb.varchObj.hjsd}" label="环境湿度"
+									maxlength="200" size="20"></p:inputText>
+								<h:outputText value="大气压力："></h:outputText>
+								<p:inputText value="#{jdglJdjlMb.varchObj.dqyl}" label="大气压力"
+									maxlength="200" size="20"></p:inputText>
+								<h:panelGroup>
+									<h:outputText value="有效期："></h:outputText>
+									<h:outputText value="*" style="color:red" />
+								</h:panelGroup>
+								<p:calendar label="有效期" value="#{jdglJdjlMb.varchObj.xyxq}"
+									required="true" readonlyInput="false" navigator="true"
+									pattern="yyyy-MM-dd" />
+								<h:panelGroup>
+									<h:outputText value="检定结果："></h:outputText>
+									<h:outputText value="*" style="color:red" />
+								</h:panelGroup>
+								<p:selectOneMenu value="#{jdglJdjlMb.varchObj.xjdjg}"
+									label="检定结果" required="true">
+									<f:selectItems value="#{selectSbxxBean.jdjgItems}" var="obj"
+										itemLabel="#{obj.key}" itemValue="#{obj.value}"></f:selectItems>
+								</p:selectOneMenu>
+
+								<h:panelGroup>
+									<h:outputText value="确认间隔："></h:outputText>
+									<h:outputText value="*" style="color:red" />
+								</h:panelGroup>
+								<p:selectOneMenu value="#{jdglJdjlMb.varchObj.xqrjg}"
+									label="确认间隔" required="true">
+									<f:selectItems value="#{selectSbxxBean.qrjgItems}" var="obj"
+										itemLabel="#{obj.key}" itemValue="#{obj.value}"></f:selectItems>
+								</p:selectOneMenu>
+
+								<h:outputText value="检定单位："  rendered="false"></h:outputText>
+								<p:inputText value="#{jdglJdjlMb.varchObj.xjddw}" label="检定单位"
+									maxlength="20" size="20" rendered="false"></p:inputText>
+								<h:panelGroup>
+									<h:outputText value="检定员："></h:outputText>
+									<h:outputText value="*" style="color:red" />
+								</h:panelGroup>
+								<p:inputText value="#{jdglJdjlMb.varchObj.jdry}" label="检定员"
+									required="true" maxlength="20" size="20"></p:inputText>
+								<h:panelGroup>
+									<h:outputText value="检定日期："></h:outputText>
+									<h:outputText value="*" style="color:red" />
+								</h:panelGroup>
+								<p:calendar label="检定日期" value="#{jdglJdjlMb.varchObj.xjdrq}"
+									required="true" readonlyInput="false" navigator="true"
+									pattern="yyyy-MM-dd">
+								</p:calendar>
+								<h:outputText value="检定证书：" rendered="false"></h:outputText>
+								<p:inputText value="#{jdglJdjlMb.varchObj.xjdzs}" label="检定证书"
+									maxlength="200" size="20" rendered="false"></p:inputText>
+								<h:outputText value="检定地点：" rendered="false"></h:outputText>
+								<p:inputText value="#{jdglJdjlMb.varchObj.jddd}" label="检定地点"
+									maxlength="200" size="20" rendered="false"></p:inputText>
+							</h:panelGrid>
+
+							<h:panelGrid columns="2">
+								<h:outputText value="备注："></h:outputText>
+								<p:inputTextarea value="#{jdglJdjlMb.varchObj.bz}" rows="4"
+									cols="80" label="备注" maxlength="1000"></p:inputTextarea>
+
+							</h:panelGrid>
+						</p:panelGrid>
+					</p:tab>
+
+					<p:tab title="附件管理">
+						<h:panelGrid width="670px"
+							style="margin-top: -10px;margin-left:-17px;">
+							<h:panelGrid width="100%">
+								<p:fileUpload multiple="true"
+									update=":dialogform:tabview:filePaneId"
+									fileUploadListener="#{jdglJdjlMb.handleFileUpload}"
+									style="width:100%;" mode="advanced" label="浏览" cancelLabel="取消"
+									uploadLabel="上传" sizeLimit="10240000"
+									invalidSizeMessage="文件必须小于10M" invalidFileMessage="格式不支持"
+									dragDropSupport="false"
+									allowTypes="/(\.|\/)(gif|jpe?g|png|pdf|txt|rar|zip|doc|docx|xls|xlsx)$/">
+								</p:fileUpload>
+								<p:dataTable id="filePaneId" paginator="true"
+									value="#{jdglJdjlMb.fileBean.files}" style="width:100%;"
+									var="file" rows="15" rowIndexVar="rowVar" filterDelay="300"
+									resizableColumns="true " liveResize="true"
+									paginatorPosition="bottom"
+									currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+									paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+									lazy="true" rowsPerPageTemplate="20,30,50">
+									<p:column headerText="序号" style="width:40px;">
+										<h:outputText value="#{rowVar+1}" />
+									</p:column>
+
+									<p:column headerText="附件名称" style="width:50%">
+										<h:outputText value="#{file.wjmc}" />
+									</p:column>
+
+									<p:column headerText="上传人员" style="width:70px">
+										<p:outputLabel value="#{file.scyhid}"></p:outputLabel>
+									</p:column>
+									<p:column headerText="上传时间" style="width:70px">
+										<h:outputText value="#{file.scrq}">
+											<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+												timeZone="GMT+8" />
+										</h:outputText>
+									</p:column>
+									<p:column headerText="操作" style="width:10%">
+										<h:panelGroup>
+											<p:commandButton id="downId" ajax="false"
+												action="#{jdglJdjlMb.fileBean.downFile}"
+												icon="ui-icon-arrowthick-1-s" immediate="true">
+												<f:setPropertyActionListener
+													target="#{jdglJdjlMb.fileBean.file}" value="#{file}"></f:setPropertyActionListener>
+											</p:commandButton>
+											<h:outputText value="  "></h:outputText>
+											<p:commandButton id="deleteId" ajax="true"
+												action="#{jdglJdjlMb.fileBean.deleteFile}"
+												icon="ui-icon-trash" oncomplete="PF('dialog').show()"
+												update=":dialogform:tabview:filePaneId">
+												<f:setPropertyActionListener
+													target="#{jdglJdjlMb.fileBean.file}" value="#{file}"></f:setPropertyActionListener>
+											</p:commandButton>
+										</h:panelGroup>
+									</p:column>
+								</p:dataTable>
+							</h:panelGrid>
+						</h:panelGrid>
+					</p:tab>
+
+
+				</p:tabView>
+				<h:inputHidden id="lovdiv" value="#{jdglJdjlMb.showLovDiv}" />
+				<p:commandButton value="保存" update=":form:table :dialogform:lovdiv"
+					ajax="true"
+					oncomplete="if ('false'==$('#dialogform\\:lovdiv').val()) {PF('dialog').hide()}"
+					actionListener="#{jdglJdjlMb.addObj}"></p:commandButton>
+
+			</h:form>
+		</p:dialog>
+		
+	</h:body>
+</f:view>
+</html>

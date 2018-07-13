@@ -1,0 +1,774 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+	<ui:include src="/common/templates/ui.xhtml"></ui:include>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+</h:head>
+<h:body>
+	<p:growl id="growlid" showDetail="false" sticky="true"
+		autoUpdate="true"></p:growl>
+	<h:form id="form">
+		<h:panelGrid columns="1">
+			<p:tabView id="sbxx" scrollable="true" style="width:1000px">
+				<p:tab title="基本信息">
+					<p:panelGrid columns="1" id="panleId" style="width:900px">
+					<p:panel>
+						<h:panelGrid columns="1" >
+						<font color="red">常用特殊字符: </font>&nbsp;&nbsp; 
+					 <a href="javascript:insert('∠')">∠</a>
+							&nbsp;&nbsp;<a href="javascript:insert('Φ')">Φ</a>
+							&nbsp;&nbsp;<a href="javascript:insert('%')">%</a>
+							&nbsp;&nbsp;<a href="javascript:insert('‰')">‰</a>
+							&nbsp;&nbsp;<a href="javascript:insert('±')">±</a>
+							&nbsp;&nbsp;<a href="javascript:insert('°')">°</a>
+							&nbsp;&nbsp;<a href="javascript:insert('℃')">℃</a>
+							&nbsp;&nbsp;<a href="javascript:insert('≤')">≤</a>
+							&nbsp;&nbsp;<a href="javascript:insert('≥')">≥</a>
+							&nbsp;&nbsp;<a href="javascript:insert('&#8486;')">&#8486;</a>
+							&nbsp;&nbsp;<a href="javascript:insert('m&sup3;')">m&sup3;</a>
+							&nbsp;&nbsp;<a href="javascript:insert('m&sup3;/h')">m&sup3;/h</a>
+							&nbsp;&nbsp;<a href="javascript:insert('σ')">σ</a>
+							&nbsp;&nbsp;<a href="javascript:insert('\'')">'</a>
+							&nbsp;&nbsp;<a href="javascript:insert('α')">α</a>
+							&nbsp;&nbsp;<a href="javascript:insert('β')">β</a>
+							&nbsp;&nbsp;<a href="javascript:insert('γ')">γ</a>
+							&nbsp;&nbsp;<a href="javascript:insert('Ⅰ')">Ⅰ</a>
+							&nbsp;&nbsp;<a href="javascript:insert('Ⅱ')">Ⅱ</a>
+							&nbsp;&nbsp;<a href="javascript:insert('Ⅲ')">Ⅲ</a>
+							&nbsp;&nbsp;<a href="javascript:insert('Ⅳ')">Ⅳ</a>
+							&nbsp;&nbsp;<a href="javascript:insert('Ⅴ')">Ⅴ</a>
+							&nbsp;&nbsp;<a href="javascript:insert('Ⅵ')">Ⅵ</a>
+							&nbsp;&nbsp;<a href="javascript:insert('Ⅶ')">Ⅶ</a>
+							&nbsp;&nbsp;<a href="javascript:insert('Ⅷ')">Ⅷ</a>
+							&nbsp;&nbsp;<a href="javascript:insert('Ⅸ')">Ⅸ</a>
+							&nbsp;&nbsp;<a href="javascript:insert('Ⅹ')">Ⅹ</a>
+							<script>
+								var id;
+								function insert(v) {
+									try {
+										document.getElementById(id).value += v;
+										document.getElementById(id).focus();
+									} catch (e) {
+										;
+									}
+								}
+								function GetId(obj) {
+									id = obj.id;
+								}
+							</script>
+
+						</h:panelGrid>
+					</p:panel>
+						<p:row>
+							<h:panelGrid columns="6" style="width:900px">
+								<h:panelGroup rendered="#{sys.sbxx.jlbh.sfsx}">
+									<h:outputText value="#{sys.sbxx.jlbh.zdms}：" />
+								</h:panelGroup>
+								<p:inputText value="#{sbglSbxxAddBean.sbxx.jlbh}" size="20"
+									rendered="#{sys.sbxx.jlbh.sfsx}" 
+									maxlength="#{sys.sbxx.jlbh.zdcd}">
+								</p:inputText>
+								<h:panelGroup rendered="#{sys.sbxx.sbmc.sfsx}">
+									<h:outputText value="#{sys.sbxx.sbmc.zdms}：" />
+									<h:outputText value="*" style="color:red" />
+								</h:panelGroup>
+								<p:inputText value="#{sbglSbxxAddBean.sbxx.sbmc}"
+									required="true"
+									requiredMessage="#{sys.sbxx.sbmc.zdms}：输入内容不能为空！"
+									maxlength="#{sys.sbxx.sbmc.zdcd}" size="20"
+									rendered="#{sys.sbxx.sbmc.sfsx}"></p:inputText>
+								<h:panelGroup rendered="#{sys.sbxx.ggxh.sfsx}">
+									<h:outputText value="#{sys.sbxx.ggxh.zdms}：" />
+									<h:outputText value="*" style="color:red" />
+								</h:panelGroup>
+								<p:inputText value="#{sbglSbxxAddBean.sbxx.ggxh}"
+									required="true" onclick="GetId(this)"
+									requiredMessage="#{sys.sbxx.ggxh.zdms}：输入内容不能为空！"
+									maxlength="#{sys.sbxx.ggxh.zdcd}" size="20"
+									rendered="#{sys.sbxx.ggxh.sfsx}"></p:inputText>
+									
+								<h:panelGroup rendered="#{sys.sbxx.sbfl.sfsx}">
+									<h:outputText value="#{sys.sbxx.sbfl.zdms}：" />
+									<h:outputText value="*" style="color:red" />
+								</h:panelGroup>
+								<p:selectOneMenu value="#{sbglSbxxAddBean.sbxx.sbfl}"
+									required="true"
+									requiredMessage="#{sys.sbxx.sbfl.zdms}：选择内容不能为空！"
+									style="width:170px" rendered="#{sys.sbxx.sbfl.sfsx}">
+									<f:selectItems value="#{selectSbxxBean.sbflItems}" var="obj"
+										itemLabel="#{obj.key}" itemValue="#{obj.value}"></f:selectItems>
+								</p:selectOneMenu>
+								<h:outputText value="#{sys.sbxx.clfw.zdms}："
+									rendered="#{sys.sbxx.clfw.sfsx}" />
+								<p:inputText value="#{sbglSbxxAddBean.sbxx.clfw}"
+									maxlength="#{sys.sbxx.clfw.zdcd}" size="20"
+									rendered="#{sys.sbxx.clfw.sfsx}" onclick="GetId(this)"></p:inputText>
+								<h:outputText value="#{sys.sbxx.fdz.zdms}："
+									rendered="#{sys.sbxx.fdz.sfsx}" />
+								<p:inputText value="#{sbglSbxxAddBean.sbxx.fdz}"
+									maxlength="#{sys.sbxx.fdz.zdcd}" size="20"
+									rendered="#{sys.sbxx.fdz.sfsx}" onclick="GetId(this)"></p:inputText>
+									
+								<h:outputText value="#{sys.sbxx.zqd.zdms}："
+									rendered="#{sys.sbxx.zqd.sfsx}" />
+								<p:inputText value="#{sbglSbxxAddBean.sbxx.zqd}"
+									maxlength="#{sys.sbxx.zqd.zdcd}" size="20"
+									rendered="#{sys.sbxx.zqd.sfsx}" onclick="GetId(this)"></p:inputText>
+								<h:outputText value="#{sys.sbxx.zqddj.zdms}："
+									rendered="#{sys.sbxx.zqddj.sfsx}" />
+								<p:inputText value="#{sbglSbxxAddBean.sbxx.zqddj}"
+									maxlength="#{sys.sbxx.zqddj.zdcd}" size="20"
+									rendered="#{sys.sbxx.zqddj.sfsx}" onclick="GetId(this)"></p:inputText>
+								<h:outputText value="#{sys.sbxx.yxwc.zdms}："
+									rendered="#{sys.sbxx.yxwc.sfsx}" />
+								<p:inputText value="#{sbglSbxxAddBean.sbxx.yxwc}"
+									maxlength="#{sys.sbxx.yxwc.zdcd}" size="20"
+									rendered="#{sys.sbxx.yxwc.sfsx}" onclick="GetId(this)"></p:inputText>
+
+								<h:outputText value="#{sys.sbxx.synx.zdms}："
+									rendered="#{sys.sbxx.synx.sfsx}" />
+								<p:selectOneMenu value="#{sbglSbxxAddBean.sbxx.synx}"
+									style="width:170px" rendered="#{sys.sbxx.synx.sfsx}">
+									<f:selectItem itemLabel="请选择使用年限" itemValue=""></f:selectItem>
+									<f:selectItems value="#{selectSbxxBean.yearItems}" var="obj"
+										itemLabel="#{obj.key}" itemValue="#{obj.value}"></f:selectItems>
+								</p:selectOneMenu>
+								<h:panelGroup rendered="#{sys.sbxx.sccj.sfsx}">
+									<h:outputText value="#{sys.sbxx.sccj.zdms}：" />
+									<h:outputText value="*" style="color:red" />
+								</h:panelGroup>
+								<p:inputText value="#{sbglSbxxAddBean.sbxx.sccj}"
+									required="true" requiredMessage="#{sys.sbxx.sccj.zdms}：不能为空！"
+									maxlength="#{sys.sbxx.sccj.zdcd}" size="20"
+									rendered="#{sys.sbxx.sccj.sfsx}"></p:inputText>
+									<h:outputText value="#{sys.sbxx.ccbh.zdms}：" />
+								<p:inputText value="#{sbglSbxxAddBean.sbxx.ccbh}"
+									maxlength="#{sys.sbxx.ccbh.zdcd}" size="20"
+									rendered="#{sys.sbxx.ccbh.sfsx}"></p:inputText>
+									
+									<h:outputText value="#{sys.sbxx.ccrq.zdms}：" />
+								<p:calendar label="#{sys.sbxx.ccrq.zdms}"
+									value="#{sbglSbxxAddBean.sbxx.ccrq}"  size="10"
+									navigator="true" pattern="yyyy-MM-dd">
+								</p:calendar>
+								<h:panelGroup rendered="#{sys.sbxx.xkfl.sfsx}">
+									<h:outputText value="#{sys.sbxx.xkfl.zdms}：" />
+									<h:outputText value="*" style="color:red" />
+								</h:panelGroup>
+								<h:panelGroup rendered="#{sys.sbxx.xkfl.sfsx}">
+									<p:selectOneMenu value="#{sbglSbxxAddBean.sbxx.xkflp}"
+										valueChangeListener="#{selectXkflBean.handValueChangeEvent}"
+										required="true"
+										requiredMessage="#{sys.sbxx.xkfl.zdms}：一级选择内容不能为空！">
+										<f:selectItems value="#{selectXkflBean.parents}" var="obj"
+											itemLabel="#{obj.key}" itemValue="#{obj.value}"></f:selectItems>
+										<p:ajax event="change" update=":form:sbxx:children" />
+									</p:selectOneMenu>
+
+									<p:selectOneMenu id="children"
+										value="#{sbglSbxxAddBean.sbxx.xkfl}" >
+										<f:selectItems value="#{selectXkflBean.childrens}" var="obj"
+											itemLabel="#{obj.value}" itemValue="#{obj.value}"></f:selectItems>
+									</p:selectOneMenu>
+								</h:panelGroup>
+								
+
+									<h:outputText value="#{sys.sbxx.fjdfy.zdms}：" />
+								<h:panelGroup>	
+									<p:inputText value="#{sbglSbxxAddBean.sbxx.fjdfy}"
+									maxlength="#{sys.sbxx.fjdfy.zdcd}" size="20"
+									rendered="#{sys.sbxx.fjdfy.sfsx}" />
+									<h:outputText value="元" />
+									</h:panelGroup>
+									<h:outputText value="#{sys.sbxx.zdyzd1.zdms}："
+									rendered="#{sys.sbxx.zdyzd1.sfsx}" />
+								<p:inputText value="#{sbglSbxxAddBean.sbxx.zdyzd1}"
+									maxlength="#{sys.sbxx.zdyzd1.zdcd}" size="20"
+									rendered="#{sys.sbxx.zdyzd1.sfsx}"></p:inputText>
+							</h:panelGrid>
+						</p:row>
+						<p:row>
+							<h:panelGrid columns="8" style="width:900px">
+								<h:panelGroup rendered="#{sys.sbxx.gllb.sfsx}">
+									<h:outputText value="#{sys.sbxx.gllb.zdms}：" />
+									<h:outputText value="*" style="color:red" />
+								</h:panelGroup>
+								<p:selectOneMenu required="true"
+									requiredMessage="#{sys.sbxx.gllb.zdms}：选择内容不能为空！"
+									value="#{sbglSbxxAddBean.sbxx.gllb}" style="width:100px"
+									rendered="#{sys.sbxx.gllb.sfsx}">
+									<f:selectItems value="#{selectSbxxBean.gllbItems}" var="gllb"
+										itemLabel="#{gllb.key}" itemValue="#{gllb.value}"></f:selectItems>
+								</p:selectOneMenu>
+								<h:panelGroup rendered="#{sys.sbxx.sbzt.sfsx}">
+									<h:outputText value="#{sys.sbxx.sbzt.zdms}：" />
+									<h:outputText value="*" style="color:red" />
+								</h:panelGroup>
+								<p:selectOneMenu value="#{sbglSbxxAddBean.sbxx.sbzt}"
+									required="true"
+									requiredMessage="#{sys.sbxx.sbzt.zdms}：选择内容不能为空！"
+									style="width:100px" rendered="#{sys.sbxx.sbzt.sfsx}">
+									<f:selectItems value="#{selectSbxxBean.sbztItems}" var="sbzt"
+										itemLabel="#{sbzt.key}" itemValue="#{sbzt.value}"></f:selectItems>
+								</p:selectOneMenu>
+								<h:outputText value="#{sys.sbxx.sfqj.zdms}："
+									rendered="#{sys.sbxx.sfqj.sfsx}" />
+								<p:selectBooleanCheckbox value="#{sbglSbxxAddBean.sbxx.sfqj}"
+									style="width:100px" rendered="#{sys.sbxx.sfqj.sfsx}" />
+								<h:outputText value="#{sys.sbxx.sfbzq.zdms}："
+									rendered="#{sys.sbxx.sfbzq.sfsx}" />
+								<p:selectBooleanCheckbox value="#{sbglSbxxAddBean.sbxx.sfbzq}"
+									style="width:100px" rendered="#{sys.sbxx.sfbzq.sfsx}" />
+									
+								<h:panelGroup rendered="#{sys.sbxx.jdfs.sfsx}">
+									<h:outputText value="#{sys.sbxx.jdfs.zdms}：" />
+									<h:outputText value="*" style="color:red" />
+								</h:panelGroup>
+								<p:selectOneMenu value="#{sbglSbxxAddBean.sbxx.jdfs}"
+									required="true"
+									requiredMessage="#{sys.sbxx.jdfs.zdms}：选择内容不能为空！"
+									style="width:100px" rendered="#{sys.sbxx.jdfs.sfsx}">
+									<f:selectItems value="#{selectSbxxBean.jdfsItems}" var="jdfs"
+										itemLabel="#{jdfs.key}" itemValue="#{jdfs.value}"></f:selectItems>
+								</p:selectOneMenu>
+								<h:panelGroup rendered="#{sys.sbxx.qrjg.sfsx}">
+									<h:outputText value="#{sys.sbxx.qrjg.zdms}：" />
+									<h:outputText value="*" style="color:red" />
+								</h:panelGroup>
+								<p:selectOneMenu value="#{sbglSbxxAddBean.sbxx.qrjg}"
+									required="true"
+									requiredMessage="#{sys.sbxx.qrjg.zdms}：选择内容不能为空！"
+									style="width:100px" rendered="#{sys.sbxx.qrjg.sfsx}">
+									<f:selectItems value="#{selectSbxxBean.qrjgItems}" var="qrjg"
+										itemLabel="#{qrjg.key}" itemValue="#{qrjg.value}"></f:selectItems>
+								</p:selectOneMenu>
+								
+								<h:outputText value="#{sys.sbxx.zdyzd2.zdms}："
+									rendered="#{sys.sbxx.zdyzd2.sfsx}" />
+								<p:inputText value="#{sbglSbxxAddBean.sbxx.zdyzd2}"
+									maxlength="#{sys.sbxx.zdyzd2.zdcd}" size="20"
+									rendered="#{sys.sbxx.zdyzd2.sfsx}" />
+									
+								<h:outputText value="#{sys.sbxx.jdbmn.zdms}："
+									rendered="#{sys.sbxx.jdbmn.sfsx}" />
+								<p:inputText value="#{sbglSbxxAddBean.sbxx.jdbmn}"
+									maxlength="#{sys.sbxx.jdbmn.zdcd}" size="20"
+									rendered="#{sys.sbxx.jdbmn.sfsx}" />
+								<h:outputText value="#{sys.sbxx.lxdh.zdms}："
+									rendered="#{sys.sbxx.lxdh.sfsx}" />
+								<p:inputText value="#{sbglSbxxAddBean.sbxx.lxdh}"
+									maxlength="#{sys.sbxx.lxdh.zdcd}" size="20"
+									rendered="#{sys.sbxx.lxdh.sfsx}"
+									validatorMessage="#{sys.sbxx.lxdh.zdms}：请填写正确的座机号码或手机号码！">
+									<f:validateRegex
+										pattern="^(0\d{2}-?)?\d{8}$|^(0\d{3}-?)?\d{7}$|^1[3458]\d{9}$"></f:validateRegex>
+								</p:inputText>
+							</h:panelGrid>
+						</p:row>
+						<p:row>
+							<h:panelGrid columns="8" style="width:900px">
+								<h:outputText value="#{sys.sbxx.fjdrq.zdms}："
+									rendered="#{sys.sbxx.fjdrq.sfsx}" />
+								
+									<p:calendar label="#{sys.sbxx.fjdrq.zdms}"
+										value="#{sbglSbxxAddBean.sbxx.fjdrq}" size="10"
+										rendered="#{sys.sbxx.fjdrq.sfsx}" readonlyInput="false"
+										navigator="true" pattern="yyyy-MM-dd"></p:calendar>
+
+								<h:panelGroup>
+								<h:outputText value="#{sys.sbxx.jdzq.zdms}："
+									rendered="#{sys.sbxx.jdzq.sfsx}" />
+									<h:outputText value="*" style="color:red" />
+									</h:panelGroup>
+								<h:panelGroup>
+									<p:inputText value="#{sbglSbxxAddBean.sbxx.jdzq}" maxlength="4"
+										label="#{sys.sbxx.jdzq.zdms}" size="4"
+										rendered="#{sys.sbxx.jdzq.sfsx}" required="true" requiredMessage="#{sys.sbxx.jdzq.zdms}：输入内容不能为空！">
+										<f:validateLongRange minimum="0" />
+									</p:inputText>
+									<h:outputText value="月"/>
+									</h:panelGroup>
+									<h:outputText value="#{sys.sbxx.fyxrq.zdms}："
+										rendered="#{sys.sbxx.fyxrq.sfsx}" />
+									<p:calendar label="#{sys.sbxx.fyxrq.zdms}"
+										value="#{sbglSbxxAddBean.sbxx.fyxrq}" size="10"
+										rendered="#{sys.sbxx.fyxrq.sfsx}" readonlyInput="false"
+										navigator="true" pattern="yyyy-MM-dd" />
+							
+								<h:outputText value="#{sys.sbxx.fjdr.zdms}："
+									rendered="#{sys.sbxx.fjdr.sfsx}" />
+								<p:inputText value="#{sbglSbxxAddBean.sbxx.fjdr}"
+									maxlength="#{sys.sbxx.fjdr.zdcd}" size="10"
+									rendered="#{sys.sbxx.fjdr.sfsx}" />
+									</h:panelGrid>
+								
+								<h:panelGrid id="gskh" columns="2" style="width:900px">
+									<h:panelGroup>
+									<h:outputText value="工时类型"/>
+									<p:inputText value="#{sbglSbxxAddBean.sbxx.gsbz.lx}" readonly="true" size="35"
+									required="true"></p:inputText>
+									<h:outputText value="工时名称"/>
+									<p:inputText value="#{sbglSbxxAddBean.sbxx.gsbz.mc}" readonly="true" size="18"></p:inputText>
+									<h:outputText value="规格等级"/>
+									<h:panelGroup>
+									<p:inputText value="#{sbglSbxxAddBean.sbxx.gsbz.ggdj}" readonly="true" size="15"></p:inputText>
+									<p:commandButton onclick="PF('displaydlg').show();return false;"
+									title="查询" icon="ui-icon-search" update=":form1:data1" ajax="true"/>
+									</h:panelGroup>
+									</h:panelGroup>
+									<h:panelGroup>
+									<h:outputText value="工时(小时)"/>
+					                <p:inputText value="#{sbglSbxxAddBean.sbxx.gsbz.zqjdgs}" readonly="true" size="8"/>
+							        </h:panelGroup>
+							</h:panelGrid>
+
+						</p:row>
+						<p:row>
+							<h:panelGrid columns="6" style="width:900px">
+								<h:panelGroup rendered="#{sys.sbxx.sybmmc.sfsx}">
+									<h:outputText value="#{sys.sbxx.sybmmc.zdms}：" />
+									<h:outputText value="*" style="color:red" />
+								</h:panelGroup>
+								<p:selectOneMenu id="ssbm" rendered="#{sys.sbxx.sybmmc.sfsx}" 
+								        value="#{sbglSbxxAddBean.selectedBm}"
+									    disabled="false" required="true" requiredMessage="使用部门：不能为空！">
+									<f:selectItem itemLabel="" itemValue="#{null}"></f:selectItem>
+									<f:selectItems value="#{selectDeptBean.ssbmByCs}" var="obj"
+										itemValue="#{obj.bmbm}" itemLabel="#{obj.bmmc}" />
+								</p:selectOneMenu>
+								<h:outputText value="#{sys.sbxx.jlgly.zdms}："
+									rendered="false" />
+								<p:inputText value="#{sbglSbxxAddBean.sbxx.jlgly}"
+									maxlength="#{sys.sbxx.jlgly.zdcd}" size="20"
+									rendered="false" />
+									
+								<h:outputText value="#{sys.sbxx.fjybm.zdms}："
+									rendered="#{sys.sbxx.fjybm.sfsx}" />
+								<p:inputText value="#{sbglSbxxAddBean.sbxx.fjybm}"
+									maxlength="#{sys.sbxx.fjybm.zdcd}" size="20"
+									rendered="#{sys.sbxx.fjybm.sfsx}" />
+								<h:outputText value="#{sys.sbxx.ccwz.zdms}："
+									rendered="#{sys.sbxx.ccwz.sfsx}" />
+								<p:inputText value="#{sbglSbxxAddBean.sbxx.ccwz}"
+									maxlength="#{sys.sbxx.ccwz.zdcd}" size="20"
+									rendered="#{sys.sbxx.ccwz.sfsx}" />
+								<h:outputText value="#{sys.sbxx.azwz.zdms}："
+									rendered="#{sys.sbxx.azwz.sfsx}" />
+								<p:inputText value="#{sbglSbxxAddBean.sbxx.azwz}"
+									maxlength="#{sys.sbxx.azwz.zdcd}" size="20"
+									rendered="#{sys.sbxx.azwz.sfsx}" />
+								<h:outputText value="#{sys.sbxx.azwh.zdms}："
+									rendered="#{sys.sbxx.azwh.sfsx}" />
+								<p:inputText value="#{sbglSbxxAddBean.sbxx.azwh}"
+									maxlength="#{sys.sbxx.azwh.zdcd}" size="20"
+									rendered="#{sys.sbxx.azwh.sfsx}" />
+								<h:outputText value="#{sys.sbxx.fjyr.zdms}："
+									rendered="#{sys.sbxx.fjyr.sfsx}" />
+								<p:inputText value="#{sbglSbxxAddBean.sbxx.fjyr}"
+									maxlength="#{sys.sbxx.fjyr.zdcd}" size="11"
+									rendered="#{sys.sbxx.fjyr.sfsx}" />
+								<h:outputText value="#{sys.sbxx.fjcrq.zdms}："
+									rendered="#{sys.sbxx.fjcrq.sfsx}" />
+								<p:calendar label="#{sys.sbxx.fjcrq.zdms}"
+									value="#{sbglSbxxAddBean.sbxx.fjcrq}" size="10"
+									rendered="#{sys.sbxx.fjcrq.sfsx}" readonlyInput="false"
+									navigator="true" pattern="yyyy-MM-dd"></p:calendar>
+								<h:outputText value="#{sys.sbxx.qyrq.zdms}："
+									rendered="#{sys.sbxx.qyrq.sfsx}" />
+								<p:calendar label="#{sys.sbxx.qyrq.zdms}" id="qyrq"
+									value="#{sbglSbxxAddBean.sbxx.qyrq}" size="10"
+									rendered="#{sys.sbxx.qyrq.sfsx}" readonlyInput="false"
+									navigator="true" pattern="yyyy-MM-dd">
+								</p:calendar>
+								<h:outputText value="#{sys.sbxx.flyr.zdms}："
+									rendered="#{sys.sbxx.flyr.sfsx}" />
+								<p:inputText value="#{sbglSbxxAddBean.sbxx.flyr}"
+									maxlength="#{sys.sbxx.flyr.zdcd}" size="11"
+									rendered="#{sys.sbxx.flyr.sfsx}" />
+								<h:outputText value="#{sys.sbxx.flyrq.zdms}："
+									rendered="#{sys.sbxx.flyrq.sfsx}" />
+								<p:calendar label="#{sys.sbxx.flyrq.zdms}"
+									value="#{sbglSbxxAddBean.sbxx.flyrq}" size="10"
+									rendered="#{sys.sbxx.flyrq.sfsx}" readonlyInput="false"
+									navigator="true" pattern="yyyy-MM-dd"></p:calendar>
+							</h:panelGrid>
+							<h:panelGrid columns="4">
+							<h:panelGroup>
+								<h:outputText value="#{sys.sbxx.zyxm.zdms}："
+									rendered="#{sys.sbxx.zyxm.sfsx}" />
+									<h:outputText value="*" style="color:red"/>
+									</h:panelGroup>
+								<p:selectManyCheckbox value="#{sbglSbxxAddBean.sbxx.zyxms}"
+									rendered="#{sys.sbxx.zyxm.sfsx}" required="true" requiredMessage="专用项目：不能为空！">
+									<f:selectItems value="#{selectSbxxBean.zyxmItems}" var="obj"
+										itemLabel="#{obj.value}" itemValue="#{obj.value}"></f:selectItems>
+								</p:selectManyCheckbox>
+								
+								<h:outputText value="#{sys.sbxx.bz.zdms}："
+								rendered="#{sys.sbxx.bz.sfsx}" />
+							<p:inputTextarea value="#{sbglSbxxAddBean.sbxx.bz}"
+								maxlength="#{sys.sbxx.bz.zdcd}" cols="50" rows="1"
+								rendered="#{sys.sbxx.bz.sfsx}" />
+							</h:panelGrid>
+						</p:row>
+
+					</p:panelGrid>
+
+
+
+				</p:tab>
+				<p:tab title="其他信息">
+					<p:panelGrid columns="1">
+						<p:row>
+							<h:panelGrid columns="4" style="width:800px">
+								<h:outputText value="#{sys.sbxx.cgbm.zdms}："
+									rendered="#{sys.sbxx.cgbm.sfsx}" />
+								<p:inputText value="#{sbglSbxxAddBean.sbxx.cgbm}"
+									maxlength="#{sys.sbxx.cgbm.zdcd}" size="35"
+									rendered="#{sys.sbxx.cgbm.sfsx}" />
+								<h:outputText value="#{sys.sbxx.cgjg.zdms}："
+									rendered="#{sys.sbxx.cgjg.sfsx}" />
+								<p:inputText value="#{sbglSbxxAddBean.sbxx.cgjg}" maxlength="8"
+									converterMessage="#{sys.sbxx.cgjg.zdms}：输入内容必须为数字！" size="35"
+									rendered="#{sys.sbxx.cgjg.sfsx}" />
+								<h:outputText value="#{sys.sbxx.cgy.zdms}："
+									rendered="#{sys.sbxx.cgy.sfsx}" />
+								<p:inputText value="#{sbglSbxxAddBean.sbxx.cgy}"
+									maxlength="#{sys.sbxx.cgy.zdcd}" size="35"
+									rendered="#{sys.sbxx.cgy.sfsx}" />
+								<h:outputText value="#{sys.sbxx.cgrq.zdms}："
+									rendered="#{sys.sbxx.cgrq.sfsx}" />
+								<p:calendar label="#{sys.sbxx.cgrq.zdms}"
+									value="#{sbglSbxxAddBean.sbxx.cgrq}" size="35"
+									rendered="#{sys.sbxx.cgrq.sfsx}" readonlyInput="false"
+									navigator="true" pattern="yyyy-MM-dd"></p:calendar>
+								<h:outputText value="#{sys.sbxx.zcbh.zdms}："
+									rendered="#{sys.sbxx.zcbh.sfsx}" />
+								<p:inputText value="#{sbglSbxxAddBean.sbxx.zcbh}"
+									maxlength="#{sys.sbxx.zcbh.zdcd}" size="35"
+									rendered="#{sys.sbxx.zcbh.sfsx}" />
+								<h:outputText value="#{sys.sbxx.bombm.zdms}："
+									rendered="#{sys.sbxx.bombm.sfsx}" />
+								<p:inputText value="#{sbglSbxxAddBean.sbxx.bombm}"
+									maxlength="#{sys.sbxx.bombm.zdcd}" size="35"
+									rendered="#{sys.sbxx.bombm.sfsx}" />
+
+
+
+							</h:panelGrid>
+						</p:row>
+						<p:row>
+							<h:panelGrid columns="2" style="width:800px">
+								<h:outputText value="#{sys.sbxx.ptsb.zdms}："
+									rendered="#{sys.sbxx.ptsb.sfsx}" />
+								<p:inputTextarea value="#{sbglSbxxAddBean.sbxx.ptsb}"
+									maxlength="#{sys.sbxx.ptsb.zdcd}" cols="93" rows="3"
+									rendered="#{sys.sbxx.ptsb.sfsx}" />
+								<h:outputText value="#{sys.sbxx.pjqd.zdms}："
+									rendered="#{sys.sbxx.pjqd.sfsx}" />
+								<p:inputTextarea value="#{sbglSbxxAddBean.sbxx.pjqd}"
+									maxlength="#{sys.sbxx.pjqd.zdcd}" cols="93" rows="3"
+									rendered="#{sys.sbxx.pjqd.sfsx}" />
+								<h:outputText value="#{sys.sbxx.hybz.zdms}："
+									rendered="#{sys.sbxx.hybz.sfsx}" />
+								<p:inputTextarea value="#{sbglSbxxAddBean.sbxx.hybz}"
+									maxlength="#{sys.sbxx.hybz.zdcd}" cols="93" rows="3"
+									rendered="#{sys.sbxx.hybz.sfsx}" />
+								<h:outputText value="#{sys.sbxx.ckbz.zdms}："
+									rendered="#{sys.sbxx.ckbz.sfsx}" />
+								<p:inputTextarea value="#{sbglSbxxAddBean.sbxx.ckbz}"
+									maxlength="#{sys.sbxx.ckbz.zdcd}" cols="93" rows="3"
+									rendered="#{sys.sbxx.ckbz.sfsx}" />
+								<h:outputText value="#{sys.sbxx.jlyq.zdms}："
+									rendered="#{sys.sbxx.jlyq.sfsx}" />
+								<p:inputTextarea value="#{sbglSbxxAddBean.sbxx.jlyq}"
+									maxlength="#{sys.sbxx.jlyq.zdcd}" cols="93" rows="3"
+									rendered="#{sys.sbxx.jlyq.sfsx}" />
+							</h:panelGrid>
+						</p:row>
+						<!-- <p:row>
+							<h:panelGrid columns="4" style="width:800px">
+								<h:outputText value="#{sys.sbxx.zdyzd1.zdms}："
+									rendered="#{sys.sbxx.zdyzd1.sfsx}" />
+								<p:inputText value="#{sbglSbxxAddBean.sbxx.zdyzd1}"
+									maxlength="#{sys.sbxx.zdyzd1.zdcd}" size="32"
+									rendered="#{sys.sbxx.zdyzd1.sfsx}"></p:inputText>
+								<h:outputText value="#{sys.sbxx.zdyzd2.zdms}："
+									rendered="#{sys.sbxx.zdyzd2.sfsx}" />
+								<p:inputText value="#{sbglSbxxAddBean.sbxx.zdyzd2}"
+									maxlength="#{sys.sbxx.zdyzd2.zdcd}" size="31"
+									rendered="#{sys.sbxx.zdyzd2.sfsx}"></p:inputText>
+								<h:outputText value="#{sys.sbxx.zdyzd3.zdms}："
+									rendered="#{sys.sbxx.zdyzd3.sfsx}" />
+								<p:inputText value="#{sbglSbxxAddBean.sbxx.zdyzd3}"
+									maxlength="#{sys.sbxx.zdyzd3.zdcd}" size="32"
+									rendered="#{sys.sbxx.zdyzd3.sfsx}"></p:inputText>
+								<h:outputText value="#{sys.sbxx.zdyzd4.zdms}："
+									rendered="#{sys.sbxx.zdyzd4.sfsx}" />
+								<p:inputText value="#{sbglSbxxAddBean.sbxx.zdyzd4}"
+									maxlength="#{sys.sbxx.zdyzd4.zdcd}" size="31"
+									rendered="#{sys.sbxx.zdyzd4.sfsx}"></p:inputText>
+								<h:outputText value="#{sys.sbxx.zdyzd5.zdms}："
+									rendered="#{sys.sbxx.zdyzd5.sfsx}" />
+								<p:inputText value="#{sbglSbxxAddBean.sbxx.zdyzd5}"
+									maxlength="#{sys.sbxx.zdyzd5.zdcd}" size="32"
+									rendered="#{sys.sbxx.zdyzd5.sfsx}"></p:inputText>
+							</h:panelGrid>
+						</p:row> -->
+						
+					</p:panelGrid>
+				</p:tab>
+
+				<p:tab title="上传附件">
+					<h:panelGrid width="800px"
+						style="margin-top: -10px;margin-left:-17px;">
+						<h:panelGrid width="100%">
+							<p:fileUpload multiple="true" update=":form:sbxx:filePaneId"
+								fileUploadListener="#{sbglSbxxAddBean.handleFileUpload}"
+								style="width:100%;" mode="advanced" label="浏览" cancelLabel="取消"
+								uploadLabel="上传" sizeLimit="10240000"
+								invalidSizeMessage="文件必须小于10M" invalidFileMessage="格式不支持"
+								dragDropSupport="false"
+								allowTypes="/(\.|\/)(gif|jpe?g|png|pdf|txt|rar|zip|doc|docx|xls|xlsx)$/">
+							</p:fileUpload>
+							<p:dataTable id="filePaneId" paginator="true" rows="10"
+								rowIndexVar="rowVar" paginatorPosition="bottom"
+								value="#{sbglSbxxAddBean.fileBean.files}" style="width:100%;"
+								filterDelay="300" lazy="false" var="file"
+								resizableColumns="true " liveResize="true"
+								currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+								paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+								rowsPerPageTemplate="5,10,15">
+								<h:outputText value="#{rowVar+1}" />
+								<p:column headerText="序号" style="width:40px;">
+									<h:outputText value="#{rowVar+1}" />
+								</p:column>
+
+								<p:column headerText="附件名称" style="width:50%">
+									<h:outputText value="#{file.wjmc}" />
+								</p:column>
+
+								<p:column headerText="上传节点" style="width:70px">
+									<p:outputLabel value="#{file.taskNode}"></p:outputLabel>
+								</p:column>
+								<p:column headerText="上传人员" style="width:70px">
+									<p:outputLabel value="#{file.scyhid}"></p:outputLabel>
+								</p:column>
+								<p:column headerText="上传时间" style="width:70px">
+									<h:outputText value="#{file.scrq}">
+										<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+											timeZone="GMT+8" />
+									</h:outputText>
+								</p:column>
+								<p:column headerText="操作" style="width:8%">
+									<h:panelGroup>
+										<p:commandButton id="downId" ajax="false"
+											action="#{sbglSbxxAddBean.fileBean.downFile}"
+											icon="ui-icon-arrowthick-1-s" immediate="true">
+
+											<f:setPropertyActionListener
+												target="#{sbglSbxxAddBean.fileBean.file}" value="#{file}"></f:setPropertyActionListener>
+										</p:commandButton>
+										<h:outputText value="  "></h:outputText>
+										<p:commandButton id="deleteId" ajax="true"
+											action="#{sbglSbxxAddBean.fileBean.deleteFile}"
+											icon="ui-icon-trash" immediate="true">
+											<p:confirm icon="ui-icon-alert" message="确定删除吗?"></p:confirm>
+											<f:setPropertyActionListener
+												target="#{sbglSbxxAddBean.fileBean.file}" value="#{file}"></f:setPropertyActionListener>
+										</p:commandButton>
+									</h:panelGroup>
+
+								</p:column>
+
+							</p:dataTable>
+
+						</h:panelGrid>
+					</h:panelGrid>
+				</p:tab>
+			</p:tabView>
+			<p:panel style="width:1000px;">
+				<p:panelGrid columns="1" style="width:99%;margin-left:6px;">
+					<p:row>
+						<h:panelGrid columns="6">
+							<h:outputText value="#{sys.sbxx.tzlrry.zdms}："
+								rendered="#{sys.sbxx.tzlrry.sfsx}" />
+							<p:inputText value="#{sbglSbxxAddBean.sbxx.tzlrry}" size="15"
+								rendered="#{sys.sbxx.tzlrry.sfsx}" readonly="true"></p:inputText>
+							<h:outputText value="#{sys.sbxx.tzlrrq.zdms}："
+								rendered="#{sys.sbxx.tzlrrq.sfsx}" />
+							<p:inputText value="#{sbglSbxxAddBean.sbxx.tzlrrq}" size="15"
+								rendered="#{sys.sbxx.tzlrrq.sfsx}" readonly="true">
+								<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+									timeZone="GMT+8" />
+							</p:inputText>
+							
+						</h:panelGrid>
+					</p:row>
+				</p:panelGrid>
+			</p:panel>
+			<f:facet name="footer">
+				<p:commandButton value="保    存"
+					actionListener="#{sbglSbxxAddBean.saveSbxx}" 
+					ajax="true" update=":sbform:sbData" style="margin-left: 400px"></p:commandButton>
+			</f:facet>
+		</h:panelGrid>
+	</h:form>
+	
+	<h:form id="sbform">
+		<h:panelGrid columns="1" style="width:1000px">
+			<p:dataTable id="sbData" var="sb" editable="true"
+				value="#{sbglSbxxAddBean.lazyDataModel}" paginator="true" rows="5"
+				widgetVar="cellSbxx" rowIndexVar="rowVar" filterDelay="300"
+				paginatorPosition="bottom" scrollable="true" scrollWidth="1000"
+				liveResize="true"
+				currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+				paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				lazy="true" rowsPerPageTemplate="5,10,20">
+				<p:ajax event="rowEdit" update=":sbform:sbData"
+					listener="#{sbglSbxxAddBean.onRowEdit}"></p:ajax>
+				<p:column style="width:30px" rendered="false">
+					<p:rowEditor></p:rowEditor>
+				</p:column>
+				<p:column style="width:#{sys.sbxx.jlbh.xskd}px"
+					headerText="#{sys.sbxx.jlbh.zdms}">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{sb.jlbh}"></h:outputText>
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{sb.jlbh}"
+								style="width:#{sys.sbxx.jlbh.xskd}px" label="计量编号"
+								required="true" maxlength="50"></p:inputText>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				<p:column style="width:#{sys.sbxx.sbmc.xskd}px"
+					headerText="#{sys.sbxx.sbmc.zdms}">
+					<h:outputText value="#{sb.sbmc}"></h:outputText>
+				</p:column>
+				<p:column headerText="#{sys.sbxx.gllb.zdms}"
+					style="width:#{sys.sbxx.gllb.xskd}px">
+					<h:outputText value="#{sb.gllb}"></h:outputText>
+				</p:column>
+				<p:column headerText="#{sys.sbxx.ggxh.zdms}"
+					style="width:#{sys.sbxx.ggxh.xskd}px">
+					<h:outputText value="#{sb.ggxh}"></h:outputText>
+				</p:column>
+				<p:column headerText="#{sys.sbxx.ccbh.zdms}"
+					style="width:#{sys.sbxx.ccbh.xskd}px">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{sb.ccbh}"></h:outputText>
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{sb.ccbh}"
+								style="width:#{sys.sbxx.ccbh.xskd}px" label="出厂编号"
+								maxlength="50"></p:inputText>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				<p:column headerText="#{sys.sbxx.fjdrq.zdms}"
+					style="width:#{sys.sbxx.fjdrq.xskd}px">
+					<h:outputText value="#{sb.fjdrq}">
+						<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+							timeZone="GMT+8" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="#{sys.sbxx.fyxrq.zdms}"
+					style="width:#{sys.sbxx.fyxrq.xskd}px">
+					<h:outputText value="#{sb.fyxrq}">
+						<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+							timeZone="GMT+8" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="#{sys.sbxx.jdfs.zdms}"
+					style="width:#{sys.sbxx.sbzt.xskd}px">
+					<h:outputText value="#{sb.jdfs}"></h:outputText>
+				</p:column>
+				<p:column headerText="#{sys.sbxx.cysj.zdms}"
+					style="width:#{sys.sbxx.sbzt.xskd}px">
+					<h:outputText value="#{sb.cysjMc}"></h:outputText>
+				</p:column>
+				<p:column headerText="#{sys.sbxx.sbzt.zdms}"
+					style="width:#{sys.sbxx.sbzt.xskd}px">
+					<h:outputText value="#{sb.sbzt}"></h:outputText>
+				</p:column>
+				<p:column exportable="false" style="width:150px" headerText="操作">
+					<h:panelGroup>
+						<p:commandLink value="复制" immediate="true" style="color:orange"
+							actionListener="#{sbglSbxxAddBean.cloneData(sb)}" ajax="true"
+							update=":sbform:sbData">
+						</p:commandLink>
+						<h:outputText value=" | "></h:outputText>
+						<p:commandLink value="修改" immediate="true" style="color:orange"
+							action="#{sbglSbxxAddBean.editSbxx(sb)}" ajax="true"
+							update=":form">
+						</p:commandLink>
+						<h:outputText value=" | "></h:outputText>
+						<p:commandLink value="删除" immediate="true" style="color:orange"
+							action="#{sbglSbxxAddBean.delSbxx(sb)}" ajax="true"
+							update=":sbform:sbData">
+							<p:confirm icon="ui-icon-alert" message="确定删除吗?"></p:confirm>
+						</p:commandLink>
+						<h:outputText value=" | "></h:outputText>
+						<p:commandLink value="入账" immediate="true" style="color:orange"
+							action="#{sbglSbxxAddBean.importSbxx(sb)}" ajax="true"
+							update=":sbform:sbData">
+						</p:commandLink>
+					</h:panelGroup>
+				</p:column>
+			</p:dataTable>
+		</h:panelGrid>
+	</h:form>
+
+<p:dialog id="dlg" header="工时定额标准" widgetVar="displaydlg" modal="true">
+			<h:form id="form1">
+				<p:dataTable id="data1" var="gs" style="width:600px"
+					value="#{gskhQb.lazyDataModel}" paginator="true"
+					widgetVar="gskh" selectionMode="single" rowKey="#{gs.id}"
+					rows="10" rowIndexVar="rowVar" filterDelay="300"
+					resizableColumns="true " liveResize="true"
+					paginatorPosition="bottom"
+					currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+					paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					lazy="true" rowsPerPageTemplate="20,30,50">
+					<p:ajax event="rowSelect" listener="#{sbglSbxxAddBean.onRowSelect}"
+						update=":form:sbxx:gskh"
+						oncomplete="PF('displaydlg').hide()" immediate="true" />
+					<p:column headerText="序号" style="width:26px">
+						<h:outputText value="#{rowVar+1}"></h:outputText>
+					</p:column>
+					<p:column sortBy="#{gs.lx}" filterBy="#{gs.lx}"
+						headerText="工时类型">
+						<h:outputText value="#{gs.lx}"></h:outputText>
+					</p:column>
+					<p:column sortBy="#{gs.mc}" filterBy="#{gs.mc}"
+						headerText="工时标准名称">
+						<h:outputText value="#{gs.mc}"></h:outputText>
+					</p:column>
+					<p:column sortBy="#{gs.ggdj}" filterBy="#{gs.ggdj}"
+						headerText="规格等级">
+						<h:outputText value="#{gs.ggdj}"></h:outputText>
+					</p:column>
+					<p:column sortBy="#{gs.zqjdgs}" filterBy="#{gs.zqjdgs}"
+						headerText="周期检定工时">
+						<h:outputText value="#{gs.zqjdgs}"></h:outputText>
+					</p:column>
+					
+				</p:dataTable>
+			</h:form>
+		</p:dialog>
+
+
+
+</h:body>
+</html>

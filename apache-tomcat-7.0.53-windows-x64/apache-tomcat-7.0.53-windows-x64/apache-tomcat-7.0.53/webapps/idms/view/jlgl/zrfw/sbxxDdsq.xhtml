@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+     <ui:include src="/common/templates/ui.xhtml"></ui:include>
+     <meta name="viewport" content="width=device-width, initial-scale=1"/>
+</h:head>
+<h:body>
+          <p:growl id="growlid" showDetail="true" sticky="true" autoUpdate="true"></p:growl>
+		 <h:form id="Sbsq">
+			              	
+			    <p:dataTable  id="data" var="sb" editable="true"   value="#{sbglSbxxMb.lazyDataModel}"  
+		           paginator="true" rows="10"  widgetVar="cellSbxx" 
+                   rowIndexVar="rowVar"  filterDelay="300"  resizableColumns="true" liveResize="true" 
+                    paginatorPosition="bottom"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" lazy="true" rowsPerPageTemplate="20,30,50">
+			        <p:ajax event="rowEdit" listener="#{sbxxDdsqMb.onRowEdit}" update=":growlid"></p:ajax>
+			  
+			           <p:column headerText="编辑" exportable="false" style="width:40px">
+			              <p:rowEditor></p:rowEditor>
+			           </p:column>
+			 
+					  <p:column  sortBy="#{sb.jlbh}" filterBy="#{sb.jlbh}" style="width:#{sys.sbxx.jlbh.xskd}px" 
+					       rendered="#{sys.sbxx.jlbh.sfsx}"  headerText="#{sys.sbxx.jlbh.zdms}"  >
+							      <h:outputText value="#{sb.jlbh}" ></h:outputText>
+					  </p:column>
+					  <p:column sortBy="#{sb.sbmc}" filterBy="#{sb.sbmc}" style="width:#{sys.sbxx.sbmc.xskd}px" 
+					       rendered="#{sys.sbxx.sbmc.sfsx}"  headerText="#{sys.sbxx.sbmc.zdms}"  >
+							       <h:outputText  value="#{sb.sbmc}" ></h:outputText>
+					  </p:column>
+					  
+					  	<p:column sortBy="#{sb.jlgly}" filterBy="#{sb.jlgly}" rendered="#{sys.sbxx.jlgly.sfsx}" 
+					             headerText="#{sys.sbxx.jlgly.zdms}"  style="width:#{sys.sbxx.jlgly.xskd}px"  >
+							<p:cellEditor>
+							   <f:facet name="output">
+							       <h:outputText value="#{sb.jlgly}" ></h:outputText>
+							   </f:facet>
+							   <f:facet name="input">
+							          <p:selectOneMenu value="#{sb.jlgly}" style="width:100%" >
+							             <f:selectItem itemLabel="" itemValue=""></f:selectItem>
+							           <f:selectItems value="#{selectSbxxBean.jlsbGlys}" var="obj" itemLabel="#{obj.key}" itemValue="#{obj.value}"></f:selectItems>
+							       </p:selectOneMenu>
+							   </f:facet>
+							</p:cellEditor>
+					    </p:column>
+					    
+					     <p:column sortBy="#{sb.sybmbm}" filterBy="#{sb.sybmbm}" rendered="#{sys.sbxx.sybm.sfsx}" 
+					             headerText="#{sys.sbxx.sybm.zdms}"  style="width:#{sys.sbxx.sybm.xskd}px"  >
+							  <p:cellEditor>
+								   <f:facet name="output">
+								     <h:outputText value="#{sb.sybmmc}"></h:outputText>
+								   </f:facet>
+								   <f:facet name="input">
+								       <p:selectOneMenu value="#{sb.sybmbm}" style="width:100%" >
+								           <f:selectItem itemLabel="" itemValue=""></f:selectItem>
+							             <f:selectItems value="#{selectSbxxBean.jlsbSybms}" var="obj" itemLabel="#{obj.key}" itemValue="#{obj.value}"></f:selectItems>
+							            </p:selectOneMenu>
+								   </f:facet>
+							  </p:cellEditor>
+							
+					    </p:column>
+					     <p:column sortBy="#{sb.jljdy}" filterBy="#{sb.jljdy}" rendered="#{sys.sbxx.jljdy.sfsx}" 
+					             headerText="#{sys.sbxx.jljdy.zdms}"  style="width:#{sys.sbxx.jljdy.xskd}px"  >
+							
+							 <p:cellEditor>
+								   <f:facet name="output">
+								     <h:outputText value="#{sb.jljdy}"></h:outputText>
+								   </f:facet>
+								   <f:facet name="input">
+								       <p:selectOneMenu value="#{sb.jljdy}" style="width:100%" >
+								          <f:selectItem itemLabel="" itemValue=""></f:selectItem>
+							             <f:selectItems value="#{selectSbxxBean.jlsbJdys}" var="obj" itemLabel="#{obj.key}" itemValue="#{obj.value}"></f:selectItems>
+							          </p:selectOneMenu>
+								   </f:facet>
+							  </p:cellEditor>
+							  
+					    </p:column>
+					     <p:column sortBy="#{sb.jdbmn}" filterBy="#{sb.jdbmn}" rendered="#{sys.sbxx.jdbmn.sfsx}" 
+					             headerText="#{sys.sbxx.jdbmn.zdms}"  style="width:#{sys.sbxx.jdbmn.xskd}px"  >
+							 <p:cellEditor>
+								   <f:facet name="output">
+								     	<h:outputText value="#{sb.jdbmn}"></h:outputText>
+								   </f:facet>
+								   <f:facet name="input">
+								       <p:selectOneMenu value="#{sb.jdbmn}" style="width:100%" >
+								        <f:selectItem itemLabel="" itemValue=""></f:selectItem>
+							             <f:selectItems value="#{selectSbxxBean.jlsbJdbms}" var="obj" itemLabel="#{obj.key}" itemValue="#{obj.value}"></f:selectItems>
+							          </p:selectOneMenu>
+								   </f:facet>
+							  </p:cellEditor>
+					    </p:column>
+					    
+					    
+					  
+					    <p:column sortBy="#{sb.gllb}" filterBy="#{sb.gllb}" rendered="#{sys.sbxx.gllb.sfsx}" 
+					             headerText="#{sys.sbxx.gllb.zdms}"  style="width:#{sys.sbxx.gllb.xskd}px"  >
+							       <h:outputText value="#{sb.gllb}"></h:outputText>
+					   </p:column>
+					   
+					    <p:column sortBy="#{sb.sbzt}" filterBy="#{sb.sbzt}" rendered="#{sys.sbxx.sbzt.sfsx}" 
+					             headerText="#{sys.sbxx.sbzt.zdms}"  style="width:#{sys.sbxx.sbzt.xskd}px"  >
+							<h:outputText value="#{sb.sbzt}"></h:outputText>
+					    </p:column>
+					    
+					     <p:column sortBy="#{sb.sbfl}" filterBy="#{sb.sbfl}" rendered="#{sys.sbxx.sbfl.sfsx}" 
+					             headerText="#{sys.sbxx.sbfl.zdms}"  style="width:#{sys.sbxx.sbfl.xskd}px"  >
+							<h:outputText value="#{sb.sbfl}"></h:outputText>
+					    </p:column>
+
+					     <p:column sortBy="#{sb.sccj}" filterBy="#{sb.sccj}" rendered="#{sys.sbxx.sccj.sfsx}" 
+					             headerText="#{sys.sbxx.sccj.zdms}"  style="width:#{sys.sbxx.sccj.xskd}px"  >
+								<h:outputText value="#{sb.sccj}"></h:outputText>
+					    </p:column>
+					       <p:column sortBy="#{sb.ccbh}" filterBy="#{sb.ccbh}" rendered="#{sys.sbxx.ccbh.sfsx}" 
+					             headerText="#{sys.sbxx.ccbh.zdms}"  style="width:#{sys.sbxx.ccbh.xskd}px"  >
+							<h:outputText value="#{sb.ccbh}"></h:outputText>
+					    </p:column>
+			</p:dataTable>
+			              	
+				 <p:toolbar >
+								<f:facet name="left">
+								            <p:outputLabel value="已管辖设备"></p:outputLabel>
+								</f:facet>
+			    </p:toolbar>
+		         </h:form>
+		</h:body>
+</html>

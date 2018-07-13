@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="2.2"
+              xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+    
+    
+     <managed-bean>
+		 <managed-bean-name>msaRarMb</managed-bean-name>
+		<managed-bean-class>
+			idms.webapp.msa.RaRMB
+		</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+
+      <managed-bean>
+		<managed-bean-name>biasMB</managed-bean-name>
+		<managed-bean-class>
+			idms.webapp.msa.LBiasMB
+		</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	
+     <managed-bean>
+		<managed-bean-name>stabMB</managed-bean-name>
+		<managed-bean-class>
+			idms.webapp.msa.StabilityMB
+		</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	
+     <managed-bean>
+		<managed-bean-name>queryBean</managed-bean-name>
+		<managed-bean-class>
+			idms.webapp.msa.QueryBean
+		</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>uncertaintyMB</managed-bean-name>
+		<managed-bean-class>
+			idms.webapp.msa.uncertaintyMB
+		</managed-bean-class>
+		<managed-bean-scope>view</managed-bean-scope>
+	</managed-bean>
+	
+	
+    
+ 
+</faces-config>

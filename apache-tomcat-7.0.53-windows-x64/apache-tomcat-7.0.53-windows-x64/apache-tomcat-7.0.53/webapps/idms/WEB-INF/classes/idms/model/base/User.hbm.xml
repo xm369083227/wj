@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="idms.model.base.User" table="BASE_USER">
+          <cache usage="nonstrict-read-write"/>
+		<id name="yhbm" type="string" column="YHBM" length="20">
+		   <generator class="assigned"></generator>
+		</id>
+		<many-to-one name="ssbm" class="idms.model.base.Dept" lazy="false" >
+			<column name="SSBM" length="20" />
+		</many-to-one>
+		<property name="jsmces" type="java.lang.String">
+			<column name="jsmces" length="200" />
+		</property>
+		
+		<property name="yhmc" type="java.lang.String">
+			<column name="YHMC" length="20" />
+		</property>
+		<property name="zsmc" type="java.lang.String">
+			<column name="ZSMC" length="20" />
+		</property>
+		<property name="yhmm" type="java.lang.String">
+			<column name="YHMM" length="20" />
+		</property>
+		<property name="xb" type="java.lang.String">
+			<column name="XB" length="20" />
+		</property>
+		<property name="zw" type="java.lang.String">
+			<column name="ZW" length="50" />
+		</property>
+		<property name="zt" type="java.lang.String">
+			<column name="ZT" length="20" />
+		</property>
+		<property name="jb" type="java.lang.Long">
+			<column name="JB" precision="22" scale="0" />
+		</property>
+		<property name="gzxsum" type="java.lang.Integer">
+			<column name="GZXSUM" length="22" />
+		</property>
+		<property name="del" type="java.lang.Integer">
+			<column name="DEl" length="2" />
+		</property>
+		<property name="dh" type="java.lang.String">
+			<column name="DH" length="20" />
+		</property>
+		<property name="sj" type="java.lang.String">
+			<column name="SJ" length="20" />
+		</property>
+		<property name="yjdz" type="java.lang.String">
+			<column name="YJDZ" length="100" />
+		</property>
+		<property name="fsbm" type="java.lang.String">
+			<column name="FSBM" length="300" />
+		</property>
+		<set name="jses" table="BASE_USER_ROLE" lazy="extra" cascade="save-update"
+			batch-size="5">
+			<key>
+				<column name="YHBM" not-null="true" />
+			</key>
+			<many-to-many class="idms.model.base.Role" column="JSBM"
+				outer-join="auto" />
+		</set>
+
+		<property name="werks" type="java.lang.String">
+			<column name="WERKS" length="30" />
+		</property>
+		<property name="title_medi" type="java.lang.String">
+			<column name="TITLE_MEDI" length="150" />
+		</property>
+		<property name="qq" type="java.lang.String">
+			<column name="QQ" length="25" />
+		</property>
+
+
+
+	</class>
+</hibernate-mapping>

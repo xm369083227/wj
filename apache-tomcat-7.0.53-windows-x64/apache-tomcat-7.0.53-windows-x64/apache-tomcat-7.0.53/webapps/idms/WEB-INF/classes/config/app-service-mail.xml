@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean id="mailConfigInfoService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.mail.MailConfigInfoServiceImpl">
+				<property name="dao"  ref="mailConfigInfoDao" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="mailInfoService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.mail.MailInfoServiceImpl">
+				<property name="dao"  ref="mailInfoDao" />
+			</bean>
+		</property>
+	</bean>
+	
+
+	
+</beans>

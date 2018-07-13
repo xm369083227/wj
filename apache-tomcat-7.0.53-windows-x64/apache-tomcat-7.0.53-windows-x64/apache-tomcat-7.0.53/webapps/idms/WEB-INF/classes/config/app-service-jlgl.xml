@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+   
+	
+	<bean id="jcglFlsqService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.jlgl.jcgl.JcglFlsqServiceImpl">
+				<property name="dao"  ref="jcglFlsqDao" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="jcglJyjlService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.jlgl.jcgl.JcglJyjlServiceImpl">
+				<property name="dao"  ref="jcglJyjlDao" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="jcglJysbService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.jlgl.jcgl.JcglJysbServiceImpl">
+				<property name="dao"  ref="jcglJysbDao" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="jcglSbsqService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.jlgl.jcgl.JcglSbsqServiceImpl">
+				<property name="dao"  ref="jcglSbsqDao" />
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="jdglJdjhService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.jlgl.jdgl.JdglJdjhServiceImpl">
+				<property name="dao"  ref="jdglJdjhDao" />
+				<property name="jdrwDao"  ref="jdglJdrwDao"/>
+				<property name="wfGzxDao"  ref="wfGzxDao"/>
+				<property name="cjtjDao"  ref="jdglCjtjDao"/>
+				<property name="sbxxDao"  ref="sbglSbxxDao" />
+				<property name="userDao"  ref="userDao" />
+				<property name="zxpzDao"  ref="cfgJhZxpzDao" />
+				<property name="trigCondDao"  ref="trigCondDao" />
+			</bean>
+		</property>
+	</bean>
+		<bean id="jdglSbhjService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.jlgl.jdgl.JdglSbhjServiceImpl">
+				<property name="dao"  ref="jdglSbhjDao" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="jdglJdjlService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.jlgl.jdgl.JdglJdjlServiceImpl">
+				<property name="dao"  ref="jdglJdjlDao" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="jdglJdrwService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.jlgl.jdgl.JdglJdrwServiceImpl">
+				<property name="dao"  ref="jdglJdrwDao" />
+		        <property name="jdjlDao"  ref="jdglJdjlDao" />
+		        <property name="gzxDao"  ref="wfGzxDao"/>
+				<property name="sbxxDao"  ref="sbglSbxxDao" />
+				<property name="jdjhDao"  ref="jdglJdjhDao" />
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="jdglCjtjService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.jlgl.jdgl.JdglCjtjServiceImpl">
+				<property name="dao"  ref="jdglCjtjDao" />
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="jlbzBzqService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.jlgl.jlbz.JlbzBzqServiceImpl">
+				<property name="dao"  ref="jlbzBzqDao" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="jlbzBzwzService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.jlgl.jlbz.JlbzBzwzServiceImpl">
+				<property name="dao"  ref="jlbzBzwzDao" />
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="jlzdJlgfService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.jlgl.jlzd.JlzdJlgfServiceImpl">
+				<property name="dao"  ref="jlzdJlgfDao" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="jlzdJxdwService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.jlgl.jlzd.JlzdJxdwServiceImpl">
+				<property name="dao"  ref="jlzdJxdwDao" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="jlzdWjsyfwService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.jlgl.jlzd.JlzdWjsyfwServiceImpl">
+				<property name="dao"  ref="jlzdWjsyfwDao" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="jlzdXkflService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.jlgl.jlzd.JlzdXkflServiceImpl">
+				<property name="dao"  ref="jlzdXkflDao" />
+			</bean>
+		</property>
+	
+	</bean>
+	<bean id="sbglSbxxService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.jlgl.sbgl.SbglSbxxServiceImpl">
+				<property name="dao"  ref="sbglSbxxDao" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="sbglSbxxBakService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.jlgl.sbgl.SbglSbxxBakServiceImpl">
+				<property name="dao"  ref="sbglSbxxBakDao" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="sbglBhgxxFkdService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.jlgl.sbgl.SbglBhgxxFkdServiceImpl">
+				<property name="dao"  ref="sbglBhgxxFkdDao" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="sbrzZqxgService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.jlgl.sbrz.SbrzZqxgServiceImpl">
+				<property name="dao"  ref="sbrzZqxgDao" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="sbrzWxjlService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.jlgl.sbrz.SbrzWxjlServiceImpl">
+				<property name="dao"  ref="sbrzWxjlDao" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="sbrzZtxgService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.jlgl.sbrz.SbrzZtxgServiceImpl">
+				<property name="dao"  ref="sbrzZtxgDao" />
+				<property name="jdrwDao"  ref="jdglJdrwDao" />
+				<property name="wfGzxDao"  ref="wfGzxDao" />
+				<property name="wfSpjlDao"  ref="wfSpjlDao" />
+				<property name="sbxxDao"  ref="sbglSbxxDao" />
+				<property name="ztxgDao"  ref="sbrzZtxgDao" />
+			</bean>
+		</property>
+	</bean>
+		<bean id="sbrzSbdsService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.jlgl.sbrz.SbrzSbdsServiceImpl">
+				<property name="dao"  ref="sbrzSbdsDao" />
+			</bean>
+		</property>
+	</bean>
+	
+    <bean id="zrfwGxfwService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.jlgl.zrfw.ZrfwGxfwServiceImpl">
+				<property name="dao"  ref="zrfwGxfwDao" />
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="zrfwBmsqService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.jlgl.zrfw.ZrfwBmsqServiceImpl">
+				<property name="dao"  ref="zrfwBmsqDao" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="zrfwFlsqService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.jlgl.zrfw.ZrfwFlsqServiceImpl">
+				<property name="dao"  ref="zrfwFlsqDao" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="zrfwSbsqService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.jlgl.zrfw.ZrfwSbsqServiceImpl">
+				<property name="dao"  ref="zrfwSbsqDao" />
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="zrfwJlyService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.jlgl.zrfw.ZrfwJlyServiceImpl">
+				<property name="dao"  ref="zrfwJlyDao" />
+			</bean>
+		</property>
+	</bean>
+    <bean id="cfgJhZxpzService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.jlgl.acom.CfgJhZxpzServiceImpl">
+				<property name="dao"  ref="cfgJhZxpzDao" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="sbxxSjlbService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="idms.service.jlgl.sbrz.SbxxSjlbServiceImpl">
+				<property name="dao"  ref="sbxxSjlbDao" />
+				<property name="jdrwDao"  ref="jdglJdrwDao" />
+				<property name="wfGzxDao"  ref="wfGzxDao" />
+				<property name="wfSpjlDao"  ref="wfSpjlDao" />
+				<property name="sbxxDao"  ref="sbglSbxxDao" />
+				<property name="ztxgDao"  ref="sbrzZtxgDao" />
+			</bean>
+		</property>
+	</bean>
+</beans>

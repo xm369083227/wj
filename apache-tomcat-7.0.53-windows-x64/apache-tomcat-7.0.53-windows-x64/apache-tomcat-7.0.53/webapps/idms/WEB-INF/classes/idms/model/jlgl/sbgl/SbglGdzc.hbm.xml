@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="idms.model.jlgl.sbgl.SbglGdzc" table="SBGL_GDZC" >
+        <id name="bh" type="java.lang.String">
+            <column name="BH" precision="18" scale="0" />
+            <generator class="assigned">
+				
+			</generator>
+        </id>
+        
+        <property name="jsjbm" type="string">
+            <column name="JSJBM" length="250" />
+        </property>
+        <property name="zcmc" type="string">
+            <column name="ZCMC" length="250" />
+        </property>
+        <property name="gchjk" type="string">
+            <column name="GCHJK" length="250" />
+        </property>
+        <property name="jssp" type="string">
+            <column name="jssp" length="250" />
+        </property>
+        <property name="ggxh" type="string">
+            <column name="GGXH" length="250" />
+        </property>
+        <property name="clfw" type="string">
+            <column name="CLFW" length="250" />
+        </property>
+        <property name="jzdw" type="string">
+            <column name="JZDW" length="250" />
+        </property>
+        <property name="cch" type="string">
+            <column name="CCH" length="250" />
+        </property>
+        <property name="ccny" type="string">
+            <column name="CCNY" length="250" />
+        </property>
+         <property name="trsj" type="string">
+            <column name="TRSJ" length="250" />
+        </property>
+        <property name="zcyz" type="double">
+            <column name="ZCYZ" />
+        </property>
+        <property name="ljzj" type="string">
+            <column name="LJZJ" length="250" />
+        </property>
+        <property name="zmjz" type="double">
+            <column name="ZMJZ"  />
+        </property>
+        <property name="ytjnl" type="string">
+            <column name="YTJNL" length="250" />
+        </property>
+        <property name="jhynx" type="string">
+            <column name="JHYNX" length="250" />
+        </property>
+        <property name="zgsj" type="string">
+            <column name="ZGSJ" length="250" />
+        </property>
+        <property name="fschsc" type="string">
+            <column name="FSCHSC" length="250" />
+        </property>
+        <property name="zwzc" type="string">
+            <column name="ZWZC" length="250" />
+        </property>
+          <property name="fcjny" type="string">
+            <column name="FCJNY" length="250" />
+        </property>
+        <property name="bljny" type="string">
+            <column name="BLJNY" length="250" />
+        </property>
+        <property name="pkjhs" type="string">
+            <column name="PKJHS" length="250" />
+        </property>
+        <property name="bfny" type="string">
+            <column name="BFNY" length="250" />
+        </property>
+         <property name="xzzc" type="string">
+            <column name="XZZC" length="250" />
+        </property>
+        <property name="syzt" type="string">
+            <column name="SYZT" length="250" />
+        </property>
+        <property name="syqk" type="string">
+            <column name="SYQK" length="250" />
+        </property>
+        <property name="sydw" type="string">
+            <column name="SYDW" length="250" />
+        </property>
+        <property name="sydd" type="string">
+            <column name="SYDD" length="250" />
+        </property>
+        <property name="pdr" type="string">
+            <column name="PDR" length="250" />
+        </property>
+        <property name="jhh" type="string">
+            <column name="JHH" length="250" />
+        </property>
+        <property name="bz" type="string">
+            <column name="BZ" length="400" />
+        </property>
+        <property name="bfyy" type="string">
+            <column name="BFYY" length="400" />
+        </property>
+    </class>
+</hibernate-mapping>

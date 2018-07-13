@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:body>
+	<h:form id="llForm">
+		<p:tabView id="jlsbll" scrollable="true">
+			<p:tab title="设备履历">
+				<p:panel>
+					<h:panelGrid columns="4" style="width:900px">
+						<h:outputText value="#{sys.sbxx.jlbh.zdms}："
+							rendered="#{sys.sbxx.sbbh.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.jlbh}" size="35"
+							readonly="true" rendered="#{sys.sbxx.jlbh.sfsx}"></p:inputText>
+						<h:outputText value="#{sys.sbxx.sbmc.zdms}："
+							rendered="#{sys.sbxx.sbmc.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.sbmc}" size="35"
+							readonly="true" rendered="#{sys.sbxx.sbmc.sfsx}"></p:inputText>
+						<h:outputText value="#{sys.sbxx.ggxh.zdms}："
+							rendered="#{sys.sbxx.ggxh.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.ggxh}" size="35"
+							readonly="true" rendered="#{sys.sbxx.ggxh.sfsx}"></p:inputText>
+						<h:outputText value="#{sys.sbxx.ccbh.zdms}："
+							rendered="#{sys.sbxx.ccbh.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.ccbh}" size="35"
+							readonly="true" rendered="#{sys.sbxx.ccbh.sfsx}"></p:inputText>
+					</h:panelGrid>
+				</p:panel>
+				<p:panel>
+					<h:panelGrid columns="4" style="width:900px">
+						<h:outputText value="#{sys.sbxx.sybmmc.zdms}："
+							rendered="#{sys.sbxx.sybmmc.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.sybmmc}" size="35"
+							readonly="true" rendered="#{sys.sbxx.sybmmc.sfsx}"></p:inputText>
+						<h:outputText value="#{sys.sbxx.cysj.zdms}："
+							rendered="#{sys.sbxx.cysj.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.cysjMc}" size="35"
+							readonly="true" rendered="#{sys.sbxx.cysj.sfsx}"></p:inputText>
+						<h:outputText value="#{sys.sbxx.gllb.zdms}："
+							rendered="#{sys.sbxx.gllb.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.gllb}" size="35"
+							readonly="true" rendered="#{sys.sbxx.gllb.sfsx}"></p:inputText>
+						<h:outputText value="#{sys.sbxx.sbzt.zdms}："
+							rendered="#{sys.sbxx.sbzt.sfsx}" />
+						<p:inputText value="#{sbglSbxxMb.sbxx.sbzt}" size="35"
+							readonly="true" rendered="#{sys.sbxx.sbzt.sfsx}"></p:inputText>
+
+					</h:panelGrid>
+				</p:panel>
+				<p:panel >
+					<h:panelGrid columns="4" style="width:900px">
+					<h:outputText value="录入人员："></h:outputText>
+					<p:inputText value="#{sbglSbxxMb.sbxx.tzlrry}" size="35" readonly="true"> </p:inputText>
+					<h:outputText value="录入日期："></h:outputText>
+					<p:inputText value="#{sbglSbxxMb.sbxx.tzlrrq}" size="35" readonly="true">
+					<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+									timeZone="GMT+8" /> </p:inputText>
+					</h:panelGrid>
+					</p:panel>
+
+				<p:dataTable id="datasbll" var="sbll"
+					value="#{sbglSbxxMb.sbllMb.lazyDataModel}" paginator="true"
+					rows="5" widgetVar="sbllSbxx" rowIndexVar="rowVar"
+					filterDelay="300" style="width:100%;" liveResize="true"
+					paginatorPosition="bottom"
+					currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+					paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					lazy="true" rowsPerPageTemplate="5,10,15">
+
+					<p:column headerText="时间" style="width:50px">
+						<h:outputText value="#{sbll.czrq}">
+							<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+								timeZone="GMT+8" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="操作人员" style="width:50px">
+						<h:outputText value="#{sbll.czy}"></h:outputText>
+					</p:column>
+					<p:column headerText="事件内容" style="width:200px"
+						filterStyle="width:100px">
+						<h:outputText value="#{sbll.sjnrs}"
+							style="display:block"></h:outputText>
+					</p:column>
+					<p:column headerText="事件类型" style="width:50px">
+						<h:outputText value="#{sbll.tzlx}"></h:outputText>
+					</p:column>
+					<p:column headerText="操作结果" style="width:50px">
+						<h:outputText value="#{sbll.spjg}"></h:outputText>
+					</p:column>
+				</p:dataTable>
+			</p:tab>
+		</p:tabView>
+	</h:form>
+</h:body>
+</html>

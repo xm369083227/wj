@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+
+<h:head>
+		<title>alter_pass</title>
+		
+		<script language="javascript">
+		 function clear()
+		 {
+		    document.getElementById('form1:oldpass').value='';
+		    document.getElementById('form1:newpass').value='';
+		    document.getElementById('form1:confirmpass').value='';
+		   
+		 }
+		</script>
+</h:head>
+<h:body>
+
+<p:growl id="growlid" sticky="true" autoUpdate="true"></p:growl>
+	<h:form id="form1">
+
+		<table width="80%" style="margin-top: 50px">
+			<tr>
+			  <td width="30%" align="right">
+				<p:outputLabel value="用户编码： " rendered="#{alterPass.flag}"></p:outputLabel></td>
+				<td width="70%">
+				<p:inputText value="#{alterPass.yhbm}" size="30" rendered="#{alterPass.flag}"/></td>
+				</tr>
+				<tr>
+				<td width="30%" align="right">
+				<p:outputLabel value="新密码： "></p:outputLabel></td>
+				<td width="70%">
+			   <p:password id="newpass" value="#{alterPass.newPass}" feedback="true"
+			                    promptLabel="弱" weakLabel="中等" size="30"
+			                    goodLabel="中强" strongLabel="强" /></td>
+			</tr>
+			<tr>
+				<td width="30%" align="right">
+				<p:outputLabel value="密码确认： "></p:outputLabel></td>
+				<td width="70%"> <p:password id="confirmpass" value="#{alterPass.confirmPass}"  size="30"/></td>
+			</tr>
+		</table>
+		<table width="100%" style="margin-top: 20px">
+			<tr>
+				<td width="22%"></td>
+				<td width="10%"><p:commandButton id="btnEdit" update=":growlid" value="确认"
+						actionListener="#{alterPass.editPass}" /></td>
+				<td width="20%"><p:commandButton id="btnClear" value="取消"
+						onclick="clear();" /></td>
+				<td width="50%"></td>
+			</tr>
+		</table>
+		<h:messages style="color:red;"/>
+	</h:form>
+</h:body>
+</html>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process-definition xmlns="urn:jbpm.org:jpdl-3.2"
+	name="检定周期调整">
+	<start-state name="开始">
+		<transition name="提交" to="计量管理员申请"></transition>
+	</start-state>
+	<task-node name="计量管理员申请">
+		<task name="计量管理员申请">
+			<assignment class="idms.workflow.jlgl.SbJdzqtzHandler"></assignment>
+			<controller>
+				<variable name="formBean" mapped-name="zttzClsbJdzqtzJBean"></variable>
+			</controller>
+		</task>
+		<transition name="提交" to="主管领导审批"></transition>
+      <transition name="取消" to="结束"></transition>
+	</task-node>
+	<task-node name="主管领导审批">
+		<task name="主管领导审批">
+			<assignment class="idms.workflow.jlgl.SbJdzqtzHandler"></assignment>
+			<controller>
+				<variable name="formBean" mapped-name="zttzClsbJdzqtzJBean"></variable>
+			</controller>
+		</task>
+		<transition name="提交" to="责任工程师审批"></transition>
+	</task-node>
+	<task-node name="责任工程师审批">
+		<task name="责任工程师审批">
+			<assignment class="idms.workflow.jlgl.SbJdzqtzHandler"></assignment>
+			<controller>
+				<variable name="formBean" mapped-name="zttzClsbJdzqtzJBean"></variable>
+			</controller>
+		</task>
+		<transition name="提交" to="计量科长审批"></transition>
+	</task-node>
+	<task-node name="计量科长审批">
+		<task name="计量科长审批">
+			<assignment class="idms.workflow.jlgl.SbJdzqtzHandler"></assignment>
+			<controller>
+				<variable name="formBean" mapped-name="zttzClsbJdzqtzJBean"></variable>
+			</controller>
+		</task>
+		<transition name="提交" to="检定员确认"></transition>
+	</task-node>
+	<task-node name="检定员确认">
+		<task name="检定员确认">
+			<assignment class="idms.workflow.jlgl.SbJdzqtzHandler"></assignment>
+			<controller>
+				<variable name="formBean" mapped-name="zttzClsbJdzqtzJBean"></variable>
+			</controller>
+		</task>
+      <transition name="提交" to="是否外送"></transition>
+	</task-node>
+	
+   <decision name="是否外送">
+      <handler class="idms.workflow.jlgl.SbJdzqtzDecision"></handler>
+      <transition name="是" to="分厂人员确认"></transition>
+      <transition name="否" to="结束"></transition>
+   </decision>
+   <task-node name="分厂人员确认">
+       <task name="分厂人员确认">
+			<assignment class="idms.workflow.jlgl.SbJdzqtzHandler"></assignment>
+			<controller>
+				<variable name="formBean" mapped-name="zttzClsbJdzqtzJBean"></variable>
+			</controller>
+		</task>
+      <transition name="结束申请" to="结束"></transition>
+   </task-node>
+   <end-state name="结束"></end-state>
+</process-definition>

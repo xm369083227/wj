@@ -1,0 +1,217 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+<f:view contentType="text/html">
+	<h:head>
+		<title>IDMS</title>
+		<ui:include src="/common/templates/ui.xhtml"></ui:include>
+	</h:head>
+	<h:body>
+		<p:dialog id="dialogid" header="检定规范" widgetVar="dialog"
+			maximizable="true" height="200px" width="600px" modal="true">
+			<h:form id="dialogform" enctype="multipart/form-data">
+				<p:panelGrid columns="1">
+					<h:panelGrid columns="4">
+						<h:outputText value="规范名称："></h:outputText>
+						<p:inputText value="#{jlzdJdgfMb.varchObj.gfmc}" size="20"></p:inputText>
+						<h:outputText value="规范代号："></h:outputText>
+						<p:inputText value="#{jlzdJdgfMb.varchObj.gfdh}" size="20"></p:inputText>
+						<h:outputText value="学科分类："></h:outputText>
+
+						<h:panelGroup>
+							<p:selectOneMenu value="#{jlzdJdgfMb.varchObj.xkflp}"
+								valueChangeListener="#{selectXkflBean.handValueChangeEvent}">
+								<f:selectItems value="#{selectXkflBean.parents}" var="obj"
+									itemLabel="#{obj.key}" itemValue="#{obj.value}"></f:selectItems>
+								<p:ajax event="change" update=":dialogform:children" />
+							</p:selectOneMenu>
+
+							<p:selectOneMenu id="children"
+								value="#{jlzdJdgfMb.varchObj.xkfl}">
+								<f:selectItems value="#{selectXkflBean.childrens}" var="obj"
+									itemLabel="#{obj.key}" itemValue="#{obj.value}"></f:selectItems>
+							</p:selectOneMenu>
+						</h:panelGroup>
+
+					</h:panelGrid>
+
+					<h:panelGrid columns="1">
+						<p:fileUpload rendered="#{jlzdJdgfMb.varchObj.jcxtWjxx==null}"
+							value="#{jlzdJdgfMb.uploadedFile}" mode="simple"
+							skinSimple="true" />
+						<h:panelGroup rendered="#{jlzdJdgfMb.varchObj.jcxtWjxx!=null}">
+							<h:outputText value="#{jlzdJdgfMb.varchObj.jcxtWjxx.wjmc}"></h:outputText>
+							<p:commandButton value=" 删除" ajax="true"
+								oncomplete="PF('dialog').show()"
+								actionListener="#{jlzdJdgfMb.delFile}" update=":dialogid"></p:commandButton>
+						</h:panelGroup>
+						<h:panelGroup>
+							<h:outputText value="有效期："></h:outputText>
+							<p:calendar label="有效期" value="#{jlzdJdgfMb.varchObj.yxq}"
+								readonlyInput="false" navigator="true" pattern="yyyy-MM-dd"></p:calendar>
+						</h:panelGroup>
+					</h:panelGrid>
+				</p:panelGrid>
+				<p:commandButton value="保存" update=":form:table" ajax="false"
+					oncomplete="PF('dialog').hide()"
+					actionListener="#{jlzdJdgfMb.addObj}"></p:commandButton>
+			</h:form>
+		</p:dialog>
+		<h:form id="form">
+
+			<h:panelGrid width="99%">
+				<p:panel header="条件查询">
+					<h:panelGrid columns="6">
+						<h:outputText value="规范名称："></h:outputText>
+						<p:inputText value="#{jlzdJdgfMb.queryObj.gfmc}" size="25"></p:inputText>
+						<h:outputText value="规范代号："></h:outputText>
+						<p:inputText value="#{jlzdJdgfMb.queryObj.gfdh}" size="25"></p:inputText>
+
+						<h:outputText value="录入用户："></h:outputText>
+						<p:inputText value="#{jlzdJdgfMb.queryObj.lrry}" size="25"></p:inputText>
+						<h:outputText value="录入日期："></h:outputText>
+						<h:panelGroup>
+							<p:calendar label="录入日期" value="#{jlzdJdgfMb.startTime}" size="8"
+								readonlyInput="false" navigator="true" pattern="yyyy-MM-dd" />
+						                                  至<p:calendar label="录入日期"
+								value="#{jlzdJdgfMb.endTime}" size="8" readonlyInput="false"
+								navigator="true" pattern="yyyy-MM-dd" />
+						</h:panelGroup>
+						<h:outputText value="学科分类："></h:outputText>
+						<h:panelGroup>
+							<p:selectOneMenu value="#{jlzdJdgfMb.queryObj.xkflp}"
+								valueChangeListener="#{selectXkflBean.handValueChangeEvent}">
+								<f:selectItems value="#{selectXkflBean.parents}" var="obj"
+									itemLabel="#{obj.key}" itemValue="#{obj.value}"></f:selectItems>
+								<p:ajax event="change" update=":form:children" />
+							</p:selectOneMenu>
+
+							<p:selectOneMenu id="children"
+								value="#{jlzdJdgfMb.queryObj.xkfl}">
+								<f:selectItems value="#{selectXkflBean.allChildrens}" var="obj"
+									itemLabel="#{obj.key}" itemValue="#{obj.value}"></f:selectItems>
+							</p:selectOneMenu>
+						</h:panelGroup>
+
+						<h:outputText value="有效期："></h:outputText>
+						<h:panelGroup>
+							<p:calendar label="有效期" value="#{jlzdJdgfMb.startYxq}" size="8"
+								readonlyInput="false" navigator="true" pattern="yyyy-MM-dd" />
+						                                  至<p:calendar label="有效期"
+								value="#{jlzdJdgfMb.endYxq}" size="8" readonlyInput="false"
+								navigator="true" pattern="yyyy-MM-dd" />
+						</h:panelGroup>
+					</h:panelGrid>
+					<p:commandButton value="查询" ajax="false"
+						action="#{jlzdJdgfMb.doSearch}"></p:commandButton>
+				</p:panel>
+				<p:dataTable id="table" paginator="true" rows="13" editable="true"
+					value="#{jlzdJdgfMb.lazyDataModel}" style="width:100%;" var="item"
+					rowsPerPageTemplate="13,30,50" rowIndexVar="rowVar"
+					filterDelay="300" resizableColumns="true " liveResize="true"
+					paginatorPosition="bottom"
+					currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+					paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					lazy="true">
+					<p:ajax event="rowEdit" update=":form:table"
+						listener="#{jlzdJdgfMb.onRowEdit}"></p:ajax>
+					<p:column headerText="序号" sortBy="#{item.id}" style="width:50px;">
+						<h:outputText value="#{rowVar+1}" />
+					</p:column>
+					<p:column headerText="规范名称" sortBy="#{item.gfmc}"
+						style="width:150px">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{item.gfmc}"></h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{item.gfmc}" style="width:90%"></p:inputText>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="规范代号" sortBy="#{item.gfdh}"
+						style="width:150px">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{item.gfdh}"></h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{item.gfdh}" style="width:90%"></p:inputText>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					<p:column headerText="有效期" sortBy="#{item.yxq}" style="width:80px;">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{item.yxq}">
+									<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+										timeZone="GMT+8" />
+								</h:outputText>
+							</f:facet>
+							<f:facet name="input">
+								<p:calendar label="有效期" value="#{item.yxq}" style="width:99%"
+									size="8" readonlyInput="false" navigator="true"
+									pattern="yyyy-MM-dd" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="学科分类" sortBy="#{item.xkfl}"
+						style="width:300px">
+						<h:outputText value="#{item.xkflfcms}"></h:outputText>
+					</p:column>
+
+					<p:column headerText="录入人员" sortBy="#{item.lrry}">
+						<p:outputLabel value="#{item.lrry}"></p:outputLabel>
+					</p:column>
+					<p:column headerText="录入时间" sortBy="#{item.lrsj}">
+						<h:outputText value="#{item.lrsj}">
+							<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+								timeZone="GMT+8" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="操作" style="width:100px">
+						<f:facet name="header">
+							<p:commandButton actionListener="#{jlzdJdgfMb.openPanal}"
+								oncomplete="PF('dialog').show()" ajax="true" update=":dialogid"
+								value="增加"></p:commandButton>
+						</f:facet>
+						<h:panelGroup>
+							<p:commandButton id="downId" ajax="false" immediate="true"
+								action="#{jlzdJdgfMb.downFile}" title="下载"
+								icon="ui-icon-arrowthick-1-s">
+								<f:param name="ID" value="#{item.id}"></f:param>
+							</p:commandButton>
+							<h:outputText value="  "></h:outputText>
+							<p:commandButton id="deleteId" ajax="true" update=":form:table"
+								action="#{jlzdJdgfMb.delObj}" title="删除" icon="ui-icon-trash"
+								immediate="true">
+								<f:param name="ID" value="#{item.id}"></f:param>
+								<p:confirm icon="ui-icon-alert" message="确定删除吗?"></p:confirm>
+							</p:commandButton>
+
+							<h:outputText value="  "></h:outputText>
+							<p:commandButton actionListener="#{jlzdJdgfMb.editPanal}"
+								oncomplete="PF('dialog').show()" ajax="true" update=":dialogid"
+								title="修改" icon="ui-icon-gear" immediate="true">
+								<f:param name="ID" value="#{item.id}"></f:param>
+							</p:commandButton>
+						</h:panelGroup>
+
+					</p:column>
+					<p:column style="width:40px">
+						<p:rowEditor></p:rowEditor>
+					</p:column>
+				</p:dataTable>
+
+			</h:panelGrid>
+
+		</h:form>
+
+	</h:body>
+</f:view>
+</html>

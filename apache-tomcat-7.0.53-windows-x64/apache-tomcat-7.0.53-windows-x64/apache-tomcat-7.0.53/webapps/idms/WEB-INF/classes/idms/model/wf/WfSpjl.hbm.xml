@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+   
+	<class name="idms.model.wf.WfSpjl" table="WF_SPJL">
+		<id name="id"  column="ID" >
+               <generator class="sequence">
+	                 <param name="sequence">S_WF_SPJL</param>
+              </generator>
+		</id>
+	    <property name="qznr" type="java.lang.String" length="1000"/>
+	    <property name="qzyh" type="java.lang.String" length="50"/>
+	    <property name="qzrq" type="java.util.Date"/>
+	    <property name="ywlx" type="java.lang.Integer" length="2"/>
+	    <property name="ywId" type="java.lang.Long" length="19"/>
+	    <property name="jdmc" type="java.lang.String" length="200" />
+	    <property name="subywId" type="java.lang.Long" length="19"/>
+	    <property name="qzlx" type="java.lang.Integer" length="2"/>
+	    <property name="sfty" type="java.lang.Boolean"  />
+		
+    </class>
+</hibernate-mapping>

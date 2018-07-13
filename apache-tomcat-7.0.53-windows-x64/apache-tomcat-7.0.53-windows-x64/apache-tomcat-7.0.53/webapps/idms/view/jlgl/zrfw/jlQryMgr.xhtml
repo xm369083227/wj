@@ -1,0 +1,227 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+	<ui:include src="/common/templates/ui.xhtml"></ui:include>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+</h:head>
+<h:body>
+	<p:growl id="growlFlsq" showDetail="true" sticky="true"
+		autoUpdate="true"></p:growl>
+	<p:dialog id="dialogZrfw" header="计量确认员（#{zrfwQryMb.varUser.zsmc}）分类授权"
+		widgetVar="dlgzrfw" maximizable="true" height="450px" width="700"
+		modal="true">
+		<h:form id="zrfw">
+			<p:panelGrid columns="1">
+				<p:panelGrid columns="2">
+					<h:panelGrid columns="2">
+						<h:outputText value="学科分类：" style="width:80em"></h:outputText>
+						<h:panelGroup>
+							<p:selectOneMenu value="#{zrfwQryMb.selectXkflp}"
+								valueChangeListener="#{selectXkflBean.handValueChangeEvent}">
+								<f:selectItems value="#{selectXkflBean.parents}" var="obj"
+									itemLabel="#{obj.key}" itemValue="#{obj.value}"></f:selectItems>
+								<p:ajax event="change" update=":zrfw:children" />
+							</p:selectOneMenu>
+							<p:selectManyMenu id="children" scrollHeight="200"
+								value="#{zrfwQryMb.selectXkfls}">
+								<f:selectItems value="#{selectXkflBean.childrens}" var="obj"
+									itemLabel="#{obj.value}" itemValue="#{obj.value}"></f:selectItems>
+							</p:selectManyMenu>
+						</h:panelGroup>
+					</h:panelGrid>
+					<h:panelGrid columns="3">
+						<h:outputText value="管辖部门：" style="width:60px"></h:outputText>
+						<h:outputText value="*" style="color:red"></h:outputText>
+						<p:selectManyMenu value="#{zrfwQryMb.selectDepts}"
+							scrollHeight="200">
+							<f:selectItem itemLabel="--所有使用部门--" itemValue=""></f:selectItem>
+							<f:selectItems value="#{selectSbxxBean.jlsbSybms}" var="obj"
+								itemLabel="#{obj.key}" itemValue="#{obj.value}"></f:selectItems>
+						</p:selectManyMenu>
+					</h:panelGrid>
+					<p:commandButton value="添加授权" update=":zrfw:dataGxfw"
+						actionListener="#{zrfwQryMb.addGxfw()}" ajax="true"></p:commandButton>
+				</p:panelGrid>
+
+				<p:dataTable id="dataGxfw" var="gxfw"
+					value="#{zrfwQryMb.zrfwGxbmQb.lazyDataModel}" paginator="true"
+					rows="10" style="with:600px" rowIndexVar="rowVar"
+					rowKey="#{gxfw.id}" filterDelay="300" resizableColumns="true "
+					liveResize="true" paginatorPosition="bottom"
+					currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+					paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					lazy="true" rowsPerPageTemplate="5,10,15">
+					<p:column headerText="序号" width="5%">
+						<h:outputText value="#{rowVar+1}" />
+					</p:column>
+					<p:column headerText="学科分类" filterBy="#{gxfw.xkfl}" width="45%">
+						<h:outputText value="#{gxfw.xkfl}"
+							style="text-align: center; vertical-align: middle;" />
+					</p:column>
+					<p:column headerText="上级分类" filterBy="#{gxfw.xkflp}" width="20%">
+						<h:outputText value="#{gxfw.xkflp}"
+							style="text-align: center; vertical-align: middle;" />
+					</p:column>
+					<p:column headerText="管辖部门" filterBy="#{gxfw.gxbm}" width="20%">
+						<h:outputText value="#{gxfw.gxbm}"
+							style="text-align: center; vertical-align: middle;" />
+					</p:column>
+					<p:column headerText="操作" width="15%">
+						<p:commandButton id="deleteId" update=":zrfw:dataGxfw"
+							action="#{zrfwQryMb.deleteGxfw()}" value="删除" title="删除"
+							icon="ui-icon-trash" immediate="true">
+							<f:param name="ID" value="#{gxfw.id}"></f:param>
+							<p:confirm icon="ui-icon-alert" message="确定删除吗?"></p:confirm>
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</p:panelGrid>
+		</h:form>
+	</p:dialog>
+
+
+	<p:dialog id="dialogFlsq" header="计量检定员（#{zrfwQryMb.varUser.zsmc}）分类授权"
+		widgetVar="dlgflsq" maximizable="true" height="450px" width="600"
+		modal="true">
+		<h:form id="flsq">
+			<p:tree id="treeid" style="width:100%" value="#{zrfwQryMb.root}"
+				var="tree" selectionMode="checkbox"
+				selection="#{zrfwQryMb.selectedNodes}">
+				<p:ajax event="unselect" update=":growlFlsq"
+					listener="#{zrfwQryMb.onNodeUnselect}" />
+				<p:ajax event="select" update=":growlFlsq"
+					listener="#{zrfwQryMb.onNodeSelect}" />
+				<p:treeNode>
+					<h:outputText value="#{tree.jdmc}" />
+					<span style="color: blue;">&nbsp;&nbsp;&nbsp;&nbsp;#{tree.jdms}</span>
+				</p:treeNode>
+			</p:tree>
+		</h:form>
+	</p:dialog>
+
+
+
+	<p:dialog id="dialogBmsq" header="计量检定员（#{zrfwQryMb.varUser.zsmc}）部门授权"
+		widgetVar="dlgBmsq" maximizable="true" height="450px" width="600"
+		modal="true">
+		<h:form id="bmsq">
+			<p:tree id="treeBid" style="width:100%" value="#{zrfwQryMb.rootDept}"
+				var="tree" selectionMode="checkbox"
+				selection="#{zrfwQryMb.selectedNodesDept}">
+				<p:ajax event="select" listener="#{zrfwQryMb.onNodeSelectDept}" />
+				<p:ajax event="unselect" listener="#{zrfwQryMb.onNodeUnselectDept}" />
+				<p:treeNode>
+					<h:outputText value="#{tree.bmmc}" />
+					<h:outputText style="color:blue"
+						value="&nbsp;&nbsp;已授权其他人(#{tree.bmmcms})"
+						rendered="#{tree.bmmcms!=''}"></h:outputText>
+				</p:treeNode>
+			</p:tree>
+		</h:form>
+	</p:dialog>
+
+
+
+	<h:form id="user1">
+		<h:panelGrid columns="1"
+			style="width:90%;text-align: left;margin-left: -3px;margin-top: -6px;">
+			<h:inputHidden id="lovdiv" value="#{zrfwQryMb.showLovDiv}"></h:inputHidden>
+			<p:dataTable id="data" var="obj" value="#{zrfwQryMb.lazyDataModel}"
+				paginator="true" rows="#{zrfwQryMb.pageSize}" rowIndexVar="rowVar"
+				filterDelay="300" resizableColumns="true" liveResize="true"
+				rowKey="#{obj.id}" paginatorPosition="bottom" 
+				currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+				paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				lazy="true" rowsPerPageTemplate="15,30,50">
+
+				<p:column style="width:2%" headerText="序号">
+	              #{rowVar+1}
+	          </p:column>
+				<p:column sortBy="#{obj.jly.zsmc}" filterBy="#{obj.jly.zsmc}"
+					headerText="计量确认员" style="width:10%" filterStyle="width:80%">
+					<h:outputText value="#{obj.jly.zsmc}"
+						style="text-align: center; vertical-align: middle;" />
+				</p:column>
+
+				<p:column headerText="#{jc.jc_yh_ssbm}" style="width:10%"
+					sortBy="#{obj.jly.ssbm.bmmc}" filterBy="#{obj.jly.ssbm.bmmc}"
+					filterStyle="width:80%">
+					<h:outputText value="#{obj.jly.ssbm.bmmc}" />
+				</p:column>
+
+				<p:column headerText="责任范围" style="width:40%"
+					filterStyle="width:80%">
+					<p:dataTable id="subdataGxfw" var="gxfw" value="#{obj.gxfws}"
+						paginator="true" rows="5" style="with:600px" rowIndexVar="rowVar"
+						rowKey="#{gxfw.id}" paginatorPosition="bottom" filterDelay="300"
+						resizableColumns="true " liveResize="true"
+						currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+						paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						lazy="true">
+						<p:column headerText="序号" width="5%">
+							<h:outputText value="#{rowVar+1}" />
+						</p:column>
+						<p:column headerText="学科分类" width="45%">
+							<h:outputText value="#{gxfw.xkfl}"
+								style="text-align: center; vertical-align: middle;" />
+						</p:column>
+						<p:column headerText="上级分类" width="20%">
+							<h:outputText value="#{gxfw.xkflp}"
+								style="text-align: center; vertical-align: middle;" />
+						</p:column>
+						<p:column headerText="管辖部门" width="20%">
+							<h:outputText value="#{gxfw.gxbm}"
+								style="text-align: center; vertical-align: middle;" />
+						</p:column>
+
+					</p:dataTable>
+				</p:column>
+
+				<p:column headerText="角色" width="5%">
+					<h:outputText value="#{obj.js}" />
+				</p:column>
+
+
+				<p:column width="8%" headerText="操作" exportable="false">
+					<h:panelGroup>
+						<p:commandLink value="责任范围"
+							actionListener="#{zrfwQryMb.openZfrwPanal()}"
+							update=":dialogZrfw" oncomplete="PF('dlgzrfw').show();"
+							style="color: orange;">
+							<f:param name="YHBM" value="#{obj.jly.yhbm}"></f:param>
+						</p:commandLink>
+						<h:outputText value="  |  " rendered="false" />
+
+						<p:commandLink rendered="false" value="分类授权"
+							actionListener="#{zrfwQryMb.openFlsqPanal}"
+							update=":dialogFlsq :flsq:treeid"
+							oncomplete="PF('dlgflsq').show();" style="color: orange;">
+							<f:param name="YHBM" value="#{obj.jly.yhbm}"></f:param>
+						</p:commandLink>
+						 <h:outputText value="  |  "   />
+						 <p:commandLink  value=" 删 除 " 
+						    actionListener="#{zrfwQryMb.deleteJlyZrfws(obj.jly.yhbm)}" 
+						           update=":user1:data" style="color: orange;" >
+						 </p:commandLink>
+
+						<p:commandLink rendered="false" value="部门授权"
+							actionListener="#{zrfwQryMb.openBmsqPanal}"
+							oncomplete="PF('dlgBmsq').show();" update=":dialogBmsq"
+							style="color: orange;">
+							<f:param name="YHBM" value="#{obj.jly.yhbm}"></f:param>
+						</p:commandLink>
+					</h:panelGroup>
+				</p:column>
+			</p:dataTable>
+		</h:panelGrid>
+	</h:form>
+</h:body>
+</html>

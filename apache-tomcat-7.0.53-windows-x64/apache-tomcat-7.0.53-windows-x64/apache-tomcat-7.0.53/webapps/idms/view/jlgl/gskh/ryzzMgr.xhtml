@@ -1,0 +1,448 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core">
+<f:view contentType="text/html">
+	<h:head>
+		<title>IDMS</title>
+		<ui:include src="/common/templates/ui.xhtml"></ui:include>
+	</h:head>
+	<h:body>
+		<p:growl id="growlid" sticky="true" autoUpdate="true" />
+		<p:dialog id="dlg" header="显示用户" widgetVar="displaydlg" modal="true">
+			<h:form>
+				<p:dataTable id="data" var="item" style="width:600px" 
+					value="#{jcUserMb.lazyDataModel}" paginator="true" widgetVar=""
+					selectionMode="single" rowKey="#{item.yhbm}" rows="15"
+					rowIndexVar="rowVar" filterDelay="300" resizableColumns="true "
+					liveResize="true" paginatorPosition="bottom"
+					currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+					paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					lazy="true" rowsPerPageTemplate="20,30,50">
+					<p:ajax event="rowSelect" listener="#{ryzzMb.onRowSelect}"
+						update=":jlform:jltab:yhxx" oncomplete="PF('displaydlg').hide()"
+						immediate="true" />
+					<p:column headerText="#{megs.xuhao}">
+						<h:outputText value="#{rowVar+1}"></h:outputText>
+					</p:column>
+					<p:column filterBy="#{item.yhbm}" sortBy="#{item.yhbm}"
+						headerText="用户编号">
+						<h:outputText value="#{item.yhbm}"></h:outputText>
+					</p:column>
+					<p:column filterBy="#{item.zsmc}" sortBy="#{item.zsmc}"
+						headerText="用户名称">
+						<h:outputText value="#{item.zsmc}"></h:outputText>
+					</p:column>
+
+
+				</p:dataTable>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog id="dlg1" header="添加计量人员" widgetVar="opendlg1"
+			maximizable="true" height="400px" width="1050px" modal="true">
+			<h:form id="jlform" enctype="multipart/form-data">
+				<h:panelGrid columns="1">
+
+					<p:tabView id="jltab" scrollable="true" style="width:1000px">
+						<p:tab title="计量人员信息">
+							<h:panelGrid id="yhxx" width="900px" align="left" columns="4">
+								<h:panelGroup>
+									<h:outputText value="用户编码："></h:outputText>
+									<p:inputText value="#{ryzzMb.editObj.yhbm.yhbm}" label="用户编号"
+										size="30" maxlength="50" require="true" readonly="true"></p:inputText>
+								</h:panelGroup>
+								<h:outputText value="用户姓名："></h:outputText>
+								<h:panelGroup>
+									<p:inputText value="#{ryzzMb.editObj.yhbm.zsmc}" label="用户姓名"
+										size="30" maxlength="50" required="true"
+										requiredMessage="请选择用户姓名！"></p:inputText>
+									<p:commandButton
+										onclick="PF('displaydlg').show();return false;" title="查询"
+										icon="ui-icon-search" />
+								</h:panelGroup>
+							</h:panelGrid>
+							<h:panelGrid columns="2">
+								<p:commandButton id="add" value="增加"
+									actionListener="#{ryzzMb.addZs()}" immediate="true"
+									update=":jlform:jltab:zs" />
+							</h:panelGrid>
+							<h:panelGrid width="900px" align="left">
+								<p:dataTable style="width:900px" id="zs" var="item"
+									value="#{ryzzMb.zsList}" rowIndexVar="rowVar" editable="true">
+									<p:column headerText="序号" style="width:50px;">
+										<h:outputText value="#{rowVar+1}"></h:outputText>
+										<!-- <h:inputHidden value=""></h:inputHidden> -->
+									</p:column>
+									<p:column headerText="证书编号" style="width:120px;">
+										<p:inputText value="#{item.zsbh}" style="width:80%"
+											required="true" label="证书编号"></p:inputText>
+									</p:column>
+									<p:column headerText="证书有效期" style="width:120px;">
+										<p:calendar label="证书有效期" value="#{item.yxq}"
+											style="width:100%" size="13" readonlyInput="false"
+											navigator="true" pattern="yyyy-MM-dd" />
+									</p:column>
+									<p:column headerText="考核单位" style="width:120px;">
+										<p:inputText value="#{item.khdw}" style="width:80%"
+											required="true" label="考核单位"></p:inputText>
+									</p:column>
+									<p:column headerText="考核时间" style="width:120px;">
+										<p:calendar label="考核时间" value="#{item.khsj}"
+											style="width:100%" size="13" readonlyInput="false"
+											navigator="true" pattern="yyyy-MM-dd" />
+									</p:column>
+									<p:column headerText="考核内容" style="width:120px;">
+										<p:inputText value="#{item.khnr}" style="width:80%"></p:inputText>
+									</p:column>
+									<p:column headerText="操作">
+										<h:panelGroup>
+											<p:commandButton style="margin-left:10px;" title="删除"
+												action="#{ryzzMb.reduceZs}" icon="ui-icon-trash" ajax="true"
+												update=":jlform:jltab:zs" immediate="true">
+												<f:param name="id" value="#{item.id}"></f:param>
+												<p:confirm icon="ui-icon-alert" message="确定删除吗?"></p:confirm>
+											</p:commandButton>
+										</h:panelGroup>
+									</p:column>
+								</p:dataTable>
+							</h:panelGrid>
+						</p:tab>
+						<p:tab title="附件">
+							<h:panelGrid width="900px"
+								style="margin-top: -10px;margin-left:-17px;">
+								<h:panelGrid width="100%">
+									<p:fileUpload multiple="true" update=":jlform:jltab:filePaneId"
+										fileUploadListener="#{ryzzMb.handleFileUpload}"
+										style="width:100%;" mode="advanced" label="浏览"
+										cancelLabel="取消" uploadLabel="上传" sizeLimit="10240000"
+										invalidSizeMessage="文件必须小于10M" invalidFileMessage="格式不支持"
+										dragDropSupport="false"
+										allowTypes="/(\.|\/)(gif|jpe?g|png|pdf|txt|rar|zip|doc|docx|xls|xlsx)$/">
+									</p:fileUpload>
+									<p:dataTable id="filePaneId" paginator="true" rows="20"
+										rowIndexVar="rowVar" value="#{ryzzMb.fileBean.files}"
+										style="width:100%;" var="file" filterDelay="300"
+										resizableColumns="true " liveResize="true"
+										paginatorPosition="bottom"
+										currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+										paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+										lazy="true" rowsPerPageTemplate="20,30,50">
+
+										<p:column headerText="序号" style="width:40px;">
+											<h:outputText value="#{rowVar+1}" />
+										</p:column>
+
+										<p:column headerText="附件名称" style="width:50%">
+											<h:outputText value="#{file.wjmc}" />
+										</p:column>
+
+										<p:column headerText="上传人员">
+											<p:outputLabel value="#{file.scyhid}"></p:outputLabel>
+										</p:column>
+										<p:column headerText="上传时间">
+											<h:outputText value="#{file.scrq}">
+												<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+													timeZone="GMT+8" />
+											</h:outputText>
+										</p:column>
+										<p:column headerText="操作" style="width:8%">
+											<h:panelGroup>
+												<p:commandButton id="downId" ajax="false"
+													action="#{ryzzMb.fileBean.downFile}"
+													icon="ui-icon-arrowthick-1-s" immediate="true">
+													<f:setPropertyActionListener
+														target="#{ryzzMb.fileBean.file}" value="#{file}"></f:setPropertyActionListener>
+
+												</p:commandButton>
+												<h:outputText value="  "></h:outputText>
+												<p:commandButton id="deleteId" ajax="false"
+													action="#{ryzzMb.fileBean.deleteFile}" icon="ui-icon-trash"
+													immediate="true">
+													<p:confirm icon="ui-icon-alert" message="确定删除吗?"></p:confirm>
+													<f:setPropertyActionListener
+														target="#{ryzzMb.fileBean.file}" value="#{file}"></f:setPropertyActionListener>
+												</p:commandButton>
+											</h:panelGroup>
+										</p:column>
+									</p:dataTable>
+
+								</h:panelGrid>
+							</h:panelGrid>
+						</p:tab>
+
+					</p:tabView>
+					<h:panelGroup>
+						<p:commandButton value="保存" actionListener="#{ryzzMb.saveObjs}"
+							oncomplete="PF('opendlg1').hide()" update=":form:data"
+							ajax="true" style="margin-left: 500px" />
+					</h:panelGroup>
+				</h:panelGrid>
+
+			</h:form>
+		</p:dialog>
+
+
+		<p:dialog id="dlgid" header="#{ryzzMb.edit?'修改':'详情'}"
+			widgetVar="opendlg" maximizable="true" height="300px" width="1050px"
+			modal="true">
+			<h:form id="dlgform" enctype="multipart/form-data">
+				<p:tabView id="jltab" scrollable="true" style="width:1000px">
+					<p:tab title="计量人员信息">
+						<h:panelGrid columns="4" width="900px" align="left">
+							<h:outputText value="用户编码："></h:outputText>
+							<p:inputText value="#{ryzzMb.editObj.yhbm.yhbm}" size="25"
+								readonly="true" maxlength="50" required="true" label="用户编码"></p:inputText>
+							<h:outputText value="用户姓名："></h:outputText>
+							<p:inputText value="#{ryzzMb.editObj.yhbm.zsmc}" size="25"
+								readonly="true" maxlength="20" label="真实名称"></p:inputText>
+							<h:outputText value="岗位："></h:outputText>
+							<p:inputText value="#{ryzzMb.editObj.yhbm.zw}" size="25"
+								readonly="true" label="岗位"></p:inputText>
+
+							<h:outputText value="性别："></h:outputText>
+							<p:inputText value="#{ryzzMb.editObj.yhbm.xb}" size="25"
+								readonly="true" label="性别"></p:inputText>
+						</h:panelGrid>
+						<p:dataTable id="zsdata" style="width:900px" var="zsxx"
+							value="#{ryzzMb.zsList}" rowIndexVar="rowVar">
+							<p:column headerText="序号" style="width:50px;">
+								<h:outputText value="#{rowVar+1}"></h:outputText>
+								<!-- <h:inputHidden value=""></h:inputHidden> -->
+							</p:column>
+							<p:column headerText="证书编号" style="width:120px;">
+								<p:inputText value="#{zsxx.zsbh}" maxlength="100" size="13"
+									readonly="#{!ryzzMb.edit}"></p:inputText>
+							</p:column>
+							<p:column headerText="证书有效期" style="width:120px;">
+								<p:calendar label="证书有效期" value="#{zsxx.yxq}" style="width:100%"
+									size="13" readonlyInput="false" navigator="true"
+									pattern="yyyy-MM-dd" />
+							</p:column>
+							<p:column headerText="考核单位" style="width:120px;">
+								<p:inputText value="#{zsxx.khdw}" maxlength="100" size="13"
+									readonly="#{!ryzzMb.edit}"></p:inputText>
+							</p:column>
+							<p:column headerText="考核时间" style="width:120px;">
+								<p:calendar label="考核时间" value="#{zsxx.khsj}" style="width:100%"
+									size="13" readonlyInput="false" navigator="true"
+									pattern="yyyy-MM-dd" />
+							</p:column>
+							<p:column headerText="考核内容" style="width:120px;">
+								<p:inputText value="#{zsxx.khnr}" maxlength="100" size="13"
+									readonly="#{!ryzzMb.edit}"></p:inputText>
+							</p:column>
+							<p:column headerText="操作" style="width:100px"
+								rendered="#{ryzzMb.edit}">
+								<f:facet name="header">
+									<p:commandButton id="add" value="增加"
+										actionListener="#{ryzzMb.addZs()}" immediate="true"
+										update=":dlgform:jltab:zsdata" />
+								</f:facet>
+
+								<p:commandButton style="margin-left:10px;" title="删除"
+									action="#{ryzzMb.reduceZss}" icon="ui-icon-trash" ajax="true"
+									update=":dlgform:jltab:zsdata" immediate="true">
+									<f:param name="id" value="#{zsxx.id}"></f:param>
+									<p:confirm icon="ui-icon-alert" message="确定删除吗?"></p:confirm>
+								</p:commandButton>
+							</p:column>
+						</p:dataTable>
+					</p:tab>
+					<p:tab title="附件">
+						<h:panelGrid width="900px"
+							style="margin-top: -10px;margin-left:-17px;">
+							<h:panelGrid width="100%">
+								<p:fileUpload multiple="true" update=":dlgform:jltab:filePaneId"
+									fileUploadListener="#{ryzzMb.handleFileUpload}"
+									style="width:100%;" mode="advanced" label="浏览" cancelLabel="取消"
+									uploadLabel="上传" sizeLimit="10240000"
+									invalidSizeMessage="文件必须小于10M" invalidFileMessage="格式不支持"
+									dragDropSupport="false"
+									allowTypes="/(\.|\/)(gif|jpe?g|png|pdf|txt|rar|zip|doc|docx|xls|xlsx)$/">
+								</p:fileUpload>
+								<p:dataTable id="filePaneId" paginator="true"
+									value="#{ryzzMb.fileBean.files}" style="width:100%;"
+									 lazy="false" var="file" rows="15"
+									rowIndexVar="rowVar" filterDelay="300" resizableColumns="true "
+									liveResize="true" paginatorPosition="bottom"
+									currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+									paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+									rowsPerPageTemplate="15,30,50">
+
+									<p:column headerText="序号" style="width:40px;">
+										<h:outputText value="#{rowVar+1}" />
+									</p:column>
+
+									<p:column headerText="附件名称" style="width:50%">
+										<h:outputText value="#{file.wjmc}" />
+									</p:column>
+
+									<p:column headerText="上传人员">
+										<p:outputLabel value="#{file.scyhid}"></p:outputLabel>
+									</p:column>
+									<p:column headerText="上传时间">
+										<h:outputText value="#{file.scrq}">
+											<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+												timeZone="GMT+8" />
+										</h:outputText>
+									</p:column>
+									<p:column headerText="操作" style="width:8%">
+										<h:panelGroup>
+											<p:commandButton id="downId" ajax="false"
+												action="#{ryzzMb.fileBean.downFile}"
+												icon="ui-icon-arrowthick-1-s" immediate="true">
+												<f:setPropertyActionListener
+													target="#{ryzzMb.fileBean.file}" value="#{file}"></f:setPropertyActionListener>
+
+											</p:commandButton>
+											<h:outputText value="  "></h:outputText>
+											<p:commandButton id="deleteId" ajax="false"
+												action="#{ryzzMb.fileBean.deleteFile}" icon="ui-icon-trash"
+												immediate="true" rendered="#{ryzzMb.edit}">
+												<p:confirm icon="ui-icon-alert" message="确定删除吗?"></p:confirm>
+												<f:setPropertyActionListener
+													target="#{ryzzMb.fileBean.file}" value="#{file}"></f:setPropertyActionListener>
+											</p:commandButton>
+										</h:panelGroup>
+									</p:column>
+								</p:dataTable>
+
+							</h:panelGrid>
+						</h:panelGrid>
+					</p:tab>
+
+				</p:tabView>
+				<h:panelGroup>
+					<p:commandButton value="保存" actionListener="#{ryzzMb.saveObjs}"
+						rendered="#{ryzzMb.edit}" oncomplete="PF('opendlg').hide()"
+						update=":form:data" ajax="true" immediate="true"
+						style="margin-left: 500px" />
+				</h:panelGroup>
+			</h:form>
+		</p:dialog>
+
+
+
+
+		<h:form id="form"
+			style="margin-bottom:10px;width:1200px;margin-top:10px">
+			<h:panelGrid>
+				<p:panel>
+					<h:panelGrid columns="10" width="1200px" align="left">
+						<h:outputText value="用户编码："></h:outputText>
+						<p:inputText value="#{ryzzMb.yhbh}" size="25"></p:inputText>
+						<h:outputText value="用户姓名："></h:outputText>
+						<p:inputText value="#{ryzzMb.zsmc}" size="25"></p:inputText>
+						<h:outputText value="岗位："></h:outputText>
+						<p:inputText value="#{ryzzMb.queryObj.zrfwsbfl}" size="25"></p:inputText>
+						<h:outputText value="性别："></h:outputText>
+						<p:selectOneMenu value="#{ryzzMb.xb}">
+							<f:selectItem itemLabel="" itemValue=""></f:selectItem>
+							<f:selectItem itemLabel="男" itemValue="男"></f:selectItem>
+							<f:selectItem itemLabel="女" itemValue="女"></f:selectItem>
+						</p:selectOneMenu>
+						<p:commandButton value="查询" ajax="true" update=":form"
+							action="#{ryzzMb.doSearch}"></p:commandButton>
+					</h:panelGrid>
+				</p:panel>
+
+
+				<p:toolbar>
+					<f:facet name="left">
+						<p:commandButton type="button" value="打印" icon="ui-icon-print">
+							<p:printer target="data" />
+						</p:commandButton>
+						<p:commandButton value="导出为PDF" ajax="false">
+							<p:dataExporter type="pdf" target="data" fileName="clgc" />
+						</p:commandButton>
+						<p:commandButton value="导出为Excel" ajax="false">
+							<p:dataExporter type="xls" target="data" fileName="clgc" />
+						</p:commandButton>
+					</f:facet>
+				</p:toolbar>
+
+				<p:dataTable id="data" paginator="true"
+					value="#{ryzzMb.lazyDataModel}" style="width:1230px" var="item"
+					rows="15" rowIndexVar="rowVar" filterDelay="300"
+					resizableColumns="true " liveResize="true"
+					paginatorPosition="bottom"
+					currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+					paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					lazy="true" rowsPerPageTemplate="15,30,50">
+
+
+					<p:column headerText="" style="width:50px;">
+						<h:outputText value="#{rowVar+1}"></h:outputText>
+					</p:column>
+					<p:column filterBy="#{item.yhbm.yhbm}" sortBy="#{item.yhbm.yhbm}"
+						headerText="用户编码" style="width:80px;">
+						<h:outputText value="#{item.yhbm.yhbm}"></h:outputText>
+					</p:column>
+					<p:column filterBy="#{item.yhbm.zsmc}" sortBy="#{item.yhbm.zsmc}"
+						headerText="真实名称" style="width:80px;">
+						<h:outputText value="#{item.yhbm.zsmc}"></h:outputText>
+					</p:column>
+					<p:column filterBy="#{item.zrfwsbfl}"
+						sortBy="#{item.yhbm.zrfwsbfl}" headerText="岗位" style="width:80px;">
+						<h:outputText value="#{item.yhbm.zw}"></h:outputText>
+					</p:column>
+					<p:column filterBy="#{item.zsbh}" sortBy="#{item.zsbh}"
+						headerText="证书编号" style="width:80px;">
+						<h:outputText value="#{item.zsbh}"></h:outputText>
+					</p:column>
+					<p:column filterBy="#{item.yxq}" sortBy="#{item.yxq}"
+						headerText="证书有效期" style="width:80px;">
+						<h:outputText value="#{item.yxq}">
+							<f:convertDateTime pattern="yyyy-MM-dd" locale="zh_CN"
+								timeZone="GMT+8"></f:convertDateTime>
+						</h:outputText>
+					</p:column>
+					<p:column filterBy="#{item.khdw}" sortBy="#{item.khdw}"
+						headerText="考核单位" style="width:80px;">
+						<h:outputText value="#{item.khdw}"></h:outputText>
+					</p:column>
+					<p:column filterBy="#{item.xs}" sortBy="#{item.xs}" headerText="项数"
+						style="width:80px;">
+						<h:outputText value="#{item.xs}"></h:outputText>
+					</p:column>
+					<p:column headerText="操作" style="width:100px">
+						<f:facet name="header">
+							<p:commandButton actionListener="#{ryzzMb.openAddPanal}"
+								immediate="true" oncomplete="PF('opendlg1').show()" ajax="true"
+								update=":form:data" value="增加"></p:commandButton>
+						</f:facet>
+						<h:panelGroup>
+							<p:commandButton action="#{ryzzMb.openPanal}"
+								oncomplete="PF('opendlg').show()" ajax="true" update=":dlgid"
+								title="详情" icon="ui-icon-search">
+								<f:param name="id" value="#{item.id}"></f:param>
+							</p:commandButton>
+							<p:commandButton actionListener="#{ryzzMb.editPanal}"
+								oncomplete="PF('opendlg').show()" ajax="true" update=":dlgid"
+								title="修改" icon="ui-icon-gear" immediate="true">
+								<f:param name="id" value="#{item.id}"></f:param>
+							</p:commandButton>
+							<p:commandButton style="margin-left:10px;" title="删除"
+								action="#{ryzzMb.delete}" icon="ui-icon-trash" ajax="true"
+								update=":form">
+								<f:param name="id" value="#{item.id}"></f:param>
+								<p:confirm icon="ui-icon-alert" message="确定删除吗?"></p:confirm>
+							</p:commandButton>
+						</h:panelGroup>
+					</p:column>
+
+				</p:dataTable>
+
+			</h:panelGrid>
+		</h:form>
+
+	</h:body>
+</f:view>
+</html>

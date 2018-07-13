@@ -1,0 +1,444 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+	<ui:include src="/common/templates/ui.xhtml"></ui:include>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link type="text/css" rel="stylesheet"
+		href="#{request.contextPath}/view/sys/mail/css.css" />
+</h:head>
+<h:body>
+
+	<p:growl id="growlid" sticky="true" autoUpdate="true"></p:growl>
+	<p:dialog id="dlgxqxqid" header="权限清单" widgetVar="dlgxqxq"
+		maximizable="true" height="300px" width="420px" modal="true">
+		<p:dataTable style="width:400px" id="role" var="role"
+			value="#{jcUserMb.roleList}" paginator="true" rowIndexVar="rowVar"
+			filterDelay="300" rows="#{jcUserMb.pageSize}"
+			paginatorPosition="bottom" liveResize="true"
+			currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+			paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			lazy="true" rowsPerPageTemplate="5,10,15">
+
+			<p:column headerText="#{megs.xuhao}" width="10%">
+				<h:outputText value="#{rowVar+1}" />
+			</p:column>
+			<p:column headerText="角色名称">
+				<h:outputText value="#{role.jsmc}"></h:outputText>
+			</p:column>
+		</p:dataTable>
+	</p:dialog>
+
+	<p:dialog id="basicDialog" header="修改用户" widgetVar="dlg1"
+		maximizable="true" height="450px" modal="true">
+		<h:form id="user">
+
+			<h:panelGrid id="hq" style="overflow:auto;">
+				<h:panelGrid columns="6" width="700em">
+					<h:panelGroup>
+						<p:outputLabel value="#{jc.jc_yh_yhmc}" />
+						<p:outputLabel value="*" style="color: red"></p:outputLabel>
+					</h:panelGroup>
+					<p:inputText id="yhmc" value="#{jcUserMb.user.yhmc}"
+						  required="true"></p:inputText>
+					<h:message for="yhmc" />
+					<h:panelGroup>
+						<p:outputLabel value="#{jc.jc_yh_yhbm}" />
+						<p:outputLabel value="*" style="color: red"></p:outputLabel>
+					</h:panelGroup>
+					<h:inputText value="#{jcUserMb.user.yhbm}"
+						disabled="#{jcUserMb.user.yhbm!=null}" />
+					<h:message for="yhbm" />
+
+					<h:panelGroup>
+						<p:outputLabel value="#{jc.jc_yh_zsmc}" />
+						<p:outputLabel value="*" style="color: red" />
+					</h:panelGroup>
+					<p:inputText id="zsmc" value="#{jcUserMb.user.zsmc}"
+						  required="true"></p:inputText>
+					<h:message for="zsmc" />
+					<p:outputLabel value="#{jc.jc_yh_xb}" />
+					<p:selectOneMenu id="xb" value="#{jcUserMb.user.xb}">
+						<f:selectItems value="#{jcUserMb.xblb }" />
+					</p:selectOneMenu>
+					<h:message for="xb" />
+
+					<p:outputLabel value="#{jc.jc_yh_ssbm}" />
+					<p:selectOneMenu id="ssbm" value="#{jcUserMb.selectedBm}"
+						 >
+						<f:selectItems value="#{selectDeptBean.allbms}" var="obj"
+							itemValue="#{obj.bmbm}" itemLabel="#{obj.bmmc}" />
+					</p:selectOneMenu>
+					<h:message for="ssbm" />
+					<p:outputLabel for="sj" value="#{jc.jc_yh_sj}" />
+					<p:inputText id="sj" value="#{jcUserMb.user.sj}"></p:inputText>
+					<p:message for="sj" />
+					<p:outputLabel for="phone" value="#{jc.jc_yh_dh}" />
+					<p:inputText id="phone" value="#{jcUserMb.user.dh}" >
+					</p:inputText>
+					<p:message for="phone" />
+
+					<p:outputLabel value="#{jc.jc_yh_yjdz}" />
+					<p:inputText id="email" value="#{jcUserMb.user.yjdz}">
+					</p:inputText>
+					<h:message for="email" />
+					<p:outputLabel value="工作中心" rendered="false" />
+
+					<h:panelGroup rendered="false">
+						<p:selectOneMenu value="#{jcUserMb.bldw}" disabled="true">
+							<f:selectItem itemLabel="---请选择办理单位---" itemValue=""></f:selectItem>
+							<f:selectItems value="#{jcUserMb.xzbldw}"></f:selectItems>
+							<p:ajax event="change" listener="#{jcUserMb.handleKeyEvent}"
+								update=":user:zpdwgzzx" />
+						</p:selectOneMenu>
+						<p:selectOneMenu id="zpdwgzzx" value="#{jcUserMb.user.fsbm}"
+							disabled="true">
+							<f:selectItem itemLabel="---请选择处理中心---" itemValue=""></f:selectItem>
+							<f:selectItems value="#{jcUserMb.xzgzzx}"></f:selectItems>
+						</p:selectOneMenu>
+					</h:panelGroup>
+				</h:panelGrid>
+
+				<p:pickList rendered="#{jcUserMb.showLovDiv}"
+					value="#{jcUserMb.rolees}" var="role" itemLabel="#{role}"
+					itemValue="#{role}" showSourceFilter="true" showTargetFilter="true"
+					filterMatchMode="contains">
+				</p:pickList>
+			</h:panelGrid>
+			<p:commandButton id="buttId" value="保存"
+				update=":user1:data :user1:lovdiv" ajax="true"
+				action="#{jcUserMb.addOrEdit}"
+				oncomplete="if('false'==$('#user1\\:lovdiv').val()){PF('dlg1').hide();}">
+			</p:commandButton>
+		</h:form>
+	</p:dialog>
+
+	<p:dialog id="basicDialog2" header="添加用户" widgetVar="dlg2"
+		maximizable="true" height="450px" modal="true">
+		<h:form id="user2">
+
+			<h:panelGrid id="hq2" style="overflow:auto;">
+				<h:panelGrid columns="4" width="700em">
+					<h:panelGroup>
+						<p:outputLabel value="#{jc.jc_yh_yhmc}" />
+						<p:outputLabel value="*" style="color: red"></p:outputLabel>
+					</h:panelGroup>
+					<p:inputText id="yhmc" value="#{jcUserMb.user.yhmc}"
+						required="true" requiredMessage="#{jc.jc_yh_yhmc}不能为空！"></p:inputText>
+					<h:panelGroup>
+						<p:outputLabel value="#{jc.jc_yh_yhbm}" />
+						<p:outputLabel value="*" style="color: red"></p:outputLabel>
+					</h:panelGroup>
+					<p:inputText id="yhbm" value="#{jcUserMb.user.yhbm}"
+						required="true" requiredMessage="#{jc.jc_yh_yhbm}不能为空！" />
+
+					<h:panelGroup>
+						<p:outputLabel value="#{jc.jc_yh_zsmc}" />
+						<p:outputLabel value="*" style="color: red" />
+					</h:panelGroup>
+					<p:inputText id="zsmc" value="#{jcUserMb.user.zsmc}"
+						required="true" requiredMessage="#{jc.jc_yh_zsmc}不能为空！"></p:inputText>
+					<p:outputLabel value="#{jc.jc_yh_xb}" />
+					<p:selectOneMenu id="xb" value="#{jcUserMb.user.xb}">
+						<f:selectItems value="#{jcUserMb.xblb }" />
+					</p:selectOneMenu>
+
+					<h:panelGroup>
+						<p:outputLabel value="#{jc.jc_yh_ssbm}" />
+						<p:outputLabel value="*" style="color: red" />
+					</h:panelGroup>
+					<p:selectOneMenu id="ssbm" value="#{jcUserMb.selectedBm}"
+						required="true" requiredMessage="#{jc.jc_yh_ssbm}不能为空！">
+						<f:selectItem itemLabel="---请选择所属部门---" itemValue=""></f:selectItem>
+						<f:selectItems value="#{selectDeptBean.allbms}" var="obj"
+							itemValue="#{obj.bmbm}" itemLabel="#{obj.bmmc}" />
+					</p:selectOneMenu>
+					<p:outputLabel for="sj" value="#{jc.jc_yh_sj}" />
+					<p:inputText id="sj" value="#{jcUserMb.user.sj}"
+						validatorMessage="请填写正确的手机号码！">
+						<f:validateRegex pattern="^1[3458]\d{9}$" />
+					</p:inputText>
+
+					<p:outputLabel for="phone" value="#{jc.jc_yh_dh}" />
+					<p:inputText id="phone" value="#{jcUserMb.user.dh}"
+						validatorMessage="请填写正确的座机号码或手机号码！">
+						<f:validateRegex
+							pattern="^(0\d{2}-?)?\d{8}$|^(0\d{3}-?)?\d{7}$|^1[3458]\d{9}$" />
+					</p:inputText>
+					<p:outputLabel value="#{jc.jc_yh_yjdz}" />
+					<p:inputText id="email" value="#{jcUserMb.user.yjdz}"
+						validatorMessage="您填写的邮件地址格式错误！">
+						<f:validateRegex
+							pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" />
+						<p:clientValidator />
+					</p:inputText>
+
+				</h:panelGrid>
+
+				<p:pickList rendered="#{jcUserMb.showLovDiv}"
+					value="#{jcUserMb.rolees}" var="role" itemLabel="#{role}"
+					itemValue="#{role}" showSourceFilter="true" showTargetFilter="true"
+					filterMatchMode="contains">
+				</p:pickList>
+			</h:panelGrid>
+			<p:commandButton id="buttId2" value="保存"
+				update=":user1:data :user1:lovdiv" ajax="true"
+				action="#{jcUserMb.addOrEdit}"
+				oncomplete="if('false'==$('#user1\\:lovdiv').val()){PF('dlg2').hide();}">
+			</p:commandButton>
+		</h:form>
+	</p:dialog>
+
+	<p:dialog id="mailcfgdlg" header="邮箱配置" widgetVar="mailcfg"
+		maximizable="true" width="500px" modal="true">
+		<h:form id="editform">
+			<script type="text/javascript" charset="utf-8"
+				src="#{request.contextPath}/view/sys/mail/js.js" />
+			<p:panelGrid columns="2" style="width:100%"
+				columnClasses="column1,column2">
+				<h:panelGroup>
+					<h:outputText value="账号名称：" />
+					<h:outputText value="*" style="color:red" />
+				</h:panelGroup>
+				<p:inputText id="userName" size="30"
+					value="#{jcUserMb.mailConfigInfo.userName}" required="true"
+					label="账号名称" maxlength="128" />
+				<h:panelGroup>
+					<h:outputText value="邮箱类型：" />
+					<h:outputText value="*" style="color:red" />
+				</h:panelGroup>
+				<p:selectOneMenu id="mailType"
+					value="#{jcUserMb.mailConfigInfo.mailType}" label="邮箱类型">
+					<f:selectItem itemLabel="POP3" itemValue="pop3"></f:selectItem>
+					<f:selectItem itemLabel="IMAP" itemValue="imap"></f:selectItem>
+					<f:ajax event="change" render="editform:mailHost editform:mailPort"></f:ajax>
+				</p:selectOneMenu>
+				<h:panelGroup>
+					<h:outputText value="邮箱地址：" />
+					<h:outputText value="*" style="color:red" />
+				</h:panelGroup>
+				<p:inputText id="mailAddress" size="30"
+					value="#{jcUserMb.mailConfigInfo.mailAddress}" required="true"
+					label="邮箱地址" maxlength="128" validatorMessage="邮箱地址格式错误！">
+					<f:validateRegex
+						pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" />
+					<p:clientValidator />
+				</p:inputText>
+				<h:panelGroup>
+					<h:outputText value="邮箱密码：" />
+					<h:outputText value="*" style="color:red" />
+				</h:panelGroup>
+				<p:inputText id="mailPassWord" size="30"
+					value="#{jcUserMb.mailConfigInfo.mailPassword}" required="true"
+					label="邮箱密码" maxlength="128" />
+				<h:panelGroup>
+					<h:outputText value="smtp主机：" />
+					<h:outputText value="*" style="color:red" />
+				</h:panelGroup>
+				<p:inputText id="smtpHost" size="30"
+					value="#{jcUserMb.mailConfigInfo.smtpHost}" required="true"
+					label="smtp主机" maxlength="128" />
+				<h:panelGroup>
+					<h:outputText value="smtp端口：" />
+					<h:outputText value="*" style="color:red" />
+				</h:panelGroup>
+				<p:inputText id="smtpPort" size="30"
+					value="#{jcUserMb.mailConfigInfo.smtpPort}" required="true"
+					label="smtp端口" maxlength="5">
+					<f:validateLongRange minimum="0" />
+				</p:inputText>
+				<h:panelGroup>
+					<h:outputText value="pop主机：" />
+				</h:panelGroup>
+				<p:inputText id="popHost" size="30" maxlength="128" />
+				<h:panelGroup>
+					<h:outputText value="pop端口：" />
+				</h:panelGroup>
+				<p:inputText id="popPort" size="30" maxlength="5" />
+				<h:panelGroup>
+					<h:outputText value="imap主机：" />
+				</h:panelGroup>
+				<p:inputText id="imapHost" size="30" maxlength="128" />
+				<h:panelGroup>
+					<h:outputText value="imap端口：" />
+				</h:panelGroup>
+				<p:inputText id="imapPort" size="30" maxlength="5" />
+			</p:panelGrid>
+			<p:inputText id="mailHost"
+				value="#{jcUserMb.mailConfigInfo.mailHost}"
+				label="#{jcUserMb.mailConfigInfo.mailType=='pop3' ? 'pop主机' : 'imap主机'}"
+				style="display:none;" />
+			<p:inputText id="mailPort"
+				value="#{jcUserMb.mailConfigInfo.mailPort}"
+				label="#{jcUserMb.mailConfigInfo.mailType=='pop3' ? 'pop端口': 'imap端口'}"
+				style="display:none;">
+				<f:validateLongRange minimum="0" />
+			</p:inputText>
+			<p:commandButton id="saveButton" value="保存" ajax="true"
+				update=":user1:data :user1:lovdiv" onclick="save();"
+				action="#{jcUserMb.saveConfigInfo}"
+				oncomplete="if('false'==$('#user1\\:lovdiv').val()) {PF('mailcfg').hide();}"></p:commandButton>
+		</h:form>
+	</p:dialog>
+
+	<h:form id="user1">
+		<h:panelGrid columns="1"
+			style="text-align: left;margin-left: -3px;margin-top: -6px;">
+			<h:inputHidden id="lovdiv" value="#{jcUserMb.showLovDiv}"></h:inputHidden>
+			<p:panel header="查询条件">
+				<h:panelGrid columns="9" width="100%">
+					<p:outputLabel value="真实名称:"></p:outputLabel>
+					<p:inputText value="#{jcUserMb.user.zsmc}"></p:inputText>
+					<p:outputLabel value="用户名称:" style="text-align: right"></p:outputLabel>
+					<p:inputText value="#{jcUserMb.user.yhmc}"></p:inputText>
+
+					<p:outputLabel value="工作中心:" rendered="false"></p:outputLabel>
+					<p:inputText value="#{jcUserMb.user.fsbm}" rendered="false"></p:inputText>
+					<p:outputLabel value="性别:" style="text-align: right;"></p:outputLabel>
+					<p:selectOneMenu value="#{jcUserMb.user.xb}">
+						<f:selectItem itemLabel="" itemValue=""></f:selectItem>
+						<f:selectItem itemLabel="男" itemValue="男"></f:selectItem>
+						<f:selectItem itemLabel="女" itemValue="女"></f:selectItem>
+					</p:selectOneMenu>
+					<p:commandButton value="查询" action="#{jcUserMb.doSearch}"
+						update=":user1:data" />
+
+				</h:panelGrid>
+			</p:panel>
+			<p:toolbar>
+				<f:facet name="left">
+					<p:commandButton type="button" value="打印" icon="ui-icon-print" rendered="false">
+						<p:printer target="data" />
+					</p:commandButton>
+					<p:commandButton value="导出为PDF" ajax="false" rendered="false">
+						<p:dataExporter type="pdf" target="data" fileName="users" />
+					</p:commandButton>
+					<p:commandButton value="导出为Excel" ajax="false" >
+						<p:dataExporter type="xls" target="data" fileName="users" />
+					</p:commandButton>
+					<p:commandButton value="导出单页Excel" ajax="false" rendered="false">
+						<p:dataExporter type="xls" target="data" fileName="users"
+							pageOnly="true" />
+					</p:commandButton>
+
+				</f:facet>
+			</p:toolbar>
+
+
+
+			<p:dataTable style="width:100%" id="data" var="user"
+				value="#{jcUserMb.lazyDataModel}" paginator="true"
+				rows="#{jcUserMb.pageSize}" rowIndexVar="rowVar" filterDelay="300"
+				resizableColumns="true" liveResize="true" paginatorPosition="bottom"
+				currentPageReportTemplate="总数: {totalRecords}, 当前页: {currentPage}/{totalPages}"
+				paginatorTemplate="  {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+                              {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				lazy="true" rowsPerPageTemplate="15,30,50">
+
+				<p:column headerText="#{megs.xuhao}" width="3%">
+					<h:outputText value="#{rowVar+1}" />
+				</p:column>
+
+				<p:column sortBy="#{user.zsmc}" filterBy="#{user.zsmc}"
+					headerText="#{jc.jc_yh_zsmc}" style="width:10%"
+					filterStyle="width:80%">
+					<h:outputText value="#{user.zsmc}"
+						style="text-align: center; vertical-align: middle;" />
+				</p:column>
+
+				<p:column sortBy="#{user.yhmc}" filterBy="#{user.yhmc}"
+					headerText="#{jc.jc_yh_yhmc}" style="width:10%"
+					filterStyle="width:80%">
+					<h:outputText value="#{user.yhmc}"
+						style="text-align: center; vertical-align: middle;" />
+				</p:column>
+
+
+
+
+				<p:column headerText="#{jc.jc_yh_ssbm}" sortBy="#{user.ssbm.bmmc}"
+					filterBy="#{user.ssbm.bmmc}" filterStyle="width:80%">
+					<h:outputText value="#{user.ssbm.bmmc}" />
+				</p:column>
+				<p:column headerText="邮件地址" sortBy="yjdz" filterBy="yjdz" width="30%"
+					filterStyle="width:80%">
+					<h:outputText value="#{user.yjdz}" />
+				</p:column>
+				<p:column headerText="工作中心" sortBy="#{fsbm}" rendered="false"
+					filterBy="#{fsbm}">
+					<h:outputText value="#{user.fsbmmc}" />
+				</p:column>
+				<p:column headerText="性别" sortBy="xb" filterBy="xb" width="3%"
+					filterStyle="width:80%">
+					<h:outputText value="#{user.xb}" />
+				</p:column>
+				<p:column headerText="状态" width="5%">
+					<h:outputText value="#{user.zt}"
+						style="color: red; font-family: 楷体_GB2312; font-size: x-small; font-weight: bold; text-align: center" />
+				</p:column>
+				<p:column width="25%" headerText="操作" exportable="false">
+					<f:facet name="header">
+						<p:commandLink value="新增用户" action="#{jcUserMb.addnewUser}"
+							style="color: orange;" oncomplete="PF('dlg2').show();"
+							update=":user2:hq2">
+							<f:setPropertyActionListener target="#{jcUserMb.showLovDiv}"
+								value="#{true}"></f:setPropertyActionListener>
+						</p:commandLink>
+					</f:facet>
+					<h:panelGroup>
+						<p:commandLink value="权限详情" action="#{jcUserMb.initRolses}"
+							style="color: orange;" oncomplete="PF('dlgxqxq').show();"
+							update=":dlgxqxqid">
+							<f:param name="yhbm" value="#{user.yhbm}"></f:param>
+						</p:commandLink>
+
+
+						<h:outputText value="  |  " />
+						<p:commandLink value="#{jc.edit}" action="#{jcUserMb.initUser}"
+							style="color: orange;" oncomplete="PF('dlg1').show();"
+							update=":user:hq">
+							<f:param name="yhbm" value="#{user.yhbm}"></f:param>
+							<f:setPropertyActionListener target="#{jcUserMb.showLovDiv}"
+								value="#{true}"></f:setPropertyActionListener>
+						</p:commandLink>
+						<h:outputText value="  |  " />
+						<p:commandLink value="#{jc.delete }"
+							action="#{jcUserMb.deleteUser}" style="color: orange;"
+							update=":user1:data">
+							<p:confirm icon="ui-icon-alert" message="确定删除吗?"></p:confirm>
+							<f:setPropertyActionListener target="#{jcUserMb.user}"
+								value="#{user}"></f:setPropertyActionListener>
+						</p:commandLink>
+						<h:outputText value="  |  " />
+						<p:commandLink value="#{user.zt =='冻结状态' ?'激活':'冻结'}"
+							style="color: orange;" action="#{jcUserMb.disabledUser}"
+							update=":user1:data">
+							<f:param name="yhbm" value="#{user.yhbm}"></f:param>
+						</p:commandLink>
+
+						<h:outputText value="  |  "  />
+						<p:commandLink value="密码重置" style="color: orange;"
+							action="#{jcUserMb.doAction(user.zsmc,user.yhbm)}"
+							update=":user1:data" rendered="false">
+							<f:param name="yhbm" value="#{user.yhbm}"></f:param>
+						</p:commandLink>
+						<h:outputText value="  |  "  rendered="false"/>
+						<p:commandLink value="邮箱配置" style="color: orange;"
+							action="#{jcUserMb.configureUserMailConfig(user)}"
+							oncomplete="PF('mailcfg').show();" update=":mailcfgdlg">
+						</p:commandLink>
+
+					</h:panelGroup>
+
+
+				</p:column>
+			</p:dataTable>
+		</h:panelGrid>
+	</h:form>
+</h:body>
+</html>
